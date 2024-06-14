@@ -3,7 +3,7 @@ import LayoutAutenticacao from "@/layouts/autenticacao/layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Login | Cultura de Segurança dos Alimentos",
+  title: "Laagin | Cultura de Segurança dos Alimentos",
   description: "Cultura de Segurança dos Alimentos",
 };
 
