@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoUsuario {
+  ADMINISTRADOR
+  GESTOR
+  AVALIADOR
+}
+
+model Usuario {
+  id                String              @id @default(uuid())
+  nome              String
+  sobrenome         String
+  cpf               String              @unique
+  email             String              @unique
+  senha             String
+  tipo              TipoUsuario
+  ativo             Boolean             @default(true)
+  ultimo_login      DateTime?           @db.Timestamptz(3)
+  criado_em         DateTime            @default(now()) @db.Timestamptz(3)
+  atualizado_em     DateTime            @updatedAt @db.Timestamptz(3)
+  ResetSenhaToken   ResetSenhaToken[]
+  CadastroToken     CadastroToken[]
+  UsuarioAplicacoes UsuarioAplicacoes[]
+
+  @@map("usuarios")
+}
+
+model ResetSenhaToken {
+  id         String   @id @default(uuid())
+  token      String   @unique
+  usuario_id String
+  usado      Boolean  @default(false)
+  expira_em  DateTime @db.Timestamptz(3)
+  criado_em  DateTime @default(now()) @db.Timestamptz(3)
+  usuario    Usuario  @relation(fields: [usuario_id], references: [id])
+
+  @@map("reset_senha_tokens")
+}
+
+model CadastroToken {
+  id         String      @id @default(uuid())
+  token      String      @unique
+  email      String
+  tipo       TipoUsuario
+  usuario_id String
+  usado      Boolean     @default(false)
+  expira_em  DateTime    @db.Timestamptz(3)
+  criado_em  DateTime    @default(now()) @db.Timestamptz(3)
+  usuario    Usuario     @relation(fields: [usuario_id], references: [id])
+
+  @@map("cadastro_tokens")
+}
+
+model Aplicacao {
+  id       String              @id @default(uuid())
+  nome     String              @unique
+  usuarios UsuarioAplicacoes[]
+
+  @@map("aplicacoes")
+}
+
+model UsuarioAplicacoes {
+  usuario      Usuario   @relation(fields: [usuario_id], references: [id])
+  usuario_id   String
+  aplicacao    Aplicacao @relation(fields: [aplicacao_id], references: [id])
+  aplicacao_id String
+
+  @@id([usuario_id, aplicacao_id])
+  @@map("usuario_aplicacoes")
+}
