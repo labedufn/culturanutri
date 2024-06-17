@@ -26,7 +26,7 @@ export function Menu({ isOpen }: MenuProps) {
           {pages.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
-                <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate">
+                <p className="text-sm font-medium text-muted-foreground px-4 pb-2 max-w-[248px] truncate ">
                   {groupLabel}
                 </p>
               ) : !isOpen && isOpen !== undefined && groupLabel ? (
@@ -38,7 +38,7 @@ export function Menu({ isOpen }: MenuProps) {
                       </div>
                     </TooltipTrigger>
                     <TooltipContent side="right">
-                      <p>{groupLabel}</p>
+                      <p className="text-zinc-400">{groupLabel}</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -56,7 +56,7 @@ export function Menu({ isOpen }: MenuProps) {
                             className="w-full justify-start h-10 mb-1"
                             asChild
                           >
-                            <Link href={href}>
+                            <Link href={href} className="">
                               <span className={cn(isOpen === false ? "" : "mr-4")}>
                                 <Icon size={18} />
                               </span>
@@ -71,7 +71,11 @@ export function Menu({ isOpen }: MenuProps) {
                             </Link>
                           </Button>
                         </TooltipTrigger>
-                        {isOpen === false && <TooltipContent side="right">{label}</TooltipContent>}
+                        {isOpen === false && (
+                          <TooltipContent side="right" className="text-zinc-400">
+                            {label}
+                          </TooltipContent>
+                        )}
                       </Tooltip>
                     </TooltipProvider>
                   </div>
