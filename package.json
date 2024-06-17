@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install:full": "cd backend && npm install && cd ../frontend && npm install",
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "install:full": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"cd backend && npm run dev:docker\" \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
     "dev:usuario": "cd backend && npm run dev:usuario",
     "dev:migrate": "cd backend && npm run dev:migrate"
   },
