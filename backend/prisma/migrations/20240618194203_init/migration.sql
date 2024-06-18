@@ -152,8 +152,6 @@ CREATE TABLE "cadastros_tokens" (
     "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "codigo_tipo_usuario" INTEGER NOT NULL,
-    "item_tipo_usuario" INTEGER NOT NULL,
     "criado_por" TEXT NOT NULL,
     "usado" INTEGER NOT NULL DEFAULT 0,
     "expira_em" TIMESTAMPTZ(3) NOT NULL,
