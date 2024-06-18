@@ -1,5 +1,4 @@
 export class Estabelecimento {
-  id_estabelecimento: string;
   nome: string;
   cnae: string;
   endereco: string;

@@ -23,8 +23,8 @@ export class RedefinirSenhaService {
       const tokenInfo = await prisma.resetSenhaToken.findFirst({
         where: {
           token: token,
-          usuario_id: usuarioId,
-          usado: false,
+          id_usuario: usuarioId,
+          usado: 0,
           expira_em: {
             gt: new Date(),
           },
@@ -44,7 +44,7 @@ export class RedefinirSenhaService {
 
       await prisma.resetSenhaToken.update({
         where: { id: tokenInfo.id },
-        data: { usado: true },
+        data: { usado: 1 },
       });
 
       return { message: "Senha redefinida com sucesso." };
