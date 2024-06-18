@@ -1,4 +1,5 @@
 export class Estabelecimento {
+  id_estabelecimento: string;
   nome: string;
   cnae: string;
   endereco: string;
@@ -18,8 +19,6 @@ export class Estabelecimento {
     numero_refeicoes: number,
     possui_alvara_sanitario: number,
     possui_responsavel_boas_praticas: number,
-    data_criacao: Date,
-    data_alteracao: Date,
     alterado_por: string,
   ) {
     this.nome = nome;
@@ -29,8 +28,6 @@ export class Estabelecimento {
     this.numero_refeicoes = numero_refeicoes;
     this.possui_alvara_sanitario = possui_alvara_sanitario;
     this.possui_responsavel_boas_praticas = possui_responsavel_boas_praticas;
-    this.data_criacao = data_criacao;
-    this.data_alteracao = data_alteracao;
     this.alterado_por = alterado_por;
   }
 }
