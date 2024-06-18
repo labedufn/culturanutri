@@ -37,7 +37,7 @@ export class CriarUsuarioService {
           id: tokenExistente.id,
         },
         data: {
-          usado: true,
+          usado: 1,
         },
       });
     }
@@ -64,7 +64,8 @@ export class CriarUsuarioService {
         cpf: usuario.cpf,
         email: usuario.email,
         senha: senhaCriptografada,
-        tipo: usuario.tipo,
+        tipo_usuario: usuario.tipo,
+        instituicao: usuario.instituicao,
       },
       select: {
         id: true,
@@ -72,7 +73,8 @@ export class CriarUsuarioService {
         sobrenome: true,
         cpf: true,
         email: true,
-        tipo: true,
+        instituicao: true,
+        tipo_usuario: true,
       },
     });
 
