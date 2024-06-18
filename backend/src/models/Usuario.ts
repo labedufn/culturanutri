@@ -1,4 +1,4 @@
-import type { TipoUsuario } from "@prisma/client";
+import { TipoUsuario } from "@prisma/client";
 
 export class Usuario {
   nome: string;
