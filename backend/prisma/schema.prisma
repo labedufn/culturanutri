@@ -176,16 +176,14 @@ model ResetSenhaToken {
 }
 
 model CadastroToken {
-  id                  String   @id @default(uuid())
-  token               String   @unique
-  email               String
-  codigo_tipo_usuario Int
-  item_tipo_usuario   Int
-  criado_por          String
-  usado               Int      @default(0)
-  expira_em           DateTime @db.Timestamptz(3)
-  criado_em           DateTime @default(now()) @db.Timestamptz(3)
-  usuario             Usuario  @relation(fields: [criado_por], references: [id])
+  id         String   @id @default(uuid())
+  token      String   @unique
+  email      String
+  criado_por String
+  usado      Int      @default(0)
+  expira_em  DateTime @db.Timestamptz(3)
+  criado_em  DateTime @default(now()) @db.Timestamptz(3)
+  usuario    Usuario  @relation(fields: [criado_por], references: [id])
 
   @@map("cadastros_tokens")
 }
