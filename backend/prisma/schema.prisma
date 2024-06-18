@@ -7,11 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoUsuario {
+  ADMINISTRADOR
+  GESTOR
+  AVALIADOR
+}
+
 model GestorAvaliacao {
-  id_gestor_avaliacao String   @id @default(uuid())
-  data_cadastro       DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao      DateTime @updatedAt @db.Timestamptz(3)
-  informacoes         String   @db.VarChar(255)
+  id             String   @id @default(uuid())
+  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
+  informacoes    String   @db.VarChar(255)
 
   AnaliseQuantitativa AnaliseQuantitativa[]
 
@@ -19,10 +25,10 @@ model GestorAvaliacao {
 }
 
 model ManipuladorAlimento {
-  id_manipulador_alimentos String   @id @default(uuid())
-  data_cadastro            DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao           DateTime @updatedAt @db.Timestamptz(3)
-  informacoes              String   @db.VarChar(255)
+  id             String   @id @default(uuid())
+  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
+  informacoes    String   @db.VarChar(255)
 
   AnaliQuantitativa AnaliseQuantitativa[]
 
@@ -30,13 +36,13 @@ model ManipuladorAlimento {
 }
 
 model ListaVerificacao {
-  id_lista_verificacao String   @id @default(uuid())
-  informacoes          String   @db.VarChar(255)
-  data_cadastro        DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao       DateTime @updatedAt @db.Timestamptz(3)
-  categoria            Int
-  verificacao_id       String
-  id_triangulacoes     String
+  id               String   @id @default(uuid())
+  informacoes      String   @db.VarChar(255)
+  data_cadastro    DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao   DateTime @updatedAt @db.Timestamptz(3)
+  categoria        Int
+  verificacao_id   String
+  id_triangulacoes String
 
   Triangulacao Triangulacao[]
 
@@ -44,7 +50,7 @@ model ListaVerificacao {
 }
 
 model TabelaAuxiliar {
-  id_tabela                String @id @default(uuid())
+  id                       String @id @default(uuid())
   codigo_tabela            Int
   descricao                String @db.VarChar(255)
   item_tabela              Int
@@ -57,9 +63,9 @@ model TabelaAuxiliar {
 }
 
 model AnaliseQualitativa {
-  id_analise_qualitativa String   @id @default(uuid())
-  categoria              Int
+  id                     String   @id @default(uuid())
   analise_qualitativa_id Int
+  categoria              Int
   informacoes            String   @db.VarChar(255)
   data_cadastro          DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao         DateTime @updatedAt @db.Timestamptz(3)
@@ -71,18 +77,18 @@ model AnaliseQualitativa {
 }
 
 model Triangulacao {
-  id_triangulacao         String              @id @default(uuid())
-  categoria               Int
+  id                      String              @id @default(uuid())
   triangulacao_id         String
+  categoria               Int
   id_lista_verificacao    String
   id_analise_qualitativa  String
   id_analise_quantitativa String
   informacoes             String              @db.VarChar(255)
   data_cadastro           DateTime            @default(now()) @db.Timestamptz(3)
   data_alteracao          DateTime            @updatedAt @db.Timestamptz(3)
-  listaVerificacao        ListaVerificacao    @relation(fields: [id_lista_verificacao], references: [id_lista_verificacao])
-  analiseQualitativa      AnaliseQualitativa  @relation(fields: [id_analise_qualitativa], references: [id_analise_qualitativa])
-  analiseQuantitativa     AnaliseQuantitativa @relation(fields: [id_analise_quantitativa], references: [id_analise_quantitativa])
+  listaVerificacao        ListaVerificacao    @relation(fields: [id_lista_verificacao], references: [id])
+  analiseQualitativa      AnaliseQualitativa  @relation(fields: [id_analise_qualitativa], references: [id])
+  analiseQuantitativa     AnaliseQuantitativa @relation(fields: [id_analise_quantitativa], references: [id])
 
   Resultado Resultado[]
 
@@ -90,17 +96,17 @@ model Triangulacao {
 }
 
 model Resultado {
-  id_resultados      String          @id @default(uuid())
+  id                 String          @id @default(uuid())
   id_estabelecimento String
   id_triangulacao    String
-  triangulacao       Triangulacao    @relation(fields: [id_triangulacao], references: [id_triangulacao])
-  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id_estabelecimento])
+  triangulacao       Triangulacao    @relation(fields: [id_triangulacao], references: [id])
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   @@map("resultados")
 }
 
 model AnaliseQuantitativa {
-  id_analise_quantitativa                String              @id @default(uuid())
+  id                                     String              @id @default(uuid())
   caracteristicas_socio_demograficas     String              @db.VarChar(255)
   resultados_avaliacao_quantitativas_csa String              @db.VarChar(255)
   vies_otimista                          String              @db.VarChar(255)
@@ -109,8 +115,8 @@ model AnaliseQuantitativa {
   id_manipulador_alimentos               String
   id_gestor_avaliacao                    String
   id_triangulacoes                       String
-  gestorAvaliacao                        GestorAvaliacao     @relation(fields: [id_gestor_avaliacao], references: [id_gestor_avaliacao])
-  manipuladorAlimento                    ManipuladorAlimento @relation(fields: [id_manipulador_alimentos], references: [id_manipulador_alimentos])
+  gestorAvaliacao                        GestorAvaliacao     @relation(fields: [id_gestor_avaliacao], references: [id])
+  manipuladorAlimento                    ManipuladorAlimento @relation(fields: [id_manipulador_alimentos], references: [id])
 
   Triangulacao Triangulacao[]
 
@@ -118,7 +124,7 @@ model AnaliseQuantitativa {
 }
 
 model Estabelecimento {
-  id_estabelecimento               String   @id @default(uuid())
+  id                               String   @id @default(uuid())
   nome                             String   @db.VarChar(255)
   cnae                             String   @db.VarChar(255)
   endereco                         String   @db.VarChar(255)
@@ -129,7 +135,7 @@ model Estabelecimento {
   data_criacao                     DateTime @map("data_criacao")
   data_alteracao                   DateTime @updatedAt @db.Timestamptz(3)
   alterado_por                     String
-  usuario                          Usuario  @relation(fields: [alterado_por], references: [id_usuario])
+  usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
 
   Resultado Resultado[]
 
@@ -137,20 +143,18 @@ model Estabelecimento {
 }
 
 model Usuario {
-  id_usuario               String   @id @default(uuid())
-  nome                     String   @db.VarChar(255)
-  sobrenome                String   @db.VarChar(255)
-  cpf                      String   @db.VarChar(255)
-  email                    String   @db.VarChar(255)
-  instituicao              String   @db.VarChar(255)
-  tipo_usuario             Int
-  senha                    String   @db.VarChar(255)
-  ativo                    Boolean
-  data_cadastro            DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao           DateTime @updatedAt @db.Timestamptz(3)
-  ultimo_login             DateTime @updatedAt @db.Timestamptz(3)
-  id_gestor_avaliacao      String
-  id_manipulador_alimentos String
+  id             String      @id @default(uuid())
+  nome           String      @db.VarChar(255)
+  sobrenome      String      @db.VarChar(255)
+  cpf            String      @db.VarChar(255)
+  email          String      @db.VarChar(255)
+  instituicao    String      @db.VarChar(255)
+  tipo_usuario   TipoUsuario
+  senha          String      @db.VarChar(255)
+  ativo          Int         @default(1)
+  data_cadastro  DateTime    @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime    @updatedAt @db.Timestamptz(3)
+  ultimo_login   DateTime    @updatedAt @db.Timestamptz(3)
 
   ResetSenhaToken ResetSenhaToken[]
   CadastroToken   CadastroToken[]
@@ -160,28 +164,26 @@ model Usuario {
 }
 
 model ResetSenhaToken {
-  id_reset_senha_token String   @id @default(uuid())
-  token                String   @unique
-  id_usuario           String
-  usado                Boolean  @default(false)
-  expira_em            DateTime @db.Timestamptz(3)
-  criado_em            DateTime @default(now()) @db.Timestamptz(3)
-  usuario              Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+  id         String   @id @default(uuid())
+  token      String   @unique
+  id_usuario String
+  usado      Int      @default(0)
+  expira_em  DateTime @db.Timestamptz(3)
+  criado_em  DateTime @default(now()) @db.Timestamptz(3)
+  usuario    Usuario  @relation(fields: [id_usuario], references: [id])
 
   @@map("reset_senhas_tokens")
 }
 
 model CadastroToken {
-  id_cadastro_token   String   @id @default(uuid())
-  token               String   @unique
-  email               String
-  codigo_tipo_usuario Int
-  item_tipo_usuario   Int
-  criado_por          String
-  usado               Boolean  @default(false)
-  expira_em           DateTime @db.Timestamptz(3)
-  criado_em           DateTime @default(now()) @db.Timestamptz(3)
-  usuario             Usuario  @relation(fields: [criado_por], references: [id_usuario])
+  id         String   @id @default(uuid())
+  token      String   @unique
+  email      String
+  criado_por String
+  usado      Int      @default(0)
+  expira_em  DateTime @db.Timestamptz(3)
+  criado_em  DateTime @default(now()) @db.Timestamptz(3)
+  usuario    Usuario  @relation(fields: [criado_por], references: [id])
 
   @@map("cadastros_tokens")
 }

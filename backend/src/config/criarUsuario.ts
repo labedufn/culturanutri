@@ -16,6 +16,7 @@ async function criarUsuario() {
   const sobrenome = readlineSync.question("Sobrenome: ");
   const cpf = readlineSync.question("CPF: ");
   const email = readlineSync.question("Email: ");
+  const instituicao = readlineSync.question("Instituicao: ");
   const senha = readlineSync.question("Senha: ", {
     hideEchoBack: true,
   });
@@ -31,6 +32,11 @@ async function criarUsuario() {
     email,
     senha,
     tipo,
+    instituicao,
+    data_cadastro: new Date(),
+    data_alteracao: new Date(),
+    ativo: 1,
+    ultimo_login: new Date(),
   };
 
   try {
