@@ -1,0 +1,36 @@
+export class Estabelecimento {
+  nome: string;
+  cnae: string;
+  endereco: string;
+  pessoal_ocupado: number;
+  numero_refeicoes: number;
+  possui_alvara_sanitario: number;
+  possui_responsavel_boas_praticas: number;
+  data_criacao: Date;
+  data_alteracao: Date;
+  alterado_por: string;
+
+  constructor(
+    nome: string,
+    cnae: string,
+    endereco: string,
+    pessoal_ocupado: number,
+    numero_refeicoes: number,
+    possui_alvara_sanitario: number,
+    possui_responsavel_boas_praticas: number,
+    data_criacao: Date,
+    data_alteracao: Date,
+    alterado_por: string,
+  ) {
+    this.nome = nome;
+    this.cnae = cnae;
+    this.endereco = endereco;
+    this.pessoal_ocupado = pessoal_ocupado;
+    this.numero_refeicoes = numero_refeicoes;
+    this.possui_alvara_sanitario = possui_alvara_sanitario;
+    this.possui_responsavel_boas_praticas = possui_responsavel_boas_praticas;
+    this.data_criacao = data_criacao;
+    this.data_alteracao = data_alteracao;
+    this.alterado_por = alterado_por;
+  }
+}
