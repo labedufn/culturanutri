@@ -14,6 +14,7 @@ export class EditarEstabelecimentoController {
       possui_alvara_sanitario,
       possui_responsavel_boas_praticas,
       alterado_por,
+      ativo,
     } = req.body;
 
     try {
@@ -26,6 +27,7 @@ export class EditarEstabelecimentoController {
         possui_alvara_sanitario,
         possui_responsavel_boas_praticas,
         alterado_por,
+        ativo,
       );
 
       const editarEstabelecimentoService = new EditarEstabelecimentoService();

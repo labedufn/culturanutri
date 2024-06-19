@@ -25,6 +25,7 @@ export class CriarEstabelecimentoController {
         possui_alvara_sanitario,
         possui_responsavel_boas_praticas,
         alterado_por,
+        1,
       );
 
       const criarEstabelecimentoService = new CriarEstabelecimentoService();

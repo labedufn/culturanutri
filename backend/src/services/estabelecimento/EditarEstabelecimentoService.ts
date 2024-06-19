@@ -18,6 +18,7 @@ export class EditarEstabelecimentoService {
         data_criacao: new Date(),
         data_alteracao: new Date(),
         alterado_por: estabelecimento.alterado_por,
+        ativo: estabelecimento.ativo,
       },
       select: {
         id: true,
@@ -31,6 +32,7 @@ export class EditarEstabelecimentoService {
         data_criacao: true,
         data_alteracao: true,
         alterado_por: true,
+        ativo: true,
       },
     });
 
