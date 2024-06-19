@@ -1,10 +1,11 @@
 import { Estabelecimento } from "@models/Estabelecimento";
-import { CriarEstabelecimentoService } from "@services/estabelecimento/CriarEstabelecimentoService";
+import { EditarEstabelecimentoService } from "@services/estabelecimento/EditarEstabelecimentoService";
 import { Request, Response } from "express";
 
-export class CriarEstabelecimentoController {
+export class EditarEstabelecimentoController {
   async handle(req: Request, res: Response) {
     const {
+      id,
       nome,
       cnae,
       endereco,
@@ -16,7 +17,7 @@ export class CriarEstabelecimentoController {
     } = req.body;
 
     try {
-      const novoEstabelecimento = new Estabelecimento(
+      const estabelecimento = new Estabelecimento(
         nome,
         cnae,
         endereco,
@@ -27,10 +28,10 @@ export class CriarEstabelecimentoController {
         alterado_por,
       );
 
-      const criarEstabelecimentoService = new CriarEstabelecimentoService();
-      const estabelecimento = await criarEstabelecimentoService.execute(novoEstabelecimento);
+      const editarEstabelecimentoService = new EditarEstabelecimentoService();
+      const estabelecimentoAlterado = await editarEstabelecimentoService.execute(id, estabelecimento);
 
-      return res.json(estabelecimento);
+      return res.json(estabelecimentoAlterado);
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
