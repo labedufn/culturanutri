@@ -44,7 +44,9 @@ module.exports = {
         browser: true,
         es6: true,
       },
-      rules: {},
+      rules: {
+        "react/react-in-jsx-scope": "off", // Adicione esta linha
+      },
     },
   ],
 };

@@ -107,7 +107,7 @@ export function CollapseMenuButton({ icon: Icon, label, active, submenus, isOpen
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent side="right" align="start" alignOffset={2}>
+          <TooltipContent side="right" align="start" alignOffset={2} className="text-zinc-400">
             {label}
           </TooltipContent>
         </Tooltip>

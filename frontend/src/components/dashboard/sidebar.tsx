@@ -26,7 +26,7 @@ export function Sidebar() {
           variant="title"
           asChild
         >
-          <a href="/dashboard" className="flex items-center gap-2">
+          <a href="/dashboard" className="flex items-center gap-2 ">
             <IconNutri color="#F5A524" className="w-8 h-8" />
             <h1
               className={cn(

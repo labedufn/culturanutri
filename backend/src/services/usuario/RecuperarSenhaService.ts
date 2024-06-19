@@ -9,7 +9,7 @@ export class RecuperarSenhaService {
   async execute(email) {
     const usuario = await prisma.usuario.findUnique({
       where: {
-        email: email,
+        id: email,
       },
     });
 
@@ -25,7 +25,7 @@ export class RecuperarSenhaService {
     await prisma.resetSenhaToken.create({
       data: {
         token: token,
-        usuario_id: usuario.id,
+        id_usuario: usuario.id,
         expira_em: expiraEmDate,
       },
     });

@@ -13,21 +13,153 @@ enum TipoUsuario {
   AVALIADOR
 }
 
+model GestorAvaliacao {
+  id             String   @id @default(uuid())
+  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
+  informacoes    String   @db.VarChar(255)
+
+  AnaliseQuantitativa AnaliseQuantitativa[]
+
+  @@map("gestores_avaliacoes")
+}
+
+model ManipuladorAlimento {
+  id             String   @id @default(uuid())
+  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
+  informacoes    String   @db.VarChar(255)
+
+  AnaliQuantitativa AnaliseQuantitativa[]
+
+  @@map("manipuladores_alimentos")
+}
+
+model ListaVerificacao {
+  id               String   @id @default(uuid())
+  informacoes      String   @db.VarChar(255)
+  data_cadastro    DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao   DateTime @updatedAt @db.Timestamptz(3)
+  categoria        Int
+  verificacao_id   String
+  id_triangulacoes String
+
+  Triangulacao Triangulacao[]
+
+  @@map("listas_verificacoes")
+}
+
+model TabelaAuxiliar {
+  id                       String @id @default(uuid())
+  codigo_tabela            Int
+  descricao                String @db.VarChar(255)
+  item_tabela              Int
+  id_listas_verificacoes   String
+  id_triangulacoes         String
+  id_analises_qualitativas String
+  id_resultados            String
+
+  @@map("tabelas_auxiliares")
+}
+
+model AnaliseQualitativa {
+  id                     String   @id @default(uuid())
+  analise_qualitativa_id Int
+  categoria              Int
+  informacoes            String   @db.VarChar(255)
+  data_cadastro          DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao         DateTime @updatedAt @db.Timestamptz(3)
+  id_triangulacoes       String
+
+  Triangulacao Triangulacao[]
+
+  @@map("analises_qualitativas")
+}
+
+model Triangulacao {
+  id                      String              @id @default(uuid())
+  triangulacao_id         String
+  categoria               Int
+  id_lista_verificacao    String
+  id_analise_qualitativa  String
+  id_analise_quantitativa String
+  informacoes             String              @db.VarChar(255)
+  data_cadastro           DateTime            @default(now()) @db.Timestamptz(3)
+  data_alteracao          DateTime            @updatedAt @db.Timestamptz(3)
+  listaVerificacao        ListaVerificacao    @relation(fields: [id_lista_verificacao], references: [id])
+  analiseQualitativa      AnaliseQualitativa  @relation(fields: [id_analise_qualitativa], references: [id])
+  analiseQuantitativa     AnaliseQuantitativa @relation(fields: [id_analise_quantitativa], references: [id])
+
+  Resultado Resultado[]
+
+  @@map("triangulacoes")
+}
+
+model Resultado {
+  id                 String          @id @default(uuid())
+  id_estabelecimento String
+  id_triangulacao    String
+  triangulacao       Triangulacao    @relation(fields: [id_triangulacao], references: [id])
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+
+  @@map("resultados")
+}
+
+model AnaliseQuantitativa {
+  id                                     String              @id @default(uuid())
+  caracteristicas_socio_demograficas     String              @db.VarChar(255)
+  resultados_avaliacao_quantitativas_csa String              @db.VarChar(255)
+  vies_otimista                          String              @db.VarChar(255)
+  data_cadastro                          DateTime            @default(now()) @db.Timestamptz(3)
+  data_alteracao                         DateTime            @updatedAt @db.Timestamptz(3)
+  id_manipulador_alimentos               String
+  id_gestor_avaliacao                    String
+  id_triangulacoes                       String
+  gestorAvaliacao                        GestorAvaliacao     @relation(fields: [id_gestor_avaliacao], references: [id])
+  manipuladorAlimento                    ManipuladorAlimento @relation(fields: [id_manipulador_alimentos], references: [id])
+
+  Triangulacao Triangulacao[]
+
+  @@map("analises_quantitativas")
+}
+
+model Estabelecimento {
+  id                               String   @id @default(uuid())
+  nome                             String   @db.VarChar(255)
+  cnae                             String   @db.VarChar(255)
+  endereco                         String   @db.VarChar(255)
+  pessoal_ocupado                  Int
+  numero_refeicoes                 Int
+  possui_alvara_sanitario          Int
+  possui_responsavel_boas_praticas Int
+  data_criacao                     DateTime @map("data_criacao")
+  data_alteracao                   DateTime @updatedAt @db.Timestamptz(3)
+  alterado_por                     String
+  ativo                            Int      @default(1)
+  usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
+
+  Resultado Resultado[]
+
+  @@map("estabelecimentos")
+}
+
 model Usuario {
-  id                String              @id @default(uuid())
-  nome              String
-  sobrenome         String
-  cpf               String              @unique
-  email             String              @unique
-  senha             String
-  tipo              TipoUsuario
-  ativo             Boolean             @default(true)
-  ultimo_login      DateTime?           @db.Timestamptz(3)
-  criado_em         DateTime            @default(now()) @db.Timestamptz(3)
-  atualizado_em     DateTime            @updatedAt @db.Timestamptz(3)
-  ResetSenhaToken   ResetSenhaToken[]
-  CadastroToken     CadastroToken[]
-  UsuarioAplicacoes UsuarioAplicacoes[]
+  id             String      @id @default(uuid())
+  nome           String      @db.VarChar(255)
+  sobrenome      String      @db.VarChar(255)
+  cpf            String      @db.VarChar(255)
+  email          String      @db.VarChar(255)
+  instituicao    String      @db.VarChar(255)
+  tipo_usuario   TipoUsuario
+  senha          String      @db.VarChar(255)
+  ativo          Int         @default(1)
+  data_cadastro  DateTime    @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime    @updatedAt @db.Timestamptz(3)
+  ultimo_login   DateTime    @updatedAt @db.Timestamptz(3)
+
+  ResetSenhaToken ResetSenhaToken[]
+  CadastroToken   CadastroToken[]
+  estabelecimento Estabelecimento[]
 
   @@map("usuarios")
 }
@@ -35,43 +167,24 @@ model Usuario {
 model ResetSenhaToken {
   id         String   @id @default(uuid())
   token      String   @unique
-  usuario_id String
-  usado      Boolean  @default(false)
+  id_usuario String
+  usado      Int      @default(0)
   expira_em  DateTime @db.Timestamptz(3)
   criado_em  DateTime @default(now()) @db.Timestamptz(3)
-  usuario    Usuario  @relation(fields: [usuario_id], references: [id])
+  usuario    Usuario  @relation(fields: [id_usuario], references: [id])
 
-  @@map("reset_senha_tokens")
+  @@map("reset_senhas_tokens")
 }
 
 model CadastroToken {
-  id         String      @id @default(uuid())
-  token      String      @unique
+  id         String   @id @default(uuid())
+  token      String   @unique
   email      String
-  tipo       TipoUsuario
-  usuario_id String
-  usado      Boolean     @default(false)
-  expira_em  DateTime    @db.Timestamptz(3)
-  criado_em  DateTime    @default(now()) @db.Timestamptz(3)
-  usuario    Usuario     @relation(fields: [usuario_id], references: [id])
+  criado_por String
+  usado      Int      @default(0)
+  expira_em  DateTime @db.Timestamptz(3)
+  criado_em  DateTime @default(now()) @db.Timestamptz(3)
+  usuario    Usuario  @relation(fields: [criado_por], references: [id])
 
-  @@map("cadastro_tokens")
-}
-
-model Aplicacao {
-  id       String              @id @default(uuid())
-  nome     String              @unique
-  usuarios UsuarioAplicacoes[]
-
-  @@map("aplicacoes")
-}
-
-model UsuarioAplicacoes {
-  usuario      Usuario   @relation(fields: [usuario_id], references: [id])
-  usuario_id   String
-  aplicacao    Aplicacao @relation(fields: [aplicacao_id], references: [id])
-  aplicacao_id String
-
-  @@id([usuario_id, aplicacao_id])
-  @@map("usuario_aplicacoes")
+  @@map("cadastros_tokens")
 }

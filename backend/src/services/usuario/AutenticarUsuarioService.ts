@@ -12,7 +12,7 @@ export class AutenticarUsuarioService {
     const usuario = await prisma.usuario.findFirst({
       where: {
         OR: [{ email: emailOuCpf }, { cpf: emailOuCpf }],
-        ativo: true,
+        ativo: 1,
       },
     });
 
@@ -29,7 +29,7 @@ export class AutenticarUsuarioService {
       {
         nome: usuario.nome,
         email: usuario.email,
-        tipo: usuario.tipo,
+        tipo_usuario: usuario.tipo_usuario,
       },
       process.env.SECRET_KEY,
       {
@@ -43,7 +43,7 @@ export class AutenticarUsuarioService {
       nome: usuario.nome,
       sobrenome: usuario.sobrenome,
       email: usuario.email,
-      tipo: usuario.tipo,
+      tipo: usuario.tipo_usuario,
       token: token,
     };
   }
