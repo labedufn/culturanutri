@@ -1,4 +1,6 @@
-import { CriarEstabelecimentoController } from "@controllers/estabelecimento/CriaEstabelecimentoController";
+import { CriarEstabelecimentoController } from "@controllers/estabelecimento/CriarEstabelecimentoController";
+import { EditarEstabelecimentoController } from "@controllers/estabelecimento/EditarEstabelecimentoController";
+import { ListarEstabelecimentosController } from "@controllers/estabelecimento/ListarEstabelecimentosController";
 import { AtualizarUsuarioController } from "@controllers/usuario/AtualizarUsuarioController";
 import { AutenticarUsuarioController } from "@controllers/usuario/AutenticarUsuarioController";
 import { CriarUsuarioController } from "@controllers/usuario/CriarUsuarioController";
@@ -22,3 +24,5 @@ router.get("/api/validar-cadastro-token", validarCadastroToken);
 
 // Rotas Estabelecimento
 router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
+router.put("/api/editar-estabelecimento", new EditarEstabelecimentoController().handle);
+router.get("/api/listar-estabelecimento", new ListarEstabelecimentosController().handle);

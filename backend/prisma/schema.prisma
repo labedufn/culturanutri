@@ -135,6 +135,7 @@ model Estabelecimento {
   data_criacao                     DateTime @map("data_criacao")
   data_alteracao                   DateTime @updatedAt @db.Timestamptz(3)
   alterado_por                     String
+  ativo                            Int      @default(1)
   usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
 
   Resultado Resultado[]

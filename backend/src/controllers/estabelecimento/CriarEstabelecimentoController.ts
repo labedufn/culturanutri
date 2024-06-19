@@ -1,5 +1,5 @@
 import { Estabelecimento } from "@models/Estabelecimento";
-import { CriarEstabelecimentoService } from "@services/estabelecimento/CriarEstabelecimentoService";
+import { CriarEstabelecimentoService } from "@services/estabelecimento/CriarEstabelecimentoService copy";
 import { Request, Response } from "express";
 
 export class CriarEstabelecimentoController {
@@ -25,6 +25,7 @@ export class CriarEstabelecimentoController {
         possui_alvara_sanitario,
         possui_responsavel_boas_praticas,
         alterado_por,
+        1,
       );
 
       const criarEstabelecimentoService = new CriarEstabelecimentoService();
