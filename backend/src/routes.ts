@@ -14,6 +14,8 @@ import { Router } from "express";
 import { EditarUsuarioController } from "@controllers/usuario/EditarUsuarioController";
 import { BuscarUsuarioController } from "@controllers/usuario/BuscarUsuarioController";
 import { BuscarEstabelecimentoController } from "@controllers/estabelecimento/BuscarEstabelecimentoController";
+import { CriarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/CriarGestorAvaliacaoController";
+import { ListarGestoresAvaliacaoController } from "@controllers/gestor-avaliacao/ListarGestoresAvaliacaoController";
 
 export const router = Router();
 
@@ -34,3 +36,7 @@ router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController(
 router.put("/api/editar-estabelecimento", new EditarEstabelecimentoController().handle);
 router.get("/api/listar-estabelecimento", new ListarEstabelecimentosController().handle);
 router.get("/api/buscar-estabelecimento", new BuscarEstabelecimentoController().handle);
+
+// Rotas Gestor Avaliacao
+router.post("/api/cadastro-gestor-avaliador", new CriarGestorAvaliacaoController().handle);
+router.get("/api/listar-gestor-avaliador", new ListarGestoresAvaliacaoController().handle);
