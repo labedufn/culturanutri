@@ -1,6 +1,7 @@
 import { CriarEstabelecimentoController } from "@controllers/estabelecimento/CriarEstabelecimentoController";
 import { EditarEstabelecimentoController } from "@controllers/estabelecimento/EditarEstabelecimentoController";
 import { ListarEstabelecimentosController } from "@controllers/estabelecimento/ListarEstabelecimentosController";
+import { ListarUsuariosController } from "@controllers/usuario/ListarUsuariosController";
 import { AtualizarUsuarioController } from "@controllers/usuario/AtualizarUsuarioController";
 import { AutenticarUsuarioController } from "@controllers/usuario/AutenticarUsuarioController";
 import { CriarUsuarioController } from "@controllers/usuario/CriarUsuarioController";
@@ -10,6 +11,7 @@ import { SolicitarCadastroController } from "@controllers/usuario/SolicitarCadas
 import { authCriarUsuario, authUsuario } from "@middlewares/authUsuario";
 import { validarCadastroToken } from "@utils/validarCadastroToken";
 import { Router } from "express";
+import { EditarUsuarioController } from "@controllers/usuario/EditarUsuarioController";
 
 export const router = Router();
 
@@ -21,6 +23,8 @@ router.post("/api/login", new AutenticarUsuarioController().handle);
 router.post("/api/recuperar-senha", new RecuperarSenhaController().handle);
 router.post("/api/redefinir-senha", new RedefinirSenhaController().handle);
 router.get("/api/validar-cadastro-token", validarCadastroToken);
+router.put("/api/editar-usuario", new EditarUsuarioController().handle);
+router.get("/api/listar-usuario", new ListarUsuariosController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
