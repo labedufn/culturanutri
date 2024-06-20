@@ -16,6 +16,8 @@ import { BuscarUsuarioController } from "@controllers/usuario/BuscarUsuarioContr
 import { BuscarEstabelecimentoController } from "@controllers/estabelecimento/BuscarEstabelecimentoController";
 import { CriarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/CriarGestorAvaliacaoController";
 import { ListarGestoresAvaliacaoController } from "@controllers/gestor-avaliacao/ListarGestoresAvaliacaoController";
+import { BuscarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/BuscarGestorAvaliacaoController";
+import { EditarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/EditarGestorAvaliacaoController";
 
 export const router = Router();
 
@@ -40,3 +42,5 @@ router.get("/api/buscar-estabelecimento", new BuscarEstabelecimentoController().
 // Rotas Gestor Avaliacao
 router.post("/api/cadastro-gestor-avaliador", new CriarGestorAvaliacaoController().handle);
 router.get("/api/listar-gestor-avaliador", new ListarGestoresAvaliacaoController().handle);
+router.get("/api/buscar-gestor-avaliador", new BuscarGestorAvaliacaoController().handle);
+router.put("/api/editar-gestor-avaliador", new EditarGestorAvaliacaoController().handle);

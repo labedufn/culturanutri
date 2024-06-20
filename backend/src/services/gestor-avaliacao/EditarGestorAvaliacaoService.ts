@@ -1,11 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { GestorAvaliacao } from "@models/GestorAvaliacao";
+import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
-export class CriarGestorAvaliacaoService {
-  async execute(gestorAvaliacao: GestorAvaliacao) {
-    const gestorCriado = await prisma.gestorAvaliacao.create({
+export class EditarGestosAvaliacaoService {
+  async execute(idGestor: string, gestorAvaliacao: GestorAvaliacao) {
+    const gestorAlterado = await prisma.gestorAvaliacao.update({
+      where: {
+        id: idGestor,
+      },
       data: {
         data_alteracao: gestorAvaliacao.data_alteracao,
         data_cadastro: gestorAvaliacao.data_cadastro,
@@ -21,6 +25,11 @@ export class CriarGestorAvaliacaoService {
       },
     });
 
-    return gestorCriado;
+    const informacoesDecodificadas = await desconverterBase64JSON(gestorAlterado.informacoes);
+
+    return {
+      ...gestorAlterado,
+      informacoesDecodificadas: informacoesDecodificadas,
+    };
   }
 }

@@ -1,5 +1,5 @@
 import { GestorAvaliacao } from "@models/GestorAvaliacao";
-import { CriarGestosAvaliacaoService } from "@services/gestor-avaliacao/CriarGestorAvaliacaoService";
+import { CriarGestorAvaliacaoService } from "@services/gestor-avaliacao/CriarGestorAvaliacaoService";
 import converterBase64JSON from "@utils/converterBase64JSON";
 import { Request, Response } from "express";
 
@@ -14,7 +14,7 @@ export class CriarGestorAvaliacaoController {
       const ativo = 1;
 
       const novoGestorAvaliador = new GestorAvaliacao(informacoes, data_cadastro, data_alteracao, ativo);
-      const criarGestorAvaliadorService = new CriarGestosAvaliacaoService();
+      const criarGestorAvaliadorService = new CriarGestorAvaliacaoService();
       const gestorAvaliador = await criarGestorAvaliadorService.execute(novoGestorAvaliador);
 
       return res.json(gestorAvaliador);
