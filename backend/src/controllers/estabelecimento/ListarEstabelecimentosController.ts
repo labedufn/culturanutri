@@ -1,4 +1,4 @@
-import { ListarEstabelecimentosService } from "@services/estabelecimento/ListarEstabelecimentoService";
+import { ListarEstabelecimentosService } from "@services/estabelecimento/ListarEstabelecimentosService";
 import { Request, Response } from "express";
 
 export class ListarEstabelecimentosController {
