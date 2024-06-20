@@ -18,6 +18,9 @@ import { CriarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/Cr
 import { ListarGestoresAvaliacaoController } from "@controllers/gestor-avaliacao/ListarGestoresAvaliacaoController";
 import { BuscarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/BuscarGestorAvaliacaoController";
 import { EditarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/EditarGestorAvaliacaoController";
+import { CriarManipuladorAlimentoController } from "@controllers/manipulador-alimento/CriarManipuladorAlimentoController";
+import { ListarManipuladoresAlimentoController } from "@controllers/manipulador-alimento/ListarManipuladoresAlimentoController";
+import { EditarManipuladorAlimentoController } from "@controllers/manipulador-alimento/EditarManipuladorAlimentoController";
 
 export const router = Router();
 
@@ -44,3 +47,9 @@ router.post("/api/cadastro-gestor-avaliador", new CriarGestorAvaliacaoController
 router.get("/api/listar-gestor-avaliador", new ListarGestoresAvaliacaoController().handle);
 router.get("/api/buscar-gestor-avaliador", new BuscarGestorAvaliacaoController().handle);
 router.put("/api/editar-gestor-avaliador", new EditarGestorAvaliacaoController().handle);
+
+// Rotas Manipulador Alimento
+router.post("/api/cadastro-manipulador-alimento", new CriarManipuladorAlimentoController().handle);
+router.get("/api/listar-manipulador-alimento", new ListarManipuladoresAlimentoController().handle);
+// router.get("/api/buscar-manipulador-alimento", new BuscarGestorAvaliacaoController().handle);
+router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoController().handle);
