@@ -7,6 +7,7 @@ CREATE TABLE "gestores_avaliacoes" (
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "informacoes" VARCHAR(255) NOT NULL,
+    "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "gestores_avaliacoes_pkey" PRIMARY KEY ("id")
 );
@@ -113,6 +114,7 @@ CREATE TABLE "estabelecimentos" (
     "data_criacao" TIMESTAMP(3) NOT NULL,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "alterado_por" TEXT NOT NULL,
+    "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "estabelecimentos_pkey" PRIMARY KEY ("id")
 );

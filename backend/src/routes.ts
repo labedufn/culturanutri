@@ -14,6 +14,14 @@ import { Router } from "express";
 import { EditarUsuarioController } from "@controllers/usuario/EditarUsuarioController";
 import { BuscarUsuarioController } from "@controllers/usuario/BuscarUsuarioController";
 import { BuscarEstabelecimentoController } from "@controllers/estabelecimento/BuscarEstabelecimentoController";
+import { CriarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/CriarGestorAvaliacaoController";
+import { ListarGestoresAvaliacaoController } from "@controllers/gestor-avaliacao/ListarGestoresAvaliacaoController";
+import { BuscarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/BuscarGestorAvaliacaoController";
+import { EditarGestorAvaliacaoController } from "@controllers/gestor-avaliacao/EditarGestorAvaliacaoController";
+import { CriarManipuladorAlimentoController } from "@controllers/manipulador-alimento/CriarManipuladorAlimentoController";
+import { ListarManipuladoresAlimentoController } from "@controllers/manipulador-alimento/ListarManipuladoresAlimentoController";
+import { EditarManipuladorAlimentoController } from "@controllers/manipulador-alimento/EditarManipuladorAlimentoController";
+import { BuscarManipuladorAlimentoController } from "@controllers/manipulador-alimento/BuscarManipuladorAlimentoController";
 
 export const router = Router();
 
@@ -34,3 +42,15 @@ router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController(
 router.put("/api/editar-estabelecimento", new EditarEstabelecimentoController().handle);
 router.get("/api/listar-estabelecimento", new ListarEstabelecimentosController().handle);
 router.get("/api/buscar-estabelecimento", new BuscarEstabelecimentoController().handle);
+
+// Rotas Gestor Avaliacao
+router.post("/api/cadastro-gestor-avaliador", new CriarGestorAvaliacaoController().handle);
+router.get("/api/listar-gestor-avaliador", new ListarGestoresAvaliacaoController().handle);
+router.get("/api/buscar-gestor-avaliador", new BuscarGestorAvaliacaoController().handle);
+router.put("/api/editar-gestor-avaliador", new EditarGestorAvaliacaoController().handle);
+
+// Rotas Manipulador Alimento
+router.post("/api/cadastro-manipulador-alimento", new CriarManipuladorAlimentoController().handle);
+router.get("/api/listar-manipulador-alimento", new ListarManipuladoresAlimentoController().handle);
+router.get("/api/buscar-manipulador-alimento", new BuscarManipuladorAlimentoController().handle);
+router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoController().handle);

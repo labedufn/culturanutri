@@ -18,6 +18,7 @@ model GestorAvaliacao {
   data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao DateTime @updatedAt @db.Timestamptz(3)
   informacoes    String   @db.VarChar(255)
+  ativo          Int      @default(1)
 
   AnaliseQuantitativa AnaliseQuantitativa[]
 
@@ -29,6 +30,7 @@ model ManipuladorAlimento {
   data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao DateTime @updatedAt @db.Timestamptz(3)
   informacoes    String   @db.VarChar(255)
+  ativo          Int      @default(1)
 
   AnaliQuantitativa AnaliseQuantitativa[]
 
