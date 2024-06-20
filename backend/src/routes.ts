@@ -12,6 +12,8 @@ import { authCriarUsuario, authUsuario } from "@middlewares/authUsuario";
 import { validarCadastroToken } from "@utils/validarCadastroToken";
 import { Router } from "express";
 import { EditarUsuarioController } from "@controllers/usuario/EditarUsuarioController";
+import { BuscarUsuarioController } from "@controllers/usuario/BuscarUsuarioController";
+import { BuscarEstabelecimentoController } from "@controllers/estabelecimento/BuscarEstabelecimentoController";
 
 export const router = Router();
 
@@ -25,8 +27,10 @@ router.post("/api/redefinir-senha", new RedefinirSenhaController().handle);
 router.get("/api/validar-cadastro-token", validarCadastroToken);
 router.put("/api/editar-usuario", new EditarUsuarioController().handle);
 router.get("/api/listar-usuario", new ListarUsuariosController().handle);
+router.get("/api/buscar-usuario", new BuscarUsuarioController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
 router.put("/api/editar-estabelecimento", new EditarEstabelecimentoController().handle);
 router.get("/api/listar-estabelecimento", new ListarEstabelecimentosController().handle);
+router.get("/api/buscar-estabelecimento", new BuscarEstabelecimentoController().handle);
