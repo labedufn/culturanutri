@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/actions/login";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +15,15 @@ import { CircleUserRound, Home, LogOut, User } from "lucide-react";
 import Link from "next/link";
 
 export function UserNav() {
+  const handleLogout = async () => {
+    const response = await logout();
+    if (response.success) {
+      window.location.href = "/autenticacao/login";
+    } else {
+      console.error(response.message);
+    }
+  };
+
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -49,7 +59,7 @@ export function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => {}}>
+        <DropdownMenuItem className="hover:cursor-pointer" onClick={handleLogout}>
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Sair
         </DropdownMenuItem>

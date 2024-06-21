@@ -17,6 +17,7 @@ export class ListarGestoresAvaliacaoService {
       const gestores = await prisma.gestorAvaliacao.findMany({
         select: {
           id: true,
+          id_estabelecimento: true,
           data_cadastro: true,
           data_alteracao: true,
           informacoes: true,

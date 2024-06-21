@@ -10,6 +10,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { getPages } from "@/lib/pages";
 import { cn } from "@/lib/utils";
+import { logout } from "@/actions/login";
+import router from "next/router";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -18,6 +20,15 @@ interface MenuProps {
 export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
   const pages = getPages(pathname);
+
+  const handleLogout = async () => {
+    const response = await logout();
+    if (response.success) {
+      window.location.href = "/autenticacao/login";
+    } else {
+      console.error(response.message);
+    }
+  };
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -91,7 +102,11 @@ export function Menu({ isOpen }: MenuProps) {
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
-                  <Button onClick={() => {}} variant="outline" className="w-full justify-center h-10 mt-4 bg-zinc-800">
+                  <Button
+                    onClick={handleLogout}
+                    variant="outline"
+                    className="w-full justify-center h-10 mt-4 bg-zinc-800"
+                  >
                     <span className={cn(isOpen === false ? "" : "mr-4")}>
                       <LogOut size={18} />
                     </span>

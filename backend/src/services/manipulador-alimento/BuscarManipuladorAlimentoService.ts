@@ -3,8 +3,9 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
-export class BuscarGestorAvaliacaoService {
-  async execute(idUsuario: string, idGestor: string) {
+export class BuscarManipuladorAlimentoService {
+  async execute(idUsuario: string, idManipulador: string) {
+    console.log(idUsuario, idManipulador);
     const usuario = await prisma.usuario.findUnique({
       where: {
         id: idUsuario,
@@ -14,9 +15,9 @@ export class BuscarGestorAvaliacaoService {
     if (!usuario) {
       throw new Error("Usuário não encontrado");
     } else {
-      const gestor = await prisma.gestorAvaliacao.findUnique({
+      const manipuladorAlimento = await prisma.manipuladorAlimento.findUnique({
         where: {
-          id: idGestor,
+          id: idManipulador,
         },
         select: {
           id: true,
@@ -29,10 +30,10 @@ export class BuscarGestorAvaliacaoService {
       });
 
       // Decode `informacoes` for each gestor
-      const informacoesDecodificadas = await desconverterBase64JSON(gestor.informacoes);
+      const informacoesDecodificadas = await desconverterBase64JSON(manipuladorAlimento.informacoes);
 
       return {
-        ...gestor,
+        ...manipuladorAlimento,
         informacoesDecodificadas: informacoesDecodificadas,
       };
     }

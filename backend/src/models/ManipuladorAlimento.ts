@@ -1,4 +1,4 @@
-export class GestorAvaliacao {
+export class ManipuladorAlimento {
   id_estabelecimento: string;
   informacoes: string;
   ativo: number;
