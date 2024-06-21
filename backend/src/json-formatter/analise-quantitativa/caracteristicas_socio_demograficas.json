@@ -1,0 +1,48 @@
+json_caracteristicas_socio_demograficas = {
+  Genero: {
+    manipuladores: {
+      Masculino: 3,
+      Feminino: 4,
+      Total: 7,
+      Idade: 9,
+    },
+    gestores: {
+      Masculino: 3,
+      Feminino: 4,
+      Total: 7,
+      Idade: 9,
+    },
+  },
+  Escolaridade: {
+    manipuladores: {
+      Ensino_Fundamental_Incompleto: 3,
+      Ensino_Fundamental_Completo: 4,
+      Ensino_Medio_Incompleto: 7,
+      Ensino_Medio_Completo: 9,
+      Ensino_Superior_Incompleto: 12,
+      Ensino_Superior_Completo: 2,
+      Total: 15,
+    },
+    gestores: {
+      Ensino_Fundamental_Incompleto: 1,
+      Ensino_Fundamental_Completo: 5,
+      Ensino_Medio_Incompleto: 1,
+      Ensino_Medio_Completo: 0,
+      Ensino_Superior_Incompleto: 2,
+      Ensino_Superior_Completo: 12,
+      Total: 125,
+    },
+  },
+  Participacao_Treinamento_Formacao: {
+    manipuladores: {
+      Sim: 2,
+      Nao: 5,
+      Total: 12,
+    },
+    gestores: {
+      Sim: 22,
+      Nao: 5,
+      Total: 27,
+    },
+  },
+};

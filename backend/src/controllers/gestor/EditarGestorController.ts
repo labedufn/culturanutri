@@ -8,7 +8,7 @@ export class EditarGestorController {
     const { id_gestor, json_informacoes, ativo } = req.body;
 
     try {
-      const { informacoes } = await converterBase64JSON(json_informacoes);
+      const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
       const data_cadastro = new Date();
       const data_alteracao = new Date();
 

@@ -1,5 +1,6 @@
 import { Gestor } from "@models/Gestor";
 import { PrismaClient } from "@prisma/client";
+import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
@@ -21,6 +22,11 @@ export class CriarGestorService {
       },
     });
 
-    return gestorCriado;
+    const informacoesDecodificadas = await desconverterBase64JSON(gestorCriado.informacoes);
+
+    return {
+      ...gestorCriado,
+      informacoesDecodificadas: informacoesDecodificadas,
+    };
   }
 }

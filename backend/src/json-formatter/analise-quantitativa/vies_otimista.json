@@ -1,0 +1,32 @@
+vies_otimista = {
+  percepcao_risco: {
+    Gestores: {
+      Outros_Servicos_Alimentacao: {
+        Servico_Alimentacao_1: 0.5,
+        Servico_Alimentacao_2: 0.5,
+        Servico_Alimentacao_3: "Neutro",
+        Servico_Alimentacao_4: 0.5,
+      },
+      Proprio_Servico_Alimentacao: {
+        Servico_Alimentacao_1: 0.5,
+        Servico_Alimentacao_2: 0.5,
+        Servico_Alimentacao_3: "Pessimista",
+        Servico_Alimentacao_4: 0.5,
+      },
+    },
+    Manipulador_Alimento: {
+      Outro_Manipulador_Outro_Servico: {
+        Outro_Servico_1: 0.5,
+        Outro_Servico_2: 0.5,
+        Outro_Servico_3: "Neutro",
+        Outro_Servico_4: 0.5,
+      },
+      Outro_Manipulador_Mesmo_Servico: {
+        Mesmo_Servico_1: 0.5,
+        Mesmo_Servico_2: 0.5,
+        Mesmo_Servico_3: "Pessimista",
+        Mesmo_Servico_4: 0.5,
+      },
+    },
+  },
+};

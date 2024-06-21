@@ -1,4 +1,5 @@
 import { ManipuladorAlimento, PrismaClient } from "@prisma/client";
+import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
@@ -6,8 +7,6 @@ export class CriarManipuladorAlimentoService {
   async execute(manipuladorAlimento: ManipuladorAlimento) {
     const manipuladorCriado = await prisma.manipuladorAlimento.create({
       data: {
-        data_alteracao: manipuladorAlimento.data_alteracao,
-        data_cadastro: manipuladorAlimento.data_cadastro,
         informacoes: manipuladorAlimento.informacoes,
         ativo: manipuladorAlimento.ativo,
       },
@@ -20,6 +19,11 @@ export class CriarManipuladorAlimentoService {
       },
     });
 
-    return manipuladorCriado;
+    const informacoesDecodificadas = await desconverterBase64JSON(manipuladorCriado.informacoes);
+
+    return {
+      ...manipuladorCriado,
+      informacoesDecodificadas: informacoesDecodificadas,
+    };
   }
 }

@@ -10,8 +10,6 @@ export class EditarManipuladorAlimentoService {
         id: idManipulador,
       },
       data: {
-        data_alteracao: manipuladorAlimento.data_alteracao,
-        data_cadastro: manipuladorAlimento.data_cadastro,
         informacoes: manipuladorAlimento.informacoes,
         ativo: manipuladorAlimento.ativo,
       },

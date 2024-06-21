@@ -109,15 +109,15 @@ model Resultado {
 
 model AnaliseQuantitativa {
   id                                     String              @id @default(uuid())
+  id_gestor                              String
+  id_manipulador_alimentos               String
   caracteristicas_socio_demograficas     String              @db.VarChar(255)
   resultados_avaliacao_quantitativas_csa String              @db.VarChar(255)
   vies_otimista                          String              @db.VarChar(255)
   data_cadastro                          DateTime            @default(now()) @db.Timestamptz(3)
   data_alteracao                         DateTime            @updatedAt @db.Timestamptz(3)
-  id_manipulador_alimentos               String
-  id_gestor_avaliacao                    String
-  id_triangulacoes                       String
-  gestores                               Gestores            @relation(fields: [id_gestor_avaliacao], references: [id])
+  ativo                                  Int                 @default(1)
+  gestores                               Gestores            @relation(fields: [id_gestor], references: [id])
   manipuladorAlimento                    ManipuladorAlimento @relation(fields: [id_manipulador_alimentos], references: [id])
 
   Triangulacao Triangulacao[]
