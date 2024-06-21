@@ -20,6 +20,7 @@ export class BuscarGestorAvaliacaoService {
         },
         select: {
           id: true,
+          id_estabelecimento: true,
           data_cadastro: true,
           data_alteracao: true,
           informacoes: true,

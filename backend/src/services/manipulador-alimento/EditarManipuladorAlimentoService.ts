@@ -5,11 +5,22 @@ const prisma = new PrismaClient();
 
 export class EditarManipuladorAlimentoService {
   async execute(idManipulador: string, manipuladorAlimento: ManipuladorAlimento) {
+    const estabelecimento = await prisma.estabelecimento.findUnique({
+      where: {
+        id: manipuladorAlimento.id_estabelecimento,
+      },
+    });
+
+    if (!estabelecimento) {
+      throw new Error("Estabelecimento não encontrado");
+    }
+
     const manipuladorAlterado = await prisma.manipuladorAlimento.update({
       where: {
         id: idManipulador,
       },
       data: {
+        id_estabelecimento: manipuladorAlimento.id_estabelecimento,
         data_alteracao: manipuladorAlimento.data_alteracao,
         data_cadastro: manipuladorAlimento.data_cadastro,
         informacoes: manipuladorAlimento.informacoes,
@@ -17,6 +28,7 @@ export class EditarManipuladorAlimentoService {
       },
       select: {
         id: true,
+        id_estabelecimento: true,
         data_cadastro: true,
         data_alteracao: true,
         informacoes: true,

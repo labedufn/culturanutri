@@ -13,7 +13,13 @@ export class CriarManipuladorAlimentoController {
       const data_alteracao = new Date();
       const ativo = 1;
 
-      const novoManipuladorAlimento = new ManipuladorAlimento(informacoes, data_cadastro, data_alteracao, ativo);
+      const novoManipuladorAlimento = new ManipuladorAlimento(
+        id_estabelecimento,
+        informacoes,
+        data_cadastro,
+        data_alteracao,
+        ativo,
+      );
       const criarManipuladorAlimentoService = new CriarManipuladorAlimentoService();
       const manipuladorAlimento = await criarManipuladorAlimentoService.execute(novoManipuladorAlimento);
 

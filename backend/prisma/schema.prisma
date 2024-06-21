@@ -14,11 +14,13 @@ enum TipoUsuario {
 }
 
 model GestorAvaliacao {
-  id             String   @id @default(uuid())
-  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
-  informacoes    String   @db.VarChar(255)
-  ativo          Int      @default(1)
+  id                 String          @id @default(uuid())
+  id_estabelecimento String
+  informacoes        String          @db.VarChar(255)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  ativo              Int             @default(1)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   AnaliseQuantitativa AnaliseQuantitativa[]
 
@@ -26,11 +28,13 @@ model GestorAvaliacao {
 }
 
 model ManipuladorAlimento {
-  id             String   @id @default(uuid())
-  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
-  informacoes    String   @db.VarChar(255)
-  ativo          Int      @default(1)
+  id                 String          @id @default(uuid())
+  id_estabelecimento String
+  informacoes        String          @db.VarChar(255)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  ativo              Int             @default(1)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   AnaliQuantitativa AnaliseQuantitativa[]
 
@@ -140,7 +144,9 @@ model Estabelecimento {
   ativo                            Int      @default(1)
   usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
 
-  Resultado Resultado[]
+  Resultado           Resultado[]
+  GestorAvaliacao     GestorAvaliacao[]
+  ManipuladorAlimento ManipuladorAlimento[]
 
   @@map("estabelecimentos")
 }

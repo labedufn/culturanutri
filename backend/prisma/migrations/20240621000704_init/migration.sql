@@ -4,9 +4,10 @@ CREATE TYPE "TipoUsuario" AS ENUM ('ADMINISTRADOR', 'GESTOR', 'AVALIADOR');
 -- CreateTable
 CREATE TABLE "gestores_avaliacoes" (
     "id" TEXT NOT NULL,
-    "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "informacoes" VARCHAR(255) NOT NULL,
+    "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
+    "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "gestores_avaliacoes_pkey" PRIMARY KEY ("id")
@@ -15,9 +16,11 @@ CREATE TABLE "gestores_avaliacoes" (
 -- CreateTable
 CREATE TABLE "manipuladores_alimentos" (
     "id" TEXT NOT NULL,
-    "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "informacoes" VARCHAR(255) NOT NULL,
+    "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
+    "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "manipuladores_alimentos_pkey" PRIMARY KEY ("id")
 );
@@ -167,6 +170,12 @@ CREATE UNIQUE INDEX "reset_senhas_tokens_token_key" ON "reset_senhas_tokens"("to
 
 -- CreateIndex
 CREATE UNIQUE INDEX "cadastros_tokens_token_key" ON "cadastros_tokens"("token");
+
+-- AddForeignKey
+ALTER TABLE "gestores_avaliacoes" ADD CONSTRAINT "gestores_avaliacoes_id_estabelecimento_fkey" FOREIGN KEY ("id_estabelecimento") REFERENCES "estabelecimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "manipuladores_alimentos" ADD CONSTRAINT "manipuladores_alimentos_id_estabelecimento_fkey" FOREIGN KEY ("id_estabelecimento") REFERENCES "estabelecimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "triangulacoes" ADD CONSTRAINT "triangulacoes_id_lista_verificacao_fkey" FOREIGN KEY ("id_lista_verificacao") REFERENCES "listas_verificacoes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

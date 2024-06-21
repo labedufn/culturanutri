@@ -17,6 +17,7 @@ export class ListarManipuladoresAlimentoService {
       const manipuladores = await prisma.manipuladorAlimento.findMany({
         select: {
           id: true,
+          id_estabelecimento: true,
           data_cadastro: true,
           data_alteracao: true,
           informacoes: true,

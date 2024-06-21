@@ -4,20 +4,44 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
-export class EditarGestosAvaliacaoService {
+export class EditarGestorAvaliacaoService {
   async execute(idGestor: string, gestorAvaliacao: GestorAvaliacao) {
+    console.log("idGestor:", idGestor);
+    console.log("gestorAvaliacao:", gestorAvaliacao);
+
+    const estabelecimento = await prisma.estabelecimento.findUnique({
+      where: {
+        id: gestorAvaliacao.id_estabelecimento,
+      },
+    });
+
+    if (!estabelecimento) {
+      throw new Error("Estabelecimento não encontrado");
+    }
+
+    const gestorExistente = await prisma.gestorAvaliacao.findUnique({
+      where: {
+        id: idGestor,
+      },
+    });
+
+    if (!gestorExistente) {
+      throw new Error("Gestor Avaliador não encontrado");
+    }
+
     const gestorAlterado = await prisma.gestorAvaliacao.update({
       where: {
         id: idGestor,
       },
       data: {
-        data_alteracao: gestorAvaliacao.data_alteracao,
-        data_cadastro: gestorAvaliacao.data_cadastro,
+        id_estabelecimento: gestorAvaliacao.id_estabelecimento,
         informacoes: gestorAvaliacao.informacoes,
         ativo: gestorAvaliacao.ativo,
+        data_alteracao: new Date().toISOString(),
       },
       select: {
         id: true,
+        id_estabelecimento: true,
         data_cadastro: true,
         data_alteracao: true,
         informacoes: true,

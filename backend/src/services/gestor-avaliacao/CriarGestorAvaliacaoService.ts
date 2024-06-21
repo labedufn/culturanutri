@@ -1,19 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 import { GestorAvaliacao } from "@models/GestorAvaliacao";
+import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
 export class CriarGestorAvaliacaoService {
-  async execute(gestorAvaliacao: GestorAvaliacao) {
+  async execute(gestorAvaliacao: GestorAvaliacao, idEstabelecimento: string) {
+    const estabelecimento = await prisma.estabelecimento.findUnique({
+      where: {
+        id: idEstabelecimento,
+      },
+    });
+
     const gestorCriado = await prisma.gestorAvaliacao.create({
       data: {
-        data_alteracao: gestorAvaliacao.data_alteracao,
-        data_cadastro: gestorAvaliacao.data_cadastro,
+        id_estabelecimento: estabelecimento.id,
         informacoes: gestorAvaliacao.informacoes,
         ativo: gestorAvaliacao.ativo,
       },
       select: {
         id: true,
+        id_estabelecimento: true,
         data_cadastro: true,
         data_alteracao: true,
         informacoes: true,
@@ -21,6 +28,11 @@ export class CriarGestorAvaliacaoService {
       },
     });
 
-    return gestorCriado;
+    const informacoesDecodificadas = await desconverterBase64JSON(gestorCriado.informacoes);
+
+    return {
+      ...gestorCriado,
+      informacoesDecodificadas: informacoesDecodificadas,
+    };
   }
 }

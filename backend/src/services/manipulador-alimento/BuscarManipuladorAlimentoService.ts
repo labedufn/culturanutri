@@ -21,6 +21,7 @@ export class BuscarManipuladorAlimentoService {
         },
         select: {
           id: true,
+          id_estabelecimento: true,
           data_cadastro: true,
           data_alteracao: true,
           informacoes: true,
