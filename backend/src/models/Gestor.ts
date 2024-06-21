@@ -1,4 +1,4 @@
-export class GestorAvaliacao {
+export class Gestor {
   informacoes: string;
   data_cadastro: Date;
   data_alteracao: Date;

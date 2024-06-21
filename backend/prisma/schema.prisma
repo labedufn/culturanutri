@@ -13,7 +13,7 @@ enum TipoUsuario {
   AVALIADOR
 }
 
-model GestorAvaliacao {
+model Gestores {
   id             String   @id @default(uuid())
   data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao DateTime @updatedAt @db.Timestamptz(3)
@@ -22,7 +22,7 @@ model GestorAvaliacao {
 
   AnaliseQuantitativa AnaliseQuantitativa[]
 
-  @@map("gestores_avaliacoes")
+  @@map("gestores")
 }
 
 model ManipuladorAlimento {
@@ -117,7 +117,7 @@ model AnaliseQuantitativa {
   id_manipulador_alimentos               String
   id_gestor_avaliacao                    String
   id_triangulacoes                       String
-  gestorAvaliacao                        GestorAvaliacao     @relation(fields: [id_gestor_avaliacao], references: [id])
+  gestores                               Gestores            @relation(fields: [id_gestor_avaliacao], references: [id])
   manipuladorAlimento                    ManipuladorAlimento @relation(fields: [id_manipulador_alimentos], references: [id])
 
   Triangulacao Triangulacao[]

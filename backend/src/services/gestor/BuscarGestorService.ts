@@ -3,8 +3,8 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
-export class ListarGestoresAvaliacaoService {
-  async execute(idUsuario: string) {
+export class BuscarGestorService {
+  async execute(idUsuario: string, idGestor: string) {
     const usuario = await prisma.usuario.findUnique({
       where: {
         id: idUsuario,
@@ -14,7 +14,10 @@ export class ListarGestoresAvaliacaoService {
     if (!usuario) {
       throw new Error("Usuário não encontrado");
     } else {
-      const gestores = await prisma.gestorAvaliacao.findMany({
+      const gestor = await prisma.gestores.findUnique({
+        where: {
+          id: idGestor,
+        },
         select: {
           id: true,
           data_cadastro: true,
@@ -25,14 +28,12 @@ export class ListarGestoresAvaliacaoService {
       });
 
       // Decode `informacoes` for each gestor
-      const decodedGestores = await Promise.all(
-        gestores.map(async (gestor) => ({
-          ...gestor,
-          informacoes: await desconverterBase64JSON(gestor.informacoes),
-        })),
-      );
+      const informacoesDecodificadas = await desconverterBase64JSON(gestor.informacoes);
 
-      return decodedGestores;
+      return {
+        ...gestor,
+        informacoesDecodificadas: informacoesDecodificadas,
+      };
     }
   }
 }
