@@ -5,21 +5,13 @@ import { Request, Response } from "express";
 
 export class CriarManipuladorAlimentoController {
   async handle(req: Request, res: Response) {
-    const { json_informacoes } = req.body;
+    const { id_estabelecimento, json_informacoes } = req.body;
 
     try {
       const { informacoes } = await converterBase64JSON(json_informacoes);
-      const data_cadastro = new Date();
-      const data_alteracao = new Date();
       const ativo = 1;
 
-      const novoManipuladorAlimento = new ManipuladorAlimento(
-        id_estabelecimento,
-        informacoes,
-        data_cadastro,
-        data_alteracao,
-        ativo,
-      );
+      const novoManipuladorAlimento = new ManipuladorAlimento(informacoes, ativo, id_estabelecimento);
       const criarManipuladorAlimentoService = new CriarManipuladorAlimentoService();
       const manipuladorAlimento = await criarManipuladorAlimentoService.execute(novoManipuladorAlimento);
 
