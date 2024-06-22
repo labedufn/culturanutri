@@ -1,27 +1,19 @@
 import { prisma } from "@config/prismaClient";
-import { TipoUsuario, Usuario } from "@models/Usuario";
+import { TipoUsuario } from "@prisma/client";
 import { validarEmail } from "@utils/validarEmail";
 import { sign } from "jsonwebtoken";
 import moment from "moment-timezone";
 import { createTransport } from "nodemailer";
 
-function converterTipoUsuario(tipo: string): TipoUsuario {
-  if (!Object.values(TipoUsuario).includes(tipo as TipoUsuario)) {
-    throw new Error("Tipo de usuário inválido");
-  }
-  return tipo as TipoUsuario;
-}
-
 export class SolicitarCadastroService {
-  async execute(criado_por: string, email: string, tipo_usuario: string) {
-    const usuarioCriadorId = criado_por;
+  async execute(usuarioCriadorId: string, email: string, tipo: TipoUsuario) {
+    console.log(usuarioCriadorId, email, tipo);
     if (!validarEmail(email)) {
       throw new Error("Email inválido.");
     }
 
     const verificarEmail = await prisma.usuario.findUnique({
       where: {
-        id: undefined,
         email: email,
       },
     });
@@ -32,23 +24,14 @@ export class SolicitarCadastroService {
 
     const token = sign({ usuarioId: usuarioCriadorId }, process.env.SECRET_KEY, { expiresIn: "15m" });
 
-    type PartialUsuario = Partial<Usuario>;
-
-    const tipoUsuario = converterTipoUsuario(tipo_usuario);
-
-    const usuario: PartialUsuario = {
-      email: email,
-      tipo: tipoUsuario,
-    };
-
     const expiraEm = moment.tz(Date.now() + 15 * 60000, "America/Sao_Paulo");
     const expiraEmDate = expiraEm.toDate();
 
     await prisma.cadastroToken.create({
       data: {
         token: token,
-        email: usuario.email,
-        tipo_usuario: usuario.tipo,
+        email: email,
+        tipo_usuario: tipo,
         criado_por: usuarioCriadorId,
         expira_em: expiraEmDate,
       },

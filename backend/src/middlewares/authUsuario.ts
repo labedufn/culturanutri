@@ -39,6 +39,7 @@ export function authAdministrador(req: Request, res: Response, next: NextFunctio
     const { sub, tipo_usuario: tipoUsuarioAutenticado } = verify(token, process.env.SECRET_KEY) as Payload;
 
     req.id_usuario = sub;
+    req.criado_por = sub;
 
     if (tipoUsuarioAutenticado === "ADMINISTRADOR") {
       return next();

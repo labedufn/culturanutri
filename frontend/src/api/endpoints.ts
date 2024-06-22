@@ -24,3 +24,9 @@ export function REDEFINIR_SENHA() {
     url: `${API_URL}/api/redefinir-senha`,
   };
 }
+
+export function ADICIONAR_USUARIO() {
+  return {
+    url: `${API_URL}/api/usuario`,
+  };
+}

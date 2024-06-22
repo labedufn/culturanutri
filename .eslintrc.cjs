@@ -45,7 +45,8 @@ module.exports = {
         es6: true,
       },
       rules: {
-        "react/react-in-jsx-scope": "off", // Adicione esta linha
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/no-explicit-any": "off",
       },
     },
   ],

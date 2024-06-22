@@ -5,12 +5,14 @@ export class SolicitarCadastroController {
   async handle(req: Request, res: Response) {
     const { email, tipo } = req.body;
 
-    const idUsuario = req.id_usuario;
+    const usuarioId = req.criado_por;
 
     try {
       const solicitarCadastroService = new SolicitarCadastroService();
 
-      await solicitarCadastroService.execute(idUsuario, email, tipo);
+      console.log("Solicitar cadastro", usuarioId, email, tipo);
+
+      await solicitarCadastroService.execute(usuarioId, email, tipo);
       res.status(200).json({ message: "E-mail para realizar o cadastro enviado com sucesso!" });
     } catch (error) {
       if (error.message === "Usuário já existe.") {
