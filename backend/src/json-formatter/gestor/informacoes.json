@@ -1,48 +1,59 @@
-informacoes = {
+informacoes: {
     dados_pessoais:{
-        nome_completo: ,
-        genero:,
-        idade:,
-        escolaridade: ,
-        formacao:,
-        participou_treinamento_manipulacao_alimentos:,
-        tempo_trabalha_com_alimentos: ,	
-        acredita_comunicacao_boa:,
-        realiza_treinamentos_boas_prticas_manipulação:,
-        carga_horaria:	,
-        frequencia_aplicação:,
-        temas_treinamentos:
+        nome_completo: "Bernardo Viero",
+        genero: 1,
+        idade: 28,
+        escolaridade: 6,
+        formacao: "Nutrição",
+        nao_tenha_formacao_tem_treinamento: 1
+        tempo_trabalha_com_alimentos: 72,	
+        acredita_comunicacao_boa: 1,
+        realiza_treinamentos_boas_prticas_manipulação: 1,
+        carga_horaria: "20 horas (5 encontros de 2 horas)",
+        frequencia_aplicação: 5,
+        temas_treinamentos: "Comportamento, saúde do colaborador, DTHA, CONTAMNAÇÃO CRUZADa, motivo de ter que ter bombeiros, vigilância."
+    },
+    conhecimento:{
+        utilização_adornos_favorecer_contaminacao: 1,
+        agua_veiculo_transmissao_doencas: 0,
+        forma_higienizar_mãos_evita_contaminacao: 0,
+        contato_alimentos_contamina: 1,
+        leite_vencimento_risco: 1,
+        alimento_improprio_apresenta_cheiro_sabor: ,
+        carne_mal_passada: 1,
+        descongelamento_alimentos_bacia: 0,
+        manipulador_alimento_doente_contamina: 1
     },
     comprometimento_afetivo:{
-        problemas_restaurante_meus: ,
-        restaurante_tem_significado: ,
-        restaurante_merece_minha_lealdade:,
-        trabalhar_por_necessidade_e_desejo: ,
-        dedicar_minha_carreira_ao_restaurante:
+        problemas_restaurante_meus: 5,
+        restaurante_tem_significado: 5,
+        restaurante_merece_minha_lealdade: 4,
+        trabalhar_por_necessidade_e_desejo: 4,
+        dedicar_minha_carreira_ao_restaurante: 2
     },
     comprometimento_normativo:{
-        nao_deixa_emprego_pois_obrigação_moral:,
-        culpado_deixasse_emprego:,
-        nao_seria_certo_deixar_emprego:,
-        devo_esse_emprego:
+        nao_deixa_emprego_pois_obrigação_moral: 5,
+        culpado_deixasse_emprego: 5,
+        nao_seria_certo_deixar_emprego: 2,
+        devo_esse_emprego: 5
     },
     comprometimento_instrumental:{
-        deixar_emprego_vida_desestruturada: ,
-        poucas_alternativas_caso_deixar_emprego:,
-        muito_dificil_deixar_emprego:
+        deixar_emprego_vida_desestruturada: 5,
+        poucas_alternativas_caso_deixar_emprego: 2,
+        muito_dificil_deixar_emprego: 5
     },
     percepcao_risco:{
-        risco_apresentar_dor_barriga_estabelecimento_similar:,
-        risco_apresentar_dor_barriga_estabelecimento_gerenciado: ,
-        risco_doença_transmitida_alimentos:
+        risco_apresentar_dor_barriga_estabelecimento_similar: 2,
+        risco_apresentar_dor_barriga_estabelecimento_gerenciado: 2,
+        risco_doença_transmitida_alimentos: 6
     },
     sistemas_gestao:{
-        lideranca_modificada_consumidor_alta_percepcao_risco:,
-        comunicacao_modificada_consumidor_alta_percepcao_risco:,
-        gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco:,
-        ambiente_trabalho_modificada_consumidor_alta_percepcao_risco:,
-        manipulador_alimentos_modificada_consumidor_alta_percepcao_risco:,
-        comprometimento_modificada_consumidor_alta_percepcao_risco:,
-        boas_praticas_consumidor_alta_percepcao_risco:
+        lideranca_modificada_consumidor_alta_percepcao_risco: 1,
+        comunicacao_modificada_consumidor_alta_percepcao_risco: 1,
+        gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco: 1,
+        ambiente_trabalho_modificada_consumidor_alta_percepcao_risco: 1,
+        manipulador_alimentos_modificada_consumidor_alta_percepcao_risco: 1,
+        comprometimento_modificada_consumidor_alta_percepcao_risco: 1,
+        boas_praticas_consumidor_alta_percepcao_risco: 1
     }						
 }

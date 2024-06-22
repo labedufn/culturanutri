@@ -14,11 +14,12 @@ enum TipoUsuario {
 }
 
 model Gestores {
-  id             String   @id @default(uuid())
-  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
-  informacoes    String   @db.VarChar(255)
-  ativo          Int      @default(1)
+  id                 String   @id @default(uuid())
+  id_estabelecimento Int
+  data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
+  informacoes        String   @db.Text
+  ativo              Int      @default(1)
 
   AnaliseQuantitativa AnaliseQuantitativa[]
 
@@ -26,11 +27,12 @@ model Gestores {
 }
 
 model ManipuladorAlimento {
-  id             String   @id @default(uuid())
-  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
-  informacoes    String   @db.VarChar(255)
-  ativo          Int      @default(1)
+  id                 String   @id @default(uuid())
+  id_estabelecimento Int
+  data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
+  informacoes        String   @db.Text
+  ativo              Int      @default(1)
 
   AnaliQuantitativa AnaliseQuantitativa[]
 
@@ -39,7 +41,7 @@ model ManipuladorAlimento {
 
 model ListaVerificacao {
   id               String   @id @default(uuid())
-  informacoes      String   @db.VarChar(255)
+  informacoes      String   @db.Text
   data_cadastro    DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao   DateTime @updatedAt @db.Timestamptz(3)
   categoria        Int
@@ -68,7 +70,7 @@ model AnaliseQualitativa {
   id                     String   @id @default(uuid())
   analise_qualitativa_id Int
   categoria              Int
-  informacoes            String   @db.VarChar(255)
+  informacoes            String   @db.Text
   data_cadastro          DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao         DateTime @updatedAt @db.Timestamptz(3)
   id_triangulacoes       String
@@ -85,7 +87,7 @@ model Triangulacao {
   id_lista_verificacao    String
   id_analise_qualitativa  String
   id_analise_quantitativa String
-  informacoes             String              @db.VarChar(255)
+  informacoes             String              @db.Text
   data_cadastro           DateTime            @default(now()) @db.Timestamptz(3)
   data_alteracao          DateTime            @updatedAt @db.Timestamptz(3)
   listaVerificacao        ListaVerificacao    @relation(fields: [id_lista_verificacao], references: [id])

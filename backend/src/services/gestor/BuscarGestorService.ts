@@ -14,7 +14,7 @@ export class BuscarGestorService {
     if (!usuario) {
       throw new Error("Usuário não encontrado");
     } else {
-      const gestor = await prisma.gestores.findUnique({
+      const gestor = await prisma.gestores.findFirstOrThrow({
         where: {
           id: idGestor,
         },
