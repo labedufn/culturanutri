@@ -26,7 +26,7 @@ export function authUsuario(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export function authCriarUsuario(req: Request, res: Response, next: NextFunction) {
+export function authAdministrador(req: Request, res: Response, next: NextFunction) {
   const authToken = req.headers.authorization;
 
   if (!authToken) {

@@ -11,7 +11,20 @@ export class ListarUsuariosService {
     if (!usuario) {
       throw new Error("Usuário inválido");
     } else {
-      const usuarios = await prisma.usuario.findMany();
+      const usuarios = await prisma.usuario.findMany({
+        select: {
+          id: true,
+          nome: true,
+          sobrenome: true,
+          email: true,
+          instituicao: true,
+          tipo_usuario: true,
+          ativo: true,
+          data_cadastro: true,
+          data_alteracao: true,
+          ultimo_login: true,
+        },
+      });
 
       return {
         usuarios,
