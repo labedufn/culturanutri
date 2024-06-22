@@ -1,0 +1,87 @@
+informacoes = {
+    dados_pessoais:{
+        nome_completo: ,
+        genero:,
+        idade:,
+        escolaridade: ,
+        formacao:,
+        participou_treinamento_manipulacao_alimentos:,
+        tempo_trabalha_com_alimentos: ,	
+        boa_comunicacao_chefe:,
+        boa_comunicacao_entre_funcionarios:
+    },
+    liderenca:{
+        normas_higiene:,
+        lider_atento:,
+        funcionários_repreendidos:
+    },
+    comunicacao:{,
+        tenho_liberdade_com_lider:,
+        informacoes_necessarias_disponiveis:,
+        informações_adequadas_normas_higiene: ,
+        fornecer_sugestoes_melhoria:
+    },
+    conhecimento:{
+        utilização_adornos_favorecer_contaminacao: ,
+        agua_veiculo_transmissao_doencas:,
+        forma_higienizar_mãos_evita_contaminacao:,
+        contato_alimentos_contamina: ,
+        leite_vencimento_risco: ,
+        alimento_improprio_apresenta_cheiro_sabor: ,
+        carne_mal_passada: ,
+        lavar_vegetais_suficiente: ,
+        descongelamento_alimentos_bacia:,
+        manipulador_alimento_doente_contamina:
+    },
+    comprometimento_afetivo:{
+        problemas_restaurante_meus: ,
+        restaurante_tem_significado: ,
+        restaurante_merece_minha_lealdade:,
+        trabalhar_por_necessidade_e_desejo: ,
+        dedicar_minha_carreira_ao_restaurante:
+    },
+    comprometimento_normativo:{
+        nao_deixa_emprego_pois_obrigação_moral:,
+        culpado_deixasse_emprego:,
+        nao_seria_certo_deixar_emprego:,
+        devo_esse_emprego:
+    },
+    comprometimento_instrumental:{
+        deixar_emprego_vida_desestruturada: ,
+        poucas_alternativas_caso_deixar_emprego:,
+        muito_dificil_deixar_emprego:
+    },
+    comprometimento_segurança_alimentos:{
+        sigo_normas_higiene_responsabilidade: ,
+        segurança_alta_prioridade:,
+        sigo_normas_higiene_importante: ,
+        empenhado_seguir_normas_higiene:
+    },
+    percepcao_risco:{
+        risco_apresentar_dor_barriga_estabelecimento_similar:,
+        risco_apresentar_dor_barriga_estabelecimento_manipulado: ,
+        risco_apresentar_dor_barriga_estabelecimento_colega_manipulado: ,
+        risco_doença_transmitida_alimentos:
+    },
+    pressoes_trabalho_crenças_normativas:{
+        chefe_seguir_boas_praticas:,
+        colegas_trabalho_normas_higiene:,
+        autoridades_vigilancia_sanitaria_normas_higiene:,
+        clientes_normas_higiene:,
+        tempo_suficiente_normas_higiene:,
+        numero_funcionarios_adequado_manipular_forma_segura:
+    },
+    ambiente_trabalho:{
+        equipamentos_necessarios_forma_segura:,
+        estrutura_adequada_normas_higiene:,
+        produtos_higienizacao_adequados_manipulacao_alimentos:,
+    },
+    sistemas_gestão:{
+        cooperacao_entre_areas_forma_segura:,
+        novos_funcionarios_antigos_funcionarios_boa_pratica_manipulacao_alimentos: ,
+        muito_trabalho_rapidamente_funcionarios_trabalham_juntos: ,
+        funcionarios_lembram_seguir_boas_praticas_manipulacao_alimentos: ,
+        acredito_legislacao_escrita_respaldo: ,
+        economizar_produtos_higienizacao_diminuir_custo:
+    }						
+}

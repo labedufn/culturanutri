@@ -1,0 +1,48 @@
+informacoes = {
+    dados_pessoais:{
+        nome_completo: ,
+        genero:,
+        idade:,
+        escolaridade: ,
+        formacao:,
+        participou_treinamento_manipulacao_alimentos:,
+        tempo_trabalha_com_alimentos: ,	
+        acredita_comunicacao_boa:,
+        realiza_treinamentos_boas_prticas_manipulação:,
+        carga_horaria:	,
+        frequencia_aplicação:,
+        temas_treinamentos:
+    },
+    comprometimento_afetivo:{
+        problemas_restaurante_meus: ,
+        restaurante_tem_significado: ,
+        restaurante_merece_minha_lealdade:,
+        trabalhar_por_necessidade_e_desejo: ,
+        dedicar_minha_carreira_ao_restaurante:
+    },
+    comprometimento_normativo:{
+        nao_deixa_emprego_pois_obrigação_moral:,
+        culpado_deixasse_emprego:,
+        nao_seria_certo_deixar_emprego:,
+        devo_esse_emprego:
+    },
+    comprometimento_instrumental:{
+        deixar_emprego_vida_desestruturada: ,
+        poucas_alternativas_caso_deixar_emprego:,
+        muito_dificil_deixar_emprego:
+    },
+    percepcao_risco:{
+        risco_apresentar_dor_barriga_estabelecimento_similar:,
+        risco_apresentar_dor_barriga_estabelecimento_gerenciado: ,
+        risco_doença_transmitida_alimentos:
+    },
+    sistemas_gestao:{
+        lideranca_modificada_consumidor_alta_percepcao_risco:,
+        comunicacao_modificada_consumidor_alta_percepcao_risco:,
+        gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco:,
+        ambiente_trabalho_modificada_consumidor_alta_percepcao_risco:,
+        manipulador_alimentos_modificada_consumidor_alta_percepcao_risco:,
+        comprometimento_modificada_consumidor_alta_percepcao_risco:,
+        boas_praticas_consumidor_alta_percepcao_risco:
+    }						
+}
