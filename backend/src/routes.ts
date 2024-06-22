@@ -2,7 +2,6 @@ import { CriarEstabelecimentoController } from "@controllers/estabelecimento/Cri
 import { EditarEstabelecimentoController } from "@controllers/estabelecimento/EditarEstabelecimentoController";
 import { ListarEstabelecimentosController } from "@controllers/estabelecimento/ListarEstabelecimentosController";
 import { ListarUsuariosController } from "@controllers/usuario/ListarUsuariosController";
-import { AtualizarUsuarioController } from "@controllers/usuario/AtualizarUsuarioController";
 import { AutenticarUsuarioController } from "@controllers/usuario/AutenticarUsuarioController";
 import { CriarUsuarioController } from "@controllers/usuario/CriarUsuarioController";
 import { RecuperarSenhaController } from "@controllers/usuario/RecuperarSenhaController";
@@ -28,12 +27,11 @@ export const router = Router();
 // Rotas usuários
 router.post("/api/cadastro", new CriarUsuarioController().handle);
 router.post("/api/usuario", authCriarUsuario, new SolicitarCadastroController().handle);
-router.put("/api/usuario", authUsuario, new AtualizarUsuarioController().handle);
 router.post("/api/login", new AutenticarUsuarioController().handle);
 router.post("/api/recuperar-senha", new RecuperarSenhaController().handle);
 router.post("/api/redefinir-senha", new RedefinirSenhaController().handle);
 router.get("/api/validar-cadastro-token", validarCadastroToken);
-router.put("/api/editar-usuario", new EditarUsuarioController().handle);
+router.put("/api/editar-usuario", authUsuario, new EditarUsuarioController().handle);
 router.get("/api/listar-usuario", new ListarUsuariosController().handle);
 router.get("/api/buscar-usuario", new BuscarUsuarioController().handle);
 
