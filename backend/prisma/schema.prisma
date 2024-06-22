@@ -9,7 +9,6 @@ datasource db {
 
 enum TipoUsuario {
   ADMINISTRADOR
-  GESTOR
   AVALIADOR
 }
 
@@ -150,7 +149,7 @@ model Usuario {
   nome           String      @db.VarChar(255)
   sobrenome      String      @db.VarChar(255)
   cpf            String      @db.VarChar(255)
-  email          String      @db.VarChar(255)
+  email          String      @unique @db.VarChar(255)
   instituicao    String      @db.VarChar(255)
   tipo_usuario   TipoUsuario
   senha          String      @db.VarChar(255)
@@ -179,14 +178,15 @@ model ResetSenhaToken {
 }
 
 model CadastroToken {
-  id         String   @id @default(uuid())
-  token      String   @unique
-  email      String
-  criado_por String
-  usado      Int      @default(0)
-  expira_em  DateTime @db.Timestamptz(3)
-  criado_em  DateTime @default(now()) @db.Timestamptz(3)
-  usuario    Usuario  @relation(fields: [criado_por], references: [id])
+  id           String      @id @default(uuid())
+  token        String      @unique
+  email        String
+  tipo_usuario TipoUsuario
+  criado_por   String
+  usado        Int         @default(0)
+  expira_em    DateTime    @db.Timestamptz(3)
+  criado_em    DateTime    @default(now()) @db.Timestamptz(3)
+  usuario      Usuario     @relation(fields: [criado_por], references: [id])
 
   @@map("cadastros_tokens")
 }

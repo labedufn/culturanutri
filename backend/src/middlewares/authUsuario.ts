@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 
 interface Payload {
   sub: string;
-  tipo: string;
+  tipo_usuario: string;
 }
 
 export function authUsuario(req: Request, res: Response, next: NextFunction) {
@@ -18,7 +18,7 @@ export function authUsuario(req: Request, res: Response, next: NextFunction) {
   try {
     const { sub } = verify(token, process.env.SECRET_KEY) as Payload;
 
-    req.usuario_id = sub;
+    req.id_usuario = sub;
 
     return next();
   } catch (err) {
@@ -36,13 +36,11 @@ export function authCriarUsuario(req: Request, res: Response, next: NextFunction
   const [, token] = authToken.split(" ");
 
   try {
-    const { sub, tipo: tipoUsuarioAutenticado } = verify(token, process.env.SECRET_KEY) as Payload;
+    const { sub, tipo_usuario: tipoUsuarioAutenticado } = verify(token, process.env.SECRET_KEY) as Payload;
 
-    req.usuario_id = sub;
+    req.id_usuario = sub;
 
     if (tipoUsuarioAutenticado === "ADMINISTRADOR") {
-      return next();
-    } else if (tipoUsuarioAutenticado === "GESTOR") {
       return next();
     } else {
       return res.status(403).json({ message: "Usuário não tem permissão para criar este tipo de usuário." });
