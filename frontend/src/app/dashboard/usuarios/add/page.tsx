@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { AdicionarUsuarioForm } from "@/components/dashboard/usuarios/adicionar-usuario-form";
 import { Card, CardContent } from "@/components/ui/card";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function UsuariosAddPage() {
   return (
@@ -40,6 +41,7 @@ export default function UsuariosAddPage() {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </>
   );
 }

@@ -10,8 +10,6 @@ export class SolicitarCadastroController {
     try {
       const solicitarCadastroService = new SolicitarCadastroService();
 
-      console.log("Solicitar cadastro", usuarioId, email, tipo);
-
       await solicitarCadastroService.execute(usuarioId, email, tipo);
       res.status(200).json({ message: "E-mail para realizar o cadastro enviado com sucesso!" });
     } catch (error) {
