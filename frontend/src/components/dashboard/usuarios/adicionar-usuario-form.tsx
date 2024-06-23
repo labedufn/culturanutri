@@ -35,14 +35,14 @@ export function AdicionarUsuarioForm() {
         });
       } else {
         toast({
-          className: cn("bg-red-700 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
           title: "Erro!",
-          description: resultado.message || "Erro ao enviar convite.",
+          description: resultado.message,
         });
       }
     } catch (error) {
       toast({
-        className: cn("bg-red-700 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
         title: "Erro de comunicação!",
         description: "Falha na comunicação com o servidor.",
       });

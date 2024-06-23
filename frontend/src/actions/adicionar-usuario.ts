@@ -4,6 +4,7 @@ import axios from "axios";
 import { ADICIONAR_USUARIO } from "@/api/endpoints";
 import { cookies } from "next/headers";
 import { verificarToken } from "@/scripts/verificarToken";
+import { apiErro } from "@/api/api-erros";
 
 interface AdicionarUsuarioData {
   email: string;
@@ -34,17 +35,16 @@ export async function adicionarUsuario(data: AdicionarUsuarioData): Promise<{ su
       },
     });
 
-    console.log("Resposta da API:", response.headers);
-
     return {
       success: true,
       message: response.data.message,
     };
   } catch (error: any) {
     console.error("Erro na resposta da API:", error.response?.data);
+    const errorMessage = apiErro(error) || "Ocorreu um erro desconhecido";
     return {
       success: false,
-      message: "Erro ao adicionar usuário.",
+      message: errorMessage,
     };
   }
 }
