@@ -9,5 +9,5 @@ export async function buscarTipoUsuarioPorEmail(email) {
     throw new Error("Utilize o e-mail que foi enviado o link de cadastro.");
   }
 
-  return cadastroToken.tipo;
+  return cadastroToken.tipo_usuario;
 }

@@ -111,7 +111,7 @@ export function LoginForm() {
         <Button
           type="submit"
           size="lg"
-          className="w-full bg-primary-700 text-white font-medium flex justify-center items-center"
+          className="w-full bg-primary-700 hover:bg-primary-800 text-white font-medium flex justify-center items-center"
         >
           {form.formState.isSubmitting ? (
             <div className="flex items-center">

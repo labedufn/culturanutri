@@ -8,25 +8,9 @@ export class CriarUsuarioController {
     const { nome, sobrenome, cpf, email, senha, instituicao } = req.body;
 
     try {
-      const tipo = await buscarTipoUsuarioPorEmail(email);
-      const data_cadastro = new Date();
-      const data_alteracao = new Date();
-      const ativo = 1;
-      const ultimo_login = new Date();
+      const tipoUsuario = await buscarTipoUsuarioPorEmail(email);
+      const novoUsuario = new Usuario(nome, sobrenome, cpf, email, senha, tipoUsuario, instituicao);
 
-      const novoUsuario = new Usuario(
-        nome,
-        sobrenome,
-        cpf,
-        email,
-        senha,
-        tipo,
-        instituicao,
-        data_cadastro,
-        data_alteracao,
-        ativo,
-        ultimo_login,
-      );
       const criarUsuarioService = new CriarUsuarioService();
       const usuario = await criarUsuarioService.execute(novoUsuario);
 

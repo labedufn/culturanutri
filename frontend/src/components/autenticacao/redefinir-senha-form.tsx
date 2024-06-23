@@ -1,6 +1,5 @@
 "use client";
 
-import { redefinirSenha } from "@/actions/redefinir-senha";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircleOutlineRounded } from "@mui/icons-material";
 import { Loader2 } from "lucide-react";
@@ -12,6 +11,7 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { FeedbackMessage } from "../utils/feedback-message";
+import { redefinirSenha } from "@/actions/redefinir-senha";
 
 const redefinirSenhaSchema = z
   .object({

@@ -69,7 +69,7 @@ export function RecuperarSenhaForm() {
           <Button
             type="submit"
             size="lg"
-            className="w-full bg-primary-700 text-white font-medium flex justify-center items-center"
+            className="w-full hover:bg-primary-800 text-white font-medium flex justify-center items-center"
           >
             {form.formState.isSubmitting ? (
               <div className="flex items-center">
