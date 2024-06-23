@@ -9,7 +9,7 @@ export class RecuperarSenhaService {
   async execute(email) {
     const usuario = await prisma.usuario.findUnique({
       where: {
-        id: email,
+        email: email,
       },
     });
 

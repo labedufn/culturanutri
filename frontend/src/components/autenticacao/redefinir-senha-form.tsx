@@ -26,8 +26,6 @@ const redefinirSenhaSchema = z
 type FormData = z.infer<typeof redefinirSenhaSchema>;
 
 export function RedefinirSenhaForm() {
-  const [isVisibleSenha, setIsVisibleSenha] = useState(false);
-  const [isVisibleConfirmarSenha, setIsVisibleConfirmarSenha] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const {} = useForm<FormData>({
@@ -37,10 +35,6 @@ export function RedefinirSenhaForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(redefinirSenhaSchema),
   });
-
-  const toggleVisibilityConfirmarSenha = () => {
-    setIsVisibleConfirmarSenha(!isVisibleConfirmarSenha);
-  };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     console.log(data);
