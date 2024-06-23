@@ -22,8 +22,8 @@ export async function redefinirSenha(data: { novaSenha: string }, url: string) {
   }
 
   try {
-    const endpointUrl = REDEFINIR_SENHA().url + `?token=${token}`;
-    const response = await axios.post(endpointUrl, data, {
+    const url = REDEFINIR_SENHA().url + `?token=${token}`;
+    const response = await axios.post(url, data, {
       headers: {
         "Content-Type": "application/json",
       },

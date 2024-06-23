@@ -6,7 +6,7 @@ export class EditarUsuarioController {
   async handle(req: Request, res: Response) {
     const { tipo, nome, sobrenome, cpf, email, senha, instituicao, ativo } = req.body;
 
-    const idUsuario = req.id_usuario;
+    const idUsuario = req.usuario_id;
 
     try {
       const data_cadastro = new Date();
