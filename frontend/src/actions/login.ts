@@ -6,7 +6,6 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 export async function login(data: { emailOuCpf: string; senha: string; rememberMe: boolean }) {
-  console.log(data);
   try {
     const { url } = LOGIN();
     const response = await axios.post(
@@ -37,8 +36,6 @@ export async function login(data: { emailOuCpf: string; senha: string; rememberM
 
     cookies().set(cookieOptions);
   } catch (error: any) {
-    console.error(error.response?.data);
-
     return {
       success: false,
       message: apiErro(error),
@@ -56,7 +53,6 @@ export async function logout() {
     });
     return { success: true };
   } catch (error: any) {
-    console.error(error);
     return {
       success: false,
       message: "Erro ao tentar sair",
