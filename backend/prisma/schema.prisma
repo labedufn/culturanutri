@@ -15,7 +15,7 @@ enum TipoUsuario {
 
 model Gestores {
   id                 String   @id @default(uuid())
-  id_estabelecimento Int
+  id_estabelecimento String
   data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
   informacoes        String   @db.Text
@@ -28,7 +28,7 @@ model Gestores {
 
 model ManipuladorAlimento {
   id                 String   @id @default(uuid())
-  id_estabelecimento Int
+  id_estabelecimento String
   data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
   informacoes        String   @db.Text

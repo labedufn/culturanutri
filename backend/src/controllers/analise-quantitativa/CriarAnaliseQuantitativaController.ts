@@ -1,5 +1,5 @@
-import { AnaliseQuantitativa } from "@models/AnaliseQuantitativa";
-import { CriarAnaliseQuantitativaService } from "@services/analise-quantitativa/CriarAnaliseQuantitativaService";
+// import { AnaliseQuantitativa } from "@models/AnaliseQuantitativa";
+// import { CriarAnaliseQuantitativaService } from "@services/analise-quantitativa/CriarAnaliseQuantitativaService";
 import { CalcularAnaliseQuantitativaService } from "@services/calculos/analise-quantitativa/CalcularAnaliseQuantitativaService";
 import { ListarGestoresService } from "@services/gestor/ListarGestoresService";
 import { ListarManipuladoresAlimentoService } from "@services/manipulador-alimento/ListarManipuladoresAlimentoService";
@@ -10,9 +10,7 @@ export class CriarAnaliseQuantitativaController {
     const { id_gestor, id_manipulador_alimentos, id_estabelecimento } = req.body;
 
     try {
-      const ativo = 1;
-
-      //criar funcao na utils para realizar o calculo e preenchimento de campos vazios
+      // const ativo = 1;
 
       const listarGestoresService = new ListarGestoresService();
       const listarManipuladoresAlimentoService = new ListarManipuladoresAlimentoService();
@@ -24,18 +22,19 @@ export class CriarAnaliseQuantitativaController {
       const { caracteristicas_socio_demograficas, resultados_avaliacao_quantitativas_csa, vies_otimista } =
         await calcularAnaliseQuantitativaService.execute(manipuladores, gestores);
 
-      const analiseQuantitativa = new AnaliseQuantitativa(
-        id_gestor,
-        id_manipulador_alimentos,
-        caracteristicas_socio_demograficas,
-        resultados_avaliacao_quantitativas_csa,
-        vies_otimista,
-        ativo,
-      );
-      const criarAnaliseQuantitativaService = new CriarAnaliseQuantitativaService();
-      const gestor = await criarAnaliseQuantitativaService.execute(analiseQuantitativa);
+      // const analiseQuantitativa = new AnaliseQuantitativa(
+      //   id_gestor,
+      //   id_manipulador_alimentos,
+      //   caracteristicas_socio_demograficas,
+      //   resultados_avaliacao_quantitativas_csa,
+      //   vies_otimista,
+      //   ativo,
+      // );
+      // const criarAnaliseQuantitativaService = new CriarAnaliseQuantitativaService();
+      // const gestor = await criarAnaliseQuantitativaService.execute(analiseQuantitativa);
 
-      return res.json(gestor);
+      // return res.json(gestor);
+      return 500;
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }

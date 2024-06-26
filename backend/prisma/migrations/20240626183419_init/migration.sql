@@ -4,9 +4,10 @@ CREATE TYPE "TipoUsuario" AS ENUM ('ADMINISTRADOR', 'GESTOR', 'AVALIADOR');
 -- CreateTable
 CREATE TABLE "gestores" (
     "id" TEXT NOT NULL,
+    "id_estabelecimento" INTEGER NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "gestores_pkey" PRIMARY KEY ("id")
@@ -15,9 +16,10 @@ CREATE TABLE "gestores" (
 -- CreateTable
 CREATE TABLE "manipuladores_alimentos" (
     "id" TEXT NOT NULL,
+    "id_estabelecimento" INTEGER NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "manipuladores_alimentos_pkey" PRIMARY KEY ("id")
@@ -26,7 +28,7 @@ CREATE TABLE "manipuladores_alimentos" (
 -- CreateTable
 CREATE TABLE "listas_verificacoes" (
     "id" TEXT NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "categoria" INTEGER NOT NULL,
@@ -55,7 +57,7 @@ CREATE TABLE "analises_qualitativas" (
     "id" TEXT NOT NULL,
     "analise_qualitativa_id" INTEGER NOT NULL,
     "categoria" INTEGER NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "id_triangulacoes" TEXT NOT NULL,
@@ -71,7 +73,7 @@ CREATE TABLE "triangulacoes" (
     "id_lista_verificacao" TEXT NOT NULL,
     "id_analise_qualitativa" TEXT NOT NULL,
     "id_analise_quantitativa" TEXT NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
 
@@ -97,6 +99,7 @@ CREATE TABLE "analises_quantitativas" (
     "vies_otimista" VARCHAR(255) NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
+    "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "analises_quantitativas_pkey" PRIMARY KEY ("id")
 );
