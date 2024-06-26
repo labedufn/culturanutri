@@ -28,7 +28,7 @@ export class CalcularAnaliseQuantitativaService {
       }
     });
 
-    return totalIdade / (quantidade || 1); // Para evitar divisão por zero
+    return totalIdade / (quantidade || 1);
   }
 
   private contarPorEscolaridade(entities: { informacoes: { dados_individuais: { escolaridade: number } } }[]) {
