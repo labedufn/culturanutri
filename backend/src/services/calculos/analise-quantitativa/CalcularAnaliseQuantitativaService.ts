@@ -1,5 +1,6 @@
 import { Gestor } from "@models/Gestor";
 import { ManipuladorAlimento } from "@prisma/client";
+import { mean, std, mode } from "mathjs";
 
 export class CalcularAnaliseQuantitativaService {
   private contarPorGenero(entities: { informacoes: { dados_individuais: { genero: number } } }[]) {
@@ -85,10 +86,86 @@ export class CalcularAnaliseQuantitativaService {
     return { participaTreinamento, naoParticipaTreinamento };
   }
 
+  private extrairValores(obj: object): number[] {
+    const valores: number[] = [];
+    const extrair = (obj: object) => {
+      for (const key in obj) {
+        if (typeof obj[key] === "number") {
+          valores.push(obj[key]);
+        } else if (typeof obj[key] === "object") {
+          extrair(obj[key]);
+        }
+      }
+    };
+    extrair(obj);
+    return valores;
+  }
+
+  private calcularMedia(valores: number[]): number {
+    if (valores.length === 0) return 0;
+    return parseFloat(mean(valores).toFixed(2));
+  }
+
+  private calcularDesvioPadrao(valores: number[]): number {
+    if (valores.length === 0) return 0;
+    return parseFloat(std(valores, "uncorrected").toFixed(2));
+  }
+
+  private calcularModa(valores: number[]): number | undefined {
+    if (valores.length === 0) return undefined;
+
+    const moda = mode(valores);
+
+    if (Array.isArray(moda) && moda.length > 0) {
+      const modaValue = moda[0] as number;
+      return parseFloat(modaValue.toFixed(2));
+    } else if (typeof moda === "number") {
+      return parseFloat(moda.toFixed(2));
+    } else {
+      return undefined;
+    }
+  }
+
+  private calcularEstatisticas(entities: { informacoes: any }[], propriedade: string) {
+    const valores = entities
+      .flatMap((entity) => this.extrairValores(entity.informacoes[propriedade]))
+      .filter((value) => typeof value === "number");
+
+    return {
+      media: this.calcularMedia(valores),
+      desvioPadrao: this.calcularDesvioPadrao(valores),
+      moda: this.calcularModa(valores),
+    };
+  }
+
   async execute(manipuladores: ManipuladorAlimento[], gestores: Gestor[]) {
     const caracteristicas_socio_demograficas: any = {};
+    const resultados_avaliacao_quantitativas_csa: any = {};
 
     try {
+      //
+      resultados_avaliacao_quantitativas_csa["liderenca"] = {
+        manipuladores: this.calcularEstatisticas(manipuladores, "liderenca"),
+      };
+
+      resultados_avaliacao_quantitativas_csa["comunicacao"] = {
+        manipuladores: this.calcularEstatisticas(manipuladores, "comunicacao"),
+      };
+
+      resultados_avaliacao_quantitativas_csa["conhecimento"] = {
+        manipuladores: this.calcularEstatisticas(manipuladores, "conhecimento"),
+        gestores: this.calcularEstatisticas(gestores, "conhecimento"),
+      };
+
+      //
+      resultados_avaliacao_quantitativas_csa["comprometimento"] = {
+        manipuladores: this.calcularEstatisticas(manipuladores, "comprometimento_afetivo"),
+        gestores: this.calcularEstatisticas(gestores, "comprometimento_afetivo"),
+      };
+
+      console.log(resultados_avaliacao_quantitativas_csa);
+
+      // parte do socio demograficas
       const manipuladoresGenero = this.contarPorGenero(manipuladores);
       const gestoresGenero = this.contarPorGenero(gestores);
 
