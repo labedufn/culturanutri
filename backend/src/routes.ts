@@ -21,6 +21,7 @@ import { CriarGestorController } from "@controllers/gestor/CriarGestorController
 import { ListarGestoresController } from "@controllers/gestor/ListarGestoresController";
 import { BuscarGestorController } from "@controllers/gestor/BuscarGestorController";
 import { EditarGestorController } from "@controllers/gestor/EditarGestorController";
+import { EditarUsuarioAdminController } from "@controllers/usuario/EditarUsuarioAdminController";
 
 export const router = Router();
 
@@ -32,6 +33,7 @@ router.post("/api/recuperar-senha", new RecuperarSenhaController().handle);
 router.post("/api/redefinir-senha", new RedefinirSenhaController().handle);
 router.get("/api/validar-cadastro-token", validarCadastroToken);
 router.put("/api/editar-usuario", authUsuario, new EditarUsuarioController().handle);
+router.put("/api/editar-usuario-admin", authAdministrador, new EditarUsuarioAdminController().handle);
 router.get("/api/listar-usuarios", authAdministrador, new ListarUsuariosController().handle);
 router.get("/api/buscar-usuario", authAdministrador, new BuscarUsuarioController().handle);
 
