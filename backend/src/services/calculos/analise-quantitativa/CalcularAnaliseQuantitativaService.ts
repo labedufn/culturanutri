@@ -1,5 +1,6 @@
 import { Gestor } from "@models/Gestor";
 import { ManipuladorAlimento } from "@prisma/client";
+import converterBase64JSON from "@utils/converterBase64JSON";
 import e from "express";
 import { mean, std, mode } from "mathjs";
 
@@ -427,19 +428,15 @@ export class CalcularAnaliseQuantitativaService {
           total: gestores.length,
         },
       };
-
-      console.log(JSON.stringify(caracteristicas_socio_demograficas, null, 2));
-      console.log(JSON.stringify(resultados_avaliacao_quantitativas_csa, null, 2));
-      console.log(JSON.stringify(vies_otimista, null, 2));
     } catch (error) {
       console.error(error.message);
       throw new Error(error.message);
     }
 
     return {
-      caracteristicas_socio_demograficas,
-      resultados_avaliacao_quantitativas_csa,
-      vies_otimista,
+      json_caracteristicas_socio_demograficas: JSON.parse(JSON.stringify(caracteristicas_socio_demograficas)),
+      json_resultados_avaliacao_quantitativas_csa: JSON.parse(JSON.stringify(resultados_avaliacao_quantitativas_csa)),
+      json_vies_otimista: JSON.parse(JSON.stringify(vies_otimista)),
     };
   }
 }

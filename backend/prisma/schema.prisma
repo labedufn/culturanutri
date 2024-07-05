@@ -21,8 +21,6 @@ model Gestores {
   informacoes        String   @db.Text
   ativo              Int      @default(1)
 
-  AnaliseQuantitativa AnaliseQuantitativa[]
-
   @@map("gestores")
 }
 
@@ -33,8 +31,6 @@ model ManipuladorAlimento {
   data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
   informacoes        String   @db.Text
   ativo              Int      @default(1)
-
-  AnaliQuantitativa AnaliseQuantitativa[]
 
   @@map("manipuladores_alimentos")
 }
@@ -110,19 +106,16 @@ model Resultado {
 }
 
 model AnaliseQuantitativa {
-  id                                     String              @id @default(uuid())
-  id_gestor                              String
-  id_manipulador_alimentos               String
-  caracteristicas_socio_demograficas     String              @db.VarChar(255)
-  resultados_avaliacao_quantitativas_csa String              @db.VarChar(255)
-  vies_otimista                          String              @db.VarChar(255)
-  data_cadastro                          DateTime            @default(now()) @db.Timestamptz(3)
-  data_alteracao                         DateTime            @updatedAt @db.Timestamptz(3)
-  ativo                                  Int                 @default(1)
-  gestores                               Gestores            @relation(fields: [id_gestor], references: [id])
-  manipuladorAlimento                    ManipuladorAlimento @relation(fields: [id_manipulador_alimentos], references: [id])
-
-  Triangulacao Triangulacao[]
+  id                                     String          @id @default(uuid())
+  id_estabelecimento                     String
+  caracteristicas_socio_demograficas     String          @db.Text
+  resultados_avaliacao_quantitativas_csa String          @db.Text
+  vies_otimista                          String          @db.Text
+  data_cadastro                          DateTime        @default(now()) @db.Timestamptz(3)
+  data_alteracao                         DateTime        @updatedAt @db.Timestamptz(3)
+  ativo                                  Int             @default(1)
+  estabelecimento                        Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  Triangulacao                           Triangulacao[]
 
   @@map("analises_quantitativas")
 }
@@ -142,7 +135,8 @@ model Estabelecimento {
   ativo                            Int      @default(1)
   usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
 
-  Resultado Resultado[]
+  Resultado           Resultado[]
+  AnaliseQuantitativa AnaliseQuantitativa[]
 
   @@map("estabelecimentos")
 }
