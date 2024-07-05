@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 export class BuscarEstabelecimentoController {
   async handle(req: Request, res: Response) {
-    const { id_usuario, id_estabelecimento } = req.body;
+    const { id_estabelecimento } = req.body;
 
     try {
       const buscarEstabelecimentosService = new BuscarEstabelecimentosService();

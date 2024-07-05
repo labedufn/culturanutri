@@ -22,6 +22,7 @@ import { ListarGestoresController } from "@controllers/gestor/ListarGestoresCont
 import { BuscarGestorController } from "@controllers/gestor/BuscarGestorController";
 import { EditarGestorController } from "@controllers/gestor/EditarGestorController";
 import { CriarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/CriarAnaliseQuantitativaController";
+import { BuscarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/BuscarAnaliseQuantitativaController";
 
 export const router = Router();
 
@@ -56,3 +57,4 @@ router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoCont
 
 // Rotas Analise Quantitativa
 router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
+router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
