@@ -184,12 +184,33 @@ export class CalcularAnaliseQuantitativaService {
     };
   }
 
+  private calculaViesOtimista(testeEstatistico: number): string {
+    if (testeEstatistico === 0 || testeEstatistico <= 0.05) {
+      return "Otimista";
+    } else if (testeEstatistico === 0.06 || testeEstatistico <= 0.99) {
+      return "Pessimista";
+    } else {
+      return "Neutro";
+    }
+  }
+
+  private calculaNotaViesOtimista(viesOtimista: string) {
+    if (viesOtimista == "Otimista") {
+      return 1;
+    } else if (viesOtimista == "Pessimista") {
+      return 2;
+    } else {
+      return 3;
+    }
+  }
+
   async execute(manipuladores: ManipuladorAlimento[], gestores: Gestor[]) {
     const caracteristicas_socio_demograficas: any = {};
     const resultados_avaliacao_quantitativas_csa: any = {};
     const vies_otimista: any = {};
 
     try {
+      //avaliacao_quantitativa_csa
       resultados_avaliacao_quantitativas_csa["liderenca"] = {
         manipuladores: this.calcularEstatisticas(manipuladores, "liderenca"),
       };
@@ -274,18 +295,16 @@ export class CalcularAnaliseQuantitativaService {
         },
       };
 
-      console.log(JSON.stringify(resultados_avaliacao_quantitativas_csa, null, 2));
-
-      //vies otimista
+      //vies_otimista
       vies_otimista["gestores"] = {
         outros_servicos_alimentacao: {
           media: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.gestores.media,
+          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.gestores.moda,
           teste_estatistico: this.buscaValores(
             gestores,
             "risco_apresentar_dor_barriga_estabelecimento_similar",
             "risco_apresentar_dor_barriga_estabelecimento_gerenciado",
           ),
-          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.gestores.moda,
         },
         proprio_servico_alimentacao: {
           media: resultados_avaliacao_quantitativas_csa.percepcao_risco.proprio_trabalho.gestores.media,
@@ -293,12 +312,30 @@ export class CalcularAnaliseQuantitativaService {
         },
       };
 
+      // calculo separado do vies e da nota
+      vies_otimista.gestores.outros_servicos_alimentacao.vies = this.calculaViesOtimista(
+        vies_otimista["gestores"].outros_servicos_alimentacao.teste_estatistico,
+      );
+      vies_otimista.gestores.outros_servicos_alimentacao.nota = this.calculaNotaViesOtimista(
+        vies_otimista["gestores"].outros_servicos_alimentacao.vies,
+      );
+
+      vies_otimista.gestores.proprio_servico_alimentacao.vies =
+        vies_otimista["gestores"].outros_servicos_alimentacao.vies;
+      vies_otimista.gestores.proprio_servico_alimentacao.nota =
+        vies_otimista["gestores"].outros_servicos_alimentacao.nota;
+
       vies_otimista["manipuladores"] = {
         outro_manipulador_outro_servico: {
           media:
             resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.manipuladores.media,
           moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.manipuladores
             .moda,
+          teste_estatistico: this.buscaValores(
+            manipuladores,
+            "risco_apresentar_dor_barriga_estabelecimento_similar",
+            "risco_apresentar_dor_barriga_estabelecimento_manipulado",
+          ),
         },
         proprio_trabalho: {
           media: resultados_avaliacao_quantitativas_csa.percepcao_risco.proprio_trabalho.manipuladores.media,
@@ -309,12 +346,36 @@ export class CalcularAnaliseQuantitativaService {
             resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_mesmo_servico.manipuladores.media,
           moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_mesmo_servico.manipuladores
             .moda,
+          teste_estatistico: this.buscaValores(
+            manipuladores,
+            "risco_apresentar_dor_barriga_estabelecimento_similar",
+            "risco_apresentar_dor_barriga_estabelecimento_colega_manipulado",
+          ),
         },
       };
 
-      console.log(JSON.stringify(vies_otimista, null, 2));
+      // calculo separado do vies e da nota
+      vies_otimista["manipuladores"].proprio_trabalho.teste_estatistico =
+        vies_otimista["manipuladores"].outro_manipulador_outro_servico.teste_estatistico;
+      vies_otimista.manipuladores.outro_manipulador_outro_servico.vies = this.calculaViesOtimista(
+        vies_otimista["manipuladores"].outro_manipulador_outro_servico.teste_estatistico,
+      );
+      vies_otimista.manipuladores.outro_manipulador_outro_servico.nota = this.calculaNotaViesOtimista(
+        vies_otimista["manipuladores"].outro_manipulador_outro_servico.vies,
+      );
 
-      // parte do socio demograficas
+      vies_otimista.manipuladores.proprio_trabalho.vies =
+        vies_otimista["manipuladores"].outro_manipulador_outro_servico.vies;
+      vies_otimista.manipuladores.proprio_trabalho.nota =
+        vies_otimista["manipuladores"].outro_manipulador_outro_servico.nota;
+
+      vies_otimista.manipuladores.outro_manipulador_mesmo_servico.vies = this.calculaViesOtimista(
+        vies_otimista["manipuladores"].outro_manipulador_mesmo_servico.teste_estatistico,
+      );
+      vies_otimista.manipuladores.outro_manipulador_mesmo_servico.nota = this.calculaNotaViesOtimista(
+        vies_otimista["manipuladores"].outro_manipulador_mesmo_servico.teste_estatistico,
+      );
+      //caracteristicas_socio_demograficas
       const manipuladoresGenero = this.contarPorGenero(manipuladores);
       const gestoresGenero = this.contarPorGenero(gestores);
 
@@ -368,6 +429,8 @@ export class CalcularAnaliseQuantitativaService {
       };
 
       console.log(JSON.stringify(caracteristicas_socio_demograficas, null, 2));
+      console.log(JSON.stringify(resultados_avaliacao_quantitativas_csa, null, 2));
+      console.log(JSON.stringify(vies_otimista, null, 2));
     } catch (error) {
       console.error(error.message);
       throw new Error(error.message);
