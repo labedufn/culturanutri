@@ -1,0 +1,43 @@
+vies_otimista = {
+  percepcao_risco: {
+    gestores: {
+      outros_servicos_alimentacao: {
+        media: 0.5,
+        moda: 0.5,
+        teste_estatistico: "neutro",
+        vies: 0.5,
+        nota: 0.5,
+      },
+      proprio_servico_alimentacao: {
+        media: 0.5,
+        moda: 0.5,
+        teste_estatistico: "neutro",
+        vies: 0.5,
+        nota: 0.5,
+      },
+    },
+    manipulador_alimento: {
+      outro_manipulador_outro_servico: {
+        media: 0.5,
+        moda: 0.5,
+        teste_estatistico: "neutro",
+        vies: 0.5,
+        nota: 0.5,
+      },
+      proprio_trabalho: {
+        media: 0.5,
+        moda: 0.5,
+        teste_estatistico: "neutro",
+        vies: 0.5,
+        nota: 0.5,
+      },
+      outro_manipulador_mesmo_servico: {
+        media: 0.5,
+        moda: 0.5,
+        teste_estatistico: "neutro",
+        vies: 0.5,
+        nota: 0.5,
+      },
+    },
+  },
+};

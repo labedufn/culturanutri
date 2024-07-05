@@ -2,22 +2,25 @@
 CREATE TYPE "TipoUsuario" AS ENUM ('ADMINISTRADOR', 'GESTOR', 'AVALIADOR');
 
 -- CreateTable
-CREATE TABLE "gestores_avaliacoes" (
+CREATE TABLE "gestores" (
     "id" TEXT NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "ativo" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "gestores_avaliacoes_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "gestores_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "manipuladores_alimentos" (
     "id" TEXT NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
+    "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "manipuladores_alimentos_pkey" PRIMARY KEY ("id")
 );
@@ -25,7 +28,7 @@ CREATE TABLE "manipuladores_alimentos" (
 -- CreateTable
 CREATE TABLE "listas_verificacoes" (
     "id" TEXT NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "categoria" INTEGER NOT NULL,
@@ -54,7 +57,7 @@ CREATE TABLE "analises_qualitativas" (
     "id" TEXT NOT NULL,
     "analise_qualitativa_id" INTEGER NOT NULL,
     "categoria" INTEGER NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "id_triangulacoes" TEXT NOT NULL,
@@ -70,7 +73,7 @@ CREATE TABLE "triangulacoes" (
     "id_lista_verificacao" TEXT NOT NULL,
     "id_analise_qualitativa" TEXT NOT NULL,
     "id_analise_quantitativa" TEXT NOT NULL,
-    "informacoes" VARCHAR(255) NOT NULL,
+    "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
 
@@ -89,14 +92,14 @@ CREATE TABLE "resultados" (
 -- CreateTable
 CREATE TABLE "analises_quantitativas" (
     "id" TEXT NOT NULL,
+    "id_gestor" TEXT NOT NULL,
+    "id_manipulador_alimentos" TEXT NOT NULL,
     "caracteristicas_socio_demograficas" VARCHAR(255) NOT NULL,
     "resultados_avaliacao_quantitativas_csa" VARCHAR(255) NOT NULL,
     "vies_otimista" VARCHAR(255) NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
-    "id_manipulador_alimentos" TEXT NOT NULL,
-    "id_gestor_avaliacao" TEXT NOT NULL,
-    "id_triangulacoes" TEXT NOT NULL,
+    "ativo" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "analises_quantitativas_pkey" PRIMARY KEY ("id")
 );
@@ -184,7 +187,7 @@ ALTER TABLE "resultados" ADD CONSTRAINT "resultados_id_triangulacao_fkey" FOREIG
 ALTER TABLE "resultados" ADD CONSTRAINT "resultados_id_estabelecimento_fkey" FOREIGN KEY ("id_estabelecimento") REFERENCES "estabelecimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "analises_quantitativas" ADD CONSTRAINT "analises_quantitativas_id_gestor_avaliacao_fkey" FOREIGN KEY ("id_gestor_avaliacao") REFERENCES "gestores_avaliacoes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "analises_quantitativas" ADD CONSTRAINT "analises_quantitativas_id_gestor_fkey" FOREIGN KEY ("id_gestor") REFERENCES "gestores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "analises_quantitativas" ADD CONSTRAINT "analises_quantitativas_id_manipulador_alimentos_fkey" FOREIGN KEY ("id_manipulador_alimentos") REFERENCES "manipuladores_alimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

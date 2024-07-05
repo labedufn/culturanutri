@@ -4,35 +4,28 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 const prisma = new PrismaClient();
 
 export class ListarManipuladoresAlimentoService {
-  async execute(idUsuario: string) {
-    const usuario = await prisma.usuario.findUnique({
+  async execute(idEstabelecimento: string) {
+    const manipuladores = await prisma.manipuladorAlimento.findMany({
       where: {
-        id: idUsuario,
+        id_estabelecimento: idEstabelecimento,
+      },
+      select: {
+        id: true,
+        data_cadastro: true,
+        data_alteracao: true,
+        informacoes: true,
+        ativo: true,
       },
     });
 
-    if (!usuario) {
-      throw new Error("Usuário não encontrado");
-    } else {
-      const manipuladores = await prisma.manipuladorAlimento.findMany({
-        select: {
-          id: true,
-          data_cadastro: true,
-          data_alteracao: true,
-          informacoes: true,
-          ativo: true,
-        },
-      });
+    // Decode `informacoes` for each gestor
+    const decodeManipulador = await Promise.all(
+      manipuladores.map(async (manipulador) => ({
+        ...manipulador,
+        informacoes: await desconverterBase64JSON(manipulador.informacoes),
+      })),
+    );
 
-      // Decode `informacoes` for each gestor
-      const decodeManipulador = await Promise.all(
-        manipuladores.map(async (manipulador) => ({
-          ...manipulador,
-          informacoes: await desconverterBase64JSON(manipulador.informacoes),
-        })),
-      );
-
-      return decodeManipulador;
-    }
+    return decodeManipulador;
   }
 }
