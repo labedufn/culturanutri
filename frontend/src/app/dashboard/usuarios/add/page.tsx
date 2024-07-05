@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import PlaceholderContent from "@/components/dashboard/placeholder-content";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,6 +8,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { AdicionarUsuarioForm } from "@/components/dashboard/usuarios/adicionar-usuario-form";
+import { Card, CardContent } from "@/components/ui/card";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function UsuariosAddPage() {
   return (
@@ -23,7 +25,7 @@ export default function UsuariosAddPage() {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/dashboard/avaliacoes">Usuários</Link>
+              <Link href="/dashboard/usuarios">Usuários</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -32,7 +34,14 @@ export default function UsuariosAddPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <Card className="rounded-lg border-none mt-6">
+        <CardContent className="p-6">
+          <div className="min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
+            <AdicionarUsuarioForm />
+          </div>
+        </CardContent>
+      </Card>
+      <Toaster />
     </>
   );
 }

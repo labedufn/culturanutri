@@ -4,7 +4,9 @@ import { Request, Response } from "express";
 
 export class EditarUsuarioController {
   async handle(req: Request, res: Response) {
-    const { id, tipo, nome, sobrenome, cpf, email, senha, instituicao, ativo } = req.body;
+    const { tipo, nome, sobrenome, cpf, email, senha, instituicao, ativo } = req.body;
+
+    const idUsuario = req.usuario_id;
 
     try {
       const data_cadastro = new Date();
@@ -24,8 +26,9 @@ export class EditarUsuarioController {
         ativo,
         ultimo_login,
       );
+
       const editarUsuarioService = new EditarUsuarioService();
-      const usuarios = await editarUsuarioService.execute(id, usuario);
+      const usuarios = await editarUsuarioService.execute(idUsuario, usuario);
 
       return res.json(usuarios);
     } catch (error) {

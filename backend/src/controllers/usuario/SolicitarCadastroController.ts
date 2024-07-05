@@ -5,7 +5,7 @@ export class SolicitarCadastroController {
   async handle(req: Request, res: Response) {
     const { email, tipo } = req.body;
 
-    const usuarioId = req.usuario_id;
+    const usuarioId = req.criado_por;
 
     try {
       const solicitarCadastroService = new SolicitarCadastroService();

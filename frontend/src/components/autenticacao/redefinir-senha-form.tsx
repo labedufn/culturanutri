@@ -1,6 +1,5 @@
 "use client";
 
-import { redefinirSenha } from "@/actions/redefinir-senha";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircleOutlineRounded } from "@mui/icons-material";
 import { Loader2 } from "lucide-react";
@@ -12,6 +11,7 @@ import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { FeedbackMessage } from "../utils/feedback-message";
+import { redefinirSenha } from "@/actions/redefinir-senha";
 
 const redefinirSenhaSchema = z
   .object({
@@ -26,8 +26,6 @@ const redefinirSenhaSchema = z
 type FormData = z.infer<typeof redefinirSenhaSchema>;
 
 export function RedefinirSenhaForm() {
-  const [isVisibleSenha, setIsVisibleSenha] = useState(false);
-  const [isVisibleConfirmarSenha, setIsVisibleConfirmarSenha] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const {} = useForm<FormData>({
@@ -37,10 +35,6 @@ export function RedefinirSenhaForm() {
   const form = useForm<FormData>({
     resolver: zodResolver(redefinirSenhaSchema),
   });
-
-  const toggleVisibilityConfirmarSenha = () => {
-    setIsVisibleConfirmarSenha(!isVisibleConfirmarSenha);
-  };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     console.log(data);

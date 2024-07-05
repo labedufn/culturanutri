@@ -1,19 +1,19 @@
 import { prisma } from "@config/prismaClient";
+import { TipoUsuario } from "@prisma/client";
 import { validarEmail } from "@utils/validarEmail";
 import { sign } from "jsonwebtoken";
 import moment from "moment-timezone";
 import { createTransport } from "nodemailer";
 
 export class SolicitarCadastroService {
-  async execute(criado_por: string, email: string) {
-    const usuarioCriadorId = criado_por;
+  async execute(usuarioCriadorId: string, email: string, tipo: TipoUsuario) {
+    console.log(usuarioCriadorId, email, tipo);
     if (!validarEmail(email)) {
       throw new Error("Email inválido.");
     }
 
     const verificarEmail = await prisma.usuario.findUnique({
       where: {
-        id: undefined,
         email: email,
       },
     });
@@ -31,6 +31,7 @@ export class SolicitarCadastroService {
       data: {
         token: token,
         email: email,
+        tipo_usuario: tipo,
         criado_por: usuarioCriadorId,
         expira_em: expiraEmDate,
       },

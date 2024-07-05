@@ -24,6 +24,7 @@ const cadastroSchema = z
     email: z.string().email("Insira um e-mail válido."),
     senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres."),
     confirmarSenha: z.string().min(1, "Confirme a senha."),
+    instituicao: z.string().min(1, "O campo instituição é obrigatório."),
   })
   .refine((data) => data.senha === data.confirmarSenha, {
     message: "As senhas não coincidem.",
@@ -110,6 +111,20 @@ export function CadastroForm() {
           />
           <FormField
             control={form.control}
+            name="instituicao"
+            defaultValue=""
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Instituição</FormLabel>
+                <FormControl>
+                  <Input {...field} placeholder="Nome da instituição" className="focus-visible:ring-primary-700" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="email"
             defaultValue=""
             render={({ field }) => (
@@ -173,7 +188,7 @@ export function CadastroForm() {
         <Button
           type="submit"
           size="lg"
-          className="w-full bg-primary-700 text-white font-medium flex justify-center items-center"
+          className="w-full bg-primary-700 hover:bg-primary-800 text-white font-medium flex justify-center items-center"
         >
           {form.formState.isSubmitting ? (
             <div className="flex items-center">
