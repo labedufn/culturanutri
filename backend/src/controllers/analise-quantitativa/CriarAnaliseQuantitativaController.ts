@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 export class CriarAnaliseQuantitativaController {
   async handle(req: Request, res: Response) {
-    const { id_gestor, id_manipulador_alimentos, id_estabelecimento } = req.body;
+    const { id_estabelecimento } = req.body;
 
     try {
       // const ativo = 1;

@@ -4,7 +4,7 @@ CREATE TYPE "TipoUsuario" AS ENUM ('ADMINISTRADOR', 'GESTOR', 'AVALIADOR');
 -- CreateTable
 CREATE TABLE "gestores" (
     "id" TEXT NOT NULL,
-    "id_estabelecimento" INTEGER NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "informacoes" TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE "gestores" (
 -- CreateTable
 CREATE TABLE "manipuladores_alimentos" (
     "id" TEXT NOT NULL,
-    "id_estabelecimento" INTEGER NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "informacoes" TEXT NOT NULL,

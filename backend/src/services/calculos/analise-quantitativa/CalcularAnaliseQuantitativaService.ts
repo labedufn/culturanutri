@@ -1,5 +1,6 @@
 import { Gestor } from "@models/Gestor";
 import { ManipuladorAlimento } from "@prisma/client";
+import e from "express";
 import { mean, std, mode } from "mathjs";
 
 export class CalcularAnaliseQuantitativaService {
@@ -102,6 +103,23 @@ export class CalcularAnaliseQuantitativaService {
     return valores;
   }
 
+  private extrairValoresSubpropriedade(obj: any, propriedade: string): number[] {
+    const valores: number[] = [];
+
+    const extrair = (obj: any) => {
+      for (const key in obj) {
+        if (key === propriedade && typeof obj[key] === "number") {
+          valores.push(obj[key]);
+        } else if (typeof obj[key] === "object" && obj[key] !== null) {
+          extrair(obj[key]);
+        }
+      }
+    };
+
+    extrair(obj);
+    return valores;
+  }
+
   private calcularMedia(valores: number[]): number {
     if (valores.length === 0) return 0;
     return parseFloat(mean(valores).toFixed(2));
@@ -138,7 +156,6 @@ export class CalcularAnaliseQuantitativaService {
       const sample1 = gestor.informacoes.percepcao_risco[propriedade];
       const sample2 = gestor.informacoes.percepcao_risco[outraPropriedade];
 
-      console.log(this.calcularTesteT(sample1, sample2));
       return this.calcularTesteT(sample1, sample2);
     });
   }
@@ -146,6 +163,18 @@ export class CalcularAnaliseQuantitativaService {
   private calcularEstatisticas(entities: { informacoes: any }[], propriedade: string) {
     const valores = entities
       .flatMap((entity) => this.extrairValores(entity.informacoes[propriedade]))
+      .filter((value) => typeof value === "number");
+
+    return {
+      media: this.calcularMedia(valores),
+      desvioPadrao: this.calcularDesvioPadrao(valores),
+      moda: this.calcularModa(valores),
+    };
+  }
+
+  private calcularEstatisticasSubpropriedades(entities: any[], propriedade: string) {
+    const valores = entities
+      .flatMap((entity) => this.extrairValoresSubpropriedade(entity.percepcao_risco, propriedade))
       .filter((value) => typeof value === "number");
 
     return {
@@ -193,30 +222,45 @@ export class CalcularAnaliseQuantitativaService {
         },
       };
 
+      const manipuladoresPercepcaoRisco = manipuladores.map((manipulador) => manipulador.informacoes);
+      const gestoresPercepcaoRisco = gestores.map((gestor) => gestor.informacoes);
+
       resultados_avaliacao_quantitativas_csa["percepcao_risco"] = {
         proprio_trabalho: {
-          manipuladores: this.calcularEstatisticas(
-            manipuladores,
+          manipuladores: this.calcularEstatisticasSubpropriedades(
+            manipuladoresPercepcaoRisco,
             "risco_apresentar_dor_barriga_estabelecimento_similar",
           ),
-          gestores: this.calcularEstatisticas(gestores, "risco_apresentar_dor_barriga_estabelecimento_similar"),
+          gestores: this.calcularEstatisticasSubpropriedades(
+            gestoresPercepcaoRisco,
+            "risco_apresentar_dor_barriga_estabelecimento_similar",
+          ),
         },
         outro_manipulador_outro_servico: {
-          manipuladores: this.calcularEstatisticas(
-            manipuladores,
+          manipuladores: this.calcularEstatisticasSubpropriedades(
+            manipuladoresPercepcaoRisco,
             "risco_apresentar_dor_barriga_estabelecimento_manipulado",
           ),
-          gestores: this.calcularEstatisticas(gestores, "risco_apresentar_dor_barriga_estabelecimento_gerenciado"),
+          gestores: this.calcularEstatisticasSubpropriedades(
+            gestoresPercepcaoRisco,
+            "risco_apresentar_dor_barriga_estabelecimento_gerenciado",
+          ),
         },
         outro_manipulador_mesmo_servico: {
-          manipuladores: this.calcularEstatisticas(
-            manipuladores,
+          manipuladores: this.calcularEstatisticasSubpropriedades(
+            manipuladoresPercepcaoRisco,
             "risco_apresentar_dor_barriga_estabelecimento_colega_manipulado",
           ),
         },
         letalidade: {
-          manipuladores: this.calcularEstatisticas(manipuladores, "risco_doença_transmitida_alimentos"),
-          gestores: this.calcularEstatisticas(gestores, "risco_doença_transmitida_alimentos"),
+          manipuladores: this.calcularEstatisticasSubpropriedades(
+            manipuladoresPercepcaoRisco,
+            "risco_doença_transmitida_alimentos",
+          ),
+          gestores: this.calcularEstatisticasSubpropriedades(
+            gestoresPercepcaoRisco,
+            "risco_doença_transmitida_alimentos",
+          ),
         },
         pressao_trabalho_crencas_normativas: {
           manipuladores: this.calcularEstatisticas(manipuladores, "pressoes_trabalho_crenças_normativas"),
@@ -230,47 +274,45 @@ export class CalcularAnaliseQuantitativaService {
         },
       };
 
-      // Exibindo os resultados para depuração
       console.log(JSON.stringify(resultados_avaliacao_quantitativas_csa, null, 2));
 
       //vies otimista
-      vies_otimista["percepcao_risco"] = {
-        gestores: {
-          outros_servicos_alimentacao: {
-            // media: resultados_avaliacao_quantitativas_csa.percepcao_risco.gestores.outro_manipulador_outro_servico[0],
-            // moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.gestores.outro_manipulador_outro_servico[1],
-            teste_estatistico: this.buscaValores(
-              gestores,
-              "risco_apresentar_dor_barriga_estabelecimento_similar",
-              "risco_apresentar_dor_barriga_estabelecimento_gerenciado",
-            ),
-          },
-          //   proprio_servico_alimentacao: {
-          //     media: resultados_avaliacao_quantitativas_csa.percepcao_risco.gestores.proprio_servico[0],
-          //     moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.gestores.proprio_servico[1],
-          //   },
-          // },
-          // manipuladores: {
-          //   outro_manipulador_outro_servico: {
-          //     media:
-          //       resultados_avaliacao_quantitativas_csa.percepcao_risco.manipuladores.outro_manipulador_outro_servico[0],
-          //     moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.manipuladores
-          //       .outro_manipulador_outro_servico[1],
-          //   },
-          //   proprio_trabalho: {
-          //     media: resultados_avaliacao_quantitativas_csa.percepcao_risco.manipuladores.proprio_servico[0],
-          //     moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.manipuladores.proprio_servico[1],
-          //   },
-          //   outro_manipulador_mesmo_servico: {
-          //     media:
-          //       resultados_avaliacao_quantitativas_csa.percepcao_risco.manipuladores.outro_manipulador_mesmo_servico[0],
-          //     moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.manipuladores
-          //       .outro_manipulador_mesmo_servico[1],
-          //   },
+      vies_otimista["gestores"] = {
+        outros_servicos_alimentacao: {
+          media: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.gestores.media,
+          teste_estatistico: this.buscaValores(
+            gestores,
+            "risco_apresentar_dor_barriga_estabelecimento_similar",
+            "risco_apresentar_dor_barriga_estabelecimento_gerenciado",
+          ),
+          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.gestores.moda,
+        },
+        proprio_servico_alimentacao: {
+          media: resultados_avaliacao_quantitativas_csa.percepcao_risco.proprio_trabalho.gestores.media,
+          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.proprio_trabalho.gestores.moda,
         },
       };
 
-      console.log(vies_otimista);
+      vies_otimista["manipuladores"] = {
+        outro_manipulador_outro_servico: {
+          media:
+            resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.manipuladores.media,
+          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_outro_servico.manipuladores
+            .moda,
+        },
+        proprio_trabalho: {
+          media: resultados_avaliacao_quantitativas_csa.percepcao_risco.proprio_trabalho.manipuladores.media,
+          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.proprio_trabalho.manipuladores.moda,
+        },
+        outro_manipulador_mesmo_servico: {
+          media:
+            resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_mesmo_servico.manipuladores.media,
+          moda: resultados_avaliacao_quantitativas_csa.percepcao_risco.outro_manipulador_mesmo_servico.manipuladores
+            .moda,
+        },
+      };
+
+      console.log(JSON.stringify(vies_otimista, null, 2));
 
       // parte do socio demograficas
       const manipuladoresGenero = this.contarPorGenero(manipuladores);
