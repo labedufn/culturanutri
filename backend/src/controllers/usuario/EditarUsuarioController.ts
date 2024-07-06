@@ -1,6 +1,6 @@
-import { Usuario, TipoUsuario } from "@models/Usuario";
-import { EditarUsuarioService } from "@services/usuario/EditarUsuarioService";
+import { Usuario } from "@models/Usuario";
 import { BuscarUsuarioService } from "@services/usuario/BuscarUsuarioService";
+import { EditarUsuarioService } from "@services/usuario/EditarUsuarioService";
 import { Request, Response } from "express";
 
 export class EditarUsuarioController {
@@ -10,16 +10,16 @@ export class EditarUsuarioController {
 
     try {
       const buscarUsuarioService = new BuscarUsuarioService();
-      const { usuario: usuarioAtual } = await buscarUsuarioService.execute(idUsuario);
+      const usuarioAtual = await buscarUsuarioService.execute(idUsuario);
 
       const usuario = new Usuario(
         nome,
         sobrenome,
         cpf,
         email,
-        usuarioAtual.tipo_usuario as TipoUsuario,
+        usuarioAtual.usuario.senha,
+        usuarioAtual.usuario.tipo_usuario,
         instituicao,
-        usuarioAtual.senha,
       );
 
       const editarUsuarioService = new EditarUsuarioService();

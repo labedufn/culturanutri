@@ -32,7 +32,7 @@ export function ADICIONAR_USUARIO() {
 
 export function EDITAR_USUARIO() {
   return {
-    url: `${API_URL}/api/usuario`,
+    url: `${API_URL}/api/editar-usuario`,
   };
 }
 

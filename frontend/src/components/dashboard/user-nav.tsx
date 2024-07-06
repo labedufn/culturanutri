@@ -29,7 +29,6 @@ export function UserNav() {
           sobrenome: response.data.usuario.sobrenome,
           tipo_usuario: response.data.usuario.tipo_usuario,
         });
-        console.log("Informações do usuário", response.data.usuario.nome);
       } else {
         console.error(response.message);
       }

@@ -10,6 +10,7 @@ export class ListarInformacoesUsuarioService {
         id: true,
         nome: true,
         sobrenome: true,
+        cpf: true,
         email: true,
         instituicao: true,
         tipo_usuario: true,
