@@ -33,10 +33,6 @@ async function criarUsuario() {
     senha,
     tipo,
     instituicao,
-    data_cadastro: new Date(),
-    data_alteracao: new Date(),
-    ativo: 1,
-    ultimo_login: new Date(),
   };
 
   try {
