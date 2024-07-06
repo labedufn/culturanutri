@@ -1,4 +1,3 @@
-// @ts-nocheck
 export const API_URL = process.env.API_URL;
 
 export function LOGIN() {
@@ -26,6 +25,12 @@ export function REDEFINIR_SENHA() {
 }
 
 export function ADICIONAR_USUARIO() {
+  return {
+    url: `${API_URL}/api/usuario`,
+  };
+}
+
+export function EDITAR_USUARIO() {
   return {
     url: `${API_URL}/api/usuario`,
   };

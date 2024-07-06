@@ -1,51 +1,38 @@
 import { prisma } from "@config/prismaClient";
-import { Usuario } from "@models/Usuario";
+import { TipoUsuario, Usuario } from "@models/Usuario";
 import { validarCpf } from "@utils/validarCpf";
 import { validarEmail } from "@utils/validarEmail";
 import { hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
 
+interface UsuarioUpdate extends Partial<Usuario> {
+  tipo?: TipoUsuario;
+}
+
 export class EditarUsuarioService {
-  async execute(idUsuario, usuario: Usuario) {
-    if (!validarEmail(usuario.email)) {
+  async execute(idUsuario: string, usuario: UsuarioUpdate, isAdmin: boolean = false) {
+    if (usuario.email && !validarEmail(usuario.email)) {
       throw new Error("E-mail inválido");
     }
 
-    if (!validarCpf(usuario.cpf)) {
+    if (usuario.cpf && !validarCpf(usuario.cpf)) {
       throw new Error("CPF inválido");
     }
 
-    const usuarioExiste = await prisma.usuario.findFirst({
-      where: {
-        OR: [{ email: usuario.email }, { cpf: usuario.cpf }],
-        NOT: {
-          id: idUsuario,
-        },
-      },
-    });
-
-    if (usuarioExiste) {
-      throw new Error("E-mail ou CPF já cadastrados.");
-    }
-
-    const tokenExistente = await prisma.cadastroToken.findFirst({
-      where: {
-        email: usuario.email,
-      },
-    });
-
-    if (tokenExistente) {
-      await prisma.cadastroToken.update({
+    if (usuario.email || usuario.cpf) {
+      const usuarioExiste = await prisma.usuario.findFirst({
         where: {
-          id: tokenExistente.id,
-        },
-        data: {
-          usado: 1,
+          OR: [{ email: usuario.email }, { cpf: usuario.cpf }],
+          NOT: {
+            id: idUsuario,
+          },
         },
       });
-    }
 
-    const senhaCriptografada = await hash(usuario.senha, 10);
+      if (usuarioExiste) {
+        throw new Error("E-mail ou CPF já cadastrados.");
+      }
+    }
 
     const token = sign(
       {
@@ -53,27 +40,30 @@ export class EditarUsuarioService {
         email: usuario.email,
         tipo: usuario.tipo,
       },
-      process.env.SECRET_KEY,
+      process.env.SECRET_KEY as string,
       {
         subject: usuario.nome,
         expiresIn: "4h",
       },
     );
 
+    const dadosAtualizados: Partial<Usuario> = {
+      nome: usuario.nome,
+      sobrenome: usuario.sobrenome,
+      cpf: usuario.cpf,
+      email: usuario.email,
+      instituicao: usuario.instituicao,
+    };
+
+    if (isAdmin && usuario.tipo) {
+      dadosAtualizados.tipo = usuario.tipo;
+    }
+
     const usuarioAlterado = await prisma.usuario.update({
       where: {
         id: idUsuario,
       },
-      data: {
-        nome: usuario.nome,
-        sobrenome: usuario.sobrenome,
-        cpf: usuario.cpf,
-        email: usuario.email,
-        senha: senhaCriptografada,
-        tipo_usuario: usuario.tipo,
-        instituicao: usuario.instituicao,
-        ativo: usuario.ativo,
-      },
+      data: dadosAtualizados,
       select: {
         id: true,
         nome: true,
@@ -89,6 +79,34 @@ export class EditarUsuarioService {
     return {
       usuarioAlterado,
       token: token,
+    };
+  }
+
+  async atualizarSenha(idUsuario: string, novaSenha: string) {
+    const senhaHash = await hash(novaSenha, 8);
+
+    const usuarioAlterado = await prisma.usuario.update({
+      where: {
+        id: idUsuario,
+      },
+      data: {
+        senha: senhaHash,
+      },
+      select: {
+        id: true,
+        nome: true,
+        sobrenome: true,
+        cpf: true,
+        email: true,
+        instituicao: true,
+        tipo_usuario: true,
+        ativo: true,
+      },
+    });
+
+    return {
+      message: "Senha atualizada com sucesso.",
+      usuario: usuarioAlterado,
     };
   }
 }
