@@ -1,30 +1,24 @@
-import { Usuario, TipoUsuario } from "@models/Usuario";
+import { Request, Response } from "express";
 import { EditarUsuarioService } from "@services/usuario/EditarUsuarioService";
 import { BuscarUsuarioService } from "@services/usuario/BuscarUsuarioService";
-import { Request, Response } from "express";
+import { compare } from "bcrypt";
 
-export class EditarUsuarioController {
+export class EditarSenhaUsuarioController {
   async handle(req: Request, res: Response) {
     const { senhaAtual, novaSenha } = req.body;
     const idUsuario = req.id_usuario;
-    const TipoUsuario = req.tipo_usuario;
 
     try {
       const buscarUsuarioService = new BuscarUsuarioService();
       const { usuario: usuarioAtual } = await buscarUsuarioService.execute(idUsuario);
 
-      const usuario = new Usuario(
-        usuarioAtual.nome,
-        usuarioAtual.sobrenome,
-        usuarioAtual.cpf,
-        usuarioAtual.email,
-        TipoUsuario as TipoUsuario,
-        usuarioAtual.instituicao,
-        novaSenha,
-      );
+      const senhaCorreta = await compare(senhaAtual, usuarioAtual.senha);
+      if (!senhaCorreta) {
+        return res.status(400).json({ error: "Senha atual incorreta." });
+      }
 
       const editarUsuarioService = new EditarUsuarioService();
-      const resultado = await editarUsuarioService.execute(idUsuario, usuario, false);
+      const resultado = await editarUsuarioService.atualizarSenha(idUsuario, novaSenha);
 
       return res.json(resultado);
     } catch (error) {

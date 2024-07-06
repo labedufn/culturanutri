@@ -2,6 +2,7 @@ import { prisma } from "@config/prismaClient";
 import { TipoUsuario, Usuario } from "@models/Usuario";
 import { validarCpf } from "@utils/validarCpf";
 import { validarEmail } from "@utils/validarEmail";
+import { hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
 
 interface UsuarioUpdate extends Partial<Usuario> {
@@ -78,6 +79,34 @@ export class EditarUsuarioService {
     return {
       usuarioAlterado,
       token: token,
+    };
+  }
+
+  async atualizarSenha(idUsuario: string, novaSenha: string) {
+    const senhaHash = await hash(novaSenha, 8);
+
+    const usuarioAlterado = await prisma.usuario.update({
+      where: {
+        id: idUsuario,
+      },
+      data: {
+        senha: senhaHash,
+      },
+      select: {
+        id: true,
+        nome: true,
+        sobrenome: true,
+        cpf: true,
+        email: true,
+        instituicao: true,
+        tipo_usuario: true,
+        ativo: true,
+      },
+    });
+
+    return {
+      message: "Senha atualizada com sucesso.",
+      usuario: usuarioAlterado,
     };
   }
 }
