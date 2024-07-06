@@ -15,7 +15,6 @@ export async function cadastro(
   data: { nome: string; sobrenome: string; cpf: string; email: string; senha: string },
   url: string,
 ) {
-  console.log(data);
   const token = extrairToken(url);
   if (!token || !(await verificarToken(token))) {
     console.error("Token inválido ou expirado.");

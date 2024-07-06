@@ -25,6 +25,7 @@ import { EditarUsuarioAdminController } from "@controllers/usuario/EditarUsuario
 import { EditarSenhaUsuarioController } from "@controllers/usuario/EditarSenhaUsuarioController";
 import { CriarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/CriarAnaliseQuantitativaController";
 import { BuscarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/BuscarAnaliseQuantitativaController";
+import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarInformacoesUsuarioController";
 
 export const router = Router();
 
@@ -40,6 +41,7 @@ router.put("/api/editar-usuario-admin", authAdministrador, new EditarUsuarioAdmi
 router.put("/api/editar-senha-usuario", authUsuario, new EditarSenhaUsuarioController().handle);
 router.get("/api/listar-usuarios", authAdministrador, new ListarUsuariosController().handle);
 router.get("/api/buscar-usuario", authAdministrador, new BuscarUsuarioController().handle);
+router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);

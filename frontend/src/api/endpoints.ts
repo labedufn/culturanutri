@@ -35,3 +35,9 @@ export function EDITAR_USUARIO() {
     url: `${API_URL}/api/usuario`,
   };
 }
+
+export function LISTAR_INFORMACOES_USUARIO() {
+  return {
+    url: `${API_URL}/api/listar-infos`,
+  };
+}

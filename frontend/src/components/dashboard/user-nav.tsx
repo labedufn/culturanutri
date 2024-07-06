@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { listarInformacoesUsuario } from "@/actions/listar-informacoes-usuario";
 import { logout } from "@/actions/login";
 import {
   DropdownMenu,
@@ -13,8 +15,29 @@ import {
 import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CircleUserRound, Home, LogOut, User } from "lucide-react";
 import Link from "next/link";
+import { formatarPalavra } from "@/scripts/formatarPalavra";
 
 export function UserNav() {
+  const [userInfo, setUserInfo] = useState({ nome: "Nome", sobrenome: "Usuário", tipo_usuario: "Avaliador" });
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const response = await listarInformacoesUsuario();
+      if (response.success) {
+        setUserInfo({
+          nome: response.data.usuario.nome,
+          sobrenome: response.data.usuario.sobrenome,
+          tipo_usuario: response.data.usuario.tipo_usuario,
+        });
+        console.log("Informações do usuário", response.data.usuario.nome);
+      } else {
+        console.error(response.message);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
   const handleLogout = async () => {
     const response = await logout();
     if (response.success) {
@@ -39,8 +62,10 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Usuário Teste</p>
-            <p className="text-xs leading-none text-muted-foreground">Administrador</p>
+            <p className="text-sm font-medium leading-none">
+              {formatarPalavra(userInfo.nome) + " " + formatarPalavra(userInfo.sobrenome)}
+            </p>
+            <p className="text-xs leading-none text-muted-foreground">{formatarPalavra(userInfo.tipo_usuario)}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
