@@ -103,7 +103,7 @@ export function AlterarSenhaUsuarioForm() {
               Atualizando...
             </div>
           ) : (
-            "Alterar Senha"
+            "Alterar senha"
           )}
         </Button>
       </form>

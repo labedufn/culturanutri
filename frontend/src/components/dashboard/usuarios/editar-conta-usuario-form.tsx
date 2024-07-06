@@ -59,6 +59,13 @@ export function EditarUsuarioForm() {
   }, [form]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (JSON.stringify(data) === JSON.stringify(userInfo)) {
+      toast({
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+      });
+      return;
+    }
+
     try {
       const resultado = await editarUsuario(data);
       if (resultado?.success !== false) {

@@ -19,23 +19,26 @@ import { formatarPalavra } from "@/scripts/formatarPalavra";
 
 export function UserNav() {
   const [userInfo, setUserInfo] = useState({ nome: "Nome", sobrenome: "Usuário", tipo_usuario: "Avaliador" });
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const fetchUserInfo = async () => {
+    const response = await listarInformacoesUsuario();
+    if (response.success) {
+      setUserInfo({
+        nome: response.data.usuario.nome,
+        sobrenome: response.data.usuario.sobrenome,
+        tipo_usuario: response.data.usuario.tipo_usuario,
+      });
+    } else {
+      console.error(response.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      const response = await listarInformacoesUsuario();
-      if (response.success) {
-        setUserInfo({
-          nome: response.data.usuario.nome,
-          sobrenome: response.data.usuario.sobrenome,
-          tipo_usuario: response.data.usuario.tipo_usuario,
-        });
-      } else {
-        console.error(response.message);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
+    if (menuOpen) {
+      fetchUserInfo();
+    }
+  }, [menuOpen]);
 
   const handleLogout = async () => {
     const response = await logout();
@@ -47,7 +50,7 @@ export function UserNav() {
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={setMenuOpen}>
       <TooltipProvider disableHoverableContent>
         <Tooltip delayDuration={100}>
           <TooltipTrigger asChild>
