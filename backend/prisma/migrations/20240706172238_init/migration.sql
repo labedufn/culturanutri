@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TipoUsuario" AS ENUM ('ADMINISTRADOR', 'GESTOR', 'AVALIADOR');
+CREATE TYPE "TipoUsuario" AS ENUM ('ADMINISTRADOR', 'AVALIADOR');
 
 -- CreateTable
 CREATE TABLE "gestores" (
@@ -92,11 +92,10 @@ CREATE TABLE "resultados" (
 -- CreateTable
 CREATE TABLE "analises_quantitativas" (
     "id" TEXT NOT NULL,
-    "id_gestor" TEXT NOT NULL,
-    "id_manipulador_alimentos" TEXT NOT NULL,
-    "caracteristicas_socio_demograficas" VARCHAR(255) NOT NULL,
-    "resultados_avaliacao_quantitativas_csa" VARCHAR(255) NOT NULL,
-    "vies_otimista" VARCHAR(255) NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
+    "caracteristicas_socio_demograficas" TEXT NOT NULL,
+    "resultados_avaliacao_quantitativas_csa" TEXT NOT NULL,
+    "vies_otimista" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "ativo" INTEGER NOT NULL DEFAULT 1,
@@ -157,6 +156,7 @@ CREATE TABLE "cadastros_tokens" (
     "id" TEXT NOT NULL,
     "token" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "tipo_usuario" "TipoUsuario" NOT NULL,
     "criado_por" TEXT NOT NULL,
     "usado" INTEGER NOT NULL DEFAULT 0,
     "expira_em" TIMESTAMPTZ(3) NOT NULL,
@@ -164,6 +164,9 @@ CREATE TABLE "cadastros_tokens" (
 
     CONSTRAINT "cadastros_tokens_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "usuarios_email_key" ON "usuarios"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "reset_senhas_tokens_token_key" ON "reset_senhas_tokens"("token");
@@ -187,10 +190,7 @@ ALTER TABLE "resultados" ADD CONSTRAINT "resultados_id_triangulacao_fkey" FOREIG
 ALTER TABLE "resultados" ADD CONSTRAINT "resultados_id_estabelecimento_fkey" FOREIGN KEY ("id_estabelecimento") REFERENCES "estabelecimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "analises_quantitativas" ADD CONSTRAINT "analises_quantitativas_id_gestor_fkey" FOREIGN KEY ("id_gestor") REFERENCES "gestores"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "analises_quantitativas" ADD CONSTRAINT "analises_quantitativas_id_manipulador_alimentos_fkey" FOREIGN KEY ("id_manipulador_alimentos") REFERENCES "manipuladores_alimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "analises_quantitativas" ADD CONSTRAINT "analises_quantitativas_id_estabelecimento_fkey" FOREIGN KEY ("id_estabelecimento") REFERENCES "estabelecimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "estabelecimentos" ADD CONSTRAINT "estabelecimentos_alterado_por_fkey" FOREIGN KEY ("alterado_por") REFERENCES "usuarios"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
