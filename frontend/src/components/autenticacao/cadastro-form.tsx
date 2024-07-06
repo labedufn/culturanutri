@@ -196,7 +196,7 @@ export function CadastroForm() {
               Carregando...
             </div>
           ) : (
-            "Entrar"
+            "Concluir Cadastro"
           )}
         </Button>
       </form>
