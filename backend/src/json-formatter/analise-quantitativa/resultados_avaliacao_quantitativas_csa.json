@@ -1,0 +1,176 @@
+json_resultados_avaliacao_quantitativas_csa = {
+  elementos: {
+    liderenca: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    comunicacao: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    conhecimento: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+  },
+  comprometimento: {
+    afetivo: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    normativo: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    continuo: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    com_seguranca_alimentos: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+  },
+  percepcao_risco: {
+    proprio_trabalho: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    outro_manipulador_outro_servico: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    outro_manipulador_mesmo_servico: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    letalidade: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    pressao_trabalho_crencas_normativas: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    ambiente_trabalho: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+    sistemas_estilos_processos_gestao: {
+      manipuladores: {
+        media: 21,
+        dp: 2,
+        moda: 5,
+      },
+      gestores: {
+        media: 21,
+        dp: 12,
+        moda: 5,
+      },
+    },
+  },
+};
