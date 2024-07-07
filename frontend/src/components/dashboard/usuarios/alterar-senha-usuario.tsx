@@ -1,15 +1,15 @@
 "use client";
 
 import { alterarSenhaUsuario } from "@/actions/alterar-senha-usuario";
-import { AlertBox } from "@/components/informacao/alert-box";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 const senhaSchema = z.object({
   senhaAtual: z.string().min(1, "Digite sua senha atual."),
@@ -19,13 +19,21 @@ const senhaSchema = z.object({
 type FormData = z.infer<typeof senhaSchema>;
 
 export function AlterarSenhaUsuarioForm() {
-  const [errorMessage, setErrorMessage] = useState("");
   const form = useForm<FormData>({
     resolver: zodResolver(senhaSchema),
     mode: "onBlur",
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (data.senhaAtual === data.novaSenha) {
+      toast({
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        title: "Erro!",
+        description: "A nova senha não pode ser igual à senha atual.",
+      });
+      return;
+    }
+
     const dadosSenha = {
       senha: data.senhaAtual,
       novaSenha: data.novaSenha,
@@ -34,18 +42,27 @@ export function AlterarSenhaUsuarioForm() {
     try {
       const resultado = await alterarSenhaUsuario(dadosSenha);
       if (resultado?.success !== false) {
-        setErrorMessage("");
-        alert("Senha alterada com sucesso!");
-        window.location.href = "/dashboard";
+        toast({
+          className: cn("bg-primary-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          title: "Sucesso!",
+          description: "Senha alterada com sucesso.",
+        });
+        form.reset();
       } else {
-        setErrorMessage(resultado.message || "Erro ao alterar senha.");
+        toast({
+          className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          title: "Erro!",
+          description: resultado.message || "Erro ao alterar senha.",
+        });
       }
     } catch (error) {
-      setErrorMessage("Falha na comunicação com o servidor.");
+      toast({
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        title: "Erro de comunicação!",
+        description: "Falha na comunicação com o servidor.",
+      });
     }
   };
-
-  const onClose = () => setErrorMessage("");
 
   return (
     <Form {...form}>
@@ -65,6 +82,7 @@ export function AlterarSenhaUsuarioForm() {
                     {...field}
                     placeholder="Digite sua senha atual"
                     className="focus-visible:ring-primary-700"
+                    showPasswordToggle
                   />
                 </FormControl>
                 <FormMessage />
@@ -84,13 +102,13 @@ export function AlterarSenhaUsuarioForm() {
                     {...field}
                     placeholder="Digite sua nova senha"
                     className="focus-visible:ring-primary-700"
+                    showPasswordToggle
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {errorMessage && <AlertBox type="error" message={errorMessage} onClose={onClose} />}
         </div>
         <Button
           type="submit"
@@ -103,7 +121,7 @@ export function AlterarSenhaUsuarioForm() {
               Atualizando...
             </div>
           ) : (
-            "Alterar Senha"
+            "Alterar senha"
           )}
         </Button>
       </form>

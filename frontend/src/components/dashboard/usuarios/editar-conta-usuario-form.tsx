@@ -1,16 +1,18 @@
 "use client";
 
 import { editarUsuario } from "@/actions/editar-usuario";
-import { AlertBox } from "@/components/informacao/alert-box";
+import { listarInformacoesUsuario } from "@/actions/listar-informacoes-usuario";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { formatarCpf, validarCpf } from "@/lib/cpf";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 const usuarioSchema = z.object({
   nome: z.string().min(1, "O campo nome é obrigatório."),
@@ -26,27 +28,70 @@ const usuarioSchema = z.object({
 type FormData = z.infer<typeof usuarioSchema>;
 
 export function EditarUsuarioForm() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [userInfo, setUserInfo] = useState({ nome: "", sobrenome: "", cpf: "", email: "", instituicao: "" });
+
   const form = useForm<FormData>({
     resolver: zodResolver(usuarioSchema),
     mode: "onBlur",
+    defaultValues: userInfo,
   });
 
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const response = await listarInformacoesUsuario();
+      if (response.success) {
+        const data = response.data.usuario;
+        const formattedData = {
+          nome: data.nome,
+          sobrenome: data.sobrenome,
+          cpf: formatarCpf(data.cpf),
+          email: data.email,
+          instituicao: data.instituicao,
+        };
+        setUserInfo(formattedData);
+        form.reset(formattedData);
+      } else {
+        console.error(response.message);
+      }
+    };
+
+    fetchUserInfo();
+  }, [form]);
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (JSON.stringify(data) === JSON.stringify(userInfo)) {
+      toast({
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+      });
+      return;
+    }
+
     try {
       const resultado = await editarUsuario(data);
       if (resultado?.success !== false) {
-        setErrorMessage("");
-        window.location.href = "/perfil";
+        toast({
+          className: cn("bg-primary-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          title: "Sucesso!",
+          description: "Dados atualizados com sucesso.",
+        });
+        const updatedData = { ...data, cpf: formatarCpf(data.cpf) };
+        setUserInfo(updatedData);
+        form.reset(updatedData);
       } else {
-        setErrorMessage(resultado.message || "Erro ao editar usuário.");
+        toast({
+          className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          title: "Erro!",
+          description: resultado.message || "Erro ao editar usuário.",
+        });
       }
     } catch (error) {
-      setErrorMessage("Falha na comunicação com o servidor.");
+      toast({
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        title: "Erro de comunicação!",
+        description: "Falha na comunicação com o servidor.",
+      });
     }
   };
-
-  const onClose = () => setErrorMessage("");
 
   return (
     <Form {...form}>
@@ -56,7 +101,6 @@ export function EditarUsuarioForm() {
           <FormField
             control={form.control}
             name="nome"
-            defaultValue=""
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nome</FormLabel>
@@ -70,7 +114,6 @@ export function EditarUsuarioForm() {
           <FormField
             control={form.control}
             name="sobrenome"
-            defaultValue=""
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Sobrenome</FormLabel>
@@ -84,7 +127,6 @@ export function EditarUsuarioForm() {
           <FormField
             control={form.control}
             name="cpf"
-            defaultValue=""
             render={({ field }) => (
               <FormItem>
                 <FormLabel>CPF</FormLabel>
@@ -104,7 +146,6 @@ export function EditarUsuarioForm() {
           <FormField
             control={form.control}
             name="email"
-            defaultValue=""
             render={({ field }) => (
               <FormItem>
                 <FormLabel>E-mail</FormLabel>
@@ -123,7 +164,6 @@ export function EditarUsuarioForm() {
           <FormField
             control={form.control}
             name="instituicao"
-            defaultValue=""
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Instituição</FormLabel>
@@ -134,7 +174,6 @@ export function EditarUsuarioForm() {
               </FormItem>
             )}
           />
-          {errorMessage && <AlertBox type="error" message={errorMessage} onClose={onClose} />}
         </div>
         <Button
           type="submit"

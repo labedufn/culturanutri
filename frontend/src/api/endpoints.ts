@@ -32,6 +32,18 @@ export function ADICIONAR_USUARIO() {
 
 export function EDITAR_USUARIO() {
   return {
-    url: `${API_URL}/api/usuario`,
+    url: `${API_URL}/api/editar-usuario`,
+  };
+}
+
+export function LISTAR_INFORMACOES_USUARIO() {
+  return {
+    url: `${API_URL}/api/listar-infos`,
+  };
+}
+
+export function ALTERAR_SENHA_USUARIO() {
+  return {
+    url: `${API_URL}/api/alterar-senha-usuario`,
   };
 }

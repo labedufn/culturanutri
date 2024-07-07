@@ -3,7 +3,7 @@ import { EditarUsuarioService } from "@services/usuario/EditarUsuarioService";
 import { BuscarUsuarioService } from "@services/usuario/BuscarUsuarioService";
 import { compare } from "bcrypt";
 
-export class EditarSenhaUsuarioController {
+export class AlterarSenhaUsuarioController {
   async handle(req: Request, res: Response) {
     const { senhaAtual, novaSenha } = req.body;
     const idUsuario = req.id_usuario;

@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { EditarUsuarioForm } from "@/components/dashboard/usuarios/editar-conta-usuario-form";
 import { AlterarSenhaUsuarioForm } from "@/components/dashboard/usuarios/alterar-senha-usuario";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function EstabelecimentosPage() {
   return (
@@ -38,6 +39,7 @@ export default function EstabelecimentosPage() {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </>
   );
 }
