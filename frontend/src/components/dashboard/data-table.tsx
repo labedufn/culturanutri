@@ -53,7 +53,7 @@ export default function DataTable({ data, columns }: DataTableProps) {
     <>
       <div className="w-full">
         <div className="rounded-md border">
-          <Table>
+          <Table className="min-w-[640px]">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
@@ -66,18 +66,18 @@ export default function DataTable({ data, columns }: DataTableProps) {
                           <div
                             {...(isSortable && {
                               onClick: header.column.getToggleSortingHandler(),
-                              style: { cursor: "pointer" },
+                              className: "flex items-center cursor-pointer whitespace-nowrap",
                             })}
                           >
                             {flexRender(header.column.columnDef.header, header.getContext())}
                             {isSortable && header.column.getIsSorted() ? (
                               header.column.getIsSorted() === "asc" ? (
-                                <ArrowUp className="inline-block ml-2" size={16} />
+                                <ArrowUp className="ml-2" size={16} />
                               ) : (
-                                <ArrowDown className="inline-block ml-2" size={16} />
+                                <ArrowDown className="ml-2" size={16} />
                               )
                             ) : (
-                              isSortable && <ChevronsUpDown className="inline-block ml-2" size={16} />
+                              isSortable && <ChevronsUpDown className="ml-2" size={16} />
                             )}
                           </div>
                         )}
@@ -92,7 +92,12 @@ export default function DataTable({ data, columns }: DataTableProps) {
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                      <TableCell
+                        key={cell.id}
+                        className="min-w-[165px] max-w-[200px] md:max-w-[500px] overflow-hidden text-ellipsis whitespace-nowrap lg:whitespace-pre-line"
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
                     ))}
                   </TableRow>
                 ))
