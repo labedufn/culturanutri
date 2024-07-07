@@ -88,7 +88,14 @@ export const columns: Array<ColumnDef<Usuarios> & { sortable?: boolean }> = [
         </button>
       </div>
     ),
-    sortable: true,
+    sortable: false,
+  },
+];
+
+export const defaultSort = [
+  {
+    id: "dataCadastro",
+    desc: false,
   },
 ];
 

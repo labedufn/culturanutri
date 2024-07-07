@@ -90,7 +90,7 @@ export default function DataTable({ data, columns }: DataTableProps) {
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
-                        className="min-w-[165px] max-w-[200px] md:max-w-[500px] overflow-hidden text-ellipsis whitespace-nowrap lg:whitespace-pre-line"
+                        className="min-w-[130px] max-w-[200px] md:max-w-[500px] overflow-hidden text-ellipsis whitespace-nowrap"
                       >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
