@@ -17,7 +17,6 @@ export default function UserTable() {
     const fetchUsersInfo = async () => {
       const response = await listarUsuarios();
       if (response.success) {
-        console.log("Resposta da API:", response);
         const formattedData = response.data.usuarios.map((user: any) => ({
           id: user.id,
           nome: user.nome + " " + user.sobrenome,
