@@ -17,7 +17,6 @@ export async function listarUsuarios() {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("Resposta da API:", response);
     const dados = response.data;
     return {
       success: true,
