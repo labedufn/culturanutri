@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ColumnFiltersState,
   SortingState,
@@ -10,16 +8,16 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  ColumnDef,
 } from "@tanstack/react-table";
 import * as React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ColumnDef } from "@tanstack/react-table";
 import Paginator from "./paginator";
 import { ArrowUp, ArrowDown, ChevronsUpDown } from "lucide-react";
 
 export interface DataTableProps {
   data: any[];
-  columns: ColumnDef<any, any>[];
+  columns: Array<ColumnDef<any> & { sortable?: boolean }>;
 }
 
 export default function DataTable({ data, columns }: DataTableProps) {
@@ -47,8 +45,6 @@ export default function DataTable({ data, columns }: DataTableProps) {
     },
   });
 
-  const isLastColumn = (index: number) => index === columns.length - 1;
-
   return (
     <>
       <div className="w-full">
@@ -57,8 +53,8 @@ export default function DataTable({ data, columns }: DataTableProps) {
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header, index) => {
-                    const isSortable = !isLastColumn(index);
+                  {headerGroup.headers.map((header) => {
+                    const isSortable = header.column.columnDef.sortable !== false;
 
                     return (
                       <TableHead key={header.id}>

@@ -28,18 +28,24 @@ const PaginationNext = ({ onClick, disabled }: PaginationButtonProps) => (
 );
 
 export default function Paginator({ currentPage, totalPages, onPageChange, showPreviousNext }: PaginatorProps) {
+  const handlePageChange = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      onPageChange(pageNumber);
+    }
+  };
+
   return (
     <Pagination>
       <PaginationContent>
         {showPreviousNext && totalPages ? (
           <PaginationItem className="cursor-pointer">
-            <PaginationPrevious onClick={() => onPageChange(currentPage - 1)} disabled={currentPage - 1 < 1} />
+            <PaginationPrevious onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage - 1 < 1} />
           </PaginationItem>
         ) : null}
-        {generatePaginationLinks(currentPage, totalPages, onPageChange)}
+        {generatePaginationLinks(currentPage, totalPages, handlePageChange)}
         {showPreviousNext && totalPages ? (
           <PaginationItem className="cursor-pointer">
-            <PaginationNext onClick={() => onPageChange(currentPage + 1)} disabled={currentPage >= totalPages} />
+            <PaginationNext onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= totalPages} />
           </PaginationItem>
         ) : null}
       </PaginationContent>

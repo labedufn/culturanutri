@@ -15,22 +15,26 @@ export type Usuarios = {
   ultimoLogin: string;
 };
 
-export const columns: ColumnDef<Usuarios>[] = [
+export const columns: Array<ColumnDef<Usuarios> & { sortable?: boolean }> = [
   {
     accessorKey: "nome",
     header: "Nome",
+    sortable: true,
   },
   {
     accessorKey: "cpf",
     header: "CPF",
+    sortable: true,
   },
   {
     accessorKey: "email",
     header: "E-mail",
+    sortable: true,
   },
   {
     accessorKey: "instituicao",
     header: "Instituição",
+    sortable: true,
   },
   {
     accessorKey: "tipoUsuario",
@@ -46,6 +50,7 @@ export const columns: ColumnDef<Usuarios>[] = [
         {row.original.tipoUsuario}
       </Badge>
     ),
+    sortable: true,
   },
   {
     accessorKey: "situacao",
@@ -55,14 +60,17 @@ export const columns: ColumnDef<Usuarios>[] = [
         {row.original.situacao}
       </Badge>
     ),
+    sortable: true,
   },
   {
     accessorKey: "dataCadastro",
     header: "Data de Cadastro",
+    sortable: true,
   },
   {
     accessorKey: "ultimoLogin",
     header: "Último Login",
+    sortable: true,
   },
   {
     id: "acoes",
@@ -80,17 +88,18 @@ export const columns: ColumnDef<Usuarios>[] = [
         </button>
       </div>
     ),
+    sortable: true,
   },
 ];
 
-const handleVisualizar = (usuario: Usuarios) => {
-  console.log("Visualizar usuário", usuario);
+export const handleVisualizar = (usuario: Usuarios) => {
+  console.log("Visualizar", usuario);
 };
 
-const handleEditar = (usuario: Usuarios) => {
-  console.log("Editar usuário", usuario);
+export const handleEditar = (usuario: Usuarios) => {
+  console.log("Editar", usuario);
 };
 
-const handleExcluir = (usuario: Usuarios) => {
-  console.log("Excluir usuário", usuario);
+export const handleExcluir = (usuario: Usuarios) => {
+  console.log("Excluir", usuario);
 };

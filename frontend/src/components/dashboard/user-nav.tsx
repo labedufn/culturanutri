@@ -55,7 +55,7 @@ export function UserNav() {
         <Tooltip delayDuration={100}>
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
-              <CircleUserRound size={28} className="cursor-pointer" />
+              <CircleUserRound size={28} className="cursor-pointer text-zinc-800" />
             </DropdownMenuTrigger>
           </TooltipTrigger>
         </Tooltip>

@@ -53,3 +53,9 @@ export function LISTAR_USUARIOS() {
     url: `${API_URL}/api/listar-usuarios`,
   };
 }
+
+export function LISTAR_INSTITUICOES() {
+  return {
+    url: `${API_URL}/api/listar-instituicoes`,
+  };
+}
