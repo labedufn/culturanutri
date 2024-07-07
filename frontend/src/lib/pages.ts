@@ -76,9 +76,9 @@ export function getPages(pathname: string): Group[] {
               active: pathname === "/dashboard/estabelecimentos",
             },
             {
-              href: "/dashboard/estabelecimentos/add",
+              href: "/dashboard/estabelecimentos/adicionar",
               label: "Adicionar Local",
-              active: pathname === "/dashboard/estabelecimentos/add",
+              active: pathname === "/dashboard/estabelecimentos/adicionar",
             },
           ],
         },
@@ -94,9 +94,9 @@ export function getPages(pathname: string): Group[] {
               active: pathname === "/dashboard/usuarios",
             },
             {
-              href: "/dashboard/usuarios/add",
+              href: "/dashboard/usuarios/adicionar",
               label: "Adicionar Usuário",
-              active: pathname === "/dashboard/usuarios/add",
+              active: pathname === "/dashboard/usuarios/adicionar",
             },
             {
               href: "/dashboard/usuarios/convites",
