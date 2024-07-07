@@ -8,17 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { adicionarUsuario } from "@/actions/adicionar-usuario";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { enviarConviteUsuario } from "@/actions/enviar-convite-usuario";
 
 const FormSchema = z.object({
   email: z.string({ required_error: "E-mail é obrigatório" }).email({ message: "E-mail inválido" }),
   tipo: z.enum(["ADMINISTRADOR", "AVALIADOR"], { required_error: "Tipo de usuário é obrigatório." }),
 });
 
-export function AdicionarUsuarioForm() {
+export function EnviarConviteUsuarioForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { email: "", tipo: undefined },
@@ -26,7 +26,7 @@ export function AdicionarUsuarioForm() {
 
   const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (data) => {
     try {
-      const resultado = await adicionarUsuario(data);
+      const resultado = await enviarConviteUsuario(data);
       if (resultado?.success !== false) {
         toast({
           className: cn("bg-primary-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),

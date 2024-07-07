@@ -1,17 +1,19 @@
 "use server";
 
 import axios from "axios";
-import { ADICIONAR_USUARIO } from "@/api/endpoints";
 import { cookies } from "next/headers";
 import { verificarToken } from "@/scripts/verificarToken";
 import { apiErro } from "@/api/api-erros";
+import { ENVIAR_CONVITE_USUARIO } from "@/api/endpoints";
 
-interface AdicionarUsuarioData {
+interface EnviarConviteUsuarioData {
   email: string;
   tipo: string;
 }
 
-export async function adicionarUsuario(data: AdicionarUsuarioData): Promise<{ success: boolean; message: string }> {
+export async function enviarConviteUsuario(
+  data: EnviarConviteUsuarioData,
+): Promise<{ success: boolean; message: string }> {
   console.log("Envio de dados para adicionar usuário", data);
 
   const cookieData = cookies().get("token");
@@ -27,7 +29,7 @@ export async function adicionarUsuario(data: AdicionarUsuarioData): Promise<{ su
   }
 
   try {
-    const { url } = ADICIONAR_USUARIO();
+    const { url } = ENVIAR_CONVITE_USUARIO();
     const response = await axios.post(url, data, {
       headers: {
         "Content-Type": "application/json",

@@ -26,6 +26,7 @@ import { AlterarSenhaUsuarioController } from "@controllers/usuario/AlterarSenha
 import { CriarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/CriarAnaliseQuantitativaController";
 import { BuscarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/BuscarAnaliseQuantitativaController";
 import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarInformacoesUsuarioController";
+import { InstituicoesController } from "@controllers/util/InstituicoesController";
 
 export const router = Router();
 
@@ -64,3 +65,5 @@ router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoCont
 // Rotas Analise Quantitativa
 router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
 router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
+
+router.get("/api/listar-instituicoes", new InstituicoesController().handle);
