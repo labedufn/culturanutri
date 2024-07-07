@@ -8,9 +8,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { AdicionarUsuarioForm } from "@/components/dashboard/usuarios/adicionar-usuario-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
+import { EnviarConviteUsuarioForm } from "@/components/dashboard/usuarios/enviar-convite-usuario-form";
 
 export default function UsuariosAddPage() {
   return (
@@ -30,14 +30,14 @@ export default function UsuariosAddPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Adicionar Usuário</BreadcrumbPage>
+            <BreadcrumbPage>Enviar Convite</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <Card className="rounded-lg border-none mt-6">
         <CardContent className="p-6">
           <div className="min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
-            <AdicionarUsuarioForm />
+            <EnviarConviteUsuarioForm />
           </div>
         </CardContent>
       </Card>

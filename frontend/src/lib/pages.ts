@@ -94,9 +94,9 @@ export function getPages(pathname: string): Group[] {
               active: pathname === "/dashboard/usuarios",
             },
             {
-              href: "/dashboard/usuarios/adicionar",
-              label: "Adicionar Usuário",
-              active: pathname === "/dashboard/usuarios/adicionar",
+              href: "/dashboard/usuarios/enviar-convite",
+              label: "Enviar Convite",
+              active: pathname === "/dashboard/usuarios/enviar-convite",
             },
             {
               href: "/dashboard/usuarios/convites",

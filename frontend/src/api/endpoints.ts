@@ -24,7 +24,7 @@ export function REDEFINIR_SENHA() {
   };
 }
 
-export function ADICIONAR_USUARIO() {
+export function ENVIAR_CONVITE_USUARIO() {
   return {
     url: `${API_URL}/api/usuario`,
   };
@@ -45,5 +45,11 @@ export function LISTAR_INFORMACOES_USUARIO() {
 export function ALTERAR_SENHA_USUARIO() {
   return {
     url: `${API_URL}/api/alterar-senha-usuario`,
+  };
+}
+
+export function LISTAR_USUARIOS() {
+  return {
+    url: `${API_URL}/api/listar-usuarios`,
   };
 }
