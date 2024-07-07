@@ -41,3 +41,9 @@ export function LISTAR_INFORMACOES_USUARIO() {
     url: `${API_URL}/api/listar-infos`,
   };
 }
+
+export function ALTERAR_SENHA_USUARIO() {
+  return {
+    url: `${API_URL}/api/alterar-senha-usuario`,
+  };
+}

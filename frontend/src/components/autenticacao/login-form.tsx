@@ -43,7 +43,7 @@ export function LoginForm() {
       const resultado = await login({
         emailOuCpf: data.emailOuCpf,
         senha: data.senha,
-        rememberMe: rememberMe, // Adicione esta linha para passar o estado da caixa de seleção
+        rememberMe: rememberMe,
       });
       if (resultado?.success !== false) {
         setErrorMessage("");
