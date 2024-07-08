@@ -1,12 +1,12 @@
 "use server";
 
 import { apiErro } from "@/api/api-erros";
-import { EDITAR_USUARIO } from "@/api/endpoints";
+import { ALTERAR_SENHA_USUARIO } from "@/api/endpoints";
 import { verificarToken } from "@/scripts/verificarToken";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-export async function alterarSenhaUsuario(data: { senha: string; novaSenha: string }) {
+export async function alterarSenhaUsuario(data: { senhaAtual: string; novaSenha: string }) {
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
   console.log("Token do usuário", token);
@@ -20,7 +20,8 @@ export async function alterarSenhaUsuario(data: { senha: string; novaSenha: stri
   }
 
   try {
-    const { url } = EDITAR_USUARIO();
+    const { url } = ALTERAR_SENHA_USUARIO();
+    console.log("RESPOSTA PARA API", url, data, token);
     const response = await axios.put(url, data, {
       headers: {
         "Content-Type": "application/json",
