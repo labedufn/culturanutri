@@ -35,12 +35,13 @@ export function AlterarSenhaUsuarioForm() {
     }
 
     const dadosSenha = {
-      senha: data.senhaAtual,
+      senhaAtual: data.senhaAtual,
       novaSenha: data.novaSenha,
     };
 
     try {
       const resultado = await alterarSenhaUsuario(dadosSenha);
+      console.log("RESULTADO: ", dadosSenha, resultado);
       if (resultado?.success !== false) {
         toast({
           className: cn("bg-primary-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
