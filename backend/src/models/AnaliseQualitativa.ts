@@ -1,4 +1,4 @@
-export class AnaliseQuanlitativa {
+export class AnaliseQualitativa {
   id_estabelecimento: string;
   informacoes: string;
   ativo: number;
