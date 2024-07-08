@@ -6,7 +6,7 @@ import DataTable from "@/components/dashboard/data-table";
 import SearchInput from "./search-input";
 import { listarUsuarios } from "@/actions/listar-usuarios";
 import { formatarCpf } from "@/lib/cpf";
-import { formatarData } from "@/scripts/formatarData";
+import { formatarData, formatarDataHora } from "@/scripts/formatarData";
 import { formatarPalavra } from "@/scripts/formatarPalavra";
 
 export default function UserTable() {
@@ -26,7 +26,7 @@ export default function UserTable() {
           tipoUsuario: formatarPalavra(user.tipo_usuario),
           situacao: user.ativo ? "Ativo" : "Inativo",
           dataCadastro: formatarData(user.data_cadastro),
-          ultimoLogin: formatarData(user.ultimo_login),
+          ultimoLogin: formatarDataHora(user.ultimo_login),
         }));
         setUserInfo(formattedData);
         setFilteredData(formattedData);

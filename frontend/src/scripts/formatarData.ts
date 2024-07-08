@@ -1,4 +1,4 @@
-export function formatarData(data: any) {
+export function formatarDataHora(data: any) {
   const dataObj = new Date(data);
   const dia = String(dataObj.getDate()).padStart(2, "0");
   const mes = String(dataObj.getMonth() + 1).padStart(2, "0");
@@ -7,4 +7,13 @@ export function formatarData(data: any) {
   const minutos = String(dataObj.getMinutes()).padStart(2, "0");
 
   return `${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+}
+
+export function formatarData(data: any) {
+  const dataObj = new Date(data);
+  const dia = String(dataObj.getDate()).padStart(2, "0");
+  const mes = String(dataObj.getMonth() + 1).padStart(2, "0");
+  const ano = dataObj.getFullYear();
+
+  return `${dia}/${mes}/${ano}`;
 }
