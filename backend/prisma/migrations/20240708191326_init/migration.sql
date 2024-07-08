@@ -55,12 +55,10 @@ CREATE TABLE "tabelas_auxiliares" (
 -- CreateTable
 CREATE TABLE "analises_qualitativas" (
     "id" TEXT NOT NULL,
-    "analise_qualitativa_id" INTEGER NOT NULL,
-    "categoria" INTEGER NOT NULL,
+    "id_estabelecimento" TEXT NOT NULL,
     "informacoes" TEXT NOT NULL,
     "data_cadastro" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
-    "id_triangulacoes" TEXT NOT NULL,
 
     CONSTRAINT "analises_qualitativas_pkey" PRIMARY KEY ("id")
 );
@@ -173,6 +171,9 @@ CREATE UNIQUE INDEX "reset_senhas_tokens_token_key" ON "reset_senhas_tokens"("to
 
 -- CreateIndex
 CREATE UNIQUE INDEX "cadastros_tokens_token_key" ON "cadastros_tokens"("token");
+
+-- AddForeignKey
+ALTER TABLE "analises_qualitativas" ADD CONSTRAINT "analises_qualitativas_id_estabelecimento_fkey" FOREIGN KEY ("id_estabelecimento") REFERENCES "estabelecimentos"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "triangulacoes" ADD CONSTRAINT "triangulacoes_id_lista_verificacao_fkey" FOREIGN KEY ("id_lista_verificacao") REFERENCES "listas_verificacoes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

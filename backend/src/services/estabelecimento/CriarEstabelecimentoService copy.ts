@@ -3,7 +3,6 @@ import { Estabelecimento } from "@prisma/client";
 
 export class CriarEstabelecimentoService {
   async execute(estabelecimento: Estabelecimento) {
-    const idUsuario = req.id_usuario;
     const estabelecimentoCriado = await prisma.estabelecimento.create({
       data: {
         nome: estabelecimento.nome,

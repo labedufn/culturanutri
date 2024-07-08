@@ -62,13 +62,13 @@ model TabelaAuxiliar {
 }
 
 model AnaliseQualitativa {
-  id                     String   @id @default(uuid())
-  analise_qualitativa_id Int
-  categoria              Int
-  informacoes            String   @db.Text
-  data_cadastro          DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao         DateTime @updatedAt @db.Timestamptz(3)
-  id_triangulacoes       String
+  id                 String          @id @default(uuid())
+  id_estabelecimento String
+  informacoes        String          @db.Text
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  ativo              Int             @default(1)
 
   Triangulacao Triangulacao[]
 
@@ -136,6 +136,7 @@ model Estabelecimento {
 
   Resultado           Resultado[]
   AnaliseQuantitativa AnaliseQuantitativa[]
+  AnaliseQualitativa  AnaliseQualitativa[]
 
   @@map("estabelecimentos")
 }
