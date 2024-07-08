@@ -18,7 +18,11 @@ const FormSchema = z.object({
   tipo: z.enum(["ADMINISTRADOR", "AVALIADOR"], { required_error: "Tipo de usuário é obrigatório." }),
 });
 
-export function EnviarConviteUsuarioForm() {
+interface EnviarConviteUsuarioFormProps {
+  onInviteSent: () => void;
+}
+
+export function EnviarConviteUsuarioForm({ onInviteSent }: EnviarConviteUsuarioFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { email: "", tipo: undefined },
@@ -33,6 +37,7 @@ export function EnviarConviteUsuarioForm() {
           title: "Sucesso!",
           description: "Convite enviado com sucesso.",
         });
+        onInviteSent(); // Chama a função para refetch
       } else {
         toast({
           className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
