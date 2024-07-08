@@ -17,3 +17,11 @@ export function formatarData(data: any) {
 
   return `${dia}/${mes}/${ano}`;
 }
+
+export function verificarExpiracao(dataExpiracao: any) {
+  const dataExpiracaoUTC = new Date(dataExpiracao).getTime();
+  const dataAtualUTC = new Date().getTime();
+  const quinzeMinutosEmMilissegundos = 15 * 60 * 1000;
+
+  return dataAtualUTC - dataExpiracaoUTC > quinzeMinutosEmMilissegundos;
+}

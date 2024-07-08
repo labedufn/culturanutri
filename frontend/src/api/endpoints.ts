@@ -59,3 +59,9 @@ export function LISTAR_INSTITUICOES() {
     url: `${API_URL}/api/listar-instituicoes`,
   };
 }
+
+export function LISTAR_CONVITES() {
+  return {
+    url: `${API_URL}/api/listar-convites`,
+  };
+}
