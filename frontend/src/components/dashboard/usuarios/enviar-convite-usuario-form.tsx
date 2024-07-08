@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
@@ -87,6 +87,7 @@ export function EnviarConviteUsuarioForm() {
                       </SelectContent>
                     </Select>
                   </FormControl>
+                  <FormDescription>O link para cadastro tem a validade de 15 minutos.</FormDescription>
                 </FormItem>
               )}
             />

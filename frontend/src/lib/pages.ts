@@ -98,11 +98,6 @@ export function getPages(pathname: string): Group[] {
               label: "Enviar Convite",
               active: pathname === "/dashboard/usuarios/enviar-convite",
             },
-            {
-              href: "/dashboard/usuarios/convites",
-              label: "Convites Enviados",
-              active: pathname === "/dashboard/usuarios/convites",
-            },
           ],
         },
         {

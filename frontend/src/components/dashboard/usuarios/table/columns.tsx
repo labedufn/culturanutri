@@ -95,7 +95,7 @@ export const columns: Array<ColumnDef<Usuarios> & { sortable?: boolean }> = [
 export const defaultSort = [
   {
     id: "dataCadastro",
-    desc: false,
+    desc: true,
   },
 ];
 

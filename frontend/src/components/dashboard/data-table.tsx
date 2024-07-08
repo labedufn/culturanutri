@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ColumnFiltersState,
   SortingState,
@@ -18,10 +20,11 @@ import { ArrowUp, ArrowDown, ChevronsUpDown } from "lucide-react";
 export interface DataTableProps {
   data: any[];
   columns: Array<ColumnDef<any> & { sortable?: boolean }>;
+  defaultSort?: SortingState;
 }
 
-export default function DataTable({ data, columns }: DataTableProps) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+export default function DataTable({ data, columns, defaultSort = [] }: DataTableProps) {
+  const [sorting, setSorting] = React.useState<SortingState>(defaultSort);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
