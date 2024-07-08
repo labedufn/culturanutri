@@ -4,13 +4,11 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
-export class CriarAnaliseQualitativaService {
+export class BuscarAnaliseQualitativaService {
   async execute(analiseQualitativa: AnaliseQualitativa) {
-    const analiseQualitativaCriada = await prisma.analiseQualitativa.create({
-      data: {
+    const analiseQualitativaBuscada = await prisma.analiseQualitativa.findFirst({
+      where: {
         id_estabelecimento: analiseQualitativa.id_estabelecimento,
-        informacoes: analiseQualitativa.informacoes,
-        ativo: analiseQualitativa.ativo,
       },
       select: {
         id: true,
@@ -22,10 +20,10 @@ export class CriarAnaliseQualitativaService {
       },
     });
 
-    const informacoesDecodificadas = await desconverterBase64JSON(analiseQualitativaCriada.informacoes);
+    const informacoesDecodificadas = await desconverterBase64JSON(analiseQualitativaBuscada.informacoes);
 
     return {
-      ...analiseQualitativaCriada,
+      ...analiseQualitativaBuscada,
       informacoesDecodificadas: informacoesDecodificadas,
     };
   }
