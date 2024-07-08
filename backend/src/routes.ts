@@ -27,6 +27,7 @@ import { CriarAnaliseQuantitativaController } from "@controllers/analise-quantit
 import { BuscarAnaliseQuantitativaController } from "@controllers/analise-quantitativa/BuscarAnaliseQuantitativaController";
 import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarInformacoesUsuarioController";
 import { InstituicoesController } from "@controllers/util/InstituicoesController";
+import { ListarConvitesCadastroController } from "@controllers/usuario/ListarConvitesCadastroController";
 
 export const router = Router();
 
@@ -43,6 +44,7 @@ router.put("/api/alterar-senha-usuario", authUsuario, new AlterarSenhaUsuarioCon
 router.get("/api/listar-usuarios", authAdministrador, new ListarUsuariosController().handle);
 router.get("/api/buscar-usuario", authAdministrador, new BuscarUsuarioController().handle);
 router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioController().handle);
+router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
