@@ -31,6 +31,9 @@ import { ListarConvitesCadastroController } from "@controllers/usuario/ListarCon
 
 export const router = Router();
 
+// Rotas teste
+router.get("/api/listar-instituicoes", new InstituicoesController().handle);
+
 // Rotas usuários
 router.post("/api/cadastro", new CriarUsuarioController().handle);
 router.post("/api/usuario", authAdministrador, new SolicitarCadastroController().handle);
@@ -47,25 +50,23 @@ router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioControl
 router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
 
 // Rotas Estabelecimento
-router.post("/api/estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
-router.put("/api/estabelecimento", new EditarEstabelecimentoController().handle);
-router.get("/api/estabelecimento", new ListarEstabelecimentosController().handle);
+router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
+router.put("/api/editar-estabelecimento", authUsuario, new EditarEstabelecimentoController().handle);
+router.get("/api/listar-estabelecimento", authUsuario, new ListarEstabelecimentosController().handle);
 router.get("/api/buscar-estabelecimento", authUsuario, new BuscarEstabelecimentoController().handle);
 
 // Rotas Gestor Avaliacao
 router.post("/api/cadastro-gestor", new CriarGestorController().handle);
+router.put("/api/editar-gestor", new EditarGestorController().handle);
 router.get("/api/listar-gestor", new ListarGestoresController().handle);
 router.get("/api/buscar-gestor", new BuscarGestorController().handle);
-router.put("/api/editar-gestor", new EditarGestorController().handle);
 
 // Rotas Manipulador Alimento
 router.post("/api/cadastro-manipulador-alimento", new CriarManipuladorAlimentoController().handle);
+router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoController().handle);
 router.get("/api/listar-manipulador-alimento", new ListarManipuladoresAlimentoController().handle);
 router.get("/api/buscar-manipulador-alimento", new BuscarManipuladorAlimentoController().handle);
-router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoController().handle);
 
 // Rotas Analise Quantitativa
 router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
 router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
-
-router.get("/api/listar-instituicoes", new InstituicoesController().handle);
