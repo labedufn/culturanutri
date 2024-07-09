@@ -9,10 +9,8 @@ export class EditarGestorController {
 
     try {
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
-      const data_cadastro = new Date();
-      const data_alteracao = new Date();
 
-      const gestor = new Gestor(informacoes, id_estabelecimento, data_cadastro, data_alteracao, ativo);
+      const gestor = new Gestor(informacoes, id_estabelecimento, ativo);
       const editarGestorService = new EditarGestosService();
       const gestorAlterado = await editarGestorService.execute(id_gestor, gestor);
 

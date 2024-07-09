@@ -10,15 +10,10 @@ export class CriarGestorService {
       data: {
         id_estabelecimento: gestor.id_estabelecimento,
         informacoes: gestor.informacoes,
-        ativo: gestor.ativo,
       },
       select: {
-        id: true,
         id_estabelecimento: true,
-        data_cadastro: true,
-        data_alteracao: true,
         informacoes: true,
-        ativo: true,
       },
     });
 

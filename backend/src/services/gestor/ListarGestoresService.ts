@@ -19,7 +19,6 @@ export class ListarGestoresService {
       },
     });
 
-    // Decode `informacoes` for each gestor
     const decodedGestores = await Promise.all(
       gestores.map(async (gestor) => ({
         ...gestor,

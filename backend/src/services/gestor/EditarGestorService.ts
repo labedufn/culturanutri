@@ -17,7 +17,6 @@ export class EditarGestosService {
         ativo: gestor.ativo,
       },
       select: {
-        id: true,
         data_cadastro: true,
         data_alteracao: true,
         informacoes: true,
