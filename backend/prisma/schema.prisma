@@ -128,7 +128,7 @@ model Estabelecimento {
   numero_refeicoes                 Int
   possui_alvara_sanitario          Int
   possui_responsavel_boas_praticas Int
-  data_criacao                     DateTime @map("data_criacao")
+  data_criacao                     DateTime @default(now()) @db.Timestamptz(3)
   data_alteracao                   DateTime @updatedAt @db.Timestamptz(3)
   alterado_por                     String
   ativo                            Int      @default(1)

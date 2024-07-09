@@ -47,10 +47,10 @@ router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioControl
 router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
 
 // Rotas Estabelecimento
-router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
-router.put("/api/editar-estabelecimento", new EditarEstabelecimentoController().handle);
-router.get("/api/listar-estabelecimento", new ListarEstabelecimentosController().handle);
-router.get("/api/buscar-estabelecimento", new BuscarEstabelecimentoController().handle);
+router.post("/api/estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
+router.put("/api/estabelecimento", new EditarEstabelecimentoController().handle);
+router.get("/api/estabelecimento", new ListarEstabelecimentosController().handle);
+router.get("/api/buscar-estabelecimento", authUsuario, new BuscarEstabelecimentoController().handle);
 
 // Rotas Gestor Avaliacao
 router.post("/api/cadastro-gestor", new CriarGestorController().handle);

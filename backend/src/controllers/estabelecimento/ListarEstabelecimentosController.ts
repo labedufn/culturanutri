@@ -3,11 +3,11 @@ import { Request, Response } from "express";
 
 export class ListarEstabelecimentosController {
   async handle(req: Request, res: Response) {
-    const { id_usuario } = req.body;
+    const idUsuario = req.id_usuario;
 
     try {
       const listarEstabelecimentosService = new ListarEstabelecimentosService();
-      const estabelecimento = await listarEstabelecimentosService.execute(id_usuario);
+      const estabelecimento = await listarEstabelecimentosService.execute(idUsuario);
 
       return res.json(estabelecimento);
     } catch (error) {

@@ -1,6 +1,7 @@
 import { Estabelecimento } from "@models/Estabelecimento";
-import { CriarEstabelecimentoService } from "@services/estabelecimento/CriarEstabelecimentoService copy";
 import { Request, Response } from "express";
+import { BuscarUsuarioService } from "@services/usuario/BuscarUsuarioService";
+import { CriarEstabelecimentoService } from "@services/estabelecimento/CriarEstabelecimentoService";
 
 export class CriarEstabelecimentoController {
   async handle(req: Request, res: Response) {
@@ -14,7 +15,12 @@ export class CriarEstabelecimentoController {
       possui_responsavel_boas_praticas,
     } = req.body;
 
+    const idUsuario = req.id_usuario;
+
     try {
+      const buscarUsuarioService = new BuscarUsuarioService();
+      const usuarioAtual = await buscarUsuarioService.execute(idUsuario);
+
       const novoEstabelecimento = new Estabelecimento(
         nome,
         cnae,
@@ -23,8 +29,7 @@ export class CriarEstabelecimentoController {
         numero_refeicoes,
         possui_alvara_sanitario,
         possui_responsavel_boas_praticas,
-        alterado_por,
-        1,
+        usuarioAtual.usuario,
       );
 
       const criarEstabelecimentoService = new CriarEstabelecimentoService();
