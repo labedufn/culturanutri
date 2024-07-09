@@ -10,7 +10,7 @@ export class AnaliseQuantitativa {
     caracteristicas_socio_demograficas: string,
     resultados_avaliacao_quantitativas_csa: string,
     vies_otimista: string,
-    ativo: number,
+    ativo: number = 1,
   ) {
     this.id_estabelecimento = id_estabelecimento;
     this.caracteristicas_socio_demograficas = caracteristicas_socio_demograficas;
