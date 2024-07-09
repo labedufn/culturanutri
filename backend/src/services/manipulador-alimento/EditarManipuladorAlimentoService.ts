@@ -1,4 +1,5 @@
-import { ManipuladorAlimento, PrismaClient } from "@prisma/client";
+import { ManipuladorAlimento } from "@models/ManipuladorAlimento";
+import { PrismaClient } from "@prisma/client";
 import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
@@ -15,7 +16,6 @@ export class EditarManipuladorAlimentoService {
       },
       select: {
         id: true,
-        data_cadastro: true,
         data_alteracao: true,
         informacoes: true,
         ativo: true,
