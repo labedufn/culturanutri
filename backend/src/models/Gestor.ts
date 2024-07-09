@@ -1,5 +1,5 @@
 export class Gestor {
-  informacoes: string;
+  informacoes: any;
   id_estabelecimento: string;
   data_cadastro: Date;
   data_alteracao: Date;

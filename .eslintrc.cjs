@@ -23,7 +23,9 @@ module.exports = {
         node: true,
         es6: true,
       },
-      rules: {},
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      },
     },
     {
       files: ["frontend/**/*.ts", "frontend/**/*.tsx"],
