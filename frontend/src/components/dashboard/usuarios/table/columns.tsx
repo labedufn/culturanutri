@@ -1,7 +1,5 @@
-"use client";
-
-import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
+import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Trash } from "lucide-react";
 
 export type Usuarios = {
@@ -15,7 +13,9 @@ export type Usuarios = {
   ultimoLogin: string;
 };
 
-export const columns: Array<ColumnDef<Usuarios> & { sortable?: boolean }> = [
+export const columns = (
+  handleVisualizar: (usuario: Usuarios) => void,
+): Array<ColumnDef<Usuarios> & { sortable?: boolean }> => [
   {
     accessorKey: "nome",
     header: "Nome",
@@ -98,10 +98,6 @@ export const defaultSort = [
     desc: true,
   },
 ];
-
-export const handleVisualizar = (usuario: Usuarios) => {
-  console.log("Visualizar", usuario);
-};
 
 export const handleEditar = (usuario: Usuarios) => {
   console.log("Editar", usuario);

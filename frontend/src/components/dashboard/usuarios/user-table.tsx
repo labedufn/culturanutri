@@ -8,10 +8,13 @@ import { listarUsuarios } from "@/actions/listar-usuarios";
 import { formatarCpf } from "@/lib/cpf";
 import { formatarData, formatarDataHora } from "@/scripts/formatarData";
 import { formatarPalavra } from "@/scripts/formatarPalavra";
+import { ModalVisualizarUsuario } from "./modal-visualizar-usuario";
 
 export default function UserTable() {
   const [userInfo, setUserInfo] = useState<Usuarios[]>([]);
   const [filteredData, setFilteredData] = useState<Usuarios[]>([]);
+  const [selectedUser, setSelectedUser] = useState<Usuarios | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUsersInfo = async () => {
@@ -49,10 +52,18 @@ export default function UserTable() {
     setFilteredData(filtered);
   };
 
+  const handleVisualizar = (usuario: Usuarios) => {
+    setSelectedUser(usuario);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <SearchInput onSearch={handleSearch} />
-      <DataTable columns={columns} data={filteredData} />
+      <DataTable columns={columns(handleVisualizar)} data={filteredData} />
+      {selectedUser && (
+        <ModalVisualizarUsuario isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} usuario={selectedUser} />
+      )}
     </div>
   );
 }
