@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Usuarios, columns } from "../../../components/dashboard/usuarios/table/columns";
+import { Usuarios, columns, defaultSort } from "../../../components/dashboard/usuarios/table/columns";
 import DataTable from "@/components/dashboard/data-table";
 import SearchInput from "./search-input";
 import { listarUsuarios } from "@/actions/listar-usuarios";
@@ -60,7 +60,7 @@ export default function UserTable() {
   return (
     <div className="flex flex-col gap-6">
       <SearchInput onSearch={handleSearch} />
-      <DataTable columns={columns(handleVisualizar)} data={filteredData} />
+      <DataTable columns={columns(handleVisualizar)} data={filteredData} defaultSort={defaultSort} />
       {selectedUser && (
         <ModalVisualizarUsuario isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} usuario={selectedUser} />
       )}
