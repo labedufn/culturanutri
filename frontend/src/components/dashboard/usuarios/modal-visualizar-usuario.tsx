@@ -9,11 +9,23 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+
+type Usuario = {
+  nome: string;
+  cpf: string;
+  email: string;
+  instituicao: string;
+  tipoUsuario: string;
+  situacao: string;
+  dataCadastro: string;
+  ultimoLogin: string;
+};
 
 type ModalVisualizarUsuarioProps = {
   isOpen: boolean;
   onClose: () => void;
-  usuario: any;
+  usuario: Usuario;
 };
 
 export function ModalVisualizarUsuario({ isOpen, onClose, usuario }: ModalVisualizarUsuarioProps) {
@@ -24,7 +36,7 @@ export function ModalVisualizarUsuario({ isOpen, onClose, usuario }: ModalVisual
           <DialogTitle>Visualizar Usuário</DialogTitle>
           <DialogDescription>Informações do usuário selecionado.</DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-2 md:gap-4 gap-6">
+        <div className="grid grid-cols-2 md:gap-5 gap-6">
           <div>
             <Label className="text-muted-foreground">Nome:</Label>
             <p className="font-medium text-sm">{usuario.nome}</p>
@@ -33,6 +45,9 @@ export function ModalVisualizarUsuario({ isOpen, onClose, usuario }: ModalVisual
             <Label className="text-muted-foreground">CPF:</Label>
             <p className="font-medium text-sm">{usuario.cpf}</p>
           </div>
+          <div className="col-span-2">
+            <Separator />
+          </div>
           <div>
             <Label className="text-muted-foreground">E-mail:</Label>
             <p className="font-medium text-sm">{usuario.email}</p>
@@ -40,6 +55,9 @@ export function ModalVisualizarUsuario({ isOpen, onClose, usuario }: ModalVisual
           <div>
             <Label className="text-muted-foreground">Instituição:</Label>
             <p className="font-medium text-sm">{usuario.instituicao}</p>
+          </div>
+          <div className="col-span-2">
+            <Separator />
           </div>
           <div>
             <Label className="text-muted-foreground">Tipo de Usuário:</Label>
@@ -64,6 +82,9 @@ export function ModalVisualizarUsuario({ isOpen, onClose, usuario }: ModalVisual
                 {usuario.situacao}
               </Badge>
             </div>
+          </div>
+          <div className="col-span-2">
+            <Separator />
           </div>
           <div>
             <Label className="text-muted-foreground">Data de Cadastro:</Label>
