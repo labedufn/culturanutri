@@ -59,9 +59,20 @@ export function EditarUsuarioForm() {
   }, [form]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    if (JSON.stringify(data) === JSON.stringify(userInfo)) {
+    const isDataChanged =
+      data.nome !== userInfo.nome ||
+      data.sobrenome !== userInfo.sobrenome ||
+      data.cpf !== userInfo.cpf.replace(/\D/g, "") ||
+      data.email !== userInfo.email ||
+      data.instituicao !== userInfo.instituicao;
+
+    if (!isDataChanged) {
       toast({
-        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        className: cn(
+          "bg-yellow-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+        ),
+        title: "Nenhuma alteração!",
+        description: "Nenhuma alteração foi feita para atualizar.",
       });
       return;
     }

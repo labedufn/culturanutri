@@ -1,5 +1,4 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,97 +7,119 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { editarUsuarioAdmin } from "@/actions/editar-usuario-admin";
+import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
+import { TipoUsuario, tipoUsuarioOptions } from "@/enums/tipoUsuario";
 
 type Usuario = {
-  nome: string;
-  cpf: string;
-  email: string;
-  instituicao: string;
+  id: string;
   tipoUsuario: string;
   situacao: string;
-  dataCadastro: string;
-  ultimoLogin: string;
 };
 
-type ModalVisualizarUsuarioProps = {
+type ModalEditarUsuarioProps = {
   isOpen: boolean;
   onClose: () => void;
   usuario: Usuario;
+  onUpdate: () => void;
 };
 
-export function ModalEditarUsuario({ isOpen, onClose, usuario }: ModalVisualizarUsuarioProps) {
+export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: ModalEditarUsuarioProps) {
+  const [tipoUsuario, setTipoUsuario] = useState(usuario.tipoUsuario);
+  const [situacao, setSituacao] = useState(usuario.situacao);
+
+  const handleSave = async () => {
+    if (tipoUsuario === usuario.tipoUsuario && situacao === usuario.situacao) {
+      toast({
+        className: cn(
+          "bg-yellow-600 text-white border-none top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+        ),
+        title: "Nenhuma alteração!",
+        description: "Nenhuma alteração foi feita para salvar.",
+      });
+      return;
+    }
+
+    const tipoUsuarioBackend = tipoUsuario === TipoUsuario.ADMINISTRADOR ? "ADMINISTRADOR" : "AVALIADOR";
+    const situacaoBackend = situacao === "Ativo" ? 1 : 0;
+
+    try {
+      const response = await editarUsuarioAdmin({
+        ...usuario,
+        id_usuario: usuario.id,
+        tipo_usuario: tipoUsuarioBackend,
+        ativo: situacaoBackend,
+      });
+
+      if (response.success) {
+        toast({
+          className: cn("bg-primary-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          title: "Sucesso!",
+          description: "Usuário atualizado com sucesso.",
+        });
+        onUpdate();
+        onClose();
+      } else {
+        toast({
+          className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          title: "Erro!",
+          description: response.message || "Erro ao editar usuário.",
+        });
+      }
+    } catch (error) {
+      toast({
+        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        title: "Erro de comunicação!",
+        description: "Falha na comunicação com o servidor.",
+      });
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
-          <DialogTitle>Visualizar Usuário</DialogTitle>
-          <DialogDescription>Informações do usuário selecionado.</DialogDescription>
+          <DialogTitle>Editar Usuário</DialogTitle>
+          <DialogDescription>Altere as informações do usuário selecionado.</DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-2 md:gap-5 gap-6">
-          <div>
-            <Label className="text-muted-foreground">Nome:</Label>
-            <p className="font-medium text-sm">{usuario.nome}</p>
+        <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2">
+          <div className="flex flex-col gap-3">
+            <Label>Tipo de Usuário</Label>
+            <Select onValueChange={setTipoUsuario} defaultValue={tipoUsuario}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione o tipo de usuário" />
+              </SelectTrigger>
+              <SelectContent>
+                {tipoUsuarioOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <div>
-            <Label className="text-muted-foreground">CPF:</Label>
-            <p className="font-medium text-sm">{usuario.cpf}</p>
-          </div>
-          <div className="col-span-2">
-            <Separator />
-          </div>
-          <div>
-            <Label className="text-muted-foreground">E-mail:</Label>
-            <p className="font-medium text-sm">{usuario.email}</p>
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Instituição:</Label>
-            <p className="font-medium text-sm">{usuario.instituicao}</p>
-          </div>
-          <div className="col-span-2">
-            <Separator />
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Tipo de Usuário:</Label>
-            <div>
-              <Badge
-                className={
-                  usuario.tipoUsuario === "Administrador"
-                    ? "bg-secondary-100 text-secondary-600"
-                    : "bg-zinc-100 text-zinc-500"
-                }
-              >
-                {usuario.tipoUsuario}
-              </Badge>
-            </div>
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Situação:</Label>
-            <div>
-              <Badge
-                className={usuario.situacao === "Ativo" ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"}
-              >
-                {usuario.situacao}
-              </Badge>
-            </div>
-          </div>
-          <div className="col-span-2">
-            <Separator />
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Data de Cadastro:</Label>
-            <p className="font-medium text-sm">{usuario.dataCadastro}</p>
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Último Login:</Label>
-            <p className="font-medium text-sm">{usuario.ultimoLogin}</p>
+          <div className="flex flex-col gap-3">
+            <Label>Situação</Label>
+            <Select onValueChange={setSituacao} defaultValue={situacao}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione a situação" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Ativo">Ativo</SelectItem>
+                <SelectItem value="Inativo">Inativo</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
-        <DialogFooter>
-          <Button className="bg-primary-700 hover:bg-primary-800" onClick={onClose}>
-            Fechar
+        <DialogFooter className="flex flex-col gap-4 md:gap-0 md:flex-row">
+          <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onClose}>
+            Cancelar
           </Button>
+          <Button onClick={handleSave}>Salvar</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

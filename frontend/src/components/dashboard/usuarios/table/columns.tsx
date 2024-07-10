@@ -4,6 +4,7 @@ import { Eye, Edit, Trash } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export type Usuarios = {
+  id: string;
   nome: string;
   cpf: string;
   email: string;
@@ -16,6 +17,7 @@ export type Usuarios = {
 
 export const columns = (
   handleVisualizar: (usuario: Usuarios) => void,
+  handleEditar: (usuario: Usuarios) => void,
 ): Array<ColumnDef<Usuarios> & { sortable?: boolean }> => [
   {
     accessorKey: "nome",
@@ -128,10 +130,6 @@ export const defaultSort = [
     desc: true,
   },
 ];
-
-export const handleEditar = (usuario: Usuarios) => {
-  console.log("Editar", usuario);
-};
 
 export const handleExcluir = (usuario: Usuarios) => {
   console.log("Excluir", usuario);

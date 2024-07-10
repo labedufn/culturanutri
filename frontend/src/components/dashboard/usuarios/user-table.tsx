@@ -9,35 +9,38 @@ import { formatarCpf } from "@/lib/cpf";
 import { formatarData, formatarDataHora } from "@/scripts/formatarData";
 import { formatarPalavra } from "@/scripts/formatarPalavra";
 import { ModalVisualizarUsuario } from "./modal-visualizar-usuario";
+import { ModalEditarUsuario } from "./modal-editar-usuario";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function UserTable() {
   const [userInfo, setUserInfo] = useState<Usuarios[]>([]);
   const [filteredData, setFilteredData] = useState<Usuarios[]>([]);
   const [selectedUser, setSelectedUser] = useState<Usuarios | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const fetchUsersInfo = async () => {
+    const response = await listarUsuarios();
+    if (response.success) {
+      const formattedData = response.data.usuarios.map((user: any) => ({
+        id: user.id,
+        nome: user.nome + " " + user.sobrenome,
+        cpf: formatarCpf(user.cpf),
+        email: user.email,
+        instituicao: user.instituicao,
+        tipoUsuario: formatarPalavra(user.tipo_usuario),
+        situacao: user.ativo ? "Ativo" : "Inativo",
+        dataCadastro: formatarData(user.data_cadastro),
+        ultimoLogin: formatarDataHora(user.ultimo_login),
+      }));
+      setUserInfo(formattedData);
+      setFilteredData(formattedData);
+    } else {
+      console.error(response.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsersInfo = async () => {
-      const response = await listarUsuarios();
-      if (response.success) {
-        const formattedData = response.data.usuarios.map((user: any) => ({
-          id: user.id,
-          nome: user.nome + " " + user.sobrenome,
-          cpf: formatarCpf(user.cpf),
-          email: user.email,
-          instituicao: user.instituicao,
-          tipoUsuario: formatarPalavra(user.tipo_usuario),
-          situacao: user.ativo ? "Ativo" : "Inativo",
-          dataCadastro: formatarData(user.data_cadastro),
-          ultimoLogin: formatarDataHora(user.ultimo_login),
-        }));
-        setUserInfo(formattedData);
-        setFilteredData(formattedData);
-      } else {
-        console.error(response.message);
-      }
-    };
-
     fetchUsersInfo();
   }, []);
 
@@ -54,16 +57,32 @@ export default function UserTable() {
 
   const handleVisualizar = (usuario: Usuarios) => {
     setSelectedUser(usuario);
-    setIsModalOpen(true);
+    setIsViewModalOpen(true);
+  };
+
+  const handleEditar = (usuario: Usuarios) => {
+    setSelectedUser(usuario);
+    setIsEditModalOpen(true);
   };
 
   return (
     <div className="flex flex-col gap-6">
       <SearchInput onSearch={handleSearch} />
-      <DataTable columns={columns(handleVisualizar)} data={filteredData} defaultSort={defaultSort} />
+      <DataTable columns={columns(handleVisualizar, handleEditar)} data={filteredData} defaultSort={defaultSort} />
       {selectedUser && (
         <>
-          <ModalVisualizarUsuario isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} usuario={selectedUser} />
+          <ModalVisualizarUsuario
+            isOpen={isViewModalOpen}
+            onClose={() => setIsViewModalOpen(false)}
+            usuario={selectedUser}
+          />
+          <ModalEditarUsuario
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            usuario={selectedUser}
+            onUpdate={fetchUsersInfo}
+          />
+          <Toaster />
         </>
       )}
     </div>
