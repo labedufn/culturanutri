@@ -16,9 +16,10 @@ import { Tooltip, TooltipProvider, TooltipTrigger } from "@/components/ui/toolti
 import { CircleUserRound, Home, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { formatarPalavra } from "@/scripts/formatarPalavra";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function UserNav() {
-  const [userInfo, setUserInfo] = useState({ nome: "Nome", sobrenome: "Usuário", tipo_usuario: "Avaliador" });
+  const [userInfo, setUserInfo] = useState<{ nome: string; sobrenome: string; tipo_usuario: string } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const fetchUserInfo = async () => {
@@ -64,10 +65,19 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {formatarPalavra(userInfo.nome) + " " + formatarPalavra(userInfo.sobrenome)}
-            </p>
-            <p className="text-xs leading-none text-muted-foreground">{formatarPalavra(userInfo.tipo_usuario)}</p>
+            {!userInfo ? (
+              <>
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-1/2" />
+              </>
+            ) : (
+              <>
+                <p className="text-sm font-medium leading-none">
+                  {formatarPalavra(userInfo.nome) + " " + formatarPalavra(userInfo.sobrenome)}
+                </p>
+                <p className="text-xs leading-none text-muted-foreground">{formatarPalavra(userInfo.tipo_usuario)}</p>
+              </>
+            )}
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

@@ -11,9 +11,10 @@ import { formatarPalavra } from "@/scripts/formatarPalavra";
 import { ModalVisualizarUsuario } from "./modal-visualizar-usuario";
 import { ModalEditarUsuario } from "./modal-editar-usuario";
 import { Toaster } from "@/components/ui/toaster";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function UserTable() {
-  const [userInfo, setUserInfo] = useState<Usuarios[]>([]);
+  const [userInfo, setUserInfo] = useState<Usuarios[] | null>(null);
   const [filteredData, setFilteredData] = useState<Usuarios[]>([]);
   const [selectedUser, setSelectedUser] = useState<Usuarios | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -45,14 +46,16 @@ export default function UserTable() {
   }, []);
 
   const handleSearch = (query: string) => {
-    const filtered = userInfo.filter(
-      (user) =>
-        user.nome.toLowerCase().includes(query.toLowerCase()) ||
-        user.email.toLowerCase().includes(query.toLowerCase()) ||
-        user.instituicao.toLowerCase().includes(query.toLowerCase()) ||
-        user.cpf.toLowerCase().includes(query.toLowerCase()),
-    );
-    setFilteredData(filtered);
+    if (userInfo) {
+      const filtered = userInfo.filter(
+        (user) =>
+          user.nome.toLowerCase().includes(query.toLowerCase()) ||
+          user.email.toLowerCase().includes(query.toLowerCase()) ||
+          user.instituicao.toLowerCase().includes(query.toLowerCase()) ||
+          user.cpf.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredData(filtered);
+    }
   };
 
   const handleVisualizar = (usuario: Usuarios) => {
@@ -67,8 +70,12 @@ export default function UserTable() {
 
   return (
     <div className="flex flex-col gap-6">
-      <SearchInput onSearch={handleSearch} />
-      <DataTable columns={columns(handleVisualizar, handleEditar)} data={filteredData} defaultSort={defaultSort} />
+      {!userInfo ? <Skeleton className="h-10 w-full" /> : <SearchInput onSearch={handleSearch} />}
+      {!userInfo ? (
+        <Skeleton className="h-64 w-full" />
+      ) : (
+        <DataTable columns={columns(handleVisualizar, handleEditar)} data={filteredData} defaultSort={defaultSort} />
+      )}
       {selectedUser && (
         <>
           <ModalVisualizarUsuario

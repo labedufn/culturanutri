@@ -6,13 +6,14 @@ import { formatarDataHora, verificarExpiracao } from "@/scripts/formatarData";
 import { formatarPalavra } from "@/scripts/formatarPalavra";
 import { Convites, columns, defaultSort } from "./table/columns";
 import { listarConvites } from "@/actions/listar-convites";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ConvitesTableProps {
   refetch: boolean;
 }
 
 export default function ConvitesTable({ refetch }: ConvitesTableProps) {
-  const [convites, setConvites] = useState<Convites[]>([]);
+  const [convites, setConvites] = useState<Convites[] | null>(null);
 
   const fetchConvitesInfo = async () => {
     const response = await listarConvites();
@@ -36,8 +37,12 @@ export default function ConvitesTable({ refetch }: ConvitesTableProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      <h3>Convites Enviados</h3>
-      <DataTable columns={columns} data={convites} defaultSort={defaultSort} />
+      {!convites ? <Skeleton className="h-8 w-1/2" /> : <h3>Convites Enviados</h3>}
+      {!convites ? (
+        <Skeleton className="h-64 w-full" />
+      ) : (
+        <DataTable columns={columns} data={convites} defaultSort={defaultSort} />
+      )}
     </div>
   );
 }
