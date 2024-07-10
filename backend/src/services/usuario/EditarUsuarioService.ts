@@ -38,7 +38,7 @@ export class EditarUsuarioService {
       {
         nome: usuario.nome,
         email: usuario.email,
-        tipo: usuario.tipo,
+        tipo_usuario: usuario.tipo_usuario,
       },
       process.env.SECRET_KEY as string,
       {
@@ -55,8 +55,9 @@ export class EditarUsuarioService {
       instituicao: usuario.instituicao,
     };
 
-    if (isAdmin && usuario.tipo) {
-      dadosAtualizados.tipo = usuario.tipo;
+    if (isAdmin && usuario.tipo_usuario && usuario.ativo !== undefined) {
+      dadosAtualizados.tipo_usuario = usuario.tipo_usuario;
+      dadosAtualizados.ativo = usuario.ativo;
     }
 
     const usuarioAlterado = await prisma.usuario.update({

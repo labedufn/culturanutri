@@ -62,7 +62,9 @@ export default function UserTable() {
       <SearchInput onSearch={handleSearch} />
       <DataTable columns={columns(handleVisualizar)} data={filteredData} defaultSort={defaultSort} />
       {selectedUser && (
-        <ModalVisualizarUsuario isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} usuario={selectedUser} />
+        <>
+          <ModalVisualizarUsuario isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} usuario={selectedUser} />
+        </>
       )}
     </div>
   );

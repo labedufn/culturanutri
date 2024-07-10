@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Edit, Trash } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export type Usuarios = {
   nome: string;
@@ -77,15 +78,44 @@ export const columns = (
     header: "Ações",
     cell: ({ row }) => (
       <div className="flex items-center space-x-4">
-        <button onClick={() => handleVisualizar(row.original)}>
-          <Eye className="text-zinc-400 w-5 hover:text-zinc-500" />
-        </button>
-        <button onClick={() => handleEditar(row.original)}>
-          <Edit className="text-zinc-400 w-5 hover:text-zinc-500" />
-        </button>
-        <button onClick={() => handleExcluir(row.original)}>
-          <Trash className="text-red-500 w-5 hover:text-red-600" />
-        </button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={() => handleVisualizar(row.original)}>
+                <Eye className="text-zinc-400 w-5 hover:text-zinc-500" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="bg-zinc-800">
+              <p className="text-white">Visualizar Usuário</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={() => handleEditar(row.original)}>
+                <Edit className="text-zinc-400 w-5 hover:text-zinc-500" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="bg-zinc-800">
+              <p className="text-white">Editar Usuário</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button onClick={() => handleExcluir(row.original)}>
+                <Trash className="text-red-500 w-5 hover:text-red-600" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="bg-zinc-800">
+              <p className="text-white">Excluir Usuário</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     ),
     sortable: false,

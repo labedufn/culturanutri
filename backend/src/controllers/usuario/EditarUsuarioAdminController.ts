@@ -5,16 +5,30 @@ import { Request, Response } from "express";
 
 export class EditarUsuarioAdminController {
   async handle(req: Request, res: Response) {
-    const { idUsuario, nome, sobrenome, cpf, email, instituicao, tipo } = req.body;
+    const { id_usuario, ativo, tipo_usuario } = req.body;
 
     try {
       const buscarUsuarioService = new BuscarUsuarioService();
-      const { usuario: usuarioAtual } = await buscarUsuarioService.execute(idUsuario);
 
-      const usuario = new Usuario(nome, sobrenome, cpf, email, tipo as TipoUsuario, instituicao, usuarioAtual.senha);
+      if (!Object.values(TipoUsuario).includes(tipo_usuario)) {
+        throw new Error("Tipo de usuário inválido.");
+      }
+
+      const { usuario: usuarioAtual } = await buscarUsuarioService.execute(id_usuario);
+
+      const usuario = new Usuario(
+        usuarioAtual.nome,
+        usuarioAtual.sobrenome,
+        usuarioAtual.cpf,
+        usuarioAtual.email,
+        usuarioAtual.senha,
+        tipo_usuario as TipoUsuario,
+        usuarioAtual.instituicao,
+        ativo,
+      );
 
       const editarUsuarioService = new EditarUsuarioService();
-      const resultado = await editarUsuarioService.execute(idUsuario, usuario, true);
+      const resultado = await editarUsuarioService.execute(id_usuario, usuario, true);
 
       return res.json(resultado);
     } catch (error) {

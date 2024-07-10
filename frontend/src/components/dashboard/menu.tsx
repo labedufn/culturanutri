@@ -11,7 +11,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { getPages } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { logout } from "@/actions/login";
-import router from "next/router";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -48,8 +47,8 @@ export function Menu({ isOpen }: MenuProps) {
                         <Ellipsis className="h-5 w-5" />
                       </div>
                     </TooltipTrigger>
-                    <TooltipContent side="right">
-                      <p className="text-zinc-400">{groupLabel}</p>
+                    <TooltipContent side="right" className="text-white bg-zinc-600">
+                      <p>{groupLabel}</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -83,7 +82,7 @@ export function Menu({ isOpen }: MenuProps) {
                           </Button>
                         </TooltipTrigger>
                         {isOpen === false && (
-                          <TooltipContent side="right" className="text-zinc-400">
+                          <TooltipContent side="right" className="text-white bg-zinc-600">
                             {label}
                           </TooltipContent>
                         )}
@@ -115,7 +114,11 @@ export function Menu({ isOpen }: MenuProps) {
                     </p>
                   </Button>
                 </TooltipTrigger>
-                {isOpen === false && <TooltipContent side="right">Sair</TooltipContent>}
+                {isOpen === false && (
+                  <TooltipContent side="right" className="text-white bg-zinc-600">
+                    Sair
+                  </TooltipContent>
+                )}
               </Tooltip>
             </TooltipProvider>
           </li>
