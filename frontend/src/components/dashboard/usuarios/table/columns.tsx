@@ -18,6 +18,7 @@ export type Usuarios = {
 export const columns = (
   handleVisualizar: (usuario: Usuarios) => void,
   handleEditar: (usuario: Usuarios) => void,
+  currentUserID: string | null, // Add currentUserID as a parameter
 ): Array<ColumnDef<Usuarios> & { sortable?: boolean }> => [
   {
     accessorKey: "nome",
@@ -93,18 +94,20 @@ export const columns = (
           </Tooltip>
         </TooltipProvider>
 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button onClick={() => handleEditar(row.original)}>
-                <Edit className="text-zinc-400 w-5 hover:text-zinc-500" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="bg-zinc-800">
-              <p className="text-white">Editar Usuário</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        {currentUserID !== row.original.id && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={() => handleEditar(row.original)}>
+                  <Edit className="text-zinc-400 w-5 hover:text-zinc-500" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-zinc-800">
+                <p className="text-white">Editar Usuário</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
 
         <TooltipProvider>
           <Tooltip>

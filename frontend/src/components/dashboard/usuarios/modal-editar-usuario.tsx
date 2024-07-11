@@ -29,11 +29,11 @@ type ModalEditarUsuarioProps = {
 };
 
 export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: ModalEditarUsuarioProps) {
-  const [tipoUsuario, setTipoUsuario] = useState(usuario.tipoUsuario);
+  const [tipoUsuario, setTipoUsuario] = useState(usuario.tipoUsuario.toUpperCase());
   const [situacao, setSituacao] = useState(usuario.situacao);
 
   const handleSave = async () => {
-    if (tipoUsuario === usuario.tipoUsuario && situacao === usuario.situacao) {
+    if (tipoUsuario === usuario.tipoUsuario.toUpperCase() && situacao === usuario.situacao) {
       toast({
         className: cn(
           "bg-yellow-600 text-white border-none top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
@@ -43,7 +43,6 @@ export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: Modal
       });
       return;
     }
-
     const tipoUsuarioBackend = tipoUsuario === TipoUsuario.ADMINISTRADOR ? "ADMINISTRADOR" : "AVALIADOR";
     const situacaoBackend = situacao === "Ativo" ? 1 : 0;
 
@@ -57,7 +56,9 @@ export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: Modal
 
       if (response.success) {
         toast({
-          className: cn("bg-primary-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          className: cn(
+            "bg-green-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+          ),
           title: "Sucesso!",
           description: "Usuário atualizado com sucesso.",
         });
@@ -65,14 +66,18 @@ export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: Modal
         onClose();
       } else {
         toast({
-          className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+          className: cn(
+            "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+          ),
           title: "Erro!",
           description: response.message || "Erro ao editar usuário.",
         });
       }
     } catch (error) {
       toast({
-        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        className: cn(
+          "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+        ),
         title: "Erro de comunicação!",
         description: "Falha na comunicação com o servidor.",
       });

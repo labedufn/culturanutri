@@ -1,0 +1,21 @@
+"use server";
+
+import { cookies } from "next/headers";
+import { jwtVerify } from "jose";
+
+export async function currentUserId() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.SECRET_KEY));
+    return payload.sub;
+  } catch (error) {
+    console.error("Token inválido:", error);
+    return null;
+  }
+}

@@ -1,6 +1,6 @@
 export enum TipoUsuario {
-  ADMINISTRADOR = "Administrador",
-  AVALIADOR = "Avaliador",
+  ADMINISTRADOR = "ADMINISTRADOR",
+  AVALIADOR = "AVALIADOR",
 }
 
 export const tipoUsuarioOptions = [

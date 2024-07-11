@@ -21,7 +21,7 @@ async function criarUsuario() {
     hideEchoBack: true,
   });
   const tipoString = readlineSync.question("Tipo (ex. ADMINISTRADOR): ");
-  const tipo = converterTipoUsuario(tipoString);
+  const tipo_usuario = converterTipoUsuario(tipoString);
 
   const criarUsuarioService = new CriarUsuarioService();
 
@@ -31,7 +31,7 @@ async function criarUsuario() {
     cpf,
     email,
     senha,
-    tipo,
+    tipo_usuario,
     instituicao,
   };
 

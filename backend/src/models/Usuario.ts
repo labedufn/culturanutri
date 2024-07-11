@@ -8,7 +8,7 @@ export class Usuario {
   senha: string;
   instituicao: string;
   tipo_usuario: TipoUsuario;
-  ativo: number;
+  ativo?: number;
 
   constructor(
     nome: string,

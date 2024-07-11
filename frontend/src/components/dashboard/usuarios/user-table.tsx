@@ -12,6 +12,7 @@ import { ModalVisualizarUsuario } from "./modal-visualizar-usuario";
 import { ModalEditarUsuario } from "./modal-editar-usuario";
 import { Toaster } from "@/components/ui/toaster";
 import { Skeleton } from "@/components/ui/skeleton";
+import { currentUserId } from "@/scripts/currentUserId";
 
 export default function UserTable() {
   const [userInfo, setUserInfo] = useState<Usuarios[] | null>(null);
@@ -19,6 +20,17 @@ export default function UserTable() {
   const [selectedUser, setSelectedUser] = useState<Usuarios | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentUserID, setCurrentUserID] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentUserID = async () => {
+      const id = await currentUserId();
+      setCurrentUserID(id || null);
+    };
+
+    fetchCurrentUserID();
+    fetchUsersInfo();
+  }, []);
 
   const fetchUsersInfo = async () => {
     const response = await listarUsuarios();
@@ -40,10 +52,6 @@ export default function UserTable() {
       console.error(response.message);
     }
   };
-
-  useEffect(() => {
-    fetchUsersInfo();
-  }, []);
 
   const handleSearch = (query: string) => {
     if (userInfo) {
@@ -74,7 +82,11 @@ export default function UserTable() {
       {!userInfo ? (
         <Skeleton className="h-64 w-full" />
       ) : (
-        <DataTable columns={columns(handleVisualizar, handleEditar)} data={filteredData} defaultSort={defaultSort} />
+        <DataTable
+          columns={columns(handleVisualizar, handleEditar, currentUserID)}
+          data={filteredData}
+          defaultSort={defaultSort}
+        />
       )}
       {selectedUser && (
         <>

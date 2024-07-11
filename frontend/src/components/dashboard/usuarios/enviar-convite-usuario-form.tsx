@@ -12,10 +12,11 @@ import { Loader2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { enviarConviteUsuario } from "@/actions/enviar-convite-usuario";
+import { tipoUsuarioOptions } from "@/enums/tipoUsuario";
 
 const FormSchema = z.object({
   email: z.string({ required_error: "E-mail é obrigatório" }).email({ message: "E-mail inválido" }),
-  tipo: z.enum(["ADMINISTRADOR", "AVALIADOR"], { required_error: "Tipo de usuário é obrigatório." }),
+  tipo_usuario: z.string({ required_error: "Tipo de usuário é obrigatório" }),
 });
 
 interface EnviarConviteUsuarioFormProps {
@@ -25,7 +26,7 @@ interface EnviarConviteUsuarioFormProps {
 export function EnviarConviteUsuarioForm({ onInviteSent }: EnviarConviteUsuarioFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { email: "", tipo: undefined },
+    defaultValues: { email: "", tipo_usuario: undefined },
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = async (data) => {
@@ -37,7 +38,7 @@ export function EnviarConviteUsuarioForm({ onInviteSent }: EnviarConviteUsuarioF
           title: "Sucesso!",
           description: "Convite enviado com sucesso.",
         });
-        onInviteSent(); // Chama a função para refetch
+        onInviteSent();
       } else {
         toast({
           className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
@@ -77,7 +78,7 @@ export function EnviarConviteUsuarioForm({ onInviteSent }: EnviarConviteUsuarioF
             />
             <FormField
               control={form.control}
-              name="tipo"
+              name="tipo_usuario"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Tipo de Usuário</FormLabel>
@@ -87,8 +88,11 @@ export function EnviarConviteUsuarioForm({ onInviteSent }: EnviarConviteUsuarioF
                         <SelectValue placeholder="Selecione o tipo de usuário" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="ADMINISTRADOR">Administrador</SelectItem>
-                        <SelectItem value="AVALIADOR">Avaliador</SelectItem>
+                        {tipoUsuarioOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>

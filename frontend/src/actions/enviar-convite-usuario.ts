@@ -8,7 +8,7 @@ import { ENVIAR_CONVITE_USUARIO } from "@/api/endpoints";
 
 interface EnviarConviteUsuarioData {
   email: string;
-  tipo: string;
+  tipo_usuario: string;
 }
 
 export async function enviarConviteUsuario(
