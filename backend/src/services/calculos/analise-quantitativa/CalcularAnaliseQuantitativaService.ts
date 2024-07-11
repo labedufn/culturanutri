@@ -1,7 +1,5 @@
 import { Gestor } from "@models/Gestor";
-import { ManipuladorAlimento } from "@prisma/client";
-import converterBase64JSON from "@utils/converterBase64JSON";
-import e from "express";
+import { ManipuladorAlimento } from "@models/ManipuladorAlimento";
 import { mean, std, mode } from "mathjs";
 
 export class CalcularAnaliseQuantitativaService {

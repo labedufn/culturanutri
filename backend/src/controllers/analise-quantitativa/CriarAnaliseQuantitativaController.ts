@@ -11,7 +11,6 @@ export class CriarAnaliseQuantitativaController {
     const { id_estabelecimento } = req.body;
 
     try {
-      const ativo = 1;
       const listarGestoresService = new ListarGestoresService();
       const listarManipuladoresAlimentoService = new ListarManipuladoresAlimentoService();
       const calcularAnaliseQuantitativaService = new CalcularAnaliseQuantitativaService();
@@ -42,7 +41,6 @@ export class CriarAnaliseQuantitativaController {
         caracteristicas_socio_demograficas,
         resultados_avaliacao_quantitativas_csa,
         vies_otimista,
-        ativo,
       );
       const criarAnaliseQuantitativaService = new CriarAnaliseQuantitativaService();
       const novaAnaliseQuantitativa = await criarAnaliseQuantitativaService.execute(analiseQuantitativa);

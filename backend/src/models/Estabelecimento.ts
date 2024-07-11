@@ -10,7 +10,6 @@ export class Estabelecimento {
   data_criacao: Date;
   data_alteracao: Date;
   alterado_por: Usuario;
-  ativo: number;
 
   constructor(
     nome: string,
@@ -21,7 +20,6 @@ export class Estabelecimento {
     possui_alvara_sanitario: number,
     possui_responsavel_boas_praticas: number,
     alterado_por: Usuario,
-    ativo: number,
   ) {
     this.nome = nome;
     this.cnae = cnae;
@@ -31,6 +29,5 @@ export class Estabelecimento {
     this.possui_alvara_sanitario = possui_alvara_sanitario;
     this.possui_responsavel_boas_praticas = possui_responsavel_boas_praticas;
     this.alterado_por = alterado_por;
-    this.ativo = ativo;
   }
 }

@@ -32,13 +32,16 @@ import { ExcluirUsuarioController } from "@controllers/usuario/ExcluirUsuarioCon
 
 export const router = Router();
 
+// Rotas teste
+router.get("/api/listar-instituicoes", new InstituicoesController().handle);
+router.get("/api/validar-cadastro-token", validarCadastroToken);
+
 // Rotas usuários
-router.post("/api/cadastro", new CriarUsuarioController().handle);
-router.post("/api/usuario", authAdministrador, new SolicitarCadastroController().handle);
 router.post("/api/login", new AutenticarUsuarioController().handle);
+router.post("/api/usuario", authAdministrador, new SolicitarCadastroController().handle);
+router.post("/api/cadastro", new CriarUsuarioController().handle);
 router.post("/api/recuperar-senha", new RecuperarSenhaController().handle);
 router.post("/api/redefinir-senha", new RedefinirSenhaController().handle);
-router.get("/api/validar-cadastro-token", validarCadastroToken);
 router.put("/api/editar-usuario", authUsuario, new EditarUsuarioController().handle);
 router.put("/api/editar-usuario-admin", authAdministrador, new EditarUsuarioAdminController().handle);
 router.put("/api/alterar-senha-usuario", authUsuario, new AlterarSenhaUsuarioController().handle);
@@ -49,25 +52,23 @@ router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastro
 router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioController().handle);
 
 // Rotas Estabelecimento
-router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
-router.put("/api/editar-estabelecimento", new EditarEstabelecimentoController().handle);
-router.get("/api/listar-estabelecimento", new ListarEstabelecimentosController().handle);
-router.get("/api/buscar-estabelecimento", new BuscarEstabelecimentoController().handle);
+router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
+router.put("/api/editar-estabelecimento", authUsuario, new EditarEstabelecimentoController().handle);
+router.get("/api/listar-estabelecimento", authUsuario, new ListarEstabelecimentosController().handle);
+router.get("/api/buscar-estabelecimento", authUsuario, new BuscarEstabelecimentoController().handle);
 
 // Rotas Gestor Avaliacao
-router.post("/api/cadastro-gestor", new CriarGestorController().handle);
-router.get("/api/listar-gestor", new ListarGestoresController().handle);
-router.get("/api/buscar-gestor", new BuscarGestorController().handle);
-router.put("/api/editar-gestor", new EditarGestorController().handle);
+router.post("/api/cadastro-gestor", authUsuario, new CriarGestorController().handle);
+router.put("/api/editar-gestor", authUsuario, new EditarGestorController().handle);
+router.get("/api/listar-gestor", authUsuario, new ListarGestoresController().handle);
+router.get("/api/buscar-gestor", authUsuario, new BuscarGestorController().handle);
 
 // Rotas Manipulador Alimento
-router.post("/api/cadastro-manipulador-alimento", new CriarManipuladorAlimentoController().handle);
-router.get("/api/listar-manipulador-alimento", new ListarManipuladoresAlimentoController().handle);
-router.get("/api/buscar-manipulador-alimento", new BuscarManipuladorAlimentoController().handle);
-router.put("/api/editar-manipulador-alimento", new EditarManipuladorAlimentoController().handle);
+router.post("/api/cadastro-manipulador-alimento", authUsuario, new CriarManipuladorAlimentoController().handle);
+router.put("/api/editar-manipulador-alimento", authUsuario, new EditarManipuladorAlimentoController().handle);
+router.get("/api/listar-manipulador-alimento", authUsuario, new ListarManipuladoresAlimentoController().handle);
+router.get("/api/buscar-manipulador-alimento", authUsuario, new BuscarManipuladorAlimentoController().handle);
 
 // Rotas Analise Quantitativa
-router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
-router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
-
-router.get("/api/listar-instituicoes", new InstituicoesController().handle);
+router.post("/api/cadastro-analise-quantitativa", authUsuario, new CriarAnaliseQuantitativaController().handle);
+router.get("/api/buscar-analise-quantitativa", authUsuario, new BuscarAnaliseQuantitativaController().handle);

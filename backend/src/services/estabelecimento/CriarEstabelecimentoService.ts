@@ -1,9 +1,8 @@
 import { prisma } from "@config/prismaClient";
-import { Estabelecimento } from "@prisma/client";
+import { Estabelecimento } from "@models/Estabelecimento";
 
 export class CriarEstabelecimentoService {
   async execute(estabelecimento: Estabelecimento) {
-    const idUsuario = req.id_usuario;
     const estabelecimentoCriado = await prisma.estabelecimento.create({
       data: {
         nome: estabelecimento.nome,
@@ -13,12 +12,9 @@ export class CriarEstabelecimentoService {
         numero_refeicoes: estabelecimento.numero_refeicoes,
         possui_alvara_sanitario: estabelecimento.possui_alvara_sanitario,
         possui_responsavel_boas_praticas: estabelecimento.possui_responsavel_boas_praticas,
-        data_criacao: new Date(),
-        data_alteracao: new Date(),
-        alterado_por: estabelecimento.alterado_por,
+        alterado_por: estabelecimento.alterado_por.id,
       },
       select: {
-        id: true,
         nome: true,
         cnae: true,
         endereco: true,
@@ -26,7 +22,6 @@ export class CriarEstabelecimentoService {
         numero_refeicoes: true,
         possui_alvara_sanitario: true,
         possui_responsavel_boas_praticas: true,
-        data_criacao: true,
         data_alteracao: true,
         alterado_por: true,
       },

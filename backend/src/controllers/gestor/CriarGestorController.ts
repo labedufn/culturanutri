@@ -9,9 +9,8 @@ export class CriarGestorController {
 
     try {
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
-      const ativo = 1;
 
-      const novoGestor = new Gestor(informacoes, id_estabelecimento, ativo);
+      const novoGestor = new Gestor(informacoes, id_estabelecimento);
       const criarGestorService = new CriarGestorService();
       const gestor = await criarGestorService.execute(novoGestor);
 

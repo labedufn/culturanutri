@@ -1,4 +1,5 @@
-import { AnaliseQuantitativa, PrismaClient } from "@prisma/client";
+import { AnaliseQuantitativa } from "@models/AnaliseQuantitativa";
+import { PrismaClient } from "@prisma/client";
 import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();

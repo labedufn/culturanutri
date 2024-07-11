@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "estabelecimentos" ALTER COLUMN "data_criacao" SET DEFAULT CURRENT_TIMESTAMP,
+ALTER COLUMN "data_criacao" SET DATA TYPE TIMESTAMPTZ(3);

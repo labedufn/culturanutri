@@ -9,9 +9,8 @@ export class CriarManipuladorAlimentoController {
 
     try {
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
-      const ativo = 1;
 
-      const novoManipuladorAlimento = new ManipuladorAlimento(informacoes, id_estabelecimento, ativo);
+      const novoManipuladorAlimento = new ManipuladorAlimento(informacoes, id_estabelecimento);
       const criarManipuladorAlimentoService = new CriarManipuladorAlimentoService();
       const manipuladorAlimento = await criarManipuladorAlimentoService.execute(novoManipuladorAlimento);
 
