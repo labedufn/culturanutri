@@ -18,7 +18,8 @@ export type Usuarios = {
 export const columns = (
   handleVisualizar: (usuario: Usuarios) => void,
   handleEditar: (usuario: Usuarios) => void,
-  currentUserID: string | null, // Add currentUserID as a parameter
+  handleExcluir: (usuario: Usuarios) => void,
+  currentUserID: string | null,
 ): Array<ColumnDef<Usuarios> & { sortable?: boolean }> => [
   {
     accessorKey: "nome",
@@ -109,18 +110,20 @@ export const columns = (
           </TooltipProvider>
         )}
 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button onClick={() => handleExcluir(row.original)}>
-                <Trash className="text-red-500 w-5 hover:text-red-600" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="bg-zinc-800">
-              <p className="text-white">Excluir Usuário</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        {currentUserID !== row.original.id && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={() => handleExcluir(row.original)}>
+                  <Trash className="text-red-500 w-5 hover:text-red-600" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-zinc-800">
+                <p className="text-white">Excluir Usuário</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
       </div>
     ),
     sortable: false,
@@ -133,7 +136,3 @@ export const defaultSort = [
     desc: true,
   },
 ];
-
-export const handleExcluir = (usuario: Usuarios) => {
-  console.log("Excluir", usuario);
-};

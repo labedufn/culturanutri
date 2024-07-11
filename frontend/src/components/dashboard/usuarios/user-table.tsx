@@ -10,6 +10,7 @@ import { formatarData, formatarDataHora } from "@/scripts/formatarData";
 import { formatarPalavra } from "@/scripts/formatarPalavra";
 import { ModalVisualizarUsuario } from "./modal-visualizar-usuario";
 import { ModalEditarUsuario } from "./modal-editar-usuario";
+import { ModalExcluirUsuario } from "./modal-excluir-usuario";
 import { Toaster } from "@/components/ui/toaster";
 import { Skeleton } from "@/components/ui/skeleton";
 import { currentUserId } from "@/scripts/currentUserId";
@@ -20,6 +21,7 @@ export default function UserTable() {
   const [selectedUser, setSelectedUser] = useState<Usuarios | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentUserID, setCurrentUserID] = useState<string | null>(null);
 
   useEffect(() => {
@@ -76,6 +78,11 @@ export default function UserTable() {
     setIsEditModalOpen(true);
   };
 
+  const handleExcluir = (usuario: Usuarios) => {
+    setSelectedUser(usuario);
+    setIsDeleteModalOpen(true);
+  };
+
   return (
     <div className="flex flex-col gap-6">
       {!userInfo ? <Skeleton className="h-10 w-full" /> : <SearchInput onSearch={handleSearch} />}
@@ -83,7 +90,7 @@ export default function UserTable() {
         <Skeleton className="h-64 w-full" />
       ) : (
         <DataTable
-          columns={columns(handleVisualizar, handleEditar, currentUserID)}
+          columns={columns(handleVisualizar, handleEditar, handleExcluir, currentUserID)}
           data={filteredData}
           defaultSort={defaultSort}
         />
@@ -100,6 +107,12 @@ export default function UserTable() {
             onClose={() => setIsEditModalOpen(false)}
             usuario={selectedUser}
             onUpdate={fetchUsersInfo}
+          />
+          <ModalExcluirUsuario
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            usuario={selectedUser}
+            onDelete={fetchUsersInfo}
           />
           <Toaster />
         </>
