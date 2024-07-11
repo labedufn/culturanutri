@@ -1,4 +1,4 @@
-import { AnaliseQuanlitativa } from "@models/AnaliseQualitativa";
+import { AnaliseQualitativa } from "@models/AnaliseQualitativa";
 import { CriarAnaliseQualitativaService } from "@services/analise-qualitativa/CriarAnaliseQualitativaSerivce";
 import converterBase64JSON from "@utils/converterBase64JSON";
 import { Request, Response } from "express";
@@ -11,7 +11,7 @@ export class CriarAnaliseQualitativaController {
       const ativo = 1;
 
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
-      const analiseQualitativa = new AnaliseQuanlitativa(id_estabelecimento, informacoes, ativo);
+      const analiseQualitativa = new AnaliseQualitativa(id_estabelecimento, informacoes, ativo);
       const criarAnaliseQualitativaService = new CriarAnaliseQualitativaService();
       const novaAnaliseQualitativa = await criarAnaliseQualitativaService.execute(analiseQualitativa);
 

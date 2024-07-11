@@ -17,7 +17,6 @@ export class CalcularAnaliseQualitativaController {
       // const ativo = 1;
 
       const analiseQualitativaBuscada = await buscarAnaliseQualitativaService.execute(id_estabelecimento);
-
       const { json_informacoes } = await calcularAnaliseQualitativaService.execute(
         analiseQualitativaBuscada.informacoesDecodificadas,
       );

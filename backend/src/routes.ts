@@ -29,6 +29,7 @@ import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarI
 import { InstituicoesController } from "@controllers/util/InstituicoesController";
 import { ListarConvitesCadastroController } from "@controllers/usuario/ListarConvitesCadastroController";
 import { CriarAnaliseQualitativaController } from "@controllers/analise-qualitativa/CriarAnaliseQualitativaController";
+import { CalcularAnaliseQualitativaController } from "@controllers/analise-qualitativa/CalcularAnaliseQualitativaController";
 
 export const router = Router();
 
@@ -73,3 +74,4 @@ router.get("/api/listar-instituicoes", new InstituicoesController().handle);
 
 // Rotas Analise Qualitativa
 router.post("/api/cadastro-analise-qualitativa", new CriarAnaliseQualitativaController().handle);
+router.post("/api/calcular-analise-qualitativa", new CalcularAnaliseQualitativaController().handle);
