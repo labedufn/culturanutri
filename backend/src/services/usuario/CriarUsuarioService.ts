@@ -48,7 +48,7 @@ export class CriarUsuarioService {
       {
         nome: usuario.nome,
         email: usuario.email,
-        tipo: usuario.tipo,
+        tipo: usuario.tipo_usuario,
       },
       process.env.SECRET_KEY,
       {
@@ -64,7 +64,7 @@ export class CriarUsuarioService {
         cpf: usuario.cpf,
         email: usuario.email,
         senha: senhaCriptografada,
-        tipo_usuario: usuario.tipo,
+        tipo_usuario: usuario.tipo_usuario,
         instituicao: usuario.instituicao,
       },
       select: {

@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
-import UserTable from "./user-table";
+import UserTable from "../../../components/dashboard/usuarios/user-table";
 
 export default function EstabelecimentosPage() {
   return (

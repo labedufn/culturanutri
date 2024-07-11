@@ -6,8 +6,7 @@ import moment from "moment-timezone";
 import { createTransport } from "nodemailer";
 
 export class SolicitarCadastroService {
-  async execute(usuarioCriadorId: string, email: string, tipo: TipoUsuario) {
-    console.log(usuarioCriadorId, email, tipo);
+  async execute(usuarioCriadorId: string, email: string, tipo_usuario: TipoUsuario) {
     if (!validarEmail(email)) {
       throw new Error("Email inválido.");
     }
@@ -31,7 +30,7 @@ export class SolicitarCadastroService {
       data: {
         token: token,
         email: email,
-        tipo_usuario: tipo,
+        tipo_usuario: tipo_usuario,
         criado_por: usuarioCriadorId,
         expira_em: expiraEmDate,
       },

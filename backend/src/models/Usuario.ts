@@ -7,7 +7,8 @@ export class Usuario {
   email: string;
   senha: string;
   instituicao: string;
-  tipo: TipoUsuario;
+  tipo_usuario: TipoUsuario;
+  ativo?: number;
 
   constructor(
     nome: string,
@@ -15,8 +16,9 @@ export class Usuario {
     cpf: string,
     email: string,
     senha: string,
-    tipo: TipoUsuario,
+    tipo_usuario: TipoUsuario,
     instituicao: string,
+    ativo: number = 1,
   ) {
     this.nome = nome;
     this.sobrenome = sobrenome;
@@ -24,7 +26,8 @@ export class Usuario {
     this.cpf = cpf;
     this.email = email;
     this.senha = senha;
-    this.tipo = tipo;
+    this.tipo_usuario = tipo_usuario;
+    this.ativo = ativo;
   }
 }
 

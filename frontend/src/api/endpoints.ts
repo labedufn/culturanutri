@@ -36,6 +36,18 @@ export function EDITAR_USUARIO() {
   };
 }
 
+export function EXCLUIR_USUARIO() {
+  return {
+    url: `${API_URL}/api/excluir-usuario`,
+  };
+}
+
+export function EDITAR_USUARIO_ADMIN() {
+  return {
+    url: `${API_URL}/api/editar-usuario-admin`,
+  };
+}
+
 export function LISTAR_INFORMACOES_USUARIO() {
   return {
     url: `${API_URL}/api/listar-infos`,

@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const usuarioSchema = z.object({
   nome: z.string().min(1, "O campo nome é obrigatório."),
@@ -28,12 +29,17 @@ const usuarioSchema = z.object({
 type FormData = z.infer<typeof usuarioSchema>;
 
 export function EditarUsuarioForm() {
-  const [userInfo, setUserInfo] = useState({ nome: "", sobrenome: "", cpf: "", email: "", instituicao: "" });
-
+  const [userInfo, setUserInfo] = useState<FormData | null>(null);
   const form = useForm<FormData>({
     resolver: zodResolver(usuarioSchema),
     mode: "onBlur",
-    defaultValues: userInfo,
+    defaultValues: userInfo || {
+      nome: "",
+      sobrenome: "",
+      cpf: "",
+      email: "",
+      instituicao: "",
+    },
   });
 
   useEffect(() => {
@@ -59,9 +65,20 @@ export function EditarUsuarioForm() {
   }, [form]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    if (JSON.stringify(data) === JSON.stringify(userInfo)) {
+    const isDataChanged =
+      data.nome !== userInfo?.nome ||
+      data.sobrenome !== userInfo?.sobrenome ||
+      data.cpf !== userInfo?.cpf.replace(/\D/g, "") ||
+      data.email !== userInfo?.email ||
+      data.instituicao !== userInfo?.instituicao;
+
+    if (!isDataChanged) {
       toast({
-        className: cn("bg-red-600 text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+        className: cn(
+          "bg-yellow-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+        ),
+        title: "Nenhuma alteração!",
+        description: "Nenhuma alteração foi feita para atualizar.",
       });
       return;
     }
@@ -96,99 +113,115 @@ export function EditarUsuarioForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
-        <h3>Editar Dados Pessoais</h3>
+        {!userInfo ? <Skeleton className="h-8 w-1/2" /> : <h3>Editar Dados Pessoais</h3>}
         <div className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="nome"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Seu nome" className="focus-visible:ring-primary-700" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="sobrenome"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Sobrenome</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Seu sobrenome" className="focus-visible:ring-primary-700" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="cpf"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>CPF</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="000.000.000-00"
-                    className="focus-visible:ring-primary-700"
-                    value={formatarCpf(field.value)}
-                    onChange={(e) => field.onChange(formatarCpf(e.target.value))}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>E-mail</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="exemplo@email.com"
-                    {...field}
-                    className="focus-visible:ring-primary-700"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="instituicao"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Instituição</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Nome da instituição" className="focus-visible:ring-primary-700" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <Button
-          type="submit"
-          size="lg"
-          className="w-full bg-primary-700 hover:bg-primary-800 text-white font-medium flex justify-center items-center"
-        >
-          {form.formState.isSubmitting ? (
-            <div className="flex items-center">
-              <Loader2 className="w-6 h-6 animate-spin mr-2" />
-              Atualizando...
-            </div>
+          {!userInfo ? (
+            <>
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+            </>
           ) : (
-            "Atualizar dados"
+            <>
+              <FormField
+                control={form.control}
+                name="nome"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nome</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Seu nome" className="focus-visible:ring-primary-700" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sobrenome"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sobrenome</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Seu sobrenome" className="focus-visible:ring-primary-700" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="cpf"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>CPF</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="000.000.000-00"
+                        className="focus-visible:ring-primary-700"
+                        value={formatarCpf(field.value)}
+                        onChange={(e) => field.onChange(formatarCpf(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>E-mail</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="exemplo@email.com"
+                        {...field}
+                        className="focus-visible:ring-primary-700"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="instituicao"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Instituição</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Nome da instituição" className="focus-visible:ring-primary-700" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>
           )}
-        </Button>
+        </div>
+        {!userInfo ? (
+          <Skeleton className="h-12 w-full" />
+        ) : (
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full bg-primary-700 hover:bg-primary-800 text-white font-medium flex justify-center items-center"
+          >
+            {form.formState.isSubmitting ? (
+              <div className="flex items-center">
+                <Loader2 className="w-6 h-6 animate-spin mr-2" />
+                Atualizando...
+              </div>
+            ) : (
+              "Atualizar dados"
+            )}
+          </Button>
+        )}
       </form>
     </Form>
   );
