@@ -28,6 +28,7 @@ import { BuscarAnaliseQuantitativaController } from "@controllers/analise-quanti
 import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarInformacoesUsuarioController";
 import { InstituicoesController } from "@controllers/util/InstituicoesController";
 import { ListarConvitesCadastroController } from "@controllers/usuario/ListarConvitesCadastroController";
+import { ExcluirUsuarioController } from "@controllers/usuario/ExcluirUsuarioController";
 
 export const router = Router();
 
@@ -45,6 +46,7 @@ router.get("/api/listar-usuarios", authAdministrador, new ListarUsuariosControll
 router.get("/api/buscar-usuario", authAdministrador, new BuscarUsuarioController().handle);
 router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioController().handle);
 router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
+router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastro-estabelecimento", new CriarEstabelecimentoController().handle);
