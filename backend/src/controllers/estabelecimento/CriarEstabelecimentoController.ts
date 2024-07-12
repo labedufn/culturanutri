@@ -13,6 +13,7 @@ export class CriarEstabelecimentoController {
       numero_refeicoes,
       possui_alvara_sanitario,
       possui_responsavel_boas_praticas,
+      alterado_por,
     } = req.body;
 
     const idUsuario = req.id_usuario;

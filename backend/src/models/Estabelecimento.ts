@@ -1,4 +1,5 @@
 import { Usuario } from "@prisma/client";
+
 export class Estabelecimento {
   nome: string;
   cnae: string;

@@ -29,6 +29,8 @@ import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarI
 import { InstituicoesController } from "@controllers/util/InstituicoesController";
 import { ListarConvitesCadastroController } from "@controllers/usuario/ListarConvitesCadastroController";
 import { ExcluirUsuarioController } from "@controllers/usuario/ExcluirUsuarioController";
+import { CriarAnaliseQualitativaController } from "@controllers/analise-qualitativa/CriarAnaliseQualitativaController";
+import { CalcularAnaliseQualitativaController } from "@controllers/analise-qualitativa/CalcularAnaliseQualitativaController";
 
 export const router = Router();
 
@@ -72,3 +74,11 @@ router.get("/api/buscar-manipulador-alimento", authUsuario, new BuscarManipulado
 // Rotas Analise Quantitativa
 router.post("/api/cadastro-analise-quantitativa", authUsuario, new CriarAnaliseQuantitativaController().handle);
 router.get("/api/buscar-analise-quantitativa", authUsuario, new BuscarAnaliseQuantitativaController().handle);
+router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
+router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
+
+router.get("/api/listar-instituicoes", new InstituicoesController().handle);
+
+// Rotas Analise Qualitativa
+router.post("/api/cadastro-analise-qualitativa", new CriarAnaliseQualitativaController().handle);
+router.post("/api/calcular-analise-qualitativa", new CalcularAnaliseQualitativaController().handle);
