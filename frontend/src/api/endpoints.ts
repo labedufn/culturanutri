@@ -77,3 +77,27 @@ export function LISTAR_CONVITES() {
     url: `${API_URL}/api/listar-convites`,
   };
 }
+
+export function CADASTRAR_ESTABELECIMENTO() {
+  return {
+    url: `${API_URL}/api/cadastrar-estabelecimento`,
+  };
+}
+
+export function LISTAR_ESTABELECIMENTOS() {
+  return {
+    url: `${API_URL}/api/listar-estabelecimentos`,
+  };
+}
+
+export function EDITAR_ESTABELECIMENTO() {
+  return {
+    url: `${API_URL}/api/editar-estabelecimento`,
+  };
+}
+
+export function EXCLUIR_ESTABELECIMENTO() {
+  return {
+    url: `${API_URL}/api/excluir-estabelecimento`,
+  };
+}

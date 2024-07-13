@@ -113,7 +113,7 @@ CREATE TABLE "estabelecimentos" (
     "numero_refeicoes" INTEGER NOT NULL,
     "possui_alvara_sanitario" INTEGER NOT NULL,
     "possui_responsavel_boas_praticas" INTEGER NOT NULL,
-    "data_criacao" TIMESTAMP(3) NOT NULL,
+    "data_criacao" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "data_alteracao" TIMESTAMPTZ(3) NOT NULL,
     "alterado_por" TEXT NOT NULL,
     "ativo" INTEGER NOT NULL DEFAULT 1,

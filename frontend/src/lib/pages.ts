@@ -69,18 +69,7 @@ export function getPages(pathname: string): Group[] {
           label: "Estabelecimentos",
           active: pathname.startsWith("/dashboard/estabelecimentos/") || pathname === "/dashboard/estabelecimentos",
           icon: UtensilsCrossed,
-          submenus: [
-            {
-              href: "/dashboard/estabelecimentos",
-              label: "Todos os Locais",
-              active: pathname === "/dashboard/estabelecimentos",
-            },
-            {
-              href: "/dashboard/estabelecimentos/adicionar",
-              label: "Adicionar Local",
-              active: pathname === "/dashboard/estabelecimentos/adicionar",
-            },
-          ],
+          submenus: [],
         },
         {
           href: "/dashboard/usuarios",

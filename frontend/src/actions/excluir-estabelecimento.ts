@@ -1,20 +1,16 @@
 "use server";
 
 import { apiErro } from "@/api/api-erros";
-import { CADASTRO } from "@/api/endpoints";
+import { EXCLUIR_ESTABELECIMENTO } from "@/api/endpoints";
 import { verificarToken } from "@/scripts/verificarToken";
 import axios from "axios";
+import { cookies } from "next/headers";
 
-function extrairToken(url: string): string | null {
-  const match = url.match(/token=([^&]+)/);
-  return match ? match[1] : null;
-}
+export async function excluirEstabelecimento(data: { id_usuario: string }) {
+  const cookieData = cookies().get("token");
+  const token = cookieData ? cookieData.value : null;
+  console.log("Token do usuário", token);
 
-export async function cadastro(
-  data: { nome: string; sobrenome: string; cpf: string; email: string; senha: string },
-  url: string,
-) {
-  const token = extrairToken(url);
   if (!token || !(await verificarToken(token))) {
     console.error("Token inválido ou expirado.");
     return {
@@ -24,15 +20,17 @@ export async function cadastro(
   }
 
   try {
-    const { url } = CADASTRO();
-    await axios.post(url, data, {
+    const { url } = EXCLUIR_ESTABELECIMENTO();
+    const response = await axios.delete(url, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      data: data,
     });
     return {
       success: true,
+      message: response.data.message,
     };
   } catch (error: unknown) {
     console.log(error);

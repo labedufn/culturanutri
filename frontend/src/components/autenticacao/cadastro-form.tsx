@@ -45,7 +45,7 @@ export function CadastroForm() {
       const resultado = await cadastro(data, window.location.href);
       if (resultado?.success !== false) {
         setErrorMessage("");
-        window.location.href = "/dashboard";
+        window.location.href = "/autenticacao/login";
       } else {
         setErrorMessage(resultado.message || "Erro ao fazer cadastro.");
       }

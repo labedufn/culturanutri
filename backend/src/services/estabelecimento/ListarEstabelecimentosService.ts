@@ -1,21 +1,30 @@
 import { prisma } from "@config/prismaClient";
 
 export class ListarEstabelecimentosService {
-  async execute(idUsuario: string) {
-    const usuario = await prisma.usuario.findUnique({
-      where: {
-        id: idUsuario,
+  async execute() {
+    const estabelecimentos = await prisma.estabelecimento.findMany({
+      include: {
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+            sobrenome: true,
+          },
+        },
       },
     });
 
-    if (!usuario) {
-      throw new Error("Usuário inválido");
-    } else {
-      const estabelecimentos = await prisma.estabelecimento.findMany();
-
-      return {
-        estabelecimentos,
-      };
+    if (estabelecimentos.length === 0) {
+      throw new Error("Nenhum estabelecimento encontrado");
     }
+
+    const formattedEstabelecimentos = estabelecimentos.map((estabelecimento) => ({
+      ...estabelecimento,
+      alterado_por: `${estabelecimento.usuario.nome} ${estabelecimento.usuario.sobrenome}`,
+    }));
+
+    return {
+      estabelecimentos: formattedEstabelecimentos,
+    };
   }
 }

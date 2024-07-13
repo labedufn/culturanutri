@@ -1,16 +1,16 @@
 "use server";
 
 import { apiErro } from "@/api/api-erros";
-import { LISTAR_INFORMACOES_USUARIO } from "@/api/endpoints";
+import { LISTAR_ESTABELECIMENTOS } from "@/api/endpoints";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-export async function listarInformacoesUsuario() {
+export async function listarEstabelecimentos() {
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
 
   try {
-    const { url } = LISTAR_INFORMACOES_USUARIO();
+    const { url } = LISTAR_ESTABELECIMENTOS();
     const response = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",

@@ -54,7 +54,7 @@ router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioContr
 // Rotas Estabelecimento
 router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
 router.put("/api/editar-estabelecimento", authUsuario, new EditarEstabelecimentoController().handle);
-router.get("/api/listar-estabelecimento", authUsuario, new ListarEstabelecimentosController().handle);
+router.get("/api/listar-estabelecimentos", authUsuario, new ListarEstabelecimentosController().handle);
 router.get("/api/buscar-estabelecimento", authUsuario, new BuscarEstabelecimentoController().handle);
 
 // Rotas Gestor Avaliacao
