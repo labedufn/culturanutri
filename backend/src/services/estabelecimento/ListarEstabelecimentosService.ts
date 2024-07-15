@@ -17,10 +17,6 @@ export class ListarEstabelecimentosService {
       },
     });
 
-    if (estabelecimentos.length === 0) {
-      throw new Error("Nenhum estabelecimento encontrado");
-    }
-
     const formattedEstabelecimentos = estabelecimentos.map((estabelecimento) => ({
       ...estabelecimento,
       alterado_por: `${estabelecimento.usuario.nome} ${estabelecimento.usuario.sobrenome}`,

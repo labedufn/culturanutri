@@ -119,6 +119,9 @@ export function ModalVisualizarEstabelecimento({
               {estabelecimento.usuario.nome} {estabelecimento.usuario.sobrenome}
             </p>
           </div>
+          <div className="col-span-2">
+            <Separator />
+          </div>
           <div>
             <Label className="text-muted-foreground">Situação:</Label>
             <div>
