@@ -3,4 +3,4 @@ Dockerfile
 docker-compose.yml
 .env
 .idx
-prisma/migrations
+*/prisma/migrations
