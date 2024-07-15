@@ -30,7 +30,6 @@ export async function editarEstabelecimento(data: {
 
   try {
     const { url } = EDITAR_ESTABELECIMENTO();
-    console.log(data);
     const response = await axios.put(url, data, {
       headers: {
         "Content-Type": "application/json",
