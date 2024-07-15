@@ -43,8 +43,6 @@ model ListaVerificacao {
   verificacao_id   String
   id_triangulacoes String
 
-  Triangulacao Triangulacao[]
-
   @@map("listas_verificacoes")
 }
 
@@ -77,15 +75,11 @@ model AnaliseQualitativa {
 
 model Triangulacao {
   id                      String              @id @default(uuid())
-  triangulacao_id         String
-  categoria               Int
-  id_lista_verificacao    String
   id_analise_qualitativa  String
   id_analise_quantitativa String
   informacoes             String              @db.Text
   data_cadastro           DateTime            @default(now()) @db.Timestamptz(3)
   data_alteracao          DateTime            @updatedAt @db.Timestamptz(3)
-  listaVerificacao        ListaVerificacao    @relation(fields: [id_lista_verificacao], references: [id])
   analiseQualitativa      AnaliseQualitativa  @relation(fields: [id_analise_qualitativa], references: [id])
   analiseQuantitativa     AnaliseQuantitativa @relation(fields: [id_analise_quantitativa], references: [id])
 

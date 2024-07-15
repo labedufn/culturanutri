@@ -15,52 +15,52 @@ export class CalcularAnaliseQualitativaService {
   async execute(informacoes: any) {
     const informacoesCalculadas: object = {};
     try {
-      informacoesCalculadas["liderenca"] = {
+      informacoesCalculadas["lideranca"] = {
         gerentes_fornecem_assistencia_orientacao_seguranca_alimentos: {
-          valor: informacoes["liderenca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
-            informacoes["liderenca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
+            informacoes["lideranca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
+            informacoes["lideranca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
           ),
         },
         gerentes_presentes_area_producao_manuseio_alimentos: {
-          valor: informacoes["liderenca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
-            informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+            informacoes["lideranca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
+            informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
           ),
         },
         gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos: {
-          valor: informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
-            informacoes["liderenca"].gerentes_promovem_reconhecimento.valor,
+            informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+            informacoes["lideranca"].gerentes_promovem_reconhecimento.valor,
           ),
         },
         gerentes_promovem_reconhecimento: {
-          valor: informacoes["liderenca"].gerentes_promovem_reconhecimento.valor,
+          valor: informacoes["lideranca"].gerentes_promovem_reconhecimento.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
-            informacoes["liderenca"].gerentes_promovem_reconhecimento.valor,
+            informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+            informacoes["lideranca"].gerentes_promovem_reconhecimento.valor,
           ),
         },
         gerentes_comprometidos_organizacao_seguranca_alimentos: {
-          valor: informacoes["liderenca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
-            informacoes["liderenca"].comportamento_gerentes_consistente_praticas_seguras.valor,
+            informacoes["lideranca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
+            informacoes["lideranca"].comportamento_gerentes_consistente_praticas_seguras.valor,
           ),
         },
         comportamento_gerentes_consistente_praticas_seguras: {
-          valor: informacoes["liderenca"].comportamento_gerentes_consistente_praticas_seguras.valor,
+          valor: informacoes["lideranca"].comportamento_gerentes_consistente_praticas_seguras.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
-            informacoes["liderenca"].comportamento_gerentes_consistente_praticas_seguras.valor,
+            informacoes["lideranca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
+            informacoes["lideranca"].comportamento_gerentes_consistente_praticas_seguras.valor,
           ),
         },
         gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos: {
           valor:
-            informacoes["liderenca"].gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos
+            informacoes["lideranca"].gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos
               .valor,
         },
       };

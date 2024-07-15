@@ -210,8 +210,8 @@ export class CalcularAnaliseQuantitativaService {
 
     try {
       //avaliacao_quantitativa_csa
-      resultados_avaliacao_quantitativas_csa["liderenca"] = {
-        manipuladores: this.calcularEstatisticas(manipuladores, "liderenca"),
+      resultados_avaliacao_quantitativas_csa["lideranca"] = {
+        manipuladores: this.calcularEstatisticas(manipuladores, "lideranca"),
       };
 
       resultados_avaliacao_quantitativas_csa["comunicacao"] = {

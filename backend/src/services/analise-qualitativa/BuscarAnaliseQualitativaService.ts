@@ -1,14 +1,13 @@
-import { AnaliseQualitativa } from "@models/AnaliseQualitativa";
 import { PrismaClient } from "@prisma/client";
 import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
 export class BuscarAnaliseQualitativaService {
-  async execute(analiseQualitativa: AnaliseQualitativa) {
+  async execute(idEstabelecimento: string) {
     const analiseQualitativaBuscada = await prisma.analiseQualitativa.findFirst({
       where: {
-        id_estabelecimento: analiseQualitativa.id_estabelecimento,
+        id_estabelecimento: idEstabelecimento,
       },
       select: {
         id: true,
