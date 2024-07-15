@@ -12,7 +12,7 @@ export class CriarEstabelecimentoService {
         numero_refeicoes: estabelecimento.numero_refeicoes,
         possui_alvara_sanitario: estabelecimento.possui_alvara_sanitario,
         possui_responsavel_boas_praticas: estabelecimento.possui_responsavel_boas_praticas,
-        alterado_por: estabelecimento.alterado_por.id,
+        alterado_por: estabelecimento.alterado_por,
       },
       select: {
         nome: true,

@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import PlaceholderContent from "@/components/dashboard/placeholder-content";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,6 +8,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Card, CardContent } from "@/components/ui/card";
+import EstabelecimentosTable from "@/components/dashboard/estabelecimentos/estabelecimentos-table";
 
 export default function EstabelecimentosPage() {
   return (
@@ -26,7 +27,13 @@ export default function EstabelecimentosPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <Card className="rounded-lg border-none mt-6">
+        <CardContent className="p-6">
+          <div className="min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
+            <EstabelecimentosTable />
+          </div>
+        </CardContent>
+      </Card>
     </>
   );
 }

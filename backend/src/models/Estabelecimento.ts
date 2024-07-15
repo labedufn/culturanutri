@@ -1,5 +1,3 @@
-import { Usuario } from "@prisma/client";
-
 export class Estabelecimento {
   nome: string;
   cnae: string;
@@ -8,9 +6,8 @@ export class Estabelecimento {
   numero_refeicoes: number;
   possui_alvara_sanitario: number;
   possui_responsavel_boas_praticas: number;
-  data_criacao: Date;
-  data_alteracao: Date;
-  alterado_por: Usuario;
+  alterado_por: string;
+  ativo: number;
 
   constructor(
     nome: string,
@@ -20,7 +17,8 @@ export class Estabelecimento {
     numero_refeicoes: number,
     possui_alvara_sanitario: number,
     possui_responsavel_boas_praticas: number,
-    alterado_por: Usuario,
+    alterado_por: string,
+    ativo: number = 1,
   ) {
     this.nome = nome;
     this.cnae = cnae;
@@ -30,5 +28,6 @@ export class Estabelecimento {
     this.possui_alvara_sanitario = possui_alvara_sanitario;
     this.possui_responsavel_boas_praticas = possui_responsavel_boas_praticas;
     this.alterado_por = alterado_por;
+    this.ativo = ativo;
   }
 }

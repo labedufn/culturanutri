@@ -1,20 +1,25 @@
 "use server";
 
 import { apiErro } from "@/api/api-erros";
-import { CADASTRO } from "@/api/endpoints";
+import { EDITAR_ESTABELECIMENTO } from "@/api/endpoints";
 import { verificarToken } from "@/scripts/verificarToken";
 import axios from "axios";
+import { cookies } from "next/headers";
 
-function extrairToken(url: string): string | null {
-  const match = url.match(/token=([^&]+)/);
-  return match ? match[1] : null;
-}
+export async function editarEstabelecimento(data: {
+  id: string;
+  nome: string;
+  cnae: string;
+  endereco: string;
+  pessoal_ocupado: number;
+  numero_refeicoes: number;
+  possui_alvara_sanitario: number;
+  possui_responsavel_boas_praticas: number;
+  ativo: number;
+}) {
+  const cookieData = cookies().get("token");
+  const token = cookieData ? cookieData.value : null;
 
-export async function cadastro(
-  data: { nome: string; sobrenome: string; cpf: string; email: string; senha: string },
-  url: string,
-) {
-  const token = extrairToken(url);
   if (!token || !(await verificarToken(token))) {
     console.error("Token inválido ou expirado.");
     return {
@@ -24,8 +29,8 @@ export async function cadastro(
   }
 
   try {
-    const { url } = CADASTRO();
-    await axios.post(url, data, {
+    const { url } = EDITAR_ESTABELECIMENTO();
+    const response = await axios.put(url, data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -33,6 +38,7 @@ export async function cadastro(
     });
     return {
       success: true,
+      message: response.data.message,
     };
   } catch (error: unknown) {
     console.log(error);

@@ -6,6 +6,7 @@ export class ListarInformacoesUsuarioController {
     const idUsuario = req.id_usuario;
 
     try {
+      console.log("ListarInformacoesUsuarioController -> idUsuario", idUsuario);
       const listarInformacoesUsuarioService = new ListarInformacoesUsuarioService();
       const usuarios = await listarInformacoesUsuarioService.execute(idUsuario);
 

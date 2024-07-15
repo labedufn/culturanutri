@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,6 +31,11 @@ type ModalEditarUsuarioProps = {
 export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: ModalEditarUsuarioProps) {
   const [tipoUsuario, setTipoUsuario] = useState(usuario.tipoUsuario.toUpperCase());
   const [situacao, setSituacao] = useState(usuario.situacao);
+
+  useEffect(() => {
+    setTipoUsuario(usuario.tipoUsuario.toUpperCase());
+    setSituacao(usuario.situacao);
+  }, [usuario]);
 
   const handleSave = async () => {
     if (tipoUsuario === usuario.tipoUsuario.toUpperCase() && situacao === usuario.situacao) {
@@ -94,7 +99,7 @@ export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: Modal
         <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2">
           <div className="flex flex-col gap-3">
             <Label>Tipo de Usuário</Label>
-            <Select onValueChange={setTipoUsuario} defaultValue={tipoUsuario}>
+            <Select onValueChange={setTipoUsuario} value={tipoUsuario}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione o tipo de usuário" />
               </SelectTrigger>
@@ -109,7 +114,7 @@ export function ModalEditarUsuario({ isOpen, onClose, usuario, onUpdate }: Modal
           </div>
           <div className="flex flex-col gap-3">
             <Label>Situação</Label>
-            <Select onValueChange={setSituacao} defaultValue={situacao}>
+            <Select onValueChange={setSituacao} value={situacao}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione a situação" />
               </SelectTrigger>

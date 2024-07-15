@@ -14,6 +14,7 @@ export class EditarEstabelecimentoController {
       numero_refeicoes,
       possui_alvara_sanitario,
       possui_responsavel_boas_praticas,
+      ativo,
     } = req.body;
 
     const idUsuario = req.id_usuario;
@@ -30,7 +31,8 @@ export class EditarEstabelecimentoController {
         numero_refeicoes,
         possui_alvara_sanitario,
         possui_responsavel_boas_praticas,
-        usuarioAtual.usuario,
+        usuarioAtual.usuario.id,
+        ativo,
       );
 
       const editarEstabelecimentoService = new EditarEstabelecimentoService();
