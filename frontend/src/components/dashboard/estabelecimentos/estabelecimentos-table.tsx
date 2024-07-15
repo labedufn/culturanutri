@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Estabelecimentos, columns } from "../../../components/dashboard/estabelecimentos/table/columns";
+import { Estabelecimentos, columns, defaultSort } from "../../../components/dashboard/estabelecimentos/table/columns";
 import DataTable from "@/components/dashboard/data-table";
 import { listarEstabelecimentos } from "@/actions/listar-estabelecimentos";
 import { ModalVisualizarEstabelecimento } from "./modal-visualizar-estabelecimento";
@@ -97,7 +97,11 @@ export default function EstabelecimentosTable() {
       {!estabelecimentos ? (
         <Skeleton className="h-64 w-full" />
       ) : (
-        <DataTable columns={columns(handleVisualizar, handleEditar, handleExcluir)} data={filteredData} />
+        <DataTable
+          columns={columns(handleVisualizar, handleEditar, handleExcluir)}
+          data={filteredData}
+          defaultSort={defaultSort}
+        />
       )}
       {selectedEstabelecimento && (
         <>

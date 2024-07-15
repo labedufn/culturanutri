@@ -131,3 +131,10 @@ export const columns = (
     sortable: false,
   },
 ];
+
+export const defaultSort = [
+  {
+    id: "nome",
+    desc: true,
+  },
+];
