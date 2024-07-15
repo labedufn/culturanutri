@@ -1,0 +1,342 @@
+informacoes = {
+  liderenca: {
+    gerentes_fornecem_assistencia_orientacao_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_presentes_area_producao_manuseio_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_promovem_reconhecimento: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_comprometidos_organizacao_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    comportamento_gerentes_consistente_praticas_seguras: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+  },
+  comunicacao: {
+    instrucoes_corretas_comunicadas_vertical_horizontal: {
+      valor: "",
+      escore: "",
+    },
+    instrucoes_consideram_nivel_educacional_manipuladores: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_ficam_avontade_comunicar_acoes_erradas_perguntar: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_ficam_avontade_opinar_melhorar_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_ficam_avontade_avisar_falta_produtos_higiene_quebra_equipamentos_falta_utensilios: {
+      valor: "",
+      escore: "",
+    },
+    melhorias_seguranca_alimentos_comunicadas_informacoes_visiveis_importantes: {
+      valor: "",
+      escore: "",
+    },
+    instrucoes_visuais_area_producao: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_recebem_comunicacao_informal_seguranca_alimentos_trabalho: {
+      valor: "",
+      escore: "",
+    },
+  },
+  conhecimento: {
+    conhecimento_aspectos_tempo_temperatura: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_medida_temperatura: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_contaminacao_cruzada: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_metodo_descongelar_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_risco_perigo_biologico_fisico_quimico: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_metodo_lavar_maos: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_organizacao_alimentos_deposito: {
+      valor: "",
+      escore: "",
+    },
+    conhecimento_doencas_transmitidas_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    sabem_explicar_requisitos_tempo_temperatura: {
+      valor: "",
+      escore: "",
+    },
+    sabem_explicar_requisitos_contaminacao_cruzada: {
+      valor: "",
+      escore: "",
+    },
+    sabem_explicar_requisitos_descongelamento_alimentos_temperatura_refrigerada: {
+      valor: "",
+      escore: "",
+    },
+    sabem_explicar_requisitos_lavagem_maos: {
+      valor: "",
+      escore: "",
+    },
+    sabem_explicar_requisitos_organizacao_estoque: {
+      valor: "",
+      escore: "",
+    },
+  },
+  comprometimento: {
+    manipuladores_gerentes_satisfeitos_trabalho: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_sentem_importancia_trabalho_comprometidos_atividades: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_gerentes_gostam_trabalhar_organizacao_sentem_parte: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_responsaveis_trabalho: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_responsaveis_seguranca_alimentos_comportamento_seguro: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_mantem_alto_grau_limpeza_pessoal: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_iniciativa_processos_higienizacao_ambiente_trabalho: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_atentos_tempo_temperatura_registram_temperaturas_implementam_acoes_corretivas: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_armazenam_alimentos_estoques_adequados_evitar_contaminacao_cruzada: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_atendem_instrucoes_recepcao_armazenamento_pre_preparo_cozimento_distribuicao: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_priorizam_alocacao_recursos_financeiros_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+  },
+  percepcao_risco: {
+    manipuladores_percebem_risco_situacoes_alto_risco: {
+      valor: "",
+      escore: "",
+    },
+    trabalhadores_compreendem_percebem_situacao_alto_risco_todos_expostos: {
+      valor: "",
+      escore: "",
+    },
+    trabalhadores_entendem_julgam_situacoes_risco_tomam_decisoes: {
+      valor: "",
+      escore: "",
+    },
+    decisao_gerentes_baseada_julgamento_risco: {
+      valor: "",
+      escore: "",
+    },
+    trabalhadores_percebem_letalidade: {
+      valor: "",
+      escore: "",
+    },
+    trabalhadores_sem_vies_otimista_pessimista: {
+      valor: "",
+      escore: "",
+    },
+  },
+  pressao_trabalho_crencas_normativas: {
+    manipuladores_carga_trabalho_pesada: {
+      valor: "",
+      escore: "",
+    },
+    tempo_trabalho_suficiente: {
+      valor: "",
+      escore: "",
+    },
+    quantidade_manipuladores_suficiente: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_pressao_trabalhar_rapidamente: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_gerentes_relacao_respeito: {
+      valor: "",
+      escore: "",
+    },
+  },
+  ambiente_trabalho: {
+    layout_permite_fluxo_adequado_preparacao_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    barreiras_fisicas_acessar_cada_area: {
+      valor: "",
+      escore: "",
+    },
+    caixa_agua_exclusiva_conservada: {
+      valor: "",
+      escore: "",
+    },
+    piso_parede_teto_portas_janelas_projetados_permitir_higienizacao: {
+      valor: "",
+      escore: "",
+    },
+    quantidade_adequada_utensilios: {
+      valor: "",
+      escore: "",
+    },
+    utensilios_projetados_permitir_sanitizacao: {
+      valor: "",
+      escore: "",
+    },
+    utensilios_boas_condicoes: {
+      valor: "",
+      escore: "",
+    },
+    utensilios_material_nao_toxico: {
+      valor: "",
+      escore: "",
+    },
+    utensilios_atendem_necessidades_manipuladores: {
+      valor: "",
+      escore: "",
+    },
+    equipamentos_suficientes: {
+      valor: "",
+      escore: "",
+    },
+    equipamentos_projetados_facilitar_acesso_limpeza_manutencao_inspecao_acidentes: {
+      valor: "",
+      escore: "",
+    },
+    manutencao_corretiva_equipamento: {
+      valor: "",
+      escore: "",
+    },
+    manutencao_preventiva_equipamento: {
+      valor: "",
+      escore: "",
+    },
+    equipamento_funciona_corretamente_sem_vazamentos_desgaste_ruido: {
+      valor: "",
+      escore: "",
+    },
+    superficies_contato_mobilia_material_compatível_inox_permite_higienizacao: {
+      valor: "",
+      escore: "",
+    },
+    mobilia_suficiente_manipulacao_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    produtos_higiene_adequados_suficientes_procedimentos_saneamento: {
+      valor: "",
+      escore: "",
+    },
+    ferramentas_limpeza_nao_permitem_contaminacao_cruzada_separadas_por_areas: {
+      valor: "",
+      escore: "",
+    },
+    materiais_lavagem_maos_suficientes_reabastecidos: {
+      valor: "",
+      escore: "",
+    },
+    adequacao_ambiente_frequente_necessidade_local_nao_inspecoes: {
+      valor: "",
+      escore: "",
+    },
+    atmosfera_ambiente_trabalho: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_espaco_se_sentem_confortaveis_seguros_trabalho: {
+      valor: "",
+      escore: "",
+    },
+  },
+  sistema_gestao: {
+    equipe_motivada_implementar_praticas_seguras_ferramentas_qualidade: {
+      valor: "",
+      escore: "",
+    },
+    manipuladores_integrados_sistemas_processos_seguranca_alimentos: {
+      valor: "",
+      escore: "",
+    },
+    equipe_sabe_preencher_formularios_controle: {
+      valor: "",
+      escore: "",
+    },
+    procedimentos_documentados_formularios_registro_atualizados: {
+      valor: "",
+      escore: "",
+    },
+    registros_equipamentos_atualizados_refletem_status_real_desempenho_equipamento: {
+      valor: "",
+      escore: "",
+    },
+    programas_pre_requisito_haccp_sistema_boas_praticas_higiene_implementados: {
+      valor: "",
+      escore: "",
+    },
+    processo_producao_alinhado_praticas_seguras_projetado_minimizar_riscos: {
+      valor: "",
+      escore: "",
+    },
+  },
+};
