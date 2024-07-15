@@ -6,7 +6,7 @@ import { verificarToken } from "@/scripts/verificarToken";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-export async function excluirEstabelecimento(data: { id_usuario: string }) {
+export async function excluirEstabelecimento(data: { id_estabelecimento: string }) {
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
   console.log("Token do usuário", token);

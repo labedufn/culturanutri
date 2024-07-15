@@ -29,6 +29,7 @@ import { ListarInformacoesUsuarioController } from "@controllers/usuario/ListarI
 import { InstituicoesController } from "@controllers/util/InstituicoesController";
 import { ListarConvitesCadastroController } from "@controllers/usuario/ListarConvitesCadastroController";
 import { ExcluirUsuarioController } from "@controllers/usuario/ExcluirUsuarioController";
+import { ExcluirEstabelecimentoController } from "@controllers/estabelecimento/ExcluirEstabelecimentoController";
 
 export const router = Router();
 
@@ -56,6 +57,7 @@ router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecime
 router.put("/api/editar-estabelecimento", authUsuario, new EditarEstabelecimentoController().handle);
 router.get("/api/listar-estabelecimentos", authUsuario, new ListarEstabelecimentosController().handle);
 router.get("/api/buscar-estabelecimento", authUsuario, new BuscarEstabelecimentoController().handle);
+router.delete("/api/excluir-estabelecimento", authUsuario, new ExcluirEstabelecimentoController().handle);
 
 // Rotas Gestor Avaliacao
 router.post("/api/cadastro-gestor", authUsuario, new CriarGestorController().handle);

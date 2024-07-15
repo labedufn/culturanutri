@@ -7,6 +7,7 @@ import axios from "axios";
 import { cookies } from "next/headers";
 
 export async function editarEstabelecimento(data: {
+  id: string;
   nome: string;
   cnae: string;
   endereco: string;
@@ -14,10 +15,10 @@ export async function editarEstabelecimento(data: {
   numero_refeicoes: number;
   possui_alvara_sanitario: number;
   possui_responsavel_boas_praticas: number;
+  ativo: number;
 }) {
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
-  console.log("Token do usuário", token);
 
   if (!token || !(await verificarToken(token))) {
     console.error("Token inválido ou expirado.");
@@ -29,6 +30,7 @@ export async function editarEstabelecimento(data: {
 
   try {
     const { url } = EDITAR_ESTABELECIMENTO();
+    console.log(data);
     const response = await axios.put(url, data, {
       headers: {
         "Content-Type": "application/json",

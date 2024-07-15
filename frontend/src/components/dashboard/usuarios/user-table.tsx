@@ -85,7 +85,11 @@ export default function UserTable() {
 
   return (
     <div className="flex flex-col gap-6">
-      {!userInfo ? <Skeleton className="h-10 w-full" /> : <SearchInput onSearch={handleSearch} />}
+      {!userInfo ? (
+        <Skeleton className="h-10 w-full" />
+      ) : (
+        <SearchInput onSearch={handleSearch} placeholder="Buscar por nome, CPF, e-mail ou instituição" />
+      )}
       {!userInfo ? (
         <Skeleton className="h-64 w-full" />
       ) : (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Estabelecimentos, columns, defaultSort } from "../../../components/dashboard/estabelecimentos/table/columns";
+import { Estabelecimentos, columns } from "../../../components/dashboard/estabelecimentos/table/columns";
 import DataTable from "@/components/dashboard/data-table";
 import { listarEstabelecimentos } from "@/actions/listar-estabelecimentos";
 import { ModalVisualizarEstabelecimento } from "./modal-visualizar-estabelecimento";
@@ -14,6 +14,7 @@ import { ModalEditarEstabelecimento } from "./modal-editar-estabelecimento";
 import { ModalCadastrarEstabelecimento } from "./modal-cadastrar-estabelecimento";
 import { PlusIcon } from "lucide-react";
 import { formatarData } from "@/scripts/formatarData";
+import { formatarCnae } from "@/scripts/formatarCnae";
 
 export default function EstabelecimentosTable() {
   const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimentos[] | null>(null);
@@ -34,7 +35,7 @@ export default function EstabelecimentosTable() {
       const formattedData = response.data.estabelecimentos.map((estabelecimento: any) => ({
         id: estabelecimento.id,
         nome: estabelecimento.nome,
-        cnae: estabelecimento.cnae,
+        cnae: estabelecimento.cnae ? formatarCnae(estabelecimento.cnae) : "Não informado",
         endereco: estabelecimento.endereco,
         pessoal_ocupado: estabelecimento.pessoal_ocupado,
         numero_refeicoes: estabelecimento.numero_refeicoes,
@@ -59,8 +60,7 @@ export default function EstabelecimentosTable() {
       const filtered = estabelecimentos.filter(
         (estabelecimento) =>
           estabelecimento.nome.toLowerCase().includes(query.toLowerCase()) ||
-          estabelecimento.cnae.toLowerCase().includes(query.toLowerCase()) ||
-          estabelecimento.endereco.toLowerCase().includes(query.toLowerCase()),
+          estabelecimento.cnae.toLowerCase().includes(query.toLowerCase()),
       );
       setFilteredData(filtered);
     }
@@ -87,7 +87,7 @@ export default function EstabelecimentosTable() {
         <Skeleton className="h-10 w-full" />
       ) : (
         <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-between sm:items-center">
-          <SearchInput onSearch={handleSearch} />
+          <SearchInput onSearch={handleSearch} placeholder="Buscar por nome ou CNAE" />
           <Button className="w-full sm:w-auto" onClick={() => setIsCreateModalOpen(true)}>
             <PlusIcon className="pr-2" />
             Cadastrar Estabelecimento
@@ -97,11 +97,7 @@ export default function EstabelecimentosTable() {
       {!estabelecimentos ? (
         <Skeleton className="h-64 w-full" />
       ) : (
-        <DataTable
-          columns={columns(handleVisualizar, handleEditar, handleExcluir)}
-          data={filteredData}
-          defaultSort={defaultSort}
-        />
+        <DataTable columns={columns(handleVisualizar, handleEditar, handleExcluir)} data={filteredData} />
       )}
       {selectedEstabelecimento && (
         <>

@@ -6,9 +6,10 @@ import { Search } from "lucide-react";
 
 interface SearchInputProps {
   onSearch: (query: string) => void;
+  placeholder: string;
 }
 
-export default function SearchInput({ onSearch }: SearchInputProps) {
+export default function SearchInput({ onSearch, placeholder }: SearchInputProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,12 +18,5 @@ export default function SearchInput({ onSearch }: SearchInputProps) {
     onSearch(value);
   };
 
-  return (
-    <Input
-      icon={<Search />}
-      placeholder="Buscar por nome, CPF, e-mail ou instituição"
-      value={searchQuery}
-      onChange={handleInputChange}
-    />
-  );
+  return <Input icon={<Search />} placeholder={placeholder} value={searchQuery} onChange={handleInputChange} />;
 }

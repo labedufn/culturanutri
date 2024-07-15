@@ -38,23 +38,39 @@ export const columns = (
   {
     accessorKey: "pessoal_ocupado",
     header: "Pessoal Ocupado",
+    cell: ({ row }) => <Badge className="bg-zinc-100 text-zinc-500">{row.original.pessoal_ocupado}</Badge>,
     sortable: true,
   },
   {
     accessorKey: "numero_refeicoes",
     header: "Número de Refeições",
+    cell: ({ row }) => <Badge className="bg-zinc-100 text-zinc-500">{row.original.numero_refeicoes}</Badge>,
     sortable: true,
   },
   {
     accessorKey: "possui_alvara_sanitario",
     header: "Possui Alvará Sanitário?",
-    cell: ({ row }) => (row.original.possui_alvara_sanitario ? "Sim" : "Não"),
+    cell: ({ row }) => (
+      <Badge
+        className={row.original.possui_alvara_sanitario ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"}
+      >
+        {row.original.possui_alvara_sanitario ? "Sim" : "Não"}
+      </Badge>
+    ),
     sortable: true,
   },
   {
     accessorKey: "possui_responsavel_boas_praticas",
     header: "Possui Responsável?",
-    cell: ({ row }) => (row.original.possui_responsavel_boas_praticas ? "Sim" : "Não"),
+    cell: ({ row }) => (
+      <Badge
+        className={
+          row.original.possui_responsavel_boas_praticas ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"
+        }
+      >
+        {row.original.possui_responsavel_boas_praticas ? "Sim" : "Não"}
+      </Badge>
+    ),
     sortable: true,
   },
   {
@@ -62,7 +78,7 @@ export const columns = (
     header: "Situação",
     cell: ({ row }) => (
       <Badge className={row.original.ativo === 1 ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"}>
-        {row.original.possui_responsavel_boas_praticas ? "Ativo" : "Inativo"}
+        {row.original.ativo ? "Ativo" : "Inativo"}
       </Badge>
     ),
     sortable: true,
@@ -113,12 +129,5 @@ export const columns = (
       </div>
     ),
     sortable: false,
-  },
-];
-
-export const defaultSort = [
-  {
-    id: "data_alteracao",
-    desc: true,
   },
 ];

@@ -41,7 +41,7 @@ export function ModalVisualizarEstabelecimento({
 }: ModalVisualizarEstabelecimentoProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[800px]">
+      <DialogContent className="sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll lg:overflow-hidden max-h-screen">
         <DialogHeader>
           <DialogTitle>Visualizar Estabelecimento</DialogTitle>
           <DialogDescription>Informações do estabelecimento selecionado.</DialogDescription>
@@ -67,11 +67,15 @@ export function ModalVisualizarEstabelecimento({
           </div>
           <div>
             <Label className="text-muted-foreground">Pessoal Ocupado:</Label>
-            <p className="font-medium text-sm">{estabelecimento.pessoal_ocupado}</p>
+            <div>
+              <Badge className="bg-zinc-100 text-zinc-500">{estabelecimento.pessoal_ocupado}</Badge>
+            </div>
           </div>
           <div>
             <Label className="text-muted-foreground">Número de Refeições:</Label>
-            <p className="font-medium text-sm">{estabelecimento.numero_refeicoes}</p>
+            <div>
+              <Badge className="bg-zinc-100 text-zinc-500">{estabelecimento.numero_refeicoes}</Badge>
+            </div>
           </div>
           <div className="col-span-2">
             <Separator />
@@ -114,6 +118,14 @@ export function ModalVisualizarEstabelecimento({
             <p className="font-medium text-sm">
               {estabelecimento.usuario.nome} {estabelecimento.usuario.sobrenome}
             </p>
+          </div>
+          <div>
+            <Label className="text-muted-foreground">Situação:</Label>
+            <div>
+              <Badge className={estabelecimento.ativo == 1 ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"}>
+                {estabelecimento.ativo == 1 ? "Ativo" : "Inativo"}
+              </Badge>
+            </div>
           </div>
         </div>
         <DialogFooter>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,11 +7,51 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { cadastrarEstabelecimento } from "@/actions/cadastrar-estabelecimento";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import { cadastrarEstabelecimento } from "@/actions/cadastrar-estabelecimento";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+const schema = z.object({
+  nome: z.string().min(1, "O campo nome é obrigatório."),
+  cnae: z.string().optional(),
+  endereco: z.string().min(1, "O campo endereço é obrigatório."),
+  pessoal_ocupado: z.preprocess(
+    (value) => (value === "" ? NaN : Number(value)),
+    z
+      .number({ invalid_type_error: "O campo pessoal ocupado é obrigatório." })
+      .min(0, "O campo pessoal ocupado é obrigatório.")
+      .refine((value) => !isNaN(value), "O campo pessoal ocupado é obrigatório."),
+  ),
+  numero_refeicoes: z.preprocess(
+    (value) => (value === "" ? NaN : Number(value)),
+    z
+      .number({ invalid_type_error: "O campo número de refeições é obrigatório." })
+      .min(0, "O campo número de refeições é obrigatório.")
+      .refine((value) => !isNaN(value), "O campo número de refeições é obrigatório."),
+  ),
+  possui_alvara_sanitario: z.preprocess(
+    (value) => (value === "" ? NaN : Number(value)),
+    z
+      .number({ invalid_type_error: "O campo possui alvará sanitário é obrigatório." })
+      .min(0, "Valor inválido.")
+      .max(1, "Valor inválido.")
+      .refine((value) => !isNaN(value), "O campo possui alvará sanitário é obrigatório."),
+  ),
+  possui_responsavel_boas_praticas: z.preprocess(
+    (value) => (value === "" ? NaN : Number(value)),
+    z
+      .number({ invalid_type_error: "O campo possui responsável por boas práticas é obrigatório." })
+      .min(0, "Valor inválido.")
+      .max(1, "Valor inválido.")
+      .refine((value) => !isNaN(value), "O campo possui responsável por boas práticas é obrigatório."),
+  ),
+});
 
 type ModalCadastrarEstabelecimentoProps = {
   isOpen: boolean;
@@ -21,24 +60,40 @@ type ModalCadastrarEstabelecimentoProps = {
 };
 
 export function ModalCadastrarEstabelecimento({ isOpen, onClose, onCreate }: ModalCadastrarEstabelecimentoProps) {
-  const [formData, setFormData] = useState({
-    nome: "",
-    cnae: "",
-    endereco: "",
-    pessoal_ocupado: 0,
-    numero_refeicoes: 0,
-    possui_alvara_sanitario: 0,
-    possui_responsavel_boas_praticas: 0,
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      nome: "",
+      cnae: "",
+      endereco: "",
+      pessoal_ocupado: undefined,
+      numero_refeicoes: undefined,
+      possui_alvara_sanitario: undefined,
+      possui_responsavel_boas_praticas: undefined,
+    },
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const cnaeValue = form.watch("cnae");
+
+  const formatCNAE = (value: string) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/^(\d{4})(\d)/, "$1-$2")
+      .replace(/(\d{4}-\d)(\d)/, "$1/$2")
+      .slice(0, 9);
   };
 
-  const handleSave = async () => {
+  const onSubmit = async (data: any) => {
     try {
-      const response = await cadastrarEstabelecimento(formData);
+      const formattedData = {
+        ...data,
+        cnae: data.cnae?.replace(/\D/g, "") || "",
+        pessoal_ocupado: Number(data.pessoal_ocupado),
+        numero_refeicoes: Number(data.numero_refeicoes),
+        possui_alvara_sanitario: Number(data.possui_alvara_sanitario),
+        possui_responsavel_boas_praticas: Number(data.possui_responsavel_boas_praticas),
+      };
+      const response = await cadastrarEstabelecimento(formattedData);
 
       if (response.success) {
         toast({
@@ -72,62 +127,155 @@ export function ModalCadastrarEstabelecimento({ isOpen, onClose, onCreate }: Mod
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[800px]">
+      <DialogContent className="sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll lg:overflow-hidden max-h-screen">
         <DialogHeader>
           <DialogTitle>Cadastrar Estabelecimento</DialogTitle>
           <DialogDescription>Preencha as informações do novo estabelecimento.</DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2">
-          <div className="flex flex-col gap-3">
-            <Label>Nome</Label>
-            <Input name="nome" value={formData.nome} onChange={handleInputChange} />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>CNAE</Label>
-            <Input name="cnae" value={formData.cnae} onChange={handleInputChange} />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>Endereço</Label>
-            <Input name="endereco" value={formData.endereco} onChange={handleInputChange} />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>Pessoal Ocupado</Label>
-            <Input name="pessoal_ocupado" type="number" value={formData.pessoal_ocupado} onChange={handleInputChange} />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>Número de Refeições</Label>
-            <Input
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2"
+          >
+            <FormField
+              control={form.control}
+              name="nome"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Nome do estabelecimento" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="cnae"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>CNAE</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="0000-0/00 (opcional)"
+                      value={formatCNAE(cnaeValue)}
+                      onChange={(e) => field.onChange(formatCNAE(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="endereco"
+              render={({ field }) => (
+                <FormItem className="md:col-span-2">
+                  <FormLabel>Endereço</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="Endereço completo" />
+                  </FormControl>
+                  <FormDescription>Formato: Rua, Número, Bairro, Cidade, Estado, CEP</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="pessoal_ocupado"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pessoal Ocupado</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" placeholder="Pessoas ocupadas no local" min="0" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="numero_refeicoes"
-              type="number"
-              value={formData.numero_refeicoes}
-              onChange={handleInputChange}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Número de Refeições</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="number" placeholder="Número de refeições servidas" min="0" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>Possui Alvará Sanitário</Label>
-            <Input
+            <FormField
+              control={form.control}
               name="possui_alvara_sanitario"
-              type="number"
-              value={formData.possui_alvara_sanitario}
-              onChange={handleInputChange}
+              render={({}) => (
+                <FormItem>
+                  <FormLabel>Possui Alvará Sanitário</FormLabel>
+                  <Controller
+                    control={form.control}
+                    name="possui_alvara_sanitario"
+                    render={({ field }) => (
+                      <RadioGroup
+                        className="flex gap-4"
+                        value={String(field.value)}
+                        onValueChange={(value) => field.onChange(parseInt(value))}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="1" id="possui_alvara_sim" />
+                          <FormLabel htmlFor="possui_alvara_sim">Sim</FormLabel>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="0" id="possui_alvara_nao" />
+                          <FormLabel htmlFor="possui_alvara_nao">Não</FormLabel>
+                        </div>
+                      </RadioGroup>
+                    )}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Label>Possui Responsável por Boas Práticas</Label>
-            <Input
+            <FormField
+              control={form.control}
               name="possui_responsavel_boas_praticas"
-              type="number"
-              value={formData.possui_responsavel_boas_praticas}
-              onChange={handleInputChange}
+              render={({}) => (
+                <FormItem>
+                  <FormLabel>Possui Responsável por Boas Práticas</FormLabel>
+                  <Controller
+                    control={form.control}
+                    name="possui_responsavel_boas_praticas"
+                    render={({ field }) => (
+                      <RadioGroup
+                        className="flex gap-4"
+                        value={String(field.value)}
+                        onValueChange={(value) => field.onChange(parseInt(value))}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="1" id="possui_responsavel_sim" />
+                          <FormLabel htmlFor="possui_responsavel_sim">Sim</FormLabel>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="0" id="possui_responsavel_nao" />
+                          <FormLabel htmlFor="possui_responsavel_nao">Não</FormLabel>
+                        </div>
+                      </RadioGroup>
+                    )}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-        </div>
-        <DialogFooter className="flex flex-col gap-4 md:gap-0 md:flex-row">
-          <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onClose}>
-            Cancelar
-          </Button>
-          <Button onClick={handleSave}>Salvar</Button>
-        </DialogFooter>
+          </form>
+          <DialogFooter className="flex-col-reverse gap-4 md:gap-0 md:flex-row">
+            <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onClose}>
+              Cancelar
+            </Button>
+            <Button onClick={form.handleSubmit(onSubmit)}>Salvar</Button>
+          </DialogFooter>
+        </Form>
       </DialogContent>
     </Dialog>
   );
