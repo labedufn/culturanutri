@@ -73,7 +73,7 @@ const Footer = () => {
             className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground gap-1 h-9 bg-transparent text-black shadow-none"
             size="sm"
             onClick={nextStep}
-            disabled={hasCompletedAllSteps} // Disable button when all steps are completed
+            disabled={hasCompletedAllSteps}
           >
             <span>{isLastStep ? "Concluir" : isOptionalStep ? "Pular" : "Próximo"}</span>
             <ChevronRight className="h-4 w-4" />
