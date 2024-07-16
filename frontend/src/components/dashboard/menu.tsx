@@ -14,9 +14,10 @@ import { logout } from "@/actions/login";
 
 interface MenuProps {
   isOpen: boolean | undefined;
+  handleClose: () => void;
 }
 
-export function Menu({ isOpen }: MenuProps) {
+export function Menu({ isOpen, handleClose }: MenuProps) {
   const pathname = usePathname();
   const pages = getPages(pathname);
 
@@ -57,7 +58,7 @@ export function Menu({ isOpen }: MenuProps) {
               )}
               {menus.map(({ href, label, icon: Icon, active, submenus }, index) =>
                 submenus.length === 0 ? (
-                  <div className="w-full" key={index}>
+                  <div className="w-full" key={index} onClick={handleClose}>
                     <TooltipProvider disableHoverableContent>
                       <Tooltip delayDuration={100}>
                         <TooltipTrigger asChild>
@@ -91,7 +92,14 @@ export function Menu({ isOpen }: MenuProps) {
                   </div>
                 ) : (
                   <div className="w-full" key={index}>
-                    <CollapseMenuButton icon={Icon} label={label} active={active} submenus={submenus} isOpen={isOpen} />
+                    <CollapseMenuButton
+                      icon={Icon}
+                      label={label}
+                      active={active}
+                      submenus={submenus}
+                      isOpen={isOpen}
+                      handleClose={handleClose}
+                    />
                   </div>
                 ),
               )}
