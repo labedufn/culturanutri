@@ -50,6 +50,7 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "no-empty-pattern": "off",
+        "react/display-name": "off",
       },
     },
   ],
