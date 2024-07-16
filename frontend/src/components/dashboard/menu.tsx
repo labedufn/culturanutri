@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Ellipsis, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +12,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { getPages } from "@/lib/pages";
 import { cn } from "@/lib/utils";
 import { logout } from "@/actions/login";
+import { buscarUsuario } from "@/actions/buscar-usuario";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -19,7 +21,20 @@ interface MenuProps {
 
 export function Menu({ isOpen, handleClose }: MenuProps) {
   const pathname = usePathname();
-  const pages = getPages(pathname);
+  const [tipoUsuario, setTipoUsuario] = useState<string | null>(null);
+  const pages = getPages(pathname, tipoUsuario);
+
+  useEffect(() => {
+    const fetchUsuario = async () => {
+      try {
+        const usuarioResponse = await buscarUsuario();
+        setTipoUsuario(usuarioResponse.data?.usuario?.tipo_usuario ?? null);
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+    fetchUsuario();
+  }, []);
 
   const handleLogout = async () => {
     const response = await logout();

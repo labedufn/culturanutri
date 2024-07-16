@@ -101,3 +101,9 @@ export function EXCLUIR_ESTABELECIMENTO() {
     url: `${API_URL}/api/excluir-estabelecimento`,
   };
 }
+
+export function BUSCAR_USUARIO() {
+  return {
+    url: `${API_URL}/api/buscar-usuario`,
+  };
+}

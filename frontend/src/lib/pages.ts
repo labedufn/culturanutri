@@ -19,8 +19,8 @@ type Group = {
   menus: Menu[];
 };
 
-export function getPages(pathname: string): Group[] {
-  return [
+export function getPages(pathname: string, tipoUsuario: string | null): Group[] {
+  const pages: Group[] = [
     {
       groupLabel: "",
       menus: [
@@ -59,11 +59,6 @@ export function getPages(pathname: string): Group[] {
             },
           ],
         },
-      ],
-    },
-    {
-      groupLabel: "Configurações",
-      menus: [
         {
           href: "/dashboard/estabelecimentos",
           label: "Estabelecimentos",
@@ -71,6 +66,14 @@ export function getPages(pathname: string): Group[] {
           icon: UtensilsCrossed,
           submenus: [],
         },
+      ],
+    },
+  ];
+
+  if (tipoUsuario === "ADMINISTRADOR") {
+    pages.push({
+      groupLabel: "Administração",
+      menus: [
         {
           href: "/dashboard/usuarios",
           label: "Usuários",
@@ -89,14 +92,22 @@ export function getPages(pathname: string): Group[] {
             },
           ],
         },
-        {
-          href: "/dashboard/conta",
-          label: "Conta",
-          active: pathname.startsWith("/dashboard/conta") || pathname === "/dashboard/conta",
-          icon: Settings,
-          submenus: [],
-        },
       ],
-    },
-  ];
+    });
+  }
+
+  pages.push({
+    groupLabel: "Configurações",
+    menus: [
+      {
+        href: "/dashboard/conta",
+        label: "Minha Conta",
+        active: pathname === "/dashboard/conta",
+        icon: Settings,
+        submenus: [],
+      },
+    ],
+  });
+
+  return pages;
 }

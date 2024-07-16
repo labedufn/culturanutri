@@ -49,7 +49,7 @@ router.put("/api/editar-usuario", authUsuario, new EditarUsuarioController().han
 router.put("/api/editar-usuario-admin", authAdministrador, new EditarUsuarioAdminController().handle);
 router.put("/api/alterar-senha-usuario", authUsuario, new AlterarSenhaUsuarioController().handle);
 router.get("/api/listar-usuarios", authAdministrador, new ListarUsuariosController().handle);
-router.get("/api/buscar-usuario", authAdministrador, new BuscarUsuarioController().handle);
+router.get("/api/buscar-usuario", authUsuario, new BuscarUsuarioController().handle);
 router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioController().handle);
 router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
 router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioController().handle);
