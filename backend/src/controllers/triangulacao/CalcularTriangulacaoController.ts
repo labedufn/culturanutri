@@ -11,21 +11,20 @@ export class CalcularTriangulacaoController {
 
     try {
       const calcularTriangulacaoService = new CalcularTriangulacaoService();
-      const criarTriangulacaoService = new CriarTriangulacaoService();
+      // const criarTriangulacaoService = new CriarTriangulacaoService();
       const buscarAnaliseQualitativaService = new BuscarAnaliseQualitativaService();
       const buscarAnaliseQuantitativaService = new BuscarAnaliseQuantitativaService();
 
       const analiseQualitativa = await buscarAnaliseQualitativaService.execute(id_estabelecimento);
       const analiseQuantitativa = await buscarAnaliseQuantitativaService.execute(id_estabelecimento);
 
-      const { informacoes } = calcularTriangulacaoService.execute(analiseQualitativa, analiseQuantitativa);
+      const informacoes = await calcularTriangulacaoService.execute(analiseQualitativa, analiseQuantitativa);
+      // const ativo = 1;
 
-      const ativo = 1;
+      // const triangulacao = new Triangulacao(id_analise_qualitativa, id_analise_qualitativa, informacoes, ativo);
+      // const triangulacaoCalculada = await criarTriangulacaoService.execute(triangulacao);
 
-      const triangulacao = new Triangulacao(id_analise_qualitativa, id_analise_qualitativa, informacoes, ativo);
-      const triangulacaoCalculada = await criarTriangulacaoService.execute(triangulacao);
-
-      return res.json(triangulacaoCalculada);
+      return res.json(informacoes);
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
