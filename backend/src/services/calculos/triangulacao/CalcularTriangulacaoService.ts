@@ -1,5 +1,5 @@
 export class CalcularTriangulacaoService {
-  private calcularAnaliseQuantitativaLideranca(valor) {
+  private calcularAnaliseQuantitativa(valor) {
     if (valor === 1) {
       return 1;
     } else if (valor <= 2.5) {
@@ -69,13 +69,31 @@ export class CalcularTriangulacaoService {
     }
   }
 
+  private analiseQuantitativaMultipla(v1, v2, v3) {
+    if (v3 > v1) {
+      return 1;
+    } else if (v3 > v2) {
+      return 1;
+    } else if (v2 > v1) {
+      return 2;
+    } else if (v2 > v3) {
+      return 2;
+    } else if (v1 > v1) {
+      return 3;
+    } else if (v2 > v3) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
   async execute(analiseQualitativa: JSON, analiseQuantitativa: JSON) {
     const informacoes = {};
 
     // informacoes liderança
     informacoes["lideranca"] = {
       escore_analise_quantitativa: {
-        0: this.calcularAnaliseQuantitativaLideranca(
+        0: this.calcularAnaliseQuantitativa(
           analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].lideranca.manipuladores.media,
         ),
         1:
@@ -126,12 +144,114 @@ export class CalcularTriangulacaoService {
         informacoes["lideranca"].triangulacao.escore_caracteristicas["3"],
       ),
     };
-
-    //informacoes comunicacao
-
     informacoes["lideranca"] = {
       ...informacoes["lideranca"],
       escore_elemento: this.escoreElemento(informacoes["lideranca"].valor_medio),
+    };
+
+    //informacoes comunicacao
+    informacoes["comunicacao"] = {
+      escore_analise_quantitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].comunicacao.manipuladores.media,
+        ),
+        1: this.calcularAnaliseQuantitativa(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].comunicacao.manipuladores.media,
+        ),
+        2: analiseQualitativa["informacoesDecodificadas"].comunicacao
+          .melhorias_seguranca_alimentos_comunicadas_informacoes_visiveis_importantes.valor,
+        3: analiseQualitativa["informacoesDecodificadas"].comunicacao.instrucoes_visuais_area_producao.escore,
+      },
+      escore_analise_qualitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].comunicacao.instrucoes_corretas_comunicadas_vertical_horizontal
+            .escore,
+        ),
+        1: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].comunicacao
+            .manipuladores_ficam_avontade_comunicar_acoes_erradas_perguntar.escore,
+        ),
+        2: analiseQualitativa["informacoesDecodificadas"].comunicacao
+          .melhorias_seguranca_alimentos_comunicadas_informacoes_visiveis_importantes.valor,
+        3: analiseQualitativa["informacoesDecodificadas"].comunicacao.instrucoes_visuais_area_producao.escore,
+      },
+    };
+
+    //informacoes conhecimento
+    informacoes["conhecimento"] = {
+      escore_analise_quantitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].conhecimento.manipuladores.media,
+        ),
+        1: analiseQualitativa["informacoesDecodificadas"].conhecimento.sabem_explicar_requisitos_tempo_temperatura
+          .escore,
+      },
+      escore_analise_qualitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].conhecimento.conhecimento_aspectos_tempo_temperatura.escore,
+        ),
+        1: analiseQualitativa["informacoesDecodificadas"].conhecimento.sabem_explicar_requisitos_tempo_temperatura
+          .escore,
+      },
+    };
+
+    //informacoes comprometimento
+    informacoes["comprometimento"] = {
+      escore_analise_quantitativa: {
+        0: this.analiseQuantitativaMultipla(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].comprometimento.continuo.manipuladores
+            .media,
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].comprometimento.afetivo.manipuladores
+            .media,
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].comprometimento.normativo
+            .manipuladores.media,
+        ),
+        1: this.calcularAnaliseQuantitativa(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].comprometimento
+            .com_seguranca_alimentos.manipuladores.media,
+        ),
+        2: analiseQualitativa["informacoesDecodificadas"].comprometimento
+          .gerentes_priorizam_alocacao_recursos_financeiros_seguranca_alimentos.escore,
+      },
+      escore_analise_qualitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].comprometimento.manipuladores_gerentes_satisfeitos_trabalho
+            .escore,
+        ),
+        1: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].comprometimento
+            .manipuladores_responsaveis_seguranca_alimentos_comportamento_seguro.escore,
+        ),
+        2: analiseQualitativa["informacoesDecodificadas"].comprometimento
+          .gerentes_priorizam_alocacao_recursos_financeiros_seguranca_alimentos.escore,
+      },
+    };
+
+    //falta fazer
+    informacoes["percepcao_risco"] = {};
+
+    //informacoes pressao_trabalho_crencas_normativas
+    informacoes["pressao_trabalho_crencas_normativas"] = {
+      escore_analise_quantitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].percepcao_risco
+            .pressao_trabalho_crencas_normativas.manipuladores.media,
+        ),
+        1: this.calcularAnaliseQuantitativa(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].percepcao_risco
+            .pressao_trabalho_crencas_normativas.manipuladores.media,
+        ),
+      },
+      escore_analise_qualitativa: {
+        0: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].pressao_trabalho_crencas_normativas
+            .manipuladores_carga_trabalho_pesada.escore,
+        ),
+        1: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].pressao_trabalho_crencas_normativas
+            .manipuladores_pressao_trabalhar_rapidamente.escore,
+        ),
+      },
     };
 
     return { informacoes };
