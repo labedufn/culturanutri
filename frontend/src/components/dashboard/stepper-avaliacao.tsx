@@ -17,10 +17,10 @@ import { Button } from "@/components/ui/button";
 const steps = [
   { label: "Informações", icon: UtensilsCrossed },
   { label: "Gestores", icon: Handshake },
-  { label: "Manipuladores", icon: CookingPot },
+  { label: "Manipuladores de alimentos", icon: CookingPot },
   { label: "Lista de verificação", icon: ListChecks },
-  { label: "Análises quali.", icon: Brush },
-  { label: "Análises quanti.", icon: ListOrdered },
+  { label: "Análises qualitativas", icon: Brush },
+  { label: "Análises quantitativas", icon: ListOrdered },
   { label: "Triangulação", icon: Triangle },
 ] satisfies StepItem[];
 

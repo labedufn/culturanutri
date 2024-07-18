@@ -36,7 +36,13 @@ export default function AvaliacoesNovaPage() {
       <Card className="rounded-lg border-none mt-6">
         <CardContent className="p-6">
           <div className="min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
-            <h3 className="mb-8">Avaliação de Cultura de Segurança dos Alimentos</h3>
+            <div className="mb-8">
+              <h3 className="mb-2">Avaliação de Cultura de Segurança dos Alimentos</h3>
+              <p className="text-sm text-muted-foreground">
+                Este sistema foi elaborado para facilitar a análise de dados da avaliação da cultura de segurança dos
+                alimentos.
+              </p>
+            </div>
             <StepperAvaliacao />
           </div>
         </CardContent>
