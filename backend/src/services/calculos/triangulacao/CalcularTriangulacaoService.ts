@@ -227,7 +227,9 @@ export class CalcularTriangulacaoService {
       },
     };
 
-    //falta fazer
+    // falta fazer
+
+    //informacoes percepcao_risco
     informacoes["percepcao_risco"] = {};
 
     //informacoes pressao_trabalho_crencas_normativas
@@ -253,6 +255,18 @@ export class CalcularTriangulacaoService {
         ),
       },
     };
+
+    //informacoes ambiente_trabalho
+    informacoes["ambiente_trabalho"] = {};
+
+    //informacoes sistema_estilos_gestao
+    informacoes["sistema_estilos_gestao"] = {};
+
+    //informacoes valor_medio (geral)
+    informacoes["valor_medio"] = {};
+
+    //informacoes escore_elemento (geral)
+    informacoes["valor_medio"] = {};
 
     return { informacoes };
   }
