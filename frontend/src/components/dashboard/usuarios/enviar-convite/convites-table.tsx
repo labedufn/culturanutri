@@ -25,7 +25,6 @@ export default function ConvitesTable({ refetch }: ConvitesTableProps) {
         status: convite.usado === 1 ? "Expirado" : verificarExpiracao(convite.expira_em) ? "Expirado" : "Disponível",
         criadoEm: formatarDataHora(convite.criado_em),
       }));
-      console.log(formattedData);
       setConvites(formattedData);
     } else {
       console.error(response.message);

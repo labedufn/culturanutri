@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export class CriarManipuladorAlimentoService {
   async execute(manipuladorAlimento: ManipuladorAlimento) {
-    console.log(manipuladorAlimento.id_estabelecimento);
     const manipuladorCriado = await prisma.manipuladorAlimento.create({
       data: {
         id_estabelecimento: manipuladorAlimento.id_estabelecimento,

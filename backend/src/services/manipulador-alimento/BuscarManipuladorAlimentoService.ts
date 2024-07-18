@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export class BuscarManipuladorAlimentoService {
   async execute(idUsuario: string, idManipulador: string) {
-    console.log(idUsuario, idManipulador);
     const usuario = await prisma.usuario.findUnique({
       where: {
         id: idUsuario,

@@ -94,7 +94,6 @@ export function ModalEditarEstabelecimento({
         ativo: Number(data.ativo),
       };
       const response = await editarEstabelecimento(formattedData);
-      console.log(formattedData);
 
       if (response.success) {
         toast({

@@ -8,9 +8,6 @@ export function autenticarUsuario(middleware: CustomMiddleware) {
     const token = request.cookies.get("token")?.value;
     const authenticated = token ? await verificarToken(token) : false;
 
-    console.log("Token:", token);
-    console.log("Authenticated:", authenticated);
-
     if (!authenticated) {
       if (request.nextUrl.pathname !== "/autenticacao/login" && request.nextUrl.pathname !== "/autenticacao/cadastro") {
         const redirectResponse = NextResponse.redirect(new URL("/autenticacao/login", request.url));
@@ -20,8 +17,6 @@ export function autenticarUsuario(middleware: CustomMiddleware) {
     } else {
       try {
         const usuarioResponse = await buscarUsuario();
-        console.log("Usuario Response:", usuarioResponse);
-
         const usuario = usuarioResponse.data?.usuario;
         if (!usuario || !usuario.ativo) {
           const redirectResponse = NextResponse.redirect(new URL("/autenticacao/login", request.url));

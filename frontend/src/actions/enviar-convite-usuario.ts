@@ -14,11 +14,8 @@ interface EnviarConviteUsuarioData {
 export async function enviarConviteUsuario(
   data: EnviarConviteUsuarioData,
 ): Promise<{ success: boolean; message: string }> {
-  console.log("Envio de dados para adicionar usuário", data);
-
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
-  console.log("Token do usuário", token);
 
   if (!token || !(await verificarToken(token))) {
     console.error("Token inválido ou expirado.");

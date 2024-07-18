@@ -17,7 +17,6 @@ export async function cadastrarEstabelecimento(data: {
 }) {
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
-  console.log("Token do usuário", token);
 
   if (!token || !(await verificarToken(token))) {
     console.error("Token inválido ou expirado.");

@@ -13,7 +13,6 @@ export async function currentUserType() {
 
   try {
     const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.SECRET_KEY));
-    console.log("Tipo de usuário:", payload.tipo_usuario);
     return payload.tipo_usuario;
   } catch (error) {
     console.error("Token inválido:", error);
