@@ -227,11 +227,6 @@ export class CalcularTriangulacaoService {
       },
     };
 
-    // falta fazer
-
-    //informacoes percepcao_risco (esse ficará em falta pois precisa da Lista de verificação)
-    informacoes["percepcao_risco"] = {};
-
     //informacoes pressao_trabalho_crencas_normativas
     informacoes["pressao_trabalho_crencas_normativas"] = {
       escore_analise_quantitativa: {
@@ -255,6 +250,11 @@ export class CalcularTriangulacaoService {
         ),
       },
     };
+
+    //falta fazer
+
+    //informacoes percepcao_risco (esse ficará em falta pois precisa da Lista de verificação)
+    informacoes["percepcao_risco"] = {};
 
     //informacoes ambiente_trabalho
     informacoes["ambiente_trabalho"] = {};
