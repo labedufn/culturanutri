@@ -1,14 +1,79 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { currentUserId } from "@/scripts/currentUserId";
 
 export function AvaliacaoGestoresDadosIndividuais() {
-  const [escolaridade, setEscolaridade] = useState("");
-  const [realizaTreinamentos, setRealizaTreinamentos] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [genero, setGenero] = useState<string>("");
+  const [idade, setIdade] = useState<string>("");
+  const [escolaridade, setEscolaridade] = useState<string>("");
+  const [formacao, setFormacao] = useState<string>("");
+  const [participouTreinamento, setParticipouTreinamento] = useState<string>("");
+  const [tempoAlimentos, setTempoAlimentos] = useState<string>("");
+  const [comunicacaoBoa, setComunicacaoBoa] = useState<string>("");
+  const [realizaTreinamentos, setRealizaTreinamentos] = useState<string>("");
+  const [frequenciaTreinamento, setFrequenciaTreinamento] = useState<string>("");
+  const [temasTreinamento, setTemasTreinamento] = useState<string>("");
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const id = (await currentUserId()) || null;
+      setUserId(id);
+
+      if (id) {
+        const storedUserId = localStorage.getItem("userId");
+        if (storedUserId === id) {
+          setGenero(localStorage.getItem("genero") || "");
+          setIdade(localStorage.getItem("idade") || "");
+          setEscolaridade(localStorage.getItem("escolaridade") || "");
+          setFormacao(localStorage.getItem("formacao") || "");
+          setParticipouTreinamento(localStorage.getItem("participouTreinamento") || "");
+          setTempoAlimentos(localStorage.getItem("tempoAlimentos") || "");
+          setComunicacaoBoa(localStorage.getItem("comunicacaoBoa") || "");
+          setRealizaTreinamentos(localStorage.getItem("realizaTreinamentos") || "");
+          setFrequenciaTreinamento(localStorage.getItem("frequenciaTreinamento") || "");
+          setTemasTreinamento(localStorage.getItem("temasTreinamento") || "");
+        } else {
+          localStorage.clear();
+          localStorage.setItem("userId", id);
+        }
+      }
+    };
+
+    fetchUserId();
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      localStorage.setItem("genero", genero);
+      localStorage.setItem("idade", idade);
+      localStorage.setItem("escolaridade", escolaridade);
+      localStorage.setItem("formacao", formacao);
+      localStorage.setItem("participouTreinamento", participouTreinamento);
+      localStorage.setItem("tempoAlimentos", tempoAlimentos);
+      localStorage.setItem("comunicacaoBoa", comunicacaoBoa);
+      localStorage.setItem("realizaTreinamentos", realizaTreinamentos);
+      localStorage.setItem("frequenciaTreinamento", frequenciaTreinamento);
+      localStorage.setItem("temasTreinamento", temasTreinamento);
+    }
+  }, [
+    userId,
+    genero,
+    idade,
+    escolaridade,
+    formacao,
+    participouTreinamento,
+    tempoAlimentos,
+    comunicacaoBoa,
+    realizaTreinamentos,
+    frequenciaTreinamento,
+    temasTreinamento,
+  ]);
 
   return (
     <>
@@ -16,7 +81,7 @@ export function AvaliacaoGestoresDadosIndividuais() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label>Gênero</Label>
-          <RadioGroup className="flex gap-2">
+          <RadioGroup value={genero} onValueChange={setGenero} className="flex gap-2">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="0" id="feminino" />
               <Label htmlFor="feminino">Feminino</Label>
@@ -30,12 +95,17 @@ export function AvaliacaoGestoresDadosIndividuais() {
 
         <div>
           <Label>Idade</Label>
-          <Input type="number" placeholder="Digite a idade do gestor" />
+          <Input
+            type="number"
+            placeholder="Digite a idade do gestor"
+            value={idade}
+            onChange={(e) => setIdade(e.target.value)}
+          />
         </div>
 
         <div>
           <Label>Escolaridade</Label>
-          <Select onValueChange={(value) => setEscolaridade(value)}>
+          <Select value={escolaridade} onValueChange={setEscolaridade}>
             <SelectTrigger>
               <SelectValue placeholder="Selecione uma opção" />
             </SelectTrigger>
@@ -55,13 +125,17 @@ export function AvaliacaoGestoresDadosIndividuais() {
         {(escolaridade === "5" || escolaridade === "6") && (
           <div>
             <Label>Formação</Label>
-            <Input placeholder="Curso que é formado ou em andamento" />
+            <Input
+              placeholder="Curso que é formado ou em andamento"
+              value={formacao}
+              onChange={(e) => setFormacao(e.target.value)}
+            />
           </div>
         )}
 
         <div>
           <Label>Participou de treinamento para manipulação de alimentos?</Label>
-          <RadioGroup className="flex gap-2">
+          <RadioGroup value={participouTreinamento} onValueChange={setParticipouTreinamento} className="flex gap-2">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -75,12 +149,17 @@ export function AvaliacaoGestoresDadosIndividuais() {
 
         <div>
           <Label>Há quanto tempo trabalha com alimentos?</Label>
-          <Input type="number" placeholder="Número de meses trabalhados" />
+          <Input
+            type="number"
+            placeholder="Número de meses trabalhados"
+            value={tempoAlimentos}
+            onChange={(e) => setTempoAlimentos(e.target.value)}
+          />
         </div>
 
         <div>
           <Label>Você acredita que a comunicação entre funcionários é boa?</Label>
-          <RadioGroup className="flex gap-2">
+          <RadioGroup value={comunicacaoBoa} onValueChange={setComunicacaoBoa} className="flex gap-2">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -94,23 +173,23 @@ export function AvaliacaoGestoresDadosIndividuais() {
 
         <div>
           <Label>Você realiza treinamentos com os funcionários a respeito de boas práticas de manipulação?</Label>
-          <RadioGroup className="flex gap-2">
+          <RadioGroup value={realizaTreinamentos} onValueChange={setRealizaTreinamentos} className="flex gap-2">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="1" id="sim" onClick={() => setRealizaTreinamentos(true)} />
+              <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="0" id="nao" onClick={() => setRealizaTreinamentos(false)} />
+              <RadioGroupItem value="0" id="nao" />
               <Label htmlFor="nao">Não</Label>
             </div>
           </RadioGroup>
         </div>
 
-        {realizaTreinamentos && (
+        {realizaTreinamentos === "1" && (
           <>
             <div>
               <Label>Qual a frequência de aplicação?</Label>
-              <Select>
+              <Select value={frequenciaTreinamento} onValueChange={setFrequenciaTreinamento}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione uma opção" />
                 </SelectTrigger>
@@ -133,7 +212,11 @@ export function AvaliacaoGestoresDadosIndividuais() {
 
             <div>
               <Label>Quais os temas costuma abordar nos treinamentos?</Label>
-              <Input placeholder="Tema 1, Tema 2, Tema 3..." />
+              <Input
+                placeholder="Tema 1, Tema 2, Tema 3..."
+                value={temasTreinamento}
+                onChange={(e) => setTemasTreinamento(e.target.value)}
+              />
             </div>
           </>
         )}
