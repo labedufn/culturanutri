@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Step, type StepItem, Stepper, useStepper } from "./stepper";
 import { Button } from "@/components/ui/button";
+import { AvaliacaoGestores } from "../avaliacao/avaliacao-gestores";
 
 const steps = [
   { label: "Informações", icon: UtensilsCrossed },
@@ -37,9 +38,7 @@ export default function StepperAvaliacao() {
         {steps.map((stepProps, index) => {
           return (
             <Step key={stepProps.label} {...stepProps}>
-              <div className="h-40 flex items-center justify-center my-2 border bg-secondary text-primary rounded-md">
-                <h1 className="text-xl">Passo {index + 1}</h1>
-              </div>
+              {index === 1 ? <AvaliacaoGestores /> : <h1 className="text-xl">Passo {index + 1}</h1>}
             </Step>
           );
         })}

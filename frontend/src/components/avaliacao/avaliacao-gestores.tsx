@@ -11,17 +11,17 @@ export function AvaliacaoGestores() {
   return (
     <>
       <AvaliacaoGestoresDadosIndividuais />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <AvaliacaoGestoresConhecimento />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <AvaliacaoGestoresComprometimentoAfetivo />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <AvaliacaoGestoresComprometimentoNormativo />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <AvaliacaoGestoresComprometimentoInstrumental />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <AvaliacaoGestoresPercepcaoRisco />
-      <Separator className="my-12" />
+      <Separator className="my-8" />
       <AvaliacaoGestoresSistemaGestao />
     </>
   );
