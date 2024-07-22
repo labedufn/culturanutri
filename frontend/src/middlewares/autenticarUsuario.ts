@@ -9,11 +9,13 @@ export function autenticarUsuario(middleware: CustomMiddleware) {
     const authenticated = token ? await verificarToken(token) : false;
 
     if (!authenticated) {
-      if (request.nextUrl.pathname !== "/autenticacao/login" && request.nextUrl.pathname !== "/autenticacao/cadastro") {
-        const redirectResponse = NextResponse.redirect(new URL("/autenticacao/login", request.url));
-        redirectResponse.cookies.set("token", "", { maxAge: -1 });
-        return redirectResponse;
+      if (request.nextUrl.pathname.startsWith("/autenticacao")) {
+        return middleware(request, event, response);
       }
+
+      const redirectResponse = NextResponse.redirect(new URL("/autenticacao/login", request.url));
+      redirectResponse.cookies.set("token", "", { maxAge: -1 });
+      return redirectResponse;
     } else {
       try {
         const usuarioResponse = await buscarUsuario();
