@@ -69,6 +69,24 @@ export class CalcularTriangulacaoService {
     }
   }
 
+  private calcularAnaliseQuantitativa2(h) {
+    if (h === 1) {
+      return 1;
+    } else if (h <= 2.5) {
+      return 1;
+    } else if (h === 2.6) {
+      return 2;
+    } else if (h <= 4) {
+      return 2;
+    } else if (h === 4.1) {
+      return 3;
+    } else if (h <= 5) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
   private analiseQuantitativaMultipla(v1, v2, v3) {
     if (v3 > v1) {
       return 1;
@@ -177,6 +195,45 @@ export class CalcularTriangulacaoService {
       },
     };
 
+    informacoes["comunicacao"] = {
+      ...informacoes["comunicacao"],
+      triangulacao: {
+        escore_caracteristicas: {
+          0: this.escoreCaracteristicas(
+            informacoes["comunicacao"].escore_analise_quantitativa["0"] +
+              informacoes["comunicacao"].escore_analise_quantitativa["0"],
+          ),
+          1: this.escoreCaracteristicas(
+            informacoes["comunicacao"].escore_analise_quantitativa["1"] +
+              informacoes["comunicacao"].escore_analise_quantitativa["1"],
+          ),
+          2: this.escoreCaracteristicas(
+            informacoes["comunicacao"].escore_analise_quantitativa["2"] +
+              informacoes["comunicacao"].escore_analise_quantitativa["2"],
+          ),
+          3: this.escoreCaracteristicas(
+            informacoes["comunicacao"].escore_analise_quantitativa["3"] +
+              informacoes["comunicacao"].escore_analise_quantitativa["3"],
+          ),
+        },
+      },
+    };
+
+    informacoes["comunicacao"] = {
+      ...informacoes["comunicacao"],
+      valor_medio: this.calcularMedia(
+        informacoes["comunicacao"].triangulacao.escore_caracteristicas["0"],
+        informacoes["comunicacao"].triangulacao.escore_caracteristicas["1"],
+        informacoes["comunicacao"].triangulacao.escore_caracteristicas["2"],
+        informacoes["comunicacao"].triangulacao.escore_caracteristicas["3"],
+      ),
+    };
+
+    informacoes["comunicacao"] = {
+      ...informacoes["comunicacao"],
+      escore_elemento: this.escoreElemento(informacoes["comunicacao"].valor_medio),
+    };
+
     //informacoes conhecimento
     informacoes["conhecimento"] = {
       escore_analise_quantitativa: {
@@ -193,6 +250,35 @@ export class CalcularTriangulacaoService {
         1: analiseQualitativa["informacoesDecodificadas"].conhecimento.sabem_explicar_requisitos_tempo_temperatura
           .escore,
       },
+    };
+
+    informacoes["conhecimento"] = {
+      ...informacoes["conhecimento"],
+      triangulacao: {
+        escore_caracteristicas: {
+          0: this.escoreCaracteristicas(
+            informacoes["conhecimento"].escore_analise_quantitativa["0"] +
+              informacoes["conhecimento"].escore_analise_qualitativa["0"],
+          ),
+          1: this.escoreCaracteristicas(
+            informacoes["conhecimento"].escore_analise_quantitativa["1"] +
+              informacoes["conhecimento"].escore_analise_qualitativa["1"],
+          ),
+        },
+      },
+    };
+
+    informacoes["conhecimento"] = {
+      ...informacoes["conhecimento"],
+      valor_medio: this.calcularMedia(
+        informacoes["conhecimento"].triangulacao.escore_caracteristicas["0"],
+        informacoes["conhecimento"].triangulacao.escore_caracteristicas["1"],
+      ),
+    };
+
+    informacoes["conhecimento"] = {
+      ...informacoes["conhecimento"],
+      escore_elemento: this.escoreElemento(informacoes["conhecimento"].valor_medio),
     };
 
     //informacoes comprometimento
@@ -227,6 +313,40 @@ export class CalcularTriangulacaoService {
       },
     };
 
+    informacoes["comprometimento"] = {
+      ...informacoes["comprometimento"],
+      triangulacao: {
+        escore_caracteristicas: {
+          0: this.escoreCaracteristicas(
+            informacoes["comprometimento"].escore_analise_quantitativa["0"] +
+              informacoes["comprometimento"].escore_analise_qualitativa["0"],
+          ),
+          1: this.escoreCaracteristicas(
+            informacoes["comprometimento"].escore_analise_quantitativa["1"] +
+              informacoes["comprometimento"].escore_analise_qualitativa["1"],
+          ),
+          2: this.escoreCaracteristicas(
+            informacoes["comprometimento"].escore_analise_quantitativa["2"] +
+              informacoes["comprometimento"].escore_analise_qualitativa["2"],
+          ),
+        },
+      },
+    };
+
+    informacoes["comprometimento"] = {
+      ...informacoes["comprometimento"],
+      valor_medio: this.calcularMedia(
+        informacoes["comprometimento"].triangulacao.escore_caracteristicas["0"],
+        informacoes["comprometimento"].triangulacao.escore_caracteristicas["1"],
+        informacoes["comprometimento"].triangulacao.escore_caracteristicas["2"],
+      ),
+    };
+
+    informacoes["comprometimento"] = {
+      ...informacoes["comprometimento"],
+      escore_elemento: this.escoreElemento(informacoes["comprometimento"].valor_medio),
+    };
+
     //informacoes pressao_trabalho_crencas_normativas
     informacoes["pressao_trabalho_crencas_normativas"] = {
       escore_analise_quantitativa: {
@@ -251,15 +371,53 @@ export class CalcularTriangulacaoService {
       },
     };
 
+    informacoes["pressao_trabalho_crencas_normativas"] = {
+      ...informacoes["pressao_trabalho_crencas_normativas"],
+      triangulacao: {
+        escore_caracteristicas: {
+          0: this.escoreCaracteristicas(
+            informacoes["pressao_trabalho_crencas_normativas"].escore_analise_quantitativa["0"] +
+              informacoes["pressao_trabalho_crencas_normativas"].escore_analise_qualitativa["0"],
+          ),
+          1: this.escoreCaracteristicas(
+            informacoes["pressao_trabalho_crencas_normativas"].escore_analise_quantitativa["1"] +
+              informacoes["pressao_trabalho_crencas_normativas"].escore_analise_qualitativa["1"],
+          ),
+        },
+      },
+    };
+
+    informacoes["pressao_trabalho_crencas_normativas"] = {
+      ...informacoes["pressao_trabalho_crencas_normativas"],
+      valor_medio: this.calcularMedia(
+        informacoes["pressao_trabalho_crencas_normativas"].triangulacao.escore_caracteristicas["0"],
+        informacoes["pressao_trabalho_crencas_normativas"].triangulacao.escore_caracteristicas["1"],
+      ),
+    };
+
+    informacoes["pressao_trabalho_crencas_normativas"] = {
+      ...informacoes["pressao_trabalho_crencas_normativas"],
+      escore_elemento: this.escoreElemento(informacoes["pressao_trabalho_crencas_normativas"].valor_medio),
+    };
+
     //falta fazer
 
     //informacoes percepcao_risco (esse ficará em falta pois precisa da Lista de verificação)
     informacoes["percepcao_risco"] = {};
 
-    //informacoes ambiente_trabalho
-    informacoes["ambiente_trabalho"] = {};
+    //informacoes ambiente_trabalho (esse ficará em falta pois precisa da Lista de verificação)
+    informacoes["ambiente_trabalho"] = {
+      escore_analise_quantitativa: {
+        0: this.calcularAnaliseQuantitativa2(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].ambiente_trabalho.manipuladores.media,
+        ),
+        1: {},
+        2: {},
+        3: {},
+      },
+    };
 
-    //informacoes sistema_estilos_gestao
+    //informacoes sistema_estilos_gestao (esse ficará em falta pois precisa da Lista de verificação)
     informacoes["sistema_estilos_gestao"] = {};
 
     //informacoes valor_medio (geral)
