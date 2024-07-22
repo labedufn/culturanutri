@@ -33,6 +33,8 @@ import { ExcluirEstabelecimentoController } from "@controllers/estabelecimento/E
 import { CriarAnaliseQualitativaController } from "@controllers/analise-qualitativa/CriarAnaliseQualitativaController";
 import { CalcularAnaliseQualitativaController } from "@controllers/analise-qualitativa/CalcularAnaliseQualitativaController";
 import { CalcularTriangulacaoController } from "@controllers/triangulacao/CalcularTriangulacaoController";
+import { CriarListaVerificacaoController } from "@controllers/lista-verificacao/CriarListaVerificacaoController";
+import { EditarListaVerificacaoController } from "@controllers/lista-verificacao/EditarListaVerificacaoController";
 
 export const router = Router();
 
@@ -88,3 +90,7 @@ router.post("/api/calcular-analise-qualitativa", new CalcularAnaliseQualitativaC
 
 // Rotas Triangulação
 router.post("/api/calcular-triangulacao", new CalcularTriangulacaoController().handle);
+
+// Rotas Lista de Verificação
+router.post("/api/criar-lista-verificacao", new CriarListaVerificacaoController().handle);
+router.post("/api/editar-lista-verificacao", new EditarListaVerificacaoController().handle);

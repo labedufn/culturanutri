@@ -35,13 +35,11 @@ model ManipuladorAlimento {
 }
 
 model ListaVerificacao {
-  id               String   @id @default(uuid())
-  informacoes      String   @db.Text
-  data_cadastro    DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao   DateTime @updatedAt @db.Timestamptz(3)
-  categoria        Int
-  verificacao_id   String
-  id_triangulacoes String
+  id             String   @id @default(uuid())
+  informacoes    String   @db.Text
+  ativo          Int      @default(1)
+  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
 
   @@map("listas_verificacoes")
 }
