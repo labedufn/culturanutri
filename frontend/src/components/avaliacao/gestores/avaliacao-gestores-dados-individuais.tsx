@@ -78,10 +78,12 @@ export function AvaliacaoGestoresDadosIndividuais() {
   return (
     <>
       <h3 className="mb-8 text-lg">Dados Pessoais</h3>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <Label>Gênero</Label>
-          <RadioGroup value={genero} onValueChange={setGenero} className="flex gap-2">
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
+        <div>
+          <div className="mb-2 text-muted-foreground">
+            <Label>Gênero</Label>
+          </div>
+          <RadioGroup value={genero} onValueChange={setGenero} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="0" id="feminino" />
               <Label htmlFor="feminino">Feminino</Label>
@@ -94,7 +96,9 @@ export function AvaliacaoGestoresDadosIndividuais() {
         </div>
 
         <div>
-          <Label>Idade</Label>
+          <div className="mb-2 text-muted-foreground">
+            <Label>Idade</Label>
+          </div>
           <Input
             type="number"
             placeholder="Digite a idade do gestor"
@@ -104,7 +108,9 @@ export function AvaliacaoGestoresDadosIndividuais() {
         </div>
 
         <div>
-          <Label>Escolaridade</Label>
+          <div className="mb-2 text-muted-foreground">
+            <Label>Escolaridade</Label>
+          </div>
           <Select value={escolaridade} onValueChange={setEscolaridade}>
             <SelectTrigger>
               <SelectValue placeholder="Selecione uma opção" />
@@ -134,8 +140,10 @@ export function AvaliacaoGestoresDadosIndividuais() {
         )}
 
         <div>
-          <Label>Participou de treinamento para manipulação de alimentos?</Label>
-          <RadioGroup value={participouTreinamento} onValueChange={setParticipouTreinamento} className="flex gap-2">
+          <div className="mb-2 text-muted-foreground">
+            <Label>Participou de treinamento para manipulação de alimentos?</Label>
+          </div>
+          <RadioGroup value={participouTreinamento} onValueChange={setParticipouTreinamento} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -148,7 +156,9 @@ export function AvaliacaoGestoresDadosIndividuais() {
         </div>
 
         <div>
-          <Label>Há quanto tempo trabalha com alimentos?</Label>
+          <div className="mb-2 text-muted-foreground">
+            <Label>Há quanto tempo trabalha com alimentos?</Label>
+          </div>
           <Input
             type="number"
             placeholder="Número de meses trabalhados"
@@ -158,8 +168,10 @@ export function AvaliacaoGestoresDadosIndividuais() {
         </div>
 
         <div>
-          <Label>Você acredita que a comunicação entre funcionários é boa?</Label>
-          <RadioGroup value={comunicacaoBoa} onValueChange={setComunicacaoBoa} className="flex gap-2">
+          <div className="mb-2 text-muted-foreground">
+            <Label>Você acredita que a comunicação entre funcionários é boa?</Label>
+          </div>
+          <RadioGroup value={comunicacaoBoa} onValueChange={setComunicacaoBoa} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -172,8 +184,10 @@ export function AvaliacaoGestoresDadosIndividuais() {
         </div>
 
         <div>
-          <Label>Você realiza treinamentos com os funcionários a respeito de boas práticas de manipulação?</Label>
-          <RadioGroup value={realizaTreinamentos} onValueChange={setRealizaTreinamentos} className="flex gap-2">
+          <div className="mb-2 text-muted-foreground">
+            <Label>Você realiza treinamentos com os funcionários a respeito de boas práticas de manipulação?</Label>
+          </div>
+          <RadioGroup value={realizaTreinamentos} onValueChange={setRealizaTreinamentos} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -188,7 +202,9 @@ export function AvaliacaoGestoresDadosIndividuais() {
         {realizaTreinamentos === "1" && (
           <>
             <div>
-              <Label>Qual a frequência de aplicação?</Label>
+              <div className="mb-2 text-muted-foreground">
+                <Label>Qual a frequência de aplicação?</Label>
+              </div>
               <Select value={frequenciaTreinamento} onValueChange={setFrequenciaTreinamento}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione uma opção" />
@@ -211,7 +227,9 @@ export function AvaliacaoGestoresDadosIndividuais() {
             </div>
 
             <div>
-              <Label>Quais os temas costuma abordar nos treinamentos?</Label>
+              <div className="mb-2 text-muted-foreground">
+                <Label>Quais os temas costuma abordar nos treinamentos?</Label>
+              </div>
               <Input
                 placeholder="Tema 1, Tema 2, Tema 3..."
                 value={temasTreinamento}
