@@ -30,14 +30,13 @@ const steps = [
 export default function StepperAvaliacao() {
   const [isFormValid, setIsFormValid] = useState(true);
 
-  // Definindo a função handleFormValidation
-  const handleFormValidation = (isValid: boolean) => {
+  const handleFormValidation = (isValid: boolean | ((prevState: boolean) => boolean)) => {
     setIsFormValid(isValid);
   };
 
   const stepComponents = [
     <AvaliacaoInfos key="step1" onFormValidation={handleFormValidation} />,
-    <AvaliacaoGestores key="step2" />,
+    <AvaliacaoGestores key="step2" onFormValidation={handleFormValidation} />,
     <div key="step3">Passo 3 - Manipuladores de alimentos</div>,
     <div key="step4">Passo 4 - Lista de verificação</div>,
     <div key="step5">Passo 5 - Análises qualitativas</div>,
@@ -67,7 +66,11 @@ export default function StepperAvaliacao() {
   );
 }
 
-const Footer = ({ isFormValid }: { isFormValid: boolean }) => {
+type FooterProps = {
+  isFormValid: boolean;
+};
+
+const Footer = ({ isFormValid }: FooterProps) => {
   const { nextStep, prevStep, isDisabledStep, hasCompletedAllSteps, isLastStep, isOptionalStep } = useStepper();
   return (
     <>

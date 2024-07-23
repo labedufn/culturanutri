@@ -1,3 +1,5 @@
+"use client";
+
 import { Separator } from "../ui/separator";
 import { AvaliacaoGestoresComprometimentoAfetivo } from "./gestores/avaliacao-gestores-comprometimento-afetivo";
 import { AvaliacaoGestoresComprometimentoInstrumental } from "./gestores/avaliacao-gestores-comprometimento-instrumental";
@@ -6,23 +8,38 @@ import { AvaliacaoGestoresConhecimento } from "./gestores/avaliacao-gestores-con
 import { AvaliacaoGestoresDadosIndividuais } from "./gestores/avaliacao-gestores-dados-individuais";
 import { AvaliacaoGestoresPercepcaoRisco } from "./gestores/avaliacao-gestores-percepcao-risco";
 import { AvaliacaoGestoresSistemaGestao } from "./gestores/avaliacao-gestores-sistema-gestao";
+import { useState } from "react";
 
-export function AvaliacaoGestores() {
+import React from "react";
+
+type AvaliacaoGestoresProps = {
+  onFormValidation: (valid: boolean) => void;
+};
+
+export function AvaliacaoGestores({ onFormValidation }: AvaliacaoGestoresProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isValid, setIsValid] = useState(false);
+
+  const handleFormValidation = (valid: boolean) => {
+    setIsValid(valid);
+    onFormValidation(valid);
+  };
+
   return (
     <>
-      <AvaliacaoGestoresDadosIndividuais />
+      <AvaliacaoGestoresDadosIndividuais onFormValidation={handleFormValidation} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresConhecimento />
+      <AvaliacaoGestoresConhecimento onFormValidation={handleFormValidation} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresComprometimentoAfetivo />
+      <AvaliacaoGestoresComprometimentoAfetivo onFormValidation={handleFormValidation} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresComprometimentoNormativo />
+      <AvaliacaoGestoresComprometimentoNormativo onFormValidation={handleFormValidation} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresComprometimentoInstrumental />
+      <AvaliacaoGestoresComprometimentoInstrumental onFormValidation={handleFormValidation} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresPercepcaoRisco />
+      <AvaliacaoGestoresPercepcaoRisco onFormValidation={handleFormValidation} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresSistemaGestao />
+      <AvaliacaoGestoresSistemaGestao onFormValidation={handleFormValidation} />
     </>
   );
 }

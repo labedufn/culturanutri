@@ -5,7 +5,13 @@ import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-export function AvaliacaoGestoresComprometimentoAfetivo() {
+type AvaliacaoGestoresComprometimentoAfetivoProps = {
+  onFormValidation: (isValid: boolean) => void;
+};
+
+export function AvaliacaoGestoresComprometimentoAfetivo({
+  onFormValidation,
+}: AvaliacaoGestoresComprometimentoAfetivoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
     problemasRestaurante: "",
@@ -49,11 +55,19 @@ export function AvaliacaoGestoresComprometimentoAfetivo() {
   }, [userId, respostas]);
 
   const handleRespostaChange = (key: string, value: string) => {
-    setRespostas((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+    const newRespostas = { ...respostas, [key]: value };
+    setRespostas(newRespostas);
+    validateForm(newRespostas);
   };
+
+  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+    onFormValidation(isValid);
+  };
+
+  useEffect(() => {
+    validateForm(respostas);
+  }, [respostas]);
 
   return (
     <>

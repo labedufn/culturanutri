@@ -7,7 +7,11 @@ import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import { currentUserId } from "@/scripts/currentUserId";
 
-export function AvaliacaoGestoresDadosIndividuais() {
+interface AvaliacaoGestoresDadosIndividuaisProps {
+  onFormValidation: (isValid: boolean) => void;
+}
+
+export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: AvaliacaoGestoresDadosIndividuaisProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [genero, setGenero] = useState<string>("");
   const [idade, setIdade] = useState<string>("");
@@ -19,6 +23,21 @@ export function AvaliacaoGestoresDadosIndividuais() {
   const [realizaTreinamentos, setRealizaTreinamentos] = useState<string>("");
   const [frequenciaTreinamento, setFrequenciaTreinamento] = useState<string>("");
   const [temasTreinamento, setTemasTreinamento] = useState<string>("");
+
+  const validateForm = () => {
+    const isValid =
+      genero !== "" &&
+      idade !== "" &&
+      escolaridade !== "" &&
+      (escolaridade !== "5" || formacao !== "") &&
+      (escolaridade !== "6" || formacao !== "") &&
+      participouTreinamento !== "" &&
+      tempoAlimentos !== "" &&
+      comunicacaoBoa !== "" &&
+      realizaTreinamentos !== "" &&
+      (realizaTreinamentos === "0" || (frequenciaTreinamento.trim() !== "" && temasTreinamento.trim() !== ""));
+    onFormValidation(isValid);
+  };
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -60,7 +79,9 @@ export function AvaliacaoGestoresDadosIndividuais() {
       localStorage.setItem("realizaTreinamentos", realizaTreinamentos);
       localStorage.setItem("frequenciaTreinamento", frequenciaTreinamento);
       localStorage.setItem("temasTreinamento", temasTreinamento);
+      validateForm();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     userId,
     genero,
@@ -101,6 +122,8 @@ export function AvaliacaoGestoresDadosIndividuais() {
           </div>
           <Input
             type="number"
+            max={100}
+            min={18}
             placeholder="Digite a idade do gestor"
             value={idade}
             onChange={(e) => setIdade(e.target.value)}
@@ -162,6 +185,7 @@ export function AvaliacaoGestoresDadosIndividuais() {
           <Input
             type="number"
             placeholder="Número de meses trabalhados"
+            min={1}
             value={tempoAlimentos}
             onChange={(e) => setTempoAlimentos(e.target.value)}
           />
@@ -185,7 +209,7 @@ export function AvaliacaoGestoresDadosIndividuais() {
 
         <div>
           <div className="mb-2 text-muted-foreground">
-            <Label>Você realiza treinamentos com os funcionários a respeito de boas práticas de manipulação?</Label>
+            <Label>Você realiza treinamentos com seus funcionários?</Label>
           </div>
           <RadioGroup value={realizaTreinamentos} onValueChange={setRealizaTreinamentos} className="flex gap-4">
             <div className="flex items-center space-x-2">
@@ -203,35 +227,23 @@ export function AvaliacaoGestoresDadosIndividuais() {
           <>
             <div>
               <div className="mb-2 text-muted-foreground">
-                <Label>Qual a frequência de aplicação?</Label>
+                <Label>Com que frequência realiza treinamentos?</Label>
               </div>
-              <Select value={frequenciaTreinamento} onValueChange={setFrequenciaTreinamento}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecione uma opção" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="1">Diário</SelectItem>
-                    <SelectItem value="2">Semanal</SelectItem>
-                    <SelectItem value="3">Quinzenal</SelectItem>
-                    <SelectItem value="4">Mensal</SelectItem>
-                    <SelectItem value="5">Trimestral</SelectItem>
-                    <SelectItem value="6">Semestral</SelectItem>
-                    <SelectItem value="7">Anual</SelectItem>
-                    <SelectItem value="8">A cada 2 anos</SelectItem>
-                    <SelectItem value="9">A cada 3 ou mais anos</SelectItem>
-                    <SelectItem value="10">Só fez uma vez</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Input
+                type="text"
+                placeholder="Digite a frequência dos treinamentos"
+                value={frequenciaTreinamento}
+                onChange={(e) => setFrequenciaTreinamento(e.target.value)}
+              />
             </div>
 
             <div>
               <div className="mb-2 text-muted-foreground">
-                <Label>Quais os temas costuma abordar nos treinamentos?</Label>
+                <Label>Quais são os temas abordados nos treinamentos?</Label>
               </div>
               <Input
-                placeholder="Tema 1, Tema 2, Tema 3..."
+                type="text"
+                placeholder="Digite os temas abordados"
                 value={temasTreinamento}
                 onChange={(e) => setTemasTreinamento(e.target.value)}
               />
