@@ -8,6 +8,7 @@ export class BuscarListaVerificacaoService {
     const listaVerificacaoBuscada = await prisma.listaVerificacao.findFirst({
       where: {
         id: id_lista_verificacao,
+        ativo: 1,
       },
       select: {
         id: true,

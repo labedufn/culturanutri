@@ -20,7 +20,7 @@
         "produtos_saneantes_regularizados_pelo_ministerio_da_saude": 0,
         "areas_de_preparacao_higienizadas_quantas_vezes_fore_menecessarias_e_imediatamente_apos_o_termino_do_trabalho": 0
     },
-        "controle_integrado_de_vetores_e_pragas_urbanas": {
+    "controle_integrado_de_vetores_e_pragas_urbanas": {
         "controle_de_vetores_e_pragas_urbanas_executados_por_empresa_especializada_devidamente_regularizada": 0,
         "existencia_de_um_conjunto_de_acoes_eficazes_e_continua_com_o_objetivo_de_impedir_a_atracao_o_abrigo_o_acesso_e_ou_proliferacao_de_vetores_e_pragas_urbanas": 0,
         "edificacoes_instalacoes_equipamentos_moveis_e_utensilios_livres_da_presenca_de_animais_incluindo_vetores_e_pragas_urbanas": 0
@@ -43,36 +43,27 @@
         "lavatorios_da_area_de_preparacao_dotados_dos_produtos_destinados_a_higiene_das_maos_sabonete_liquido_inodoro_antisseptico_ou_sabonete_liquido_inodoro_e_produto_antisseptico_toalhas_de_papel_nao_reciclado_ou_outro_sistema_higienico_e_seguro_de_secagem_das_maos": 1,
         "durante_o_preparo_aqueles_que_manipulam_alimentos_crus_realizam_a_lavagem_e_a_antissepsia_das_maos_antes_de_manusear_alimentos_preparados": 1,
         "produtos_pereciveis_expostos_a_temperatura_ambiente_somente_pelo_tempo_minimo_necessario_para_preparacao_do_alimento": 0,
-        "descongelamento_conduzido_conforme_orientacao_do_fabricante_e_utilizando_uma_das_seguintes_tecnicas_refrigeracao_a_temperatura_inferior_a_5ºc_ou_em_forno_de_micro_ondas_quando_o_alimento_for_submetido_imediatamente_a_cocao": 0,
+        "descongelamento_conduzido_conforme_orientacao_do_fabricante_e_utilizando_uma_das_seguintes_tecnicas_refrigeracao_a_temperatura_inferior_a_5C_ou_em_forno_de_micro_ondas_quando_o_alimento_for_submetido_imediatamente_a_cocao": 0,
         "alimentos_submetidos_ao_descongelamento_mantidos_sob_refrigeracao_se_nao_fore_imediatamente_utilizados_e_nao_se_recongela": 0,
-        "tratamento_termico_garante_que_todas_as_partes_do_alimento_atinjam_a_temperatura_de_no_minimo_70ºc_ou_outra_combinacao_de_tempo_e_temperatura_desde_que_assegure_a_qualidade_higienico_sanitaria_dos_alimentos": 0,
+        "tratamento_termico_garante_que_todas_as_partes_do_alimento_atinjam_a_temperatura_de_no_minimo_70C_ou_outra_combinacao_de_tempo_e_temperatura_desde_que_assegure_a_qualidade_higienico_sanitaria_dos_alimentos": 0,
         "avalia_se_a_eficacia_do_tratamento_termico": 0,
         "possuem_termometro_comprovadamente_calibrado_para_a_afericao_da_temperatura_dos_alimentos": 1,
-        "apos_o_resfriamento_alimento_preparado_conservado_sob_refrigeracao_a_temperaturas_inferiores_a_5ºc_ou_congelado_a_temperatura_igual_ou_inferior_a_-18ºc": 0,
+        "apos_o_resfriamento_alimento_preparado_conservado_sob_refrigeracao_a_temperaturas_inferiores_a_5C_ou_congelado_a_temperatura_igual_ou_inferior_a_18": 0,
         "alimentos_consumidos_crus_quando_aplicavel_submetidos_a_processo_de_higienizacao_com_produtos_regularizados_e_aplicados_de_forma_a_evitar_a_presenca_de_residuos": 0,
         "evita_se_o_contato_direto_ou_indireto_entre_alimentos_crus_semi_prontos_e_prontos_para_o_consumo": 0,
-        "temperatura_do_alimento_preparado_no_resfriamento_reduzida_de_60ºc_a_10ºc_em_ate_2_horas": 0
+        "temperatura_do_alimento_preparado_no_resfriamento_reduzida_de_60C_a_10C_em_ate_2_horas": 0
     },
     "armazenamento_transporte_exposicao_do_alimento_preparado": {
-        "alimento_preparado_armazenado_sob_refrigeracao_ou_congelamento_identificado_com_no_minimo_as_seguintes_informacoes_designacao_data_de_preparo_e_prazo_de_validade": 0,
-        "prazo_maximo_de_consumo_do_alimento_preparado_e_conservado_sob_refrigeracao_e_de_5_dias_caso_a_temperatura_de_conservacao_seja_igual_ou_inferior_a_4ºc_quando_a_temperatura_de_refrigeracao_estiver_entre_4ºc_e_5ºc_o_prazo_maximo_de_consumo_e_de_3_dias": 0,
-        "antes_de_serem_expostos_ao_consumo_alimentos_refrigerados_aquecidos_ate_atingirem_a_temperatura_minima_de_70ºc_por_toda_a_massa_alimenticia_ou_outra_combinacao_de_tempo_e_temperatura_desde_que_assegure_a_qualidade_higienico_sanitaria_dos_alimentos": 0,
-        "transporte_de_alimento_preparado_realizado_em_condicoes_de_temperatura_e_umidade_adequadas_em_veiculos_higienizados_e_de_uso_exclusivo": 0,
-        "transporte_realizado_em_ate_2_horas": 0,
-        "alimento_quente_mantido_a_temperatura_acima_de_60ºc_durante_a_exposicao_ao_consumo_e_em_tempo_inferior_a_6_horas": 0,
-        "alimento_frio_mantido_a_temperatura_inferior_a_10ºc_durante_a_exposicao_ao_consumo_e_em_tempo_inferior_a_4_horas": 0,
-        "alimento_exposto_ao_consumo_sem_protecao_contra_contaminacao": 0,
-        "alimento_exposto_ao_consumo_identificado_no_balanco_com_o_seu_prazo_de_validade_de_consumo": 0,
-        "utensilios_usados_para_servir_ou_distribuir_o_alimento_mantidos_em_condicoes_higienico_sanitarias_adequadas": 0,
-        "utensilios_equipamentos_e_superficies_que_entram_em_contato_com_o_alimento_expostos_ao_consumo_mantidos_em_bom_estado_de_conservacao": 0,
-        "talheres_para_consumo_do_alimento_mantidos_em_condicoes_higienico_sanitarias_adequadas": 0,
-        "oleos_gorduras_e_outros_graos_que_nao_apresentam_alteracoes_sensoriais_utilizados": 0,
-        "embalagens_dos_alimentos_em_bom_estado_de_conservacao": 0,
-        "produtos_armazenados_em_local_adequado_evitar_contaminacao": 0,
-        "materias_primas_separadas_por_tipos_e_classes": 0,
-        "alimentos_pereciveis_armazenados_em_temperaturas_adequadas": 0,
-        "alimentos_secos_armazenados_em_ambiente_ventilado": 0
-    },
+        "alimento_preparado_armazenado_identificado": 0,
+        "prazo_maximo_consumo_5_dias_4C_ou_inferior": 0,
+        "prazo_maximo_consumo_acima_4C_abaixo_5C": 0,
+        "manipuladores_minimizam_risco_contaminacao": 0,
+        "alimento_preparado_conservado_5C_ou_inferior": 0,
+        "alimentos_preparados_acima_60C": 0,
+        "temperatura_equipamentos_exposicao_monitorada": 0,
+        "alimentos_armazenados_identificados_protegidos": 0,
+        "armazenamento_transporte_temperatura_adequada": 0
+   },
     "responsabilidade_documentacao_registro": {
         "possui_um_responsavel_pelas_atividades_de_manipulacao_de_alimentos_responsavel_tecnico_proprietario_ou_funcionario_designado_devidamente_capacitado": 0,
         "empresa_segue_o_manual_de_boas_praticas_e_os_procedimentos_operacionais_padronizados": 0
@@ -110,7 +101,7 @@
         "portas_externas_na_area_de_preparacao_e_armazenamento_providas_de_telas_milimetradas_limpas_em_bom_estado_de_conservacao_e_ajustadas_aos_batentes": 0,
         "telas_removiveis_para_facilitar_a_limpeza_periodica": 0
     },
-        "janelas_e_outras_aberturas_sistema_de_exaustao": {
+    "janelas_e_outras_aberturas_sistema_de_exaustao": {
         "janelas_mantidas_ajustadas_aos_batentes_bem_fechadas_e_vedadas": 0,
         "area_de_preparacao_e_armazenamento_providas_de_telas_milimetradas_limpas_em_bom_estado_de_conservacao_e_ajustadas_aos_batentes": 0,
         "telas_removiveis_para_facilitar_a_limpeza_periodica": 1

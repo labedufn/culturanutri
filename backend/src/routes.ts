@@ -35,6 +35,7 @@ import { CalcularAnaliseQualitativaController } from "@controllers/analise-quali
 import { CalcularTriangulacaoController } from "@controllers/triangulacao/CalcularTriangulacaoController";
 import { CriarListaVerificacaoController } from "@controllers/lista-verificacao/CriarListaVerificacaoController";
 import { EditarListaVerificacaoController } from "@controllers/lista-verificacao/EditarListaVerificacaoController";
+import { CalcularListaVerificacaoController } from "@controllers/lista-verificacao/CalcularListaVerificacaoController";
 
 export const router = Router();
 
@@ -94,3 +95,4 @@ router.post("/api/calcular-triangulacao", new CalcularTriangulacaoController().h
 // Rotas Lista de Verificação
 router.post("/api/criar-lista-verificacao", new CriarListaVerificacaoController().handle);
 router.post("/api/editar-lista-verificacao", new EditarListaVerificacaoController().handle);
+router.post("/api/calcular-lista-verificacao", new CalcularListaVerificacaoController().handle);
