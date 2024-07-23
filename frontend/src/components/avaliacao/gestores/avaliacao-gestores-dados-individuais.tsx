@@ -35,7 +35,8 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
       tempoAlimentos !== "" &&
       comunicacaoBoa !== "" &&
       realizaTreinamentos !== "" &&
-      (realizaTreinamentos === "0" || (frequenciaTreinamento.trim() !== "" && temasTreinamento.trim() !== ""));
+      (realizaTreinamentos !== "1" || frequenciaTreinamento !== "") &&
+      (realizaTreinamentos !== "1" || temasTreinamento !== "");
     onFormValidation(isValid);
   };
 
@@ -224,31 +225,31 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
         </div>
 
         {realizaTreinamentos === "1" && (
-          <>
-            <div>
-              <div className="mb-2 text-muted-foreground">
-                <Label>Com que frequência realiza treinamentos?</Label>
-              </div>
-              <Input
-                type="text"
-                placeholder="Digite a frequência dos treinamentos"
-                value={frequenciaTreinamento}
-                onChange={(e) => setFrequenciaTreinamento(e.target.value)}
-              />
+          <div>
+            <div className="mb-2 text-muted-foreground">
+              <Label>Com que frequência realiza treinamentos?</Label>
             </div>
+            <Input
+              type="text"
+              placeholder="Digite a frequência dos treinamentos"
+              value={frequenciaTreinamento}
+              onChange={(e) => setFrequenciaTreinamento(e.target.value)}
+            />
+          </div>
+        )}
 
-            <div>
-              <div className="mb-2 text-muted-foreground">
-                <Label>Quais são os temas abordados nos treinamentos?</Label>
-              </div>
-              <Input
-                type="text"
-                placeholder="Digite os temas abordados"
-                value={temasTreinamento}
-                onChange={(e) => setTemasTreinamento(e.target.value)}
-              />
+        {realizaTreinamentos === "1" && (
+          <div>
+            <div className="mb-2 text-muted-foreground">
+              <Label>Quais são os temas abordados nos treinamentos?</Label>
             </div>
-          </>
+            <Input
+              type="text"
+              placeholder="Digite os temas abordados"
+              value={temasTreinamento}
+              onChange={(e) => setTemasTreinamento(e.target.value)}
+            />
+          </div>
         )}
       </div>
     </>
