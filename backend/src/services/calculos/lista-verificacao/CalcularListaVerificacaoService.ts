@@ -53,6 +53,52 @@ export class CalcularListaVerificacaoService {
     }
   }
 
+  private somaSe(informacoesCalculadas, criterio) {
+    let somaTotal = 0;
+
+    for (const key in informacoesCalculadas) {
+      if (Object.prototype.hasOwnProperty.call(informacoesCalculadas, key)) {
+        const item = informacoesCalculadas[key];
+
+        if (typeof item === "object" && item !== null) {
+          for (const subKey in item) {
+            if (Object.prototype.hasOwnProperty.call(item, subKey)) {
+              if (item[subKey] === criterio) {
+                somaTotal += item[subKey];
+              }
+            }
+          }
+        } else {
+          if (item === criterio) {
+            somaTotal += item;
+          }
+        }
+      }
+    }
+
+    return somaTotal;
+  }
+
+  private contarValores(informacoesCalculadas) {
+    let count = 0;
+
+    for (const key in informacoesCalculadas) {
+      if (Object.prototype.hasOwnProperty.call(informacoesCalculadas, key)) {
+        const subObjeto = informacoesCalculadas[key];
+        for (const subKey in subObjeto) {
+          if (Object.prototype.hasOwnProperty.call(subObjeto, subKey)) {
+            const valor = subObjeto[subKey];
+            if (valor === 0 || valor === 1) {
+              count++;
+            }
+          }
+        }
+      }
+    }
+
+    return count;
+  }
+
   async execute(informacoes: JSON) {
     const informacoesCalculadas = {};
 
@@ -274,6 +320,32 @@ export class CalcularListaVerificacaoService {
 
     informacoesCalculadas["resultado"] = this.somarCargasFatoriais(informacoesCalculadas);
     informacoesCalculadas["classificacao"] = this.classificacao(informacoesCalculadas["resultado"]);
+
+    const informacoesSemCargasFatoriais = {
+      ...informacoes["areas_externas"],
+      ...informacoes["areas_internas"],
+      ...informacoes["edificacao_e_instalacoes"],
+      ...informacoes["instalacoes_fisicas_pisos"],
+      ...informacoes["instalacoes_fisicas_paredes"],
+      ...informacoes["instalacoes_fisicas_tetos"],
+      ...informacoes["portas"],
+      ...informacoes["janelas_e_outras_aberturas_sistema_de_exaustao"],
+      ...informacoes["ralos_e_grelhas"],
+      ...informacoes["caixa_de_gordura_e_esgoto"],
+      ...informacoes["iluminacao"],
+      ...informacoes["instalacoes_eletricas"],
+      ...informacoes["ventilacao"],
+      ...informacoes["instalacoes_sanitarias_e_vestarios"],
+      ...informacoes["lavatorio_area_de_manipulacao"],
+      ...informacoes["equipamentos"],
+      ...informacoes["utensilios"],
+      ...informacoes["moveis"],
+    };
+
+    informacoesCalculadas["total_adequacoes"] = this.somaSe(informacoesSemCargasFatoriais, 1);
+    informacoesCalculadas["total_aplicavel"] = this.contarValores(informacoesSemCargasFatoriais);
+    informacoesCalculadas["porcentagem"] =
+      (informacoesCalculadas["total_adequacoes"] / informacoesCalculadas["total_aplicavel"]) * 100;
 
     const informacoesConcatenadas = {
       ...informacoes,
