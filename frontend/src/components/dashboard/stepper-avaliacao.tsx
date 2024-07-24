@@ -28,9 +28,9 @@ const steps = [
 ] satisfies StepItem[];
 
 export default function StepperAvaliacao() {
-  const [isFormValid, setIsFormValid] = useState(true);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleFormValidation = (isValid: boolean | ((prevState: boolean) => boolean)) => {
+  const handleFormValidation = (isValid: boolean) => {
     setIsFormValid(isValid);
   };
 

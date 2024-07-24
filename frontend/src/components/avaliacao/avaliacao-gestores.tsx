@@ -8,7 +8,7 @@ import { AvaliacaoGestoresConhecimento } from "./gestores/avaliacao-gestores-con
 import { AvaliacaoGestoresDadosIndividuais } from "./gestores/avaliacao-gestores-dados-individuais";
 import { AvaliacaoGestoresPercepcaoRisco } from "./gestores/avaliacao-gestores-percepcao-risco";
 import { AvaliacaoGestoresSistemaGestao } from "./gestores/avaliacao-gestores-sistema-gestao";
-import { useState } from "react";
+import { useRef } from "react";
 
 import React from "react";
 
@@ -17,29 +17,47 @@ type AvaliacaoGestoresProps = {
 };
 
 export function AvaliacaoGestores({ onFormValidation }: AvaliacaoGestoresProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isValid, setIsValid] = useState(false);
+  const validationsRef = useRef({
+    dadosIndividuais: false,
+    conhecimento: false,
+    comprometimentoAfetivo: false,
+    comprometimentoNormativo: false,
+    comprometimentoInstrumental: false,
+    percepcaoRisco: false,
+    sistemaGestao: false,
+  });
 
-  const handleFormValidation = (valid: boolean) => {
-    setIsValid(valid);
-    onFormValidation(valid);
+  const handleComponentValidation = (component: string, valid: boolean) => {
+    validationsRef.current = { ...validationsRef.current, [component]: valid };
+    const allValid = Object.values(validationsRef.current).every((v) => v === true);
+    onFormValidation(allValid);
   };
 
   return (
     <>
-      <AvaliacaoGestoresDadosIndividuais onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresDadosIndividuais
+        onFormValidation={(valid) => handleComponentValidation("dadosIndividuais", valid)}
+      />
       <Separator className="my-8" />
-      <AvaliacaoGestoresConhecimento onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresConhecimento onFormValidation={(valid) => handleComponentValidation("conhecimento", valid)} />
       <Separator className="my-8" />
-      <AvaliacaoGestoresComprometimentoAfetivo onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresComprometimentoAfetivo
+        onFormValidation={(valid) => handleComponentValidation("comprometimentoAfetivo", valid)}
+      />
       <Separator className="my-8" />
-      <AvaliacaoGestoresComprometimentoNormativo onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresComprometimentoNormativo
+        onFormValidation={(valid) => handleComponentValidation("comprometimentoNormativo", valid)}
+      />
       <Separator className="my-8" />
-      <AvaliacaoGestoresComprometimentoInstrumental onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresComprometimentoInstrumental
+        onFormValidation={(valid) => handleComponentValidation("comprometimentoInstrumental", valid)}
+      />
       <Separator className="my-8" />
-      <AvaliacaoGestoresPercepcaoRisco onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresPercepcaoRisco
+        onFormValidation={(valid) => handleComponentValidation("percepcaoRisco", valid)}
+      />
       <Separator className="my-8" />
-      <AvaliacaoGestoresSistemaGestao onFormValidation={handleFormValidation} />
+      <AvaliacaoGestoresSistemaGestao onFormValidation={(valid) => handleComponentValidation("sistemaGestao", valid)} />
     </>
   );
 }
