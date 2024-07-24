@@ -20,18 +20,5 @@ services:
     ports:
       - "8025:8025"
       - "1025:1025"
-
-  cloudbeaver:
-    image: dbeaver/cloudbeaver:latest
-    container_name: cloudbeaver
-    restart: always
-    ports:
-      - "8978:8978"
-    depends_on:
-      - postgres
-    volumes:
-      - cloudbeaver:/opt/cloudbeaver
-
 volumes:
-  cloudbeaver:
   postgres_data:
