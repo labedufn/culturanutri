@@ -40,7 +40,7 @@ export function AvaliacaoInfos({ onFormValidation }: AvaliacaoInfosProps) {
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setEstabelecimento(localStorage.getItem("idEstabelecimento") || "");
+          setEstabelecimento(localStorage.getItem("id_estabelecimento") || "");
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -53,7 +53,7 @@ export function AvaliacaoInfos({ onFormValidation }: AvaliacaoInfosProps) {
 
   useEffect(() => {
     if (userId) {
-      localStorage.setItem("idEstabelecimento", estabelecimento || "");
+      localStorage.setItem("id_estabelecimento", estabelecimento || "");
       onFormValidation(!!estabelecimento);
     }
   }, [userId, estabelecimento, onFormValidation]);

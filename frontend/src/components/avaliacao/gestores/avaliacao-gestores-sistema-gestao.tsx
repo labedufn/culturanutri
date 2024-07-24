@@ -12,13 +12,13 @@ interface AvaliacaoGestoresSistemaGestaoProps {
 export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGestoresSistemaGestaoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    lideranca: "",
-    comunicacao: "",
-    segurancaAlimentos: "",
-    ambienteTrabalho: "",
-    pressaoManipulador: "",
-    comprometimentoManipuladores: "",
-    boasPraticas: "",
+    liderancaModificadaConsumidorAltaPercepcaoRisco: "",
+    comunicacaoModificadaConsumidorAltaPercepcaoRisco: "",
+    gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco: "",
+    ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco: "",
+    manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco: "",
+    comprometimentoModificadaConsumidorAltaPercepcaoRisco: "",
+    boasPraticasConsumidorAltaPercepcaoRisco: "",
   });
 
   useEffect(() => {
@@ -30,13 +30,20 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            lideranca: localStorage.getItem("lideranca") || "",
-            comunicacao: localStorage.getItem("comunicacao") || "",
-            segurancaAlimentos: localStorage.getItem("segurancaAlimentos") || "",
-            ambienteTrabalho: localStorage.getItem("ambienteTrabalho") || "",
-            pressaoManipulador: localStorage.getItem("pressaoManipulador") || "",
-            comprometimentoManipuladores: localStorage.getItem("comprometimentoManipuladores") || "",
-            boasPraticas: localStorage.getItem("boasPraticas") || "",
+            liderancaModificadaConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("lideranca_modificada_consumidor_alta_percepcao_risco") || "",
+            comunicacaoModificadaConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("comunicacao_modificada_consumidor_alta_percepcao_risco") || "",
+            gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco") || "",
+            ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("ambiente_trabalho_modificada_consumidor_alta_percepcao_risco") || "",
+            manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("manipulador_alimentos_modificada_consumidor_alta_percepcao_risco") || "",
+            comprometimentoModificadaConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("comprometimento_modificada_consumidor_alta_percepcao_risco") || "",
+            boasPraticasConsumidorAltaPercepcaoRisco:
+              localStorage.getItem("boas_praticas_consumidor_alta_percepcao_risco") || "",
           });
         } else {
           localStorage.clear();
@@ -51,7 +58,10 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
   useEffect(() => {
     if (userId) {
       Object.keys(respostas).forEach((key) => {
-        localStorage.setItem(key, respostas[key]);
+        const value = respostas[key];
+        if (value !== "") {
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
+        }
       });
     }
   }, [userId, respostas]);
@@ -77,37 +87,37 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "lideranca",
+            key: "liderancaModificadaConsumidorAltaPercepcaoRisco",
             question:
               "A forma de liderança deve ser modificada somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },
           {
-            key: "comunicacao",
+            key: "comunicacaoModificadaConsumidorAltaPercepcaoRisco",
             question:
               "A forma de comunicação deve ser modificada somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },
           {
-            key: "segurancaAlimentos",
+            key: "gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco",
             question:
               "A forma de gerenciar a segurança dos alimentos deve ser modificada somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },
           {
-            key: "ambienteTrabalho",
+            key: "ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco",
             question:
               "O ambiente de trabalho deve ser modificado somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },
           {
-            key: "pressaoManipulador",
+            key: "manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco",
             question:
               "O manipulador de alimentos deve ser mais pressionado somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },
           {
-            key: "comprometimentoManipuladores",
+            key: "comprometimentoModificadaConsumidorAltaPercepcaoRisco",
             question:
               "O comprometimento dos manipuladores deve ser modificado somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },
           {
-            key: "boasPraticas",
+            key: "boasPraticasConsumidorAltaPercepcaoRisco",
             question:
               "As boas práticas devem ser melhoradas somente quando o consumidor tem alta percepção de risco de doenças transmitidas por alimentos.",
           },

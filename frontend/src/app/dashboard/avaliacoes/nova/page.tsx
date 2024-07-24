@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
 import StepperAvaliacao from "@/components/dashboard/stepper-avaliacao";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function AvaliacoesNovaPage() {
   return (
@@ -47,6 +48,7 @@ export default function AvaliacoesNovaPage() {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </>
   );
 }

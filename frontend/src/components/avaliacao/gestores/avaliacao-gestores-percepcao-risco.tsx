@@ -12,9 +12,9 @@ type AvaliacaoGestoresPercepcaoRiscoProps = {
 export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoGestoresPercepcaoRiscoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    riscoClienteSimilar: "",
-    riscoClienteEstabelecimento: "",
-    riscoDoencaGrave: "",
+    riscoApresentarDorBarrigaEstabelecimentoSimilar: "",
+    riscoApresentarDorBarrigaEstabelecimentoGerenciado: "",
+    riscoDoencaTransmitidaAlimentos: "",
   });
 
   useEffect(() => {
@@ -26,9 +26,11 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            riscoClienteSimilar: localStorage.getItem("riscoClienteSimilar") || "",
-            riscoClienteEstabelecimento: localStorage.getItem("riscoClienteEstabelecimento") || "",
-            riscoDoencaGrave: localStorage.getItem("riscoDoencaGrave") || "",
+            riscoApresentarDorBarrigaEstabelecimentoSimilar:
+              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_similar") || "",
+            riscoApresentarDorBarrigaEstabelecimentoGerenciado:
+              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_gerenciado") || "",
+            riscoDoencaTransmitidaAlimentos: localStorage.getItem("risco_doenca_transmitida_alimentos") || "",
           });
         } else {
           localStorage.clear();
@@ -43,7 +45,10 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
   useEffect(() => {
     if (userId) {
       Object.keys(respostas).forEach((key) => {
-        localStorage.setItem(key, respostas[key]);
+        const value = respostas[key];
+        if (value !== "") {
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
+        }
       });
     }
   }, [userId, respostas]);
@@ -61,7 +66,7 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
 
   useEffect(() => {
     validateForm(respostas);
-  }, [respostas, validateForm]);
+  }, [respostas]);
 
   return (
     <>
@@ -69,17 +74,17 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "riscoClienteSimilar",
+            key: "riscoApresentarDorBarrigaEstabelecimentoSimilar",
             question:
               "Qual o risco do cliente apresentar dor de barriga e/ou vômitos (intoxicação alimentar) após comer uma refeição preparada por um manipulador de alimentos no estabelecimento similar ao que você gerencia (que tenha estrutura, cardápio, tamanho e funcionamento similar ao seu)?",
           },
           {
-            key: "riscoClienteEstabelecimento",
+            key: "riscoApresentarDorBarrigaEstabelecimentoGerenciado",
             question:
               "Qual o risco do cliente apresentar dor de barriga e/ou vômitos (intoxicação alimentar) após comer uma refeição preparada no estabelecimento que você gerencia?",
           },
           {
-            key: "riscoDoencaGrave",
+            key: "riscoDoencaTransmitidaAlimentos",
             question:
               "Se o cliente consumir um alimento contaminado qual o risco que uma doença transmitida por alimentos pode ser grave ou letal a ele?",
           },

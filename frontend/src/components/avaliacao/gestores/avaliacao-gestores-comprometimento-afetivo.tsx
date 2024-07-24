@@ -14,11 +14,11 @@ export function AvaliacaoGestoresComprometimentoAfetivo({
 }: AvaliacaoGestoresComprometimentoAfetivoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    problemasRestaurante: "",
-    significadoPessoal: "",
-    lealdade: "",
-    necessidadeDesejo: "",
-    carreiraFutura: "",
+    problemasRestauranteMeus: "",
+    restauranteTemSignificado: "",
+    restauranteMereceMinhaLealdade: "",
+    trabalharPorNecessidadeDesejo: "",
+    dedicarMinhaCarreiraAoRestaurante: "",
   });
 
   useEffect(() => {
@@ -30,11 +30,11 @@ export function AvaliacaoGestoresComprometimentoAfetivo({
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            problemasRestaurante: localStorage.getItem("problemasRestaurante") || "",
-            significadoPessoal: localStorage.getItem("significadoPessoal") || "",
-            lealdade: localStorage.getItem("lealdade") || "",
-            necessidadeDesejo: localStorage.getItem("necessidadeDesejo") || "",
-            carreiraFutura: localStorage.getItem("carreiraFutura") || "",
+            problemasRestauranteMeus: localStorage.getItem("problemas_restaurante_meus") || "",
+            restauranteTemSignificado: localStorage.getItem("restaurante_tem_significado") || "",
+            restauranteMereceMinhaLealdade: localStorage.getItem("restaurante_merece_minha_lealdade") || "",
+            trabalharPorNecessidadeDesejo: localStorage.getItem("trabalhar_por_necessidade_e_desejo") || "",
+            dedicarMinhaCarreiraAoRestaurante: localStorage.getItem("dedicar_minha_carreira_ao_restaurante") || "",
           });
         } else {
           localStorage.clear();
@@ -49,7 +49,16 @@ export function AvaliacaoGestoresComprometimentoAfetivo({
   useEffect(() => {
     if (userId) {
       Object.keys(respostas).forEach((key) => {
-        localStorage.setItem(key, respostas[key]);
+        const value = respostas[key];
+        if (value !== "") {
+          localStorage.setItem(
+            key
+              .replace(/([A-Z])/g, "_$1")
+              .toLowerCase()
+              .replace(/_/g, "_"),
+            value,
+          );
+        }
       });
     }
   }, [userId, respostas]);
@@ -75,23 +84,23 @@ export function AvaliacaoGestoresComprometimentoAfetivo({
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "problemasRestaurante",
+            key: "problemasRestauranteMeus",
             question: "Eu realmente sinto os problemas do restaurante como se fossem meus.",
           },
           {
-            key: "significadoPessoal",
+            key: "restauranteTemSignificado",
             question: "Este restaurante tem um imenso significado pessoal para mim.",
           },
           {
-            key: "lealdade",
+            key: "restauranteMereceMinhaLealdade",
             question: "Este restaurante merece minha lealdade.",
           },
           {
-            key: "necessidadeDesejo",
+            key: "trabalharPorNecessidadeDesejo",
             question: "Na situação atual, trabalhar nesse restaurante é tanto uma necessidade quanto um desejo.",
           },
           {
-            key: "carreiraFutura",
+            key: "dedicarMinhaCarreiraAoRestaurante",
             question: "Eu seria muito feliz em dedicar o resto da minha carreira nesse restaurante.",
           },
         ].map(({ key, question }) => (

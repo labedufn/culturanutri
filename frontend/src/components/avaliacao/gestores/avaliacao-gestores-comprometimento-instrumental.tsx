@@ -14,9 +14,9 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
 }: AvaliacaoGestoresComprometimentoInstrumentalProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    vidaDesestruturada: "",
-    poucasAlternativas: "",
-    dificuldadeDeixar: "",
+    deixarEmpregoVidaDesestruturada: "",
+    poucasAlternativasCasoDeixarEmprego: "",
+    muitoDificilDeixarEmprego: "",
   });
 
   useEffect(() => {
@@ -28,9 +28,9 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            vidaDesestruturada: localStorage.getItem("vidaDesestruturada") || "",
-            poucasAlternativas: localStorage.getItem("poucasAlternativas") || "",
-            dificuldadeDeixar: localStorage.getItem("dificuldadeDeixar") || "",
+            deixarEmpregoVidaDesestruturada: localStorage.getItem("deixar_emprego_vida_desestruturada") || "",
+            poucasAlternativasCasoDeixarEmprego: localStorage.getItem("poucas_alternativas_caso_deixar_emprego") || "",
+            muitoDificilDeixarEmprego: localStorage.getItem("muito_dificil_deixar_emprego") || "",
           });
         } else {
           localStorage.clear();
@@ -45,7 +45,10 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
   useEffect(() => {
     if (userId) {
       Object.keys(respostas).forEach((key) => {
-        localStorage.setItem(key, respostas[key]);
+        const value = respostas[key];
+        if (value !== "") {
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
+        }
       });
     }
   }, [userId, respostas]);
@@ -71,15 +74,15 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "vidaDesestruturada",
+            key: "deixarEmpregoVidaDesestruturada",
             question: "Se eu decidisse deixar meu emprego agora, minha vida ficaria bastante desestruturada.",
           },
           {
-            key: "poucasAlternativas",
+            key: "poucasAlternativasCasoDeixarEmprego",
             question: "Eu acho que teria poucas alternativas se deixasse este emprego.",
           },
           {
-            key: "dificuldadeDeixar",
+            key: "muitoDificilDeixarEmprego",
             question: "Mesmo se eu quisesse, seria muito difícil para mim deixar este emprego agora.",
           },
         ].map(({ key, question }) => (

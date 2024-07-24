@@ -12,16 +12,15 @@ type AvaliacaoGestoresConhecimentoProps = {
 export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGestoresConhecimentoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    adornos: "",
-    agua: "",
-    higienizacaoMaos: "",
-    contatoAlimentos: "",
-    leiteVencido: "",
-    alimentoImproprio: "",
+    utilizacaoAdornosFavorecerContaminacao: "",
+    aguaVeiculoTransmissaoDoencas: "",
+    formaHigienizarMaosEvitaContaminacao: "",
+    contatoAlimentosContamina: "",
+    leiteVencimentoRisco: "",
+    alimentoImproprioApresentaCheiroSabor: "",
     carneMalPassada: "",
-    lavagemVegetais: "",
-    descongelamento: "",
-    manipuladorDoente: "",
+    descongelamentoAlimentosBacia: "",
+    manipuladorAlimentoDoenteContamina: "",
   });
 
   useEffect(() => {
@@ -33,16 +32,18 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            adornos: localStorage.getItem("adornos") || "",
-            agua: localStorage.getItem("agua") || "",
-            higienizacaoMaos: localStorage.getItem("higienizacaoMaos") || "",
-            contatoAlimentos: localStorage.getItem("contatoAlimentos") || "",
-            leiteVencido: localStorage.getItem("leiteVencido") || "",
-            alimentoImproprio: localStorage.getItem("alimentoImproprio") || "",
-            carneMalPassada: localStorage.getItem("carneMalPassada") || "",
-            lavagemVegetais: localStorage.getItem("lavagemVegetais") || "",
-            descongelamento: localStorage.getItem("descongelamento") || "",
-            manipuladorDoente: localStorage.getItem("manipuladorDoente") || "",
+            utilizacaoAdornosFavorecerContaminacao:
+              localStorage.getItem("utilizacao_adornos_favorecer_contaminacao") || "",
+            aguaVeiculoTransmissaoDoencas: localStorage.getItem("agua_veiculo_transmissao_doencas") || "",
+            formaHigienizarMaosEvitaContaminacao:
+              localStorage.getItem("forma_higienizar_maos_evita_contaminacao") || "",
+            contatoAlimentosContamina: localStorage.getItem("contato_alimentos_contamina") || "",
+            leiteVencimentoRisco: localStorage.getItem("leite_vencimento_risco") || "",
+            alimentoImproprioApresentaCheiroSabor:
+              localStorage.getItem("alimento_improprio_apresenta_cheiro_sabor") || "",
+            carneMalPassada: localStorage.getItem("carne_mal_passada") || "",
+            descongelamentoAlimentosBacia: localStorage.getItem("descongelamento_alimentos_bacia") || "",
+            manipuladorAlimentoDoenteContamina: localStorage.getItem("manipulador_alimento_doente_contamina") || "",
           });
         } else {
           localStorage.clear();
@@ -57,7 +58,10 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
   useEffect(() => {
     if (userId) {
       Object.keys(respostas).forEach((key) => {
-        localStorage.setItem(key, respostas[key]);
+        const value = respostas[key];
+        if (value !== "") {
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
+        }
       });
     }
   }, [userId, respostas]);
@@ -83,31 +87,31 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "adornos",
+            key: "utilizacaoAdornosFavorecerContaminacao",
             question:
               "A utilização de adornos como: brincos, anéis, aliança, relógio e outros, pode favorecer a contaminação dos alimentos?",
           },
           {
-            key: "agua",
+            key: "aguaVeiculoTransmissaoDoencas",
             question:
               "A água pode ser veículo de transmissão de doenças, porém ao ser transformada em gelo o risco da transmissão de doenças é menor?",
           },
           {
-            key: "higienizacaoMaos",
+            key: "formaHigienizarMaosEvitaContaminacao",
             question:
               "A forma de higienizar as mãos, para evitar a contaminação de alimentos, consiste em molhar as mãos em água corrente, utilizar detergente neutro e secar com papel?",
           },
           {
-            key: "contatoAlimentos",
+            key: "contatoAlimentosContamina",
             question:
               "O contato entre alimentos crus e cozidos, como utilizar alface na decoração de porções fritas, possibilita a contaminação desses alimentos?",
           },
           {
-            key: "leiteVencido",
+            key: "leiteVencimentoRisco",
             question: "Utilizar leite um dia após a data de seu vencimento traz riscos a saúde?",
           },
           {
-            key: "alimentoImproprio",
+            key: "alimentoImproprioApresentaCheiroSabor",
             question: "O alimento impróprio para consumo sempre apresenta cheiro ruim e sabor estragado?",
           },
           {
@@ -116,17 +120,12 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
               "O consumo de carne mal passada pode levar a doenças transmitidas por alimentos que podem causar vômitos e diarreia?",
           },
           {
-            key: "lavagemVegetais",
-            question:
-              "Lavar os vegetais e deixá-los de molho na água com vinagre é suficiente para esse alimento ser seguro para o consumo?",
-          },
-          {
-            key: "descongelamento",
+            key: "descongelamentoAlimentosBacia",
             question:
               "O descongelamento de alimentos pode ser feito em uma bacia com ou sem água sobre a pia, mesa ou bancada?",
           },
           {
-            key: "manipuladorDoente",
+            key: "manipuladorAlimentoDoenteContamina",
             question:
               "O manipulador de alimento com doenças como: diarreia, gripe e dor de garganta, representa risco para a contaminação de alimentos?",
           },

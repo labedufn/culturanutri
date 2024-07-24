@@ -14,10 +14,10 @@ export function AvaliacaoGestoresComprometimentoNormativo({
 }: AvaliacaoGestoresComprometimentoNormativoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    obrigacaoMoral: "",
-    sentimentoCulpa: "",
-    vantagemPessoal: "",
-    dividaEmprego: "",
+    naoDeixaEmpregoPoisObrigacaoMoral: "",
+    culpadoDeixasseEmprego: "",
+    naoSeriaCertoDeixarEmprego: "",
+    devoEsseEmprego: "",
   });
 
   useEffect(() => {
@@ -29,10 +29,10 @@ export function AvaliacaoGestoresComprometimentoNormativo({
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            obrigacaoMoral: localStorage.getItem("obrigacaoMoral") || "",
-            sentimentoCulpa: localStorage.getItem("sentimentoCulpa") || "",
-            vantagemPessoal: localStorage.getItem("vantagemPessoal") || "",
-            dividaEmprego: localStorage.getItem("dividaEmprego") || "",
+            naoDeixaEmpregoPoisObrigacaoMoral: localStorage.getItem("nao_deixa_emprego_pois_obrigação_moral") || "",
+            culpadoDeixasseEmprego: localStorage.getItem("culpado_deixasse_emprego") || "",
+            naoSeriaCertoDeixarEmprego: localStorage.getItem("nao_seria_certo_deixar_emprego") || "",
+            devoEsseEmprego: localStorage.getItem("devo_esse_emprego") || "",
           });
         } else {
           localStorage.clear();
@@ -47,7 +47,10 @@ export function AvaliacaoGestoresComprometimentoNormativo({
   useEffect(() => {
     if (userId) {
       Object.keys(respostas).forEach((key) => {
-        localStorage.setItem(key, respostas[key]);
+        const value = respostas[key];
+        if (value !== "") {
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
+        }
       });
     }
   }, [userId, respostas]);
@@ -73,19 +76,19 @@ export function AvaliacaoGestoresComprometimentoNormativo({
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "obrigacaoMoral",
+            key: "naoDeixaEmpregoPoisObrigacaoMoral",
             question: "Eu não deixaria meu emprego agora porque eu tenho uma obrigação moral com as pessoas daqui.",
           },
           {
-            key: "sentimentoCulpa",
+            key: "culpadoDeixasseEmprego",
             question: "Eu me sentiria culpado se deixasse meu emprego agora.",
           },
           {
-            key: "vantagemPessoal",
+            key: "naoSeriaCertoDeixarEmprego",
             question: "Mesmo se fosse vantagem para mim, eu sinto que não seria certo deixar meu emprego agora.",
           },
           {
-            key: "dividaEmprego",
+            key: "devoEsseEmprego",
             question: "Eu devo muito a esse emprego.",
           },
         ].map(({ key, question }) => (
