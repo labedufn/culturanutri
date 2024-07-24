@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { AvaliacaoGestores } from "../avaliacao/avaliacao-gestores";
 import { AvaliacaoInfos } from "../avaliacao/avaliacao-infos";
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 const steps = [
   { label: "Informações", icon: UtensilsCrossed },
@@ -29,6 +31,7 @@ const steps = [
 
 export default function StepperAvaliacao() {
   const [isFormValid, setIsFormValid] = useState(false);
+  const { toast } = useToast();
 
   const handleFormValidation = (isValid: boolean) => {
     setIsFormValid(isValid);
@@ -52,6 +55,14 @@ export default function StepperAvaliacao() {
         onClickStep={(step, setStep) => {
           if (step === 0 || isFormValid) {
             setStep(step);
+          } else {
+            toast({
+              className: cn(
+                "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+              ),
+              title: "Campos obrigatórios não preenchidos!",
+              description: "Por favor, preencha todos os campos obrigatórios antes de prosseguir.",
+            });
           }
         }}
       >
