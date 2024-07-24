@@ -15,6 +15,24 @@ export class CalcularTriangulacaoService {
     }
   }
 
+  private calcularAnaliseQualitativa(valor) {
+    if (valor === 1) {
+      return "1";
+    } else if (valor <= 1.4) {
+      return "1";
+    } else if (valor === 1.5) {
+      return "2";
+    } else if (valor <= 2.5) {
+      return "2";
+    } else if (valor === 2.6) {
+      return "3";
+    } else if (valor <= 5) {
+      return "3";
+    } else {
+      return null;
+    }
+  }
+
   private calcularMedia(...numeros) {
     if (numeros.length === 0) {
       return 0;
@@ -122,7 +140,25 @@ export class CalcularTriangulacaoService {
     return null;
   }
 
-  async execute(analiseQualitativa: JSON, analiseQuantitativa: JSON) {
+  private calcularCategoria(percentual) {
+    if (percentual === 0) {
+      return 1;
+    } else if (percentual <= 50) {
+      return 1;
+    } else if (percentual === 51) {
+      return 2;
+    } else if (percentual <= 75) {
+      return 2;
+    } else if (percentual === 76) {
+      return 3;
+    } else if (percentual <= 100) {
+      return 3;
+    } else {
+      return null;
+    }
+  }
+
+  async execute(analiseQualitativa: JSON, analiseQuantitativa: JSON, listaVerificacao: JSON) {
     const informacoes = {};
 
     // informacoes liderança
@@ -422,17 +458,36 @@ export class CalcularTriangulacaoService {
     //informacoes percepcao_risco (esse ficará em falta pois possui erros no excel)
     informacoes["percepcao_risco"] = {};
 
-    //informacoes ambiente_trabalho (esse ficará em falta pois precisa da Lista de verificação)
-    // informacoes["ambiente_trabalho"] = {
-    //   escore_analise_quantitativa: {
-    //     0: this.calcularAnaliseQuantitativa2(
-    //       analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].ambiente_trabalho.manipuladores.media,
-    //     ),
-    //     1: this.calcularRisco(),
-    //     2: ,
-    //     3: ,
-    //   },
-    // };
+    //informacoes ambiente de trabalho
+    informacoes["ambiente_trabalho"] = {
+      escore_analise_quantitativa: {
+        0: this.calcularAnaliseQuantitativa2(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].ambiente_trabalho.manipuladores.media,
+        ),
+        1: this.calcularCategoria(listaVerificacao["informacoesDecodificadas"].porcentagem),
+        2: analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho
+          .adequacao_ambiente_frequente_necessidade_local_nao_inspecoes.valor,
+        3: analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho.atmosfera_ambiente_trabalho.escore,
+      },
+      escore_analise_qualitativa: {
+        0: this.calcularAnaliseQualitativa(
+          analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho
+            .layout_permite_fluxo_adequado_preparacao_alimentos.escore,
+        ),
+        1: this.calcularCategoria(listaVerificacao["informacoesDecodificadas"].porcentagem),
+        2: analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho
+          .adequacao_ambiente_frequente_necessidade_local_nao_inspecoes.valor,
+        3: analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho.atmosfera_ambiente_trabalho.escore,
+      },
+    };
+
+    informacoes["ambiente_trabalho"] = {
+      ...informacoes["ambiente_trabalho"],
+      valor_medio: this.calcularMedia(
+        informacoes["pressao_trabalho_crencas_normativas"].triangulacao.escore_caracteristicas["0"],
+        informacoes["pressao_trabalho_crencas_normativas"].triangulacao.escore_caracteristicas["1"],
+      ),
+    };
 
     //informacoes sistema_estilos_gestao (esse ficará em falta pois precisa da Lista de verificação)
     informacoes["sistema_estilos_gestao"] = {};
