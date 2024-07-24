@@ -79,26 +79,6 @@ export class CalcularListaVerificacaoService {
     return somaTotal;
   }
 
-  private contarValores(informacoesCalculadas) {
-    let count = 0;
-
-    for (const key in informacoesCalculadas) {
-      if (Object.prototype.hasOwnProperty.call(informacoesCalculadas, key)) {
-        const subObjeto = informacoesCalculadas[key];
-        for (const subKey in subObjeto) {
-          if (Object.prototype.hasOwnProperty.call(subObjeto, subKey)) {
-            const valor = subObjeto[subKey];
-            if (valor === 0 || valor === 1) {
-              count++;
-            }
-          }
-        }
-      }
-    }
-
-    return count;
-  }
-
   async execute(informacoes: JSON) {
     const informacoesCalculadas = {};
 
@@ -343,9 +323,10 @@ export class CalcularListaVerificacaoService {
     };
 
     informacoesCalculadas["total_adequacoes"] = this.somaSe(informacoesSemCargasFatoriais, 1);
-    informacoesCalculadas["total_aplicavel"] = this.contarValores(informacoesSemCargasFatoriais);
-    informacoesCalculadas["porcentagem"] =
-      (informacoesCalculadas["total_adequacoes"] / informacoesCalculadas["total_aplicavel"]) * 100;
+    informacoesCalculadas["total_aplicavel"] = 58;
+    informacoesCalculadas["porcentagem"] = parseFloat(
+      ((informacoesCalculadas["total_adequacoes"] / informacoesCalculadas["total_aplicavel"]) * 100).toFixed(2),
+    );
 
     const informacoesConcatenadas = {
       ...informacoes,

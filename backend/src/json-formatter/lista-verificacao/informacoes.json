@@ -108,7 +108,7 @@
     },
     "ralos_e_grelhas": {
         "ralos_sifonados_quando_presentes": 0,
-        "quando_presentes_as_grelhas_possuem_dispositivo_de_fechamento": "na"
+        "quando_presentes_as_grelhas_possuem_dispositivo_de_fechamento": 0
     },
     "caixa_de_gordura_e_esgoto": {
         "possuem_dimensao_compativel_ao_volume_de_residuos": 0,

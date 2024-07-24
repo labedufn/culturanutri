@@ -107,20 +107,20 @@ export class CalcularTriangulacaoService {
 
   private calcularRisco(valor) {
     if (valor === 0) {
-        return 1;
-    } else if (valor <= 0.50) {
-        return 1;
+      return 1;
+    } else if (valor <= 0.5) {
+      return 1;
     } else if (valor === 0.51) {
-        return 2;
+      return 2;
     } else if (valor <= 0.75) {
-        return 2;
+      return 2;
     } else if (valor === 0.76) {
-        return 3;
-    } else if (valor <= 1.00) {
-        return 3;
+      return 3;
+    } else if (valor <= 1.0) {
+      return 3;
     }
     return null;
-}
+  }
 
   async execute(analiseQualitativa: JSON, analiseQuantitativa: JSON) {
     const informacoes = {};
@@ -423,16 +423,16 @@ export class CalcularTriangulacaoService {
     informacoes["percepcao_risco"] = {};
 
     //informacoes ambiente_trabalho (esse ficará em falta pois precisa da Lista de verificação)
-    informacoes["ambiente_trabalho"] = {
-      escore_analise_quantitativa: {
-        0: this.calcularAnaliseQuantitativa2(
-          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].ambiente_trabalho.manipuladores.media,
-        ),
-        1: this.calcularRisco(),
-        2: ,
-        3: ,
-      },
-    };
+    // informacoes["ambiente_trabalho"] = {
+    //   escore_analise_quantitativa: {
+    //     0: this.calcularAnaliseQuantitativa2(
+    //       analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].ambiente_trabalho.manipuladores.media,
+    //     ),
+    //     1: this.calcularRisco(),
+    //     2: ,
+    //     3: ,
+    //   },
+    // };
 
     //informacoes sistema_estilos_gestao (esse ficará em falta pois precisa da Lista de verificação)
     informacoes["sistema_estilos_gestao"] = {};
