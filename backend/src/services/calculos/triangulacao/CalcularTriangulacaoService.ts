@@ -453,11 +453,6 @@ export class CalcularTriangulacaoService {
       escore_elemento: this.escoreElemento(informacoes["pressao_trabalho_crencas_normativas"].valor_medio),
     };
 
-    //falta fazer
-
-    //informacoes percepcao_risco (esse ficará em falta pois possui erros no excel)
-    informacoes["percepcao_risco"] = {};
-
     //informacoes ambiente de trabalho
     informacoes["ambiente_trabalho"] = {
       escore_analise_quantitativa: {
@@ -483,10 +478,39 @@ export class CalcularTriangulacaoService {
 
     informacoes["ambiente_trabalho"] = {
       ...informacoes["ambiente_trabalho"],
-      valor_medio: this.calcularMedia(
-        informacoes["pressao_trabalho_crencas_normativas"].triangulacao.escore_caracteristicas["0"],
-        informacoes["pressao_trabalho_crencas_normativas"].triangulacao.escore_caracteristicas["1"],
-      ),
+      triangulacao: {
+        escore_caracteristicas: {
+          0:
+            informacoes["ambiente_trabalho"].escore_analise_quantitativa[0] +
+            informacoes["ambiente_trabalho"].escore_analise_qualitativa[0],
+          1:
+            informacoes["ambiente_trabalho"].escore_analise_quantitativa[1] +
+            informacoes["ambiente_trabalho"].escore_analise_qualitativa[1],
+          2:
+            informacoes["ambiente_trabalho"].escore_analise_quantitativa[2] +
+            informacoes["ambiente_trabalho"].escore_analise_qualitativa[2],
+          3:
+            informacoes["ambiente_trabalho"].escore_analise_quantitativa[3] +
+            informacoes["ambiente_trabalho"].escore_analise_qualitativa[3],
+        },
+      },
+    };
+
+    informacoes["ambiente_trabalho"] = {
+      ...informacoes["ambiente_trabalho"],
+      triangulacao: {
+        valor_medio: this.calcularMedia(
+          informacoes["ambiente_trabalho"].triangulacao.escore_caracteristicas[0],
+          informacoes["ambiente_trabalho"].triangulacao.escore_caracteristicas[1],
+          informacoes["ambiente_trabalho"].triangulacao.escore_caracteristicas[2],
+          informacoes["ambiente_trabalho"].triangulacao.escore_caracteristicas[3],
+        ),
+      },
+    };
+
+    informacoes["ambiente_trabalho"] = {
+      ...informacoes["ambiente_trabalho"],
+      escore_elemento: this.escoreElemento(informacoes["ambiente_trabalho"].triangulacao.valor_medio),
     };
 
     //informacoes sistema_estilos_gestao (esse ficará em falta pois precisa da Lista de verificação)
@@ -497,6 +521,11 @@ export class CalcularTriangulacaoService {
 
     //informacoes escore_elemento (geral)
     informacoes["valor_medio"] = {};
+
+    //falta fazer
+
+    //informacoes percepcao_risco (esse ficará em falta pois possui erros no excel)
+    informacoes["percepcao_risco"] = {};
 
     return { informacoes };
   }
