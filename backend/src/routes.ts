@@ -36,6 +36,7 @@ import { CalcularTriangulacaoController } from "@controllers/triangulacao/Calcul
 import { CriarListaVerificacaoController } from "@controllers/lista-verificacao/CriarListaVerificacaoController";
 import { EditarListaVerificacaoController } from "@controllers/lista-verificacao/EditarListaVerificacaoController";
 import { CalcularListaVerificacaoController } from "@controllers/lista-verificacao/CalcularListaVerificacaoController";
+import { CriarResultadoController } from "@controllers/resultado/CriarResultadoController";
 
 export const router = Router();
 
@@ -94,3 +95,6 @@ router.post("/api/calcular-triangulacao", authUsuario, new CalcularTriangulacaoC
 router.post("/api/criar-lista-verificacao", authUsuario, new CriarListaVerificacaoController().handle);
 router.post("/api/editar-lista-verificacao", authUsuario, new EditarListaVerificacaoController().handle);
 router.post("/api/calcular-lista-verificacao", authUsuario, new CalcularListaVerificacaoController().handle);
+
+// Rotas Resultado
+router.post("/api/criar-resultado", new CriarResultadoController().handle);
