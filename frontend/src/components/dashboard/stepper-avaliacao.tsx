@@ -14,8 +14,7 @@ import { Button } from "@/components/ui/button";
 import { AvaliacaoGestores } from "../avaliacao/avaliacao-gestores";
 import { AvaliacaoInfos } from "../avaliacao/avaliacao-infos";
 import { useState, useEffect } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/utils";
+import { AvaliacaoManipuladores } from "../avaliacao/avaliacao-manipuladores";
 
 const steps = [
   { label: "Informações", icon: UtensilsCrossed },
@@ -28,7 +27,6 @@ const steps = [
 export default function StepperAvaliacao() {
   const [isFormValid, setIsFormValid] = useState(false);
   const [initialStep, setInitialStep] = useState<number | null>(null);
-  const { toast } = useToast();
   const { currentStep, setStep } = useStepper();
 
   useEffect(() => {
@@ -59,7 +57,7 @@ export default function StepperAvaliacao() {
   const stepComponents = [
     <AvaliacaoInfos key="step1" onFormValidation={handleFormValidation} />,
     <AvaliacaoGestores key="step2" onFormValidation={handleFormValidation} />,
-    <div key="step3">Passo 3 - Manipuladores de alimentos</div>,
+    <AvaliacaoManipuladores key="step3" onFormValidation={handleFormValidation} />,
     <div key="step4">Passo 4 - Lista de verificação</div>,
     <div key="step5">Passo 5 - Análises qualitativas</div>,
     <div key="step6">Passo 6 - Análises quantitativas</div>,
@@ -76,18 +74,8 @@ export default function StepperAvaliacao() {
         initialStep={initialStep}
         steps={steps}
         onClickStep={(step, setStep) => {
-          if (step === 0 || isFormValid) {
-            setStep(step);
-            localStorage.setItem("currentStep", step.toString());
-          } else {
-            toast({
-              className: cn(
-                "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-              ),
-              title: "Campos obrigatórios não preenchidos!",
-              description: "Por favor, preencha todos os campos obrigatórios antes de prosseguir.",
-            });
-          }
+          setStep(step);
+          localStorage.setItem("currentStep", step.toString());
         }}
       >
         {steps.map((stepProps, index) => (
