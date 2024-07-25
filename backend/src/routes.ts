@@ -62,19 +62,19 @@ router.get("/api/buscar-estabelecimento", authUsuario, new BuscarEstabelecimento
 router.delete("/api/excluir-estabelecimento", authUsuario, new ExcluirEstabelecimentoController().handle);
 
 // Rotas Gestor Avaliacao
-router.post("/api/cadastro-gestor", authUsuario, new CriarGestorController().handle);
+router.post("/api/cadastrar-gestor", authUsuario, new CriarGestorController().handle);
 router.put("/api/editar-gestor", authUsuario, new EditarGestorController().handle);
 router.get("/api/listar-gestor", authUsuario, new ListarGestoresController().handle);
 router.get("/api/buscar-gestor", authUsuario, new BuscarGestorController().handle);
 
 // Rotas Manipulador Alimento
-router.post("/api/cadastro-manipulador-alimento", authUsuario, new CriarManipuladorAlimentoController().handle);
+router.post("/api/cadastrar-manipulador-alimento", authUsuario, new CriarManipuladorAlimentoController().handle);
 router.put("/api/editar-manipulador-alimento", authUsuario, new EditarManipuladorAlimentoController().handle);
 router.get("/api/listar-manipulador-alimento", authUsuario, new ListarManipuladoresAlimentoController().handle);
 router.get("/api/buscar-manipulador-alimento", authUsuario, new BuscarManipuladorAlimentoController().handle);
 
 // Rotas Analise Quantitativa
-router.post("/api/cadastro-analise-quantitativa", authUsuario, new CriarAnaliseQuantitativaController().handle);
+router.post("/api/cadastrar-analise-quantitativa", authUsuario, new CriarAnaliseQuantitativaController().handle);
 router.get("/api/buscar-analise-quantitativa", authUsuario, new BuscarAnaliseQuantitativaController().handle);
 router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
 router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
@@ -82,5 +82,5 @@ router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaCont
 router.get("/api/listar-instituicoes", new InstituicoesController().handle);
 
 // Rotas Analise Qualitativa
-router.post("/api/cadastro-analise-qualitativa", new CriarAnaliseQualitativaController().handle);
+router.post("/api/cadastrar-analise-qualitativa", new CriarAnaliseQualitativaController().handle);
 router.post("/api/calcular-analise-qualitativa", new CalcularAnaliseQualitativaController().handle);

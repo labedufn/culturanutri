@@ -107,3 +107,9 @@ export function BUSCAR_USUARIO() {
     url: `${API_URL}/api/buscar-usuario`,
   };
 }
+
+export function CADASTRAR_GESTOR() {
+  return {
+    url: `${API_URL}/api/cadastrar-gestor`,
+  };
+}
