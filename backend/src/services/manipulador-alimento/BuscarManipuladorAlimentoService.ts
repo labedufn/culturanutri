@@ -5,22 +5,15 @@ const prisma = new PrismaClient();
 
 export class BuscarManipuladorAlimentoService {
   async execute(idUsuario: string, idManipulador: string) {
-    const manipuladorAlimento = await prisma.manipuladorAlimento.findUnique({
+    const usuario = await prisma.usuario.findUnique({
       where: {
-        id: idManipulador,
+        id: idUsuario,
       },
       select: {
         id: true,
-        data_cadastro: true,
-        data_alteracao: true,
-        informacoes: true,
-        ativo: true,
       },
     });
 
-<<<<<<< HEAD
-    const informacoesDecodificadas = await desconverterBase64JSON(manipuladorAlimento.informacoes);
-=======
     if (!usuario) {
       throw new Error("Usuário não encontrado");
     } else {
@@ -37,11 +30,13 @@ export class BuscarManipuladorAlimentoService {
           ativo: true,
         },
       });
->>>>>>> main
 
-    return {
-      ...manipuladorAlimento,
-      informacoesDecodificadas: informacoesDecodificadas,
-    };
+      const informacoesDecodificadas = await desconverterBase64JSON(manipuladorAlimento.informacoes);
+
+      return {
+        ...manipuladorAlimento,
+        informacoesDecodificadas: informacoesDecodificadas,
+      };
+    }
   }
 }

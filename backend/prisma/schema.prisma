@@ -12,21 +12,12 @@ enum TipoUsuario {
   AVALIADOR
 }
 
-<<<<<<< HEAD
 model Gestores {
   id                 String          @id @default(uuid())
   id_estabelecimento String
   data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
   data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
   informacoes        String          @db.Text
-=======
-model GestorAvaliacao {
-  id                 String          @id @default(uuid())
-  id_estabelecimento String
-  informacoes        String          @db.VarChar(255)
-  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
-  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
->>>>>>> main
   ativo              Int             @default(1)
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
@@ -36,21 +27,13 @@ model GestorAvaliacao {
 model ManipuladorAlimento {
   id                 String          @id @default(uuid())
   id_estabelecimento String
-<<<<<<< HEAD
   data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
   data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
   informacoes        String          @db.Text
   ativo              Int             @default(1)
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
-=======
-  informacoes        String          @db.VarChar(255)
-  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
-  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
-  ativo              Int             @default(1)
-  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   AnaliQuantitativa AnaliseQuantitativa[]
->>>>>>> main
 
   @@map("manipuladores_alimentos")
 }
@@ -116,46 +99,42 @@ model Resultado {
 }
 
 model AnaliseQuantitativa {
-  id                                     String          @id @default(uuid())
+  id                                     String               @id @default(uuid())
   id_estabelecimento                     String
-  caracteristicas_socio_demograficas     String          @db.Text
-  resultados_avaliacao_quantitativas_csa String          @db.Text
-  vies_otimista                          String          @db.Text
-  data_cadastro                          DateTime        @default(now()) @db.Timestamptz(3)
-  data_alteracao                         DateTime        @updatedAt @db.Timestamptz(3)
-  ativo                                  Int             @default(1)
-  estabelecimento                        Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  caracteristicas_socio_demograficas     String               @db.Text
+  resultados_avaliacao_quantitativas_csa String               @db.Text
+  vies_otimista                          String               @db.Text
+  data_cadastro                          DateTime             @default(now()) @db.Timestamptz(3)
+  data_alteracao                         DateTime             @updatedAt @db.Timestamptz(3)
+  ativo                                  Int                  @default(1)
+  estabelecimento                        Estabelecimento      @relation(fields: [id_estabelecimento], references: [id])
+  ManipuladorAlimento                    ManipuladorAlimento? @relation(fields: [manipuladorAlimentoId], references: [id])
+  manipuladorAlimentoId                  String?
 
   @@map("analises_quantitativas")
 }
 
 model Estabelecimento {
-  id                               String   @id @default(uuid())
-  nome                             String   @db.VarChar(255)
-  cnae                             String   @db.VarChar(255)
-  endereco                         String   @db.VarChar(255)
+  id                               String                @id @default(uuid())
+  nome                             String                @db.VarChar(255)
+  cnae                             String                @db.VarChar(255)
+  endereco                         String                @db.VarChar(255)
   pessoal_ocupado                  Int
   numero_refeicoes                 Int
   possui_alvara_sanitario          Int
   possui_responsavel_boas_praticas Int
-  data_criacao                     DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao                   DateTime @updatedAt @db.Timestamptz(3)
+  data_criacao                     DateTime              @default(now()) @db.Timestamptz(3)
+  data_alteracao                   DateTime              @updatedAt @db.Timestamptz(3)
   alterado_por                     String
-  ativo                            Int      @default(1)
-  usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
-
-  Resultado           Resultado[]
-<<<<<<< HEAD
-  AnaliseQuantitativa AnaliseQuantitativa[]
-  AnaliseQualitativa  AnaliseQualitativa[]
-  ListaVerificacao    ListaVerificacao[]
-  ManipuladorAlimento ManipuladorAlimento[]
-  Gestores            Gestores[]
-  Triangulacao        Triangulacao[]
-=======
-  GestorAvaliacao     GestorAvaliacao[]
-  ManipuladorAlimento ManipuladorAlimento[]
->>>>>>> main
+  ativo                            Int                   @default(1)
+  usuario                          Usuario               @relation(fields: [alterado_por], references: [id])
+  Gestores                         Gestores[]
+  ManipuladorAlimento              ManipuladorAlimento[]
+  ListaVerificacao                 ListaVerificacao[]
+  AnaliseQualitativa               AnaliseQualitativa[]
+  Triangulacao                     Triangulacao[]
+  Resultado                        Resultado[]
+  AnaliseQuantitativa              AnaliseQuantitativa[]
 
   @@map("estabelecimentos")
 }

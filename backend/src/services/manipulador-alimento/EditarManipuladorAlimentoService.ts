@@ -21,20 +21,14 @@ export class EditarManipuladorAlimentoService {
         id: idManipulador,
       },
       data: {
-<<<<<<< HEAD
-=======
         id_estabelecimento: manipuladorAlimento.id_estabelecimento,
->>>>>>> main
         informacoes: manipuladorAlimento.informacoes,
         ativo: manipuladorAlimento.ativo,
       },
       select: {
         id: true,
-<<<<<<< HEAD
-=======
         id_estabelecimento: true,
         data_cadastro: true,
->>>>>>> main
         data_alteracao: true,
         informacoes: true,
         ativo: true,

@@ -8,15 +8,9 @@ export class EditarManipuladorAlimentoController {
     const { id_manipulador_alimento, id_estabelecimento, json_informacoes, ativo } = req.body;
 
     try {
-<<<<<<< HEAD
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
 
-      const manipuladorAlimento = new ManipuladorAlimento(informacoes, ativo);
-=======
-      const { informacoes } = await converterBase64JSON(json_informacoes);
-
-      const manipuladorAlimento = new ManipuladorAlimento(informacoes, ativo, id_estabelecimento);
->>>>>>> main
+      const manipuladorAlimento = new ManipuladorAlimento(informacoes, id_estabelecimento, ativo);
       const editarManipuladorAlimentoService = new EditarManipuladorAlimentoService();
       const gestorAlterado = await editarManipuladorAlimentoService.execute(
         id_manipulador_alimento,
