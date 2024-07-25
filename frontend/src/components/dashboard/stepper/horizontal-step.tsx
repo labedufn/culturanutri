@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import * as React from "react";
 import { StepButtonContainer } from "./step-button-container";
 import { StepIcon } from "./step-icon";
-// import { StepLabel } from "./step-label";
+import { StepLabel } from "./step-label";
 import type { StepSharedProps } from "./types";
 import { useStepper } from "./use-stepper";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -28,7 +28,7 @@ const HorizontalStep = React.forwardRef<HTMLDivElement, StepSharedProps>((props,
     hasVisited,
     icon,
     label,
-    // description,
+    description,
     isKeepError,
     state,
     checkIcon: checkIconProp,
@@ -38,7 +38,7 @@ const HorizontalStep = React.forwardRef<HTMLDivElement, StepSharedProps>((props,
   const localIsLoading = isLoading || state === "loading";
   const localIsError = isError || state === "error";
 
-  // const opacity = hasVisited ? 1 : 0.8;
+  const opacity = hasVisited ? 1 : 0.8;
 
   const active = variant === "line" ? isCompletedStep || isCurrentStep : isCompletedStep;
 
@@ -98,7 +98,7 @@ const HorizontalStep = React.forwardRef<HTMLDivElement, StepSharedProps>((props,
                   errorIcon={errorIcon}
                 />
               </StepButtonContainer>
-              {/* <StepLabel label={label} description={description} {...{ isCurrentStep, opacity }} /> */}
+              <StepLabel label={label} description={description} {...{ isCurrentStep, opacity }} />
             </div>
           </TooltipTrigger>
           <TooltipContent side="top" className="bg-zinc-800">

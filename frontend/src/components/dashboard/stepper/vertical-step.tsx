@@ -96,7 +96,7 @@ const VerticalStep = React.forwardRef<HTMLDivElement, VerticalStepProps>((props,
                 });
               }
             }}
-            className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up"
+            className="data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up"
           >
             {children}
           </CollapsibleContent>
@@ -127,12 +127,7 @@ const VerticalStep = React.forwardRef<HTMLDivElement, VerticalStepProps>((props,
       <div
         data-vertical={true}
         data-active={active}
-        className={cn(
-          "stepper__vertical-step-container",
-          "flex items-center",
-          variant === "line" && "border-s-[3px] data-[active=true]:border-primary py-2 ps-3",
-          styles?.["vertical-step-container"],
-        )}
+        className={cn("stepper__vertical-step-container", "flex items-center", styles?.["vertical-step-container"])}
       >
         <StepButtonContainer {...{ isLoading: localIsLoading, isError: localIsError, ...props }}>
           <StepIcon
