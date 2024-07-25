@@ -19,6 +19,7 @@ export class ListarManipuladoresAlimentoService {
       },
     });
 
+<<<<<<< HEAD
     const decodeManipulador = await Promise.all(
       manipuladores.map(async (manipulador) => ({
         id_estabelecimento,
@@ -26,6 +27,21 @@ export class ListarManipuladoresAlimentoService {
         informacoes: await desconverterBase64JSON(manipulador.informacoes),
       })),
     );
+=======
+    if (!usuario) {
+      throw new Error("Usuário não encontrado");
+    } else {
+      const manipuladores = await prisma.manipuladorAlimento.findMany({
+        select: {
+          id: true,
+          id_estabelecimento: true,
+          data_cadastro: true,
+          data_alteracao: true,
+          informacoes: true,
+          ativo: true,
+        },
+      });
+>>>>>>> main
 
     return decodeManipulador;
   }

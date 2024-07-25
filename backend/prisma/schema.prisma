@@ -12,12 +12,21 @@ enum TipoUsuario {
   AVALIADOR
 }
 
+<<<<<<< HEAD
 model Gestores {
   id                 String          @id @default(uuid())
   id_estabelecimento String
   data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
   data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
   informacoes        String          @db.Text
+=======
+model GestorAvaliacao {
+  id                 String          @id @default(uuid())
+  id_estabelecimento String
+  informacoes        String          @db.VarChar(255)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+>>>>>>> main
   ativo              Int             @default(1)
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
@@ -27,11 +36,21 @@ model Gestores {
 model ManipuladorAlimento {
   id                 String          @id @default(uuid())
   id_estabelecimento String
+<<<<<<< HEAD
   data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
   data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
   informacoes        String          @db.Text
   ativo              Int             @default(1)
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+=======
+  informacoes        String          @db.VarChar(255)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  ativo              Int             @default(1)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+
+  AnaliQuantitativa AnaliseQuantitativa[]
+>>>>>>> main
 
   @@map("manipuladores_alimentos")
 }
@@ -126,12 +145,17 @@ model Estabelecimento {
   usuario                          Usuario  @relation(fields: [alterado_por], references: [id])
 
   Resultado           Resultado[]
+<<<<<<< HEAD
   AnaliseQuantitativa AnaliseQuantitativa[]
   AnaliseQualitativa  AnaliseQualitativa[]
   ListaVerificacao    ListaVerificacao[]
   ManipuladorAlimento ManipuladorAlimento[]
   Gestores            Gestores[]
   Triangulacao        Triangulacao[]
+=======
+  GestorAvaliacao     GestorAvaliacao[]
+  ManipuladorAlimento ManipuladorAlimento[]
+>>>>>>> main
 
   @@map("estabelecimentos")
 }
