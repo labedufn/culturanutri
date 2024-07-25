@@ -30,9 +30,17 @@ interface CollapseMenuButtonProps {
   active: boolean;
   submenus: Submenu[];
   isOpen: boolean | undefined;
+  handleClose: () => void;
 }
 
-export function CollapseMenuButton({ icon: Icon, label, active, submenus, isOpen }: CollapseMenuButtonProps) {
+export function CollapseMenuButton({
+  icon: Icon,
+  label,
+  active,
+  submenus,
+  isOpen,
+  handleClose,
+}: CollapseMenuButtonProps) {
   const isSubmenuActive = submenus.some((submenu) => submenu.active);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(isSubmenuActive);
 
@@ -69,6 +77,7 @@ export function CollapseMenuButton({ icon: Icon, label, active, submenus, isOpen
             variant={active ? "secondary" : "ghost"}
             className="w-full justify-start h-10 mb-1"
             asChild
+            onClick={handleClose}
           >
             <Link href={href}>
               <span className="mr-4 ml-2">
@@ -117,7 +126,7 @@ export function CollapseMenuButton({ icon: Icon, label, active, submenus, isOpen
         <DropdownMenuSeparator />
         {submenus.map(({ href, label }, index) => (
           <DropdownMenuItem key={index} asChild>
-            <Link className="cursor-pointer" href={href}>
+            <Link className="cursor-pointer" href={href} onClick={handleClose}>
               <p className="max-w-[180px] truncate">{label}</p>
             </Link>
           </DropdownMenuItem>

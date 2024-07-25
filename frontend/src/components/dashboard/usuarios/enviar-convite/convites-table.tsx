@@ -22,7 +22,7 @@ export default function ConvitesTable({ refetch }: ConvitesTableProps) {
         email: convite.email,
         tipoUsuario: formatarPalavra(convite.tipo_usuario),
         situacao: convite.usado === 1 ? "Usado" : "Não Usado",
-        status: verificarExpiracao(convite.expira_em) ? "Expirado" : "Disponível",
+        status: convite.usado === 1 ? "Expirado" : verificarExpiracao(convite.expira_em) ? "Expirado" : "Disponível",
         criadoEm: formatarDataHora(convite.criado_em),
       }));
       setConvites(formattedData);

@@ -49,7 +49,6 @@ export function LoginForm() {
         setErrorMessage("");
         window.location.href = "/dashboard";
       } else {
-        console.log(resultado.message);
         setErrorMessage(resultado.message || "Erro ao fazer login.");
       }
     } catch (error) {

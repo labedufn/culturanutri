@@ -12,7 +12,6 @@ export async function listarInstituicoes() {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data);
     const dados = response.data;
     return {
       success: true,

@@ -37,7 +37,6 @@ export function RedefinirSenhaForm() {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
     try {
       const resultado = await redefinirSenha(data, window.location.href);
       if (!(resultado?.success === false)) {
