@@ -172,8 +172,15 @@ export class CalcularAnaliseQuantitativaService {
   }
 
   private calcularEstatisticasSubpropriedades(entities: any[], propriedade: string) {
+    if (!Array.isArray(entities)) {
+      throw new Error("entities should be an array");
+    }
+
     const valores = entities
-      .flatMap((entity) => this.extrairValoresSubpropriedade(entity.percepcao_risco, propriedade))
+      .reduce((acc, entity) => {
+        const subValores = this.extrairValoresSubpropriedade(entity.percepcao_risco, propriedade);
+        return acc.concat(subValores);
+      }, [])
       .filter((value) => typeof value === "number");
 
     return {

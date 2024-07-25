@@ -19,11 +19,14 @@ export class ListarManipuladoresAlimentoService {
       },
     });
 
-    const informacoesDecodificadas = await desconverterBase64JSON(manipuladores.informacoes);
+    const decodeManipulador = await Promise.all(
+      manipuladores.map(async (manipulador) => ({
+        id_estabelecimento,
+        ...manipulador,
+        informacoes: await desconverterBase64JSON(manipulador.informacoes),
+      })),
+    );
 
-    return {
-      ...manipuladores,
-      informacoesDecodificadas: informacoesDecodificadas,
-    };
+    return decodeManipulador;
   }
 }
