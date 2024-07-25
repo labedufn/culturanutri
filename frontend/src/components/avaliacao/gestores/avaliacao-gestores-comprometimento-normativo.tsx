@@ -29,7 +29,7 @@ export function AvaliacaoGestoresComprometimentoNormativo({
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
           setRespostas({
-            naoDeixaEmpregoPoisObrigacaoMoral: localStorage.getItem("nao_deixa_emprego_pois_obrigação_moral") || "",
+            naoDeixaEmpregoPoisObrigacaoMoral: localStorage.getItem("nao_deixa_emprego_pois_obrigacao_moral") || "",
             culpadoDeixasseEmprego: localStorage.getItem("culpado_deixasse_emprego") || "",
             naoSeriaCertoDeixarEmprego: localStorage.getItem("nao_seria_certo_deixar_emprego") || "",
             devoEsseEmprego: localStorage.getItem("devo_esse_emprego") || "",
@@ -49,7 +49,7 @@ export function AvaliacaoGestoresComprometimentoNormativo({
       Object.keys(respostas).forEach((key) => {
         const value = respostas[key];
         if (value !== "") {
-          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), value);
         }
       });
     }

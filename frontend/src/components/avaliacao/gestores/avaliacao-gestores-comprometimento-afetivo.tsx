@@ -33,7 +33,7 @@ export function AvaliacaoGestoresComprometimentoAfetivo({
             problemasRestauranteMeus: localStorage.getItem("problemas_restaurante_meus") || "",
             restauranteTemSignificado: localStorage.getItem("restaurante_tem_significado") || "",
             restauranteMereceMinhaLealdade: localStorage.getItem("restaurante_merece_minha_lealdade") || "",
-            trabalharPorNecessidadeDesejo: localStorage.getItem("trabalhar_por_necessidade_e_desejo") || "",
+            trabalharPorNecessidadeDesejo: localStorage.getItem("trabalhar_por_necessidade_desejo") || "",
             dedicarMinhaCarreiraAoRestaurante: localStorage.getItem("dedicar_minha_carreira_ao_restaurante") || "",
           });
         } else {
@@ -51,13 +51,7 @@ export function AvaliacaoGestoresComprometimentoAfetivo({
       Object.keys(respostas).forEach((key) => {
         const value = respostas[key];
         if (value !== "") {
-          localStorage.setItem(
-            key
-              .replace(/([A-Z])/g, "_$1")
-              .toLowerCase()
-              .replace(/_/g, "_"),
-            value,
-          );
+          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), value);
         }
       });
     }

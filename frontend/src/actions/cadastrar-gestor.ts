@@ -6,15 +6,7 @@ import { verificarToken } from "@/scripts/verificarToken";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-export async function cadastrarEstabelecimento(data: {
-  nome: string;
-  cnae: string;
-  endereco: string;
-  pessoal_ocupado: number;
-  numero_refeicoes: number;
-  possui_alvara_sanitario: number;
-  possui_responsavel_boas_praticas: number;
-}) {
+export async function cadastrarGestor(data: any) {
   const cookieData = cookies().get("token");
   const token = cookieData ? cookieData.value : null;
 
