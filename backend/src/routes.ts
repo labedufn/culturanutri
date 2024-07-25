@@ -84,13 +84,13 @@ router.get("/api/buscar-analise-quantitativa", authUsuario, new BuscarAnaliseQua
 router.get("/api/listar-instituicoes", new InstituicoesController().handle);
 
 // Rotas Analise Qualitativa
-router.post("/api/cadastrar-analise-qualitativa", new CriarAnaliseQualitativaController().handle);
-router.post("/api/calcular-analise-qualitativa", new CalcularAnaliseQualitativaController().handle);
+router.post("/api/cadastrar-analise-qualitativa", authUsuario, new CriarAnaliseQualitativaController().handle);
+router.post("/api/calcular-analise-qualitativa", authUsuario, new CalcularAnaliseQualitativaController().handle);
 
 // Rotas Triangulação
-router.post("/api/calcular-triangulacao", new CalcularTriangulacaoController().handle);
+router.post("/api/calcular-triangulacao", authUsuario, new CalcularTriangulacaoController().handle);
 
 // Rotas Lista de Verificação
-router.post("/api/criar-lista-verificacao", new CriarListaVerificacaoController().handle);
-router.post("/api/editar-lista-verificacao", new EditarListaVerificacaoController().handle);
-router.post("/api/calcular-lista-verificacao", new CalcularListaVerificacaoController().handle);
+router.post("/api/criar-lista-verificacao", authUsuario, new CriarListaVerificacaoController().handle);
+router.post("/api/editar-lista-verificacao", authUsuario, new EditarListaVerificacaoController().handle);
+router.post("/api/calcular-lista-verificacao", authUsuario, new CalcularListaVerificacaoController().handle);
