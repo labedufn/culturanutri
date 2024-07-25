@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 
 export class BuscarGestorController {
   async handle(req: Request, res: Response) {
-    const { id_usuario, id_gestor } = req.body;
+    const { id_gestor } = req.body;
+    const id_usuario = req.id_usuario;
 
     try {
       const buscaGestorService = new BuscarGestorService();

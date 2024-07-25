@@ -70,22 +70,18 @@ model AnaliseQualitativa {
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
   ativo              Int             @default(1)
 
-  Triangulacao Triangulacao[]
-
   @@map("analises_qualitativas")
 }
 
 model Triangulacao {
-  id                      String              @id @default(uuid())
-  id_analise_qualitativa  String
-  id_analise_quantitativa String
-  informacoes             String              @db.Text
-  data_cadastro           DateTime            @default(now()) @db.Timestamptz(3)
-  data_alteracao          DateTime            @updatedAt @db.Timestamptz(3)
-  analiseQualitativa      AnaliseQualitativa  @relation(fields: [id_analise_qualitativa], references: [id])
-  analiseQuantitativa     AnaliseQuantitativa @relation(fields: [id_analise_quantitativa], references: [id])
+  id                 String   @id @default(uuid())
+  id_estabelecimento String
+  informacoes        String   @db.Text
+  data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
 
-  Resultado Resultado[]
+  Resultado       Resultado[]
+  Estabelecimento Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   @@map("triangulacoes")
 }
@@ -110,7 +106,6 @@ model AnaliseQuantitativa {
   data_alteracao                         DateTime        @updatedAt @db.Timestamptz(3)
   ativo                                  Int             @default(1)
   estabelecimento                        Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
-  Triangulacao                           Triangulacao[]
 
   @@map("analises_quantitativas")
 }
@@ -136,6 +131,7 @@ model Estabelecimento {
   ListaVerificacao    ListaVerificacao[]
   ManipuladorAlimento ManipuladorAlimento[]
   Gestores            Gestores[]
+  Triangulacao        Triangulacao[]
 
   @@map("estabelecimentos")
 }

@@ -646,6 +646,6 @@ export class CalcularTriangulacaoService {
     //informacoes percepcao_risco (esse ficará em falta pois possui erros no excel)
     informacoes["percepcao_risco"] = {};
 
-    return { informacoes };
+    return { informacoes: informacoes };
   }
 }

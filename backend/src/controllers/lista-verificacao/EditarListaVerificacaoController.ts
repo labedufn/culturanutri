@@ -12,7 +12,7 @@ export class EditarListaVerificacaoController {
 
       const novaListaVerificacao = new ListaVerificacao(informacoes, id_estabelecimento, ativo);
       const editarListaVerificacaoService = new EditarListaVerificacaoService();
-      const listaVerificacao = await editarListaVerificacaoService.execute(novaListaVerificacao, id_lista_verificacao);
+      const listaVerificacao = await editarListaVerificacaoService.execute(id_lista_verificacao, novaListaVerificacao);
 
       return res.json(listaVerificacao);
     } catch (error) {

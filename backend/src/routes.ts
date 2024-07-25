@@ -80,8 +80,6 @@ router.get("/api/buscar-manipulador-alimento", authUsuario, new BuscarManipulado
 // Rotas Analise Quantitativa
 router.post("/api/cadastro-analise-quantitativa", authUsuario, new CriarAnaliseQuantitativaController().handle);
 router.get("/api/buscar-analise-quantitativa", authUsuario, new BuscarAnaliseQuantitativaController().handle);
-router.post("/api/cadastro-analise-quantitativa", new CriarAnaliseQuantitativaController().handle);
-router.get("/api/buscar-analise-quantitativa", new BuscarAnaliseQuantitativaController().handle);
 
 router.get("/api/listar-instituicoes", new InstituicoesController().handle);
 

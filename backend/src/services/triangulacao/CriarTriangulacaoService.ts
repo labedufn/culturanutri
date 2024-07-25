@@ -8,19 +8,15 @@ export class CriarTriangulacaoService {
   async execute(triangulacao: Triangulacao) {
     const triangulacaoCriada = await prisma.triangulacao.create({
       data: {
-        id_analise_qualitativa: triangulacao.id_analise_qualitativa,
-        id_analise_quantitativa: triangulacao.id_analise_quantitativa,
         informacoes: triangulacao.informacoes,
-        ativo: triangulacao.ativo,
+        id_estabelecimento: triangulacao.id_estabelecimento,
       },
       select: {
         id: true,
-        id_analise_qualitativa: true,
-        id_analise_quantitativa: true,
         informacoes: true,
+        id_estabelecimento: true,
         data_cadastro: true,
         data_alteracao: true,
-        ativo: true,
       },
     });
 

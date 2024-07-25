@@ -12,6 +12,7 @@ export class CriarGestorService {
         informacoes: gestor.informacoes,
       },
       select: {
+        id: true,
         id_estabelecimento: true,
         informacoes: true,
       },

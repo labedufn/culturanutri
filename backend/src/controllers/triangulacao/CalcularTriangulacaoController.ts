@@ -4,6 +4,7 @@ import { BuscarAnaliseQuantitativaService } from "@services/analise-quantitativa
 import { CalcularTriangulacaoService } from "@services/calculos/triangulacao/CalcularTriangulacaoService";
 import { BuscarListaVerificacaoService } from "@services/lista-verificacao/BuscarListaVerificacaoService";
 import { CriarTriangulacaoService } from "@services/triangulacao/CriarTriangulacaoService";
+import converterBase64JSON from "@utils/converterBase64JSON";
 import { Request, Response } from "express";
 
 export class CalcularTriangulacaoController {
@@ -12,7 +13,7 @@ export class CalcularTriangulacaoController {
 
     try {
       const calcularTriangulacaoService = new CalcularTriangulacaoService();
-      // const criarTriangulacaoService = new CriarTriangulacaoService();
+      const criarTriangulacaoService = new CriarTriangulacaoService();
       const buscarAnaliseQualitativaService = new BuscarAnaliseQualitativaService();
       const buscarAnaliseQuantitativaService = new BuscarAnaliseQuantitativaService();
       const buscarListaVerificacao = new BuscarListaVerificacaoService();
@@ -21,17 +22,19 @@ export class CalcularTriangulacaoController {
       const analiseQuantitativa = await buscarAnaliseQuantitativaService.execute(id_estabelecimento);
       const listaVerificacao = await buscarListaVerificacao.execute(id_estabelecimento);
 
-      const informacoes = await calcularTriangulacaoService.execute(
+      const { informacoes } = await calcularTriangulacaoService.execute(
         analiseQualitativa,
         analiseQuantitativa,
         listaVerificacao,
       );
-      // const ativo = 1;
+      const ativo = 1;
 
-      // const triangulacao = new Triangulacao(id_analise_qualitativa, id_analise_qualitativa, informacoes, ativo);
-      // const triangulacaoCalculada = await criarTriangulacaoService.execute(triangulacao);
+      const { informacoesCodificadas } = await converterBase64JSON(informacoes, "informacoesCodificadas");
 
-      return res.json(informacoes);
+      const triangulacao = new Triangulacao(id_estabelecimento, informacoesCodificadas, ativo);
+      const triangulacaoCalculada = await criarTriangulacaoService.execute(triangulacao);
+
+      return res.json(triangulacaoCalculada);
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
