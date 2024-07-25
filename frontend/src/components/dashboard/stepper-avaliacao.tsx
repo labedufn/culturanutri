@@ -17,10 +17,10 @@ import { useState, useEffect } from "react";
 
 const steps = [
   { label: "Informações", icon: UtensilsCrossed },
-  { label: "Gestores", icon: Handshake },
-  { label: "Manipuladores de alimentos", icon: CookingPot },
+  { label: "Gestor", icon: Handshake },
+  { label: "Manipulador de alimento", icon: CookingPot },
   { label: "Lista de verificação", icon: ListChecks },
-  { label: "Análises qualitativas", icon: NotebookPen },
+  { label: "Análise qualitativa", icon: NotebookPen },
 ] satisfies StepItem[];
 
 export default function StepperAvaliacao() {
