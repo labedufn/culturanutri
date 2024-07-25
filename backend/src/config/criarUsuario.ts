@@ -10,8 +10,6 @@ function converterTipoUsuario(tipo: string): TipoUsuario {
 }
 
 async function criarUsuario() {
-  console.log("Por favor, insira os dados para criar o usuário:");
-
   const nome = readlineSync.question("Nome: ");
   const sobrenome = readlineSync.question("Sobrenome: ");
   const cpf = readlineSync.question("CPF: ");
