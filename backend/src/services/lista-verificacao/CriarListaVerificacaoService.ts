@@ -9,10 +9,12 @@ export class CriarListaVerificacaoService {
     const listaVerificacaoCriada = await prisma.listaVerificacao.create({
       data: {
         informacoes: listaVerificacao.informacoes,
+        id_estabelecimento: listaVerificacao.id_estabelecimento,
         ativo: listaVerificacao.ativo,
       },
       select: {
         id: true,
+        id_estabelecimento: true,
         data_cadastro: true,
         data_alteracao: true,
         informacoes: true,

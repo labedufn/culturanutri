@@ -13,33 +13,37 @@ enum TipoUsuario {
 }
 
 model Gestores {
-  id                 String   @id @default(uuid())
+  id                 String          @id @default(uuid())
   id_estabelecimento String
-  data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
-  informacoes        String   @db.Text
-  ativo              Int      @default(1)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  informacoes        String          @db.Text
+  ativo              Int             @default(1)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   @@map("gestores")
 }
 
 model ManipuladorAlimento {
-  id                 String   @id @default(uuid())
+  id                 String          @id @default(uuid())
   id_estabelecimento String
-  data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
-  informacoes        String   @db.Text
-  ativo              Int      @default(1)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  informacoes        String          @db.Text
+  ativo              Int             @default(1)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   @@map("manipuladores_alimentos")
 }
 
 model ListaVerificacao {
-  id             String   @id @default(uuid())
-  informacoes    String   @db.Text
-  ativo          Int      @default(1)
-  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
+  id                 String          @id @default(uuid())
+  informacoes        String          @db.Text
+  id_estabelecimento String
+  ativo              Int             @default(1)
+  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
+  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
+  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
   @@map("listas_verificacoes")
 }
@@ -129,6 +133,9 @@ model Estabelecimento {
   Resultado           Resultado[]
   AnaliseQuantitativa AnaliseQuantitativa[]
   AnaliseQualitativa  AnaliseQualitativa[]
+  ListaVerificacao    ListaVerificacao[]
+  ManipuladorAlimento ManipuladorAlimento[]
+  Gestores            Gestores[]
 
   @@map("estabelecimentos")
 }
