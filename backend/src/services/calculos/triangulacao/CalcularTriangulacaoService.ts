@@ -176,26 +176,26 @@ export class CalcularTriangulacaoService {
   private verificarValor(k) {
     if (k === 0) {
       return "1";
-    } else if (k <= 9) {
-      return 9;
+    } else if (k <= 9.9) {
+      return "1";
     } else if (k === 10) {
       return "1->2";
-    } else if (k <= 14) {
-      return 9;
+    } else if (k <= 14.9) {
+      return "1->2";
     } else if (k === 15) {
       return "2";
     } else if (k <= 17) {
       return "2";
-    } else if (k === 17) {
+    } else if (k === 17.1) {
       return "2->3";
     } else if (k <= 22) {
       return "2->3";
-    } else if (k === 22) {
+    } else if (k === 22.1) {
       return "3";
     } else if (k <= 24) {
       return "3";
     } else {
-      return null;
+      return "";
     }
   }
 

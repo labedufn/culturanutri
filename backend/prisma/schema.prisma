@@ -92,6 +92,7 @@ model Resultado {
   id                 String          @id @default(uuid())
   id_estabelecimento String
   id_triangulacao    String
+  informacoes        String          @db.Text
   triangulacao       Triangulacao    @relation(fields: [id_triangulacao], references: [id])
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
 
