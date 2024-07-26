@@ -11,10 +11,10 @@ type AvaliacaoGestoresPercepcaoRiscoProps = {
 
 export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoGestoresPercepcaoRiscoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    riscoApresentarDorBarrigaEstabelecimentoSimilar: "",
-    riscoApresentarDorBarrigaEstabelecimentoGerenciado: "",
-    riscoDoencaTransmitidaAlimentos: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    riscoApresentarDorBarrigaEstabelecimentoSimilar: null,
+    riscoApresentarDorBarrigaEstabelecimentoGerenciado: null,
+    riscoDoencaTransmitidaAlimentos: null,
   });
 
   useEffect(() => {
@@ -25,13 +25,18 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            riscoApresentarDorBarrigaEstabelecimentoSimilar:
-              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_similar") || "",
-            riscoApresentarDorBarrigaEstabelecimentoGerenciado:
-              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_gerenciado") || "",
-            riscoDoencaTransmitidaAlimentos: localStorage.getItem("risco_doenca_transmitida_alimentos") || "",
-          });
+          const storedData = localStorage.getItem("percepcaoRiscoGestor");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              riscoApresentarDorBarrigaEstabelecimentoSimilar:
+                parsedData.percepcao_risco.risco_apresentar_dor_barriga_estabelecimento_similar?.toString() || null,
+              riscoApresentarDorBarrigaEstabelecimentoGerenciado:
+                parsedData.percepcao_risco.risco_apresentar_dor_barriga_estabelecimento_gerenciado?.toString() || null,
+              riscoDoencaTransmitidaAlimentos:
+                parsedData.percepcao_risco.risco_doenca_transmitida_alimentos?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -44,12 +49,24 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
-        }
-      });
+      const data = {
+        percepcao_risco: {
+          risco_apresentar_dor_barriga_estabelecimento_similar:
+            respostas.riscoApresentarDorBarrigaEstabelecimentoSimilar
+              ? parseInt(respostas.riscoApresentarDorBarrigaEstabelecimentoSimilar)
+              : null,
+          risco_apresentar_dor_barriga_estabelecimento_gerenciado:
+            respostas.riscoApresentarDorBarrigaEstabelecimentoGerenciado
+              ? parseInt(respostas.riscoApresentarDorBarrigaEstabelecimentoGerenciado)
+              : null,
+          risco_doenca_transmitida_alimentos: respostas.riscoDoencaTransmitidaAlimentos
+            ? parseInt(respostas.riscoDoencaTransmitidaAlimentos)
+            : null,
+        },
+      };
+
+      localStorage.setItem("percepcaoRiscoGestor", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -59,8 +76,8 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -94,7 +111,7 @@ export function AvaliacaoGestoresPercepcaoRisco({ onFormValidation }: AvaliacaoG
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

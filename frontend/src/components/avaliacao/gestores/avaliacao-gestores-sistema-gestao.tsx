@@ -11,14 +11,14 @@ interface AvaliacaoGestoresSistemaGestaoProps {
 
 export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGestoresSistemaGestaoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    liderancaModificadaConsumidorAltaPercepcaoRisco: "",
-    comunicacaoModificadaConsumidorAltaPercepcaoRisco: "",
-    gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco: "",
-    ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco: "",
-    manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco: "",
-    comprometimentoModificadaConsumidorAltaPercepcaoRisco: "",
-    boasPraticasConsumidorAltaPercepcaoRisco: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    liderancaModificadaConsumidorAltaPercepcaoRisco: null,
+    comunicacaoModificadaConsumidorAltaPercepcaoRisco: null,
+    gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco: null,
+    ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco: null,
+    manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco: null,
+    comprometimentoModificadaConsumidorAltaPercepcaoRisco: null,
+    boasPraticasConsumidorAltaPercepcaoRisco: null,
   });
 
   useEffect(() => {
@@ -29,22 +29,30 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            liderancaModificadaConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("lideranca_modificada_consumidor_alta_percepcao_risco") || "",
-            comunicacaoModificadaConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("comunicacao_modificada_consumidor_alta_percepcao_risco") || "",
-            gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco") || "",
-            ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("ambiente_trabalho_modificada_consumidor_alta_percepcao_risco") || "",
-            manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("manipulador_alimentos_modificada_consumidor_alta_percepcao_risco") || "",
-            comprometimentoModificadaConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("comprometimento_modificada_consumidor_alta_percepcao_risco") || "",
-            boasPraticasConsumidorAltaPercepcaoRisco:
-              localStorage.getItem("boas_praticas_consumidor_alta_percepcao_risco") || "",
-          });
+          const storedData = localStorage.getItem("sistemasGestaoGestor");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              liderancaModificadaConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.lideranca_modificada_consumidor_alta_percepcao_risco?.toString() || null,
+              comunicacaoModificadaConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.comunicacao_modificada_consumidor_alta_percepcao_risco?.toString() || null,
+              gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco?.toString() ||
+                null,
+              ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.ambiente_trabalho_modificada_consumidor_alta_percepcao_risco?.toString() ||
+                null,
+              manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.manipulador_alimentos_modificada_consumidor_alta_percepcao_risco?.toString() ||
+                null,
+              comprometimentoModificadaConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.comprometimento_modificada_consumidor_alta_percepcao_risco?.toString() ||
+                null,
+              boasPraticasConsumidorAltaPercepcaoRisco:
+                parsedData.sistemas_gestao.boas_praticas_consumidor_alta_percepcao_risco?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -57,12 +65,40 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
-        }
-      });
+      const data = {
+        sistemas_gestao: {
+          lideranca_modificada_consumidor_alta_percepcao_risco:
+            respostas.liderancaModificadaConsumidorAltaPercepcaoRisco
+              ? parseInt(respostas.liderancaModificadaConsumidorAltaPercepcaoRisco)
+              : null,
+          comunicacao_modificada_consumidor_alta_percepcao_risco:
+            respostas.comunicacaoModificadaConsumidorAltaPercepcaoRisco
+              ? parseInt(respostas.comunicacaoModificadaConsumidorAltaPercepcaoRisco)
+              : null,
+          gerenciar_seguranca_modificada_consumidor_alta_percepcao_risco:
+            respostas.gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco
+              ? parseInt(respostas.gerenciarSegurancaModificadaConsumidorAltaPercepcaoRisco)
+              : null,
+          ambiente_trabalho_modificada_consumidor_alta_percepcao_risco:
+            respostas.ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco
+              ? parseInt(respostas.ambienteTrabalhoModificadaConsumidorAltaPercepcaoRisco)
+              : null,
+          manipulador_alimentos_modificada_consumidor_alta_percepcao_risco:
+            respostas.manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco
+              ? parseInt(respostas.manipuladorAlimentosModificadaConsumidorAltaPercepcaoRisco)
+              : null,
+          comprometimento_modificada_consumidor_alta_percepcao_risco:
+            respostas.comprometimentoModificadaConsumidorAltaPercepcaoRisco
+              ? parseInt(respostas.comprometimentoModificadaConsumidorAltaPercepcaoRisco)
+              : null,
+          boas_praticas_consumidor_alta_percepcao_risco: respostas.boasPraticasConsumidorAltaPercepcaoRisco
+            ? parseInt(respostas.boasPraticasConsumidorAltaPercepcaoRisco)
+            : null,
+        },
+      };
+
+      localStorage.setItem("sistemasGestaoGestor", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -72,8 +108,8 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -127,7 +163,7 @@ export function AvaliacaoGestoresSistemaGestao({ onFormValidation }: AvaliacaoGe
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

@@ -9,8 +9,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
-import StepperAvaliacao from "@/components/dashboard/stepper-avaliacao";
 import { Toaster } from "@/components/ui/toaster";
+import { StepperAvaliacao } from "@/components/dashboard/stepper-avaliacao";
 
 export default function AvaliacoesNovaPage() {
   return (
@@ -40,8 +40,8 @@ export default function AvaliacoesNovaPage() {
             <div className="mb-8">
               <h3 className="mb-2">Avaliação de Cultura de Segurança dos Alimentos</h3>
               <p className="text-sm text-muted-foreground">
-                Este sistema foi elaborado para facilitar a análise de dados da avaliação da cultura de segurança dos
-                alimentos.
+                Este sistema foi elaborado para tornar mais intuitiva a análise de dados da avaliação da cultura de
+                segurança dos alimentos.
               </p>
             </div>
             <StepperAvaliacao />

@@ -15,18 +15,17 @@ export function AvaliacaoManipuladoresDadosIndividuais({
   onFormValidation,
 }: AvaliacaoManipuladoresDadosIndividuaisProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [nomeCompleto, setNomeCompleto] = useState<string>("");
-  const [genero, setGenero] = useState<string>("");
-  const [idade, setIdade] = useState<string>("");
-  const [escolaridade, setEscolaridade] = useState<string>("");
-  const [formacao, setFormacao] = useState<string>("");
-  const [naoTenhaFormacaoTemTreinamento, setNaoTenhaFormacaoTemTreinamento] = useState<string>("");
-  const [tempoTrabalhaComAlimentos, setTempoTrabalhaComAlimentos] = useState<string>("");
-  const [acreditaComunicacaoBoa, setAcreditaComunicacaoBoa] = useState<string>("");
-  const [boaComunicacaoChefe, setBoaComunicacaoChefe] = useState<string>("");
-  const [cargaHoraria, setCargaHoraria] = useState<string>("");
-  const [frequenciaAplicacao, setFrequenciaAplicacao] = useState<string>("");
-  const [temasTreinamentos, setTemasTreinamentos] = useState<string>("");
+  const [nomeCompleto, setNomeCompleto] = useState<string | null>(null);
+  const [genero, setGenero] = useState<string | null>(null);
+  const [idade, setIdade] = useState<string | null>(null);
+  const [escolaridade, setEscolaridade] = useState<string | null>(null);
+  const [formacao, setFormacao] = useState<string | null>(null);
+  const [participouTreinamentoManipulacaoAlimentos, setParticipouTreinamentoManipulacaoAlimentos] = useState<
+    string | null
+  >(null);
+  const [tempoTrabalhaComAlimentos, setTempoTrabalhaComAlimentos] = useState<string | null>(null);
+  const [boaComunicacaoChefe, setBoaComunicacaoChefe] = useState<string | null>(null);
+  const [boaComunicacaoEntreFuncionarios, setBoaComunicacaoEntreFuncionarios] = useState<string | null>(null);
 
   const [errors, setErrors] = useState<{ idade?: string; tempoTrabalhaComAlimentos?: string }>({});
 
@@ -56,16 +55,17 @@ export function AvaliacaoManipuladoresDadosIndividuais({
 
   const validateForm = (currentErrors = errors) => {
     const isValid =
-      nomeCompleto !== "" &&
-      genero !== "" &&
-      idade !== "" &&
-      escolaridade !== "" &&
-      (escolaridade !== "5" || formacao !== "") &&
-      (escolaridade !== "6" || formacao !== "") &&
-      naoTenhaFormacaoTemTreinamento !== "" &&
-      tempoTrabalhaComAlimentos !== "" &&
-      acreditaComunicacaoBoa !== "" &&
-      boaComunicacaoChefe !== "";
+      nomeCompleto !== null &&
+      genero !== null &&
+      idade !== null &&
+      escolaridade !== null &&
+      (escolaridade !== "5" || formacao !== null) &&
+      (escolaridade !== "6" || formacao !== null) &&
+      participouTreinamentoManipulacaoAlimentos !== null &&
+      tempoTrabalhaComAlimentos !== null &&
+      boaComunicacaoChefe !== null &&
+      boaComunicacaoEntreFuncionarios !== null &&
+      Object.keys(currentErrors).length === 0;
 
     onFormValidation(isValid);
   };
@@ -78,22 +78,43 @@ export function AvaliacaoManipuladoresDadosIndividuais({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setNomeCompleto(localStorage.getItem("nome_completo_manipuladores") || "");
-          setGenero(localStorage.getItem("genero_manipuladores") || "");
-          setIdade(localStorage.getItem("idade_manipuladores") || "");
-          setEscolaridade(localStorage.getItem("escolaridade_manipuladores") || "");
-          setFormacao(localStorage.getItem("formacao_manipuladores") || "");
-          setNaoTenhaFormacaoTemTreinamento(
-            localStorage.getItem("nao_tenha_formacao_tem_treinamento_manipuladores") || "",
-          );
-          setTempoTrabalhaComAlimentos(localStorage.getItem("tempo_trabalha_com_alimentos_manipuladores") || "");
-          setAcreditaComunicacaoBoa(localStorage.getItem("acredita_comunicacao_boa_manipuladores") || "");
-          setBoaComunicacaoChefe(
-            localStorage.getItem("realiza_treinamentos_boas_prticas_manipulação_manipuladores") || "",
-          );
-          setCargaHoraria(localStorage.getItem("carga_horaria_manipuladores") || "");
-          setFrequenciaAplicacao(localStorage.getItem("frequencia_aplicação_manipuladores") || "");
-          setTemasTreinamentos(localStorage.getItem("temas_treinamentos_manipuladores") || "");
+          const storedData = localStorage.getItem("dadosIndividuaisManipulador");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setNomeCompleto(parsedData.dados_individuais.nome_completo || null);
+            setGenero(
+              parsedData.dados_individuais.genero !== undefined ? String(parsedData.dados_individuais.genero) : null,
+            );
+            setIdade(
+              parsedData.dados_individuais.idade !== undefined ? String(parsedData.dados_individuais.idade) : null,
+            );
+            setEscolaridade(
+              parsedData.dados_individuais.escolaridade !== undefined
+                ? String(parsedData.dados_individuais.escolaridade)
+                : null,
+            );
+            setFormacao(parsedData.dados_individuais.formacao || null);
+            setParticipouTreinamentoManipulacaoAlimentos(
+              parsedData.dados_individuais.participou_treinamento_manipulacao_alimentos !== undefined
+                ? String(parsedData.dados_individuais.participou_treinamento_manipulacao_alimentos)
+                : null,
+            );
+            setTempoTrabalhaComAlimentos(
+              parsedData.dados_individuais.tempo_trabalha_com_alimentos !== undefined
+                ? String(parsedData.dados_individuais.tempo_trabalha_com_alimentos)
+                : null,
+            );
+            setBoaComunicacaoChefe(
+              parsedData.dados_individuais.boa_comunicacao_chefe !== undefined
+                ? String(parsedData.dados_individuais.boa_comunicacao_chefe)
+                : null,
+            );
+            setBoaComunicacaoEntreFuncionarios(
+              parsedData.dados_individuais.boa_comunicacao_entre_funcionarios !== undefined
+                ? String(parsedData.dados_individuais.boa_comunicacao_entre_funcionarios)
+                : null,
+            );
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -106,24 +127,27 @@ export function AvaliacaoManipuladoresDadosIndividuais({
 
   useEffect(() => {
     if (userId) {
-      localStorage.setItem("nome_completo_manipuladores", nomeCompleto);
-      localStorage.setItem("genero_manipuladores", genero);
-      localStorage.setItem("idade_manipuladores", idade ? parseInt(idade).toString() : "");
-      localStorage.setItem("escolaridade_manipuladores", escolaridade);
-      localStorage.setItem("formacao_manipuladores", formacao);
-      localStorage.setItem("nao_tenha_formacao_tem_treinamento_manipuladores", naoTenhaFormacaoTemTreinamento);
-      localStorage.setItem(
-        "tempo_trabalha_com_alimentos_manipuladores",
-        tempoTrabalhaComAlimentos ? parseInt(tempoTrabalhaComAlimentos).toString() : "",
-      );
-      localStorage.setItem("acredita_comunicacao_boa_manipuladores", acreditaComunicacaoBoa);
-      localStorage.setItem("realiza_treinamentos_boas_prticas_manipulação_manipuladores", boaComunicacaoChefe);
-      localStorage.setItem("carga_horaria_manipuladores", cargaHoraria);
-      localStorage.setItem("frequencia_aplicação_manipuladores", frequenciaAplicacao);
-      localStorage.setItem("temas_treinamentos_manipuladores", temasTreinamentos);
-      validateForm();
+      const data = {
+        dados_individuais: {
+          nome_completo: nomeCompleto || null,
+          genero: genero ? parseInt(genero) : null,
+          idade: idade ? parseInt(idade) : null,
+          escolaridade: escolaridade ? parseInt(escolaridade) : null,
+          formacao: formacao || null,
+          participou_treinamento_manipulacao_alimentos: participouTreinamentoManipulacaoAlimentos
+            ? parseInt(participouTreinamentoManipulacaoAlimentos)
+            : null,
+          tempo_trabalha_com_alimentos: tempoTrabalhaComAlimentos ? parseInt(tempoTrabalhaComAlimentos) : null,
+          boa_comunicacao_chefe: boaComunicacaoChefe ? parseInt(boaComunicacaoChefe) : null,
+          boa_comunicacao_entre_funcionarios: boaComunicacaoEntreFuncionarios
+            ? parseInt(boaComunicacaoEntreFuncionarios)
+            : null,
+        },
+      };
+
+      localStorage.setItem("dadosIndividuaisManipulador", JSON.stringify(data));
+      validateForm(errors);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     userId,
     nomeCompleto,
@@ -131,13 +155,11 @@ export function AvaliacaoManipuladoresDadosIndividuais({
     idade,
     escolaridade,
     formacao,
-    naoTenhaFormacaoTemTreinamento,
+    participouTreinamentoManipulacaoAlimentos,
     tempoTrabalhaComAlimentos,
-    acreditaComunicacaoBoa,
     boaComunicacaoChefe,
-    cargaHoraria,
-    frequenciaAplicacao,
-    temasTreinamentos,
+    boaComunicacaoEntreFuncionarios,
+    errors,
   ]);
 
   return (
@@ -151,7 +173,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
           <Input
             type="text"
             placeholder="Digite o nome completo"
-            value={nomeCompleto}
+            value={nomeCompleto || ""}
             name="nomeCompleto"
             onChange={(e) => setNomeCompleto(e.target.value)}
             onBlur={validateForm}
@@ -161,7 +183,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
           <div className="mb-2 text-muted-foreground">
             <Label>Gênero</Label>
           </div>
-          <RadioGroup value={genero} onValueChange={setGenero} className="flex gap-4">
+          <RadioGroup value={genero || ""} onValueChange={setGenero} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="0" id="feminino" />
               <Label htmlFor="feminino">Feminino</Label>
@@ -182,7 +204,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
             max={100}
             min={18}
             placeholder="Digite a idade do gestor"
-            value={idade}
+            value={idade || ""}
             name="idade"
             onChange={(e) => setIdade(e.target.value)}
             onBlur={validateField}
@@ -194,7 +216,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
           <div className="mb-2 text-muted-foreground">
             <Label>Escolaridade</Label>
           </div>
-          <Select value={escolaridade} onValueChange={setEscolaridade}>
+          <Select value={escolaridade || ""} onValueChange={setEscolaridade}>
             <SelectTrigger onBlur={validateForm}>
               <SelectValue placeholder="Selecione uma opção" />
             </SelectTrigger>
@@ -218,7 +240,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
             </div>
             <Input
               placeholder="Curso que é formado ou em andamento"
-              value={formacao}
+              value={formacao || ""}
               onChange={(e) => setFormacao(e.target.value)}
               onBlur={validateForm}
             />
@@ -231,8 +253,8 @@ export function AvaliacaoManipuladoresDadosIndividuais({
               <Label>Participou de treinamento para manipulação de alimentos?</Label>
             </div>
             <RadioGroup
-              value={naoTenhaFormacaoTemTreinamento}
-              onValueChange={setNaoTenhaFormacaoTemTreinamento}
+              value={participouTreinamentoManipulacaoAlimentos || ""}
+              onValueChange={setParticipouTreinamentoManipulacaoAlimentos}
               className="flex gap-4"
             >
               <div className="flex items-center space-x-2">
@@ -255,7 +277,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
             type="number"
             placeholder="Número de meses trabalhados"
             min={1}
-            value={tempoTrabalhaComAlimentos}
+            value={tempoTrabalhaComAlimentos || ""}
             name="tempoTrabalhaComAlimentos"
             onChange={(e) => setTempoTrabalhaComAlimentos(e.target.value)}
             onBlur={validateField}
@@ -269,7 +291,11 @@ export function AvaliacaoManipuladoresDadosIndividuais({
           <div className="mb-2 text-muted-foreground">
             <Label>Você acredita que a comunicação entre funcionários é boa?</Label>
           </div>
-          <RadioGroup value={acreditaComunicacaoBoa} onValueChange={setAcreditaComunicacaoBoa} className="flex gap-4">
+          <RadioGroup
+            value={boaComunicacaoEntreFuncionarios || ""}
+            onValueChange={setBoaComunicacaoEntreFuncionarios}
+            className="flex gap-4"
+          >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -285,7 +311,7 @@ export function AvaliacaoManipuladoresDadosIndividuais({
           <div className="mb-2 text-muted-foreground">
             <Label>Você tem abertura de conversar com seu chefe sobre os problemas do restaurante?</Label>
           </div>
-          <RadioGroup value={boaComunicacaoChefe} onValueChange={setBoaComunicacaoChefe} className="flex gap-4">
+          <RadioGroup value={boaComunicacaoChefe || ""} onValueChange={setBoaComunicacaoChefe} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>

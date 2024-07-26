@@ -13,11 +13,11 @@ export function AvaliacaoManipuladoresComprometimentoNormativo({
   onFormValidation,
 }: AvaliacaoManipuladoresComprometimentoNormativoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    naoDeixaEmpregoPoisObrigacaoMoral: "",
-    culpadoDeixasseEmprego: "",
-    naoSeriaCertoDeixarEmprego: "",
-    devoEsseEmprego: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    naoDeixaEmpregoPoisObrigacaoMoral: null,
+    culpadoDeixasseEmprego: null,
+    naoSeriaCertoDeixarEmprego: null,
+    devoEsseEmprego: null,
   });
 
   useEffect(() => {
@@ -28,13 +28,18 @@ export function AvaliacaoManipuladoresComprometimentoNormativo({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            naoDeixaEmpregoPoisObrigacaoMoral:
-              localStorage.getItem("nao_deixa_emprego_pois_obrigacao_moral_manipuladores") || "",
-            culpadoDeixasseEmprego: localStorage.getItem("culpado_deixasse_emprego_manipuladores") || "",
-            naoSeriaCertoDeixarEmprego: localStorage.getItem("nao_seria_certo_deixar_emprego_manipuladores") || "",
-            devoEsseEmprego: localStorage.getItem("devo_esse_emprego_manipuladores") || "",
-          });
+          const storedData = localStorage.getItem("comprometimentoNormativoManipulador");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              naoDeixaEmpregoPoisObrigacaoMoral:
+                parsedData.comprometimento_normativo.nao_deixa_emprego_pois_obrigacao_moral?.toString() || null,
+              culpadoDeixasseEmprego: parsedData.comprometimento_normativo.culpado_deixasse_emprego?.toString() || null,
+              naoSeriaCertoDeixarEmprego:
+                parsedData.comprometimento_normativo.nao_seria_certo_deixar_emprego?.toString() || null,
+              devoEsseEmprego: parsedData.comprometimento_normativo.devo_esse_emprego?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -47,15 +52,23 @@ export function AvaliacaoManipuladoresComprometimentoNormativo({
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(
-            `${key.replace(/([A-Z])/g, "_$1").toLowerCase()}_manipuladores`,
-            parseInt(value, 10).toString(),
-          );
-        }
-      });
+      const data = {
+        comprometimento_normativo: {
+          nao_deixa_emprego_pois_obrigacao_moral: respostas.naoDeixaEmpregoPoisObrigacaoMoral
+            ? parseInt(respostas.naoDeixaEmpregoPoisObrigacaoMoral)
+            : null,
+          culpado_deixasse_emprego: respostas.culpadoDeixasseEmprego
+            ? parseInt(respostas.culpadoDeixasseEmprego)
+            : null,
+          nao_seria_certo_deixar_emprego: respostas.naoSeriaCertoDeixarEmprego
+            ? parseInt(respostas.naoSeriaCertoDeixarEmprego)
+            : null,
+          devo_esse_emprego: respostas.devoEsseEmprego ? parseInt(respostas.devoEsseEmprego) : null,
+        },
+      };
+
+      localStorage.setItem("comprometimentoNormativoManipulador", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -65,8 +78,8 @@ export function AvaliacaoManipuladoresComprometimentoNormativo({
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -101,7 +114,7 @@ export function AvaliacaoManipuladoresComprometimentoNormativo({
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

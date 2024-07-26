@@ -13,10 +13,10 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
   onFormValidation,
 }: AvaliacaoGestoresComprometimentoInstrumentalProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    deixarEmpregoVidaDesestruturada: "",
-    poucasAlternativasCasoDeixarEmprego: "",
-    muitoDificilDeixarEmprego: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    deixarEmpregoVidaDesestruturada: null,
+    poucasAlternativasCasoDeixarEmprego: null,
+    muitoDificilDeixarEmprego: null,
   });
 
   useEffect(() => {
@@ -27,11 +27,18 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            deixarEmpregoVidaDesestruturada: localStorage.getItem("deixar_emprego_vida_desestruturada") || "",
-            poucasAlternativasCasoDeixarEmprego: localStorage.getItem("poucas_alternativas_caso_deixar_emprego") || "",
-            muitoDificilDeixarEmprego: localStorage.getItem("muito_dificil_deixar_emprego") || "",
-          });
+          const storedData = localStorage.getItem("comprometimentoInstrumentalGestor");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              deixarEmpregoVidaDesestruturada:
+                parsedData.comprometimento_instrumental.deixar_emprego_vida_desestruturada?.toString() || null,
+              poucasAlternativasCasoDeixarEmprego:
+                parsedData.comprometimento_instrumental.poucas_alternativas_caso_deixar_emprego?.toString() || null,
+              muitoDificilDeixarEmprego:
+                parsedData.comprometimento_instrumental.muito_dificil_deixar_emprego?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -44,12 +51,22 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
-        }
-      });
+      const data = {
+        comprometimento_instrumental: {
+          deixar_emprego_vida_desestruturada: respostas.deixarEmpregoVidaDesestruturada
+            ? parseInt(respostas.deixarEmpregoVidaDesestruturada)
+            : null,
+          poucas_alternativas_caso_deixar_emprego: respostas.poucasAlternativasCasoDeixarEmprego
+            ? parseInt(respostas.poucasAlternativasCasoDeixarEmprego)
+            : null,
+          muito_dificil_deixar_emprego: respostas.muitoDificilDeixarEmprego
+            ? parseInt(respostas.muitoDificilDeixarEmprego)
+            : null,
+        },
+      };
+
+      localStorage.setItem("comprometimentoInstrumentalGestor", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -59,8 +76,8 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -91,7 +108,7 @@ export function AvaliacaoGestoresComprometimentoInstrumental({
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

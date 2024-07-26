@@ -5,19 +5,17 @@ import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-type AvaliacaoGestoresComprometimentoNormativoProps = {
+interface AvaliacaoManipuladoresComunicacaoProps {
   onFormValidation: (isValid: boolean) => void;
-};
+}
 
-export function AvaliacaoGestoresComprometimentoNormativo({
-  onFormValidation,
-}: AvaliacaoGestoresComprometimentoNormativoProps) {
+export function AvaliacaoManipuladoresComunicacao({ onFormValidation }: AvaliacaoManipuladoresComunicacaoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    naoDeixaEmpregoPoisObrigacaoMoral: null,
-    culpadoDeixasseEmprego: null,
-    naoSeriaCertoDeixarEmprego: null,
-    devoEsseEmprego: null,
+    tenhoLiberdadeComLider: null,
+    informacoesNecessariasDisponiveis: null,
+    informacoesAdequadasNormasHigiene: null,
+    fornecerSugestoesMelhoria: null,
   });
 
   useEffect(() => {
@@ -28,16 +26,16 @@ export function AvaliacaoGestoresComprometimentoNormativo({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("comprometimentoNormativoGestor");
+          const storedData = localStorage.getItem("comunicacaoManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              naoDeixaEmpregoPoisObrigacaoMoral:
-                parsedData.comprometimento_normativo.nao_deixa_emprego_pois_obrigacao_moral?.toString() || null,
-              culpadoDeixasseEmprego: parsedData.comprometimento_normativo.culpado_deixasse_emprego?.toString() || null,
-              naoSeriaCertoDeixarEmprego:
-                parsedData.comprometimento_normativo.nao_seria_certo_deixar_emprego?.toString() || null,
-              devoEsseEmprego: parsedData.comprometimento_normativo.devo_esse_emprego?.toString() || null,
+              tenhoLiberdadeComLider: parsedData.comunicacao.tenho_liberdade_com_lider?.toString() || null,
+              informacoesNecessariasDisponiveis:
+                parsedData.comunicacao.informacoes_necessarias_disponiveis?.toString() || null,
+              informacoesAdequadasNormasHigiene:
+                parsedData.comunicacao.informacoes_adequadas_normas_higiene?.toString() || null,
+              fornecerSugestoesMelhoria: parsedData.comunicacao.fornecer_sugestoes_melhoria?.toString() || null,
             });
           }
         } else {
@@ -53,21 +51,23 @@ export function AvaliacaoGestoresComprometimentoNormativo({
   useEffect(() => {
     if (userId) {
       const data = {
-        comprometimento_normativo: {
-          nao_deixa_emprego_pois_obrigacao_moral: respostas.naoDeixaEmpregoPoisObrigacaoMoral
-            ? parseInt(respostas.naoDeixaEmpregoPoisObrigacaoMoral)
+        comunicacao: {
+          tenho_liberdade_com_lider: respostas.tenhoLiberdadeComLider
+            ? parseInt(respostas.tenhoLiberdadeComLider)
             : null,
-          culpado_deixasse_emprego: respostas.culpadoDeixasseEmprego
-            ? parseInt(respostas.culpadoDeixasseEmprego)
+          informacoes_necessarias_disponiveis: respostas.informacoesNecessariasDisponiveis
+            ? parseInt(respostas.informacoesNecessariasDisponiveis)
             : null,
-          nao_seria_certo_deixar_emprego: respostas.naoSeriaCertoDeixarEmprego
-            ? parseInt(respostas.naoSeriaCertoDeixarEmprego)
+          informacoes_adequadas_normas_higiene: respostas.informacoesAdequadasNormasHigiene
+            ? parseInt(respostas.informacoesAdequadasNormasHigiene)
             : null,
-          devo_esse_emprego: respostas.devoEsseEmprego ? parseInt(respostas.devoEsseEmprego) : null,
+          fornecer_sugestoes_melhoria: respostas.fornecerSugestoesMelhoria
+            ? parseInt(respostas.fornecerSugestoesMelhoria)
+            : null,
         },
       };
 
-      localStorage.setItem("comprometimentoNormativoGestor", JSON.stringify(data));
+      localStorage.setItem("comunicacaoManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -89,24 +89,27 @@ export function AvaliacaoGestoresComprometimentoNormativo({
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Comprometimento Normativo</h3>
+      <h3 className="mb-8 text-lg">Comunicação</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "naoDeixaEmpregoPoisObrigacaoMoral",
-            question: "Eu não deixaria meu emprego agora porque eu tenho uma obrigação moral com as pessoas daqui.",
+            key: "tenhoLiberdadeComLider",
+            question:
+              "Eu tenho liberdade de falar com meu líder se eu ver algo que pode afetar a segurança dos alimentos.",
           },
           {
-            key: "culpadoDeixasseEmprego",
-            question: "Eu me sentiria culpado se deixasse meu emprego agora.",
+            key: "informacoesNecessariasDisponiveis",
+            question:
+              "Todas as informações necessárias para a manipulação de alimentos de forma segura são prontamente disponíveis para mim.",
           },
           {
-            key: "naoSeriaCertoDeixarEmprego",
-            question: "Mesmo se fosse vantagem para mim, eu sinto que não seria certo deixar meu emprego agora.",
+            key: "informacoesAdequadasNormasHigiene",
+            question: "O líder fornece informações adequadas e atualizadas sobre as normas de higiene.",
           },
           {
-            key: "devoEsseEmprego",
-            question: "Eu devo muito a esse emprego.",
+            key: "fornecerSugestoesMelhoria",
+            question:
+              "Sinto-me encorajado a fornecer sugestões para a melhoria das práticas de segurança dos alimentos.",
           },
         ].map(({ key, question }) => (
           <div key={key}>

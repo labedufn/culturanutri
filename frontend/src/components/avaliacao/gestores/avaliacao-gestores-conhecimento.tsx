@@ -11,16 +11,16 @@ type AvaliacaoGestoresConhecimentoProps = {
 
 export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGestoresConhecimentoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    utilizacaoAdornosFavorecerContaminacao: "",
-    aguaVeiculoTransmissaoDoencas: "",
-    formaHigienizarMaosEvitaContaminacao: "",
-    contatoAlimentosContamina: "",
-    leiteVencimentoRisco: "",
-    alimentoImproprioApresentaCheiroSabor: "",
-    carneMalPassada: "",
-    descongelamentoAlimentosBacia: "",
-    manipuladorAlimentoDoenteContamina: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    utilizacaoAdornosFavorecerContaminacao: null,
+    aguaVeiculoTransmissaoDoencas: null,
+    formaHigienizarMaosEvitaContaminacao: null,
+    contatoAlimentosContamina: null,
+    leiteVencimentoRisco: null,
+    alimentoImproprioApresentaCheiroSabor: null,
+    carneMalPassada: null,
+    descongelamentoAlimentosBacia: null,
+    manipuladorAlimentoDoenteContamina: null,
   });
 
   useEffect(() => {
@@ -31,20 +31,27 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            utilizacaoAdornosFavorecerContaminacao:
-              localStorage.getItem("utilizacao_adornos_favorecer_contaminacao") || "",
-            aguaVeiculoTransmissaoDoencas: localStorage.getItem("agua_veiculo_transmissao_doencas") || "",
-            formaHigienizarMaosEvitaContaminacao:
-              localStorage.getItem("forma_higienizar_maos_evita_contaminacao") || "",
-            contatoAlimentosContamina: localStorage.getItem("contato_alimentos_contamina") || "",
-            leiteVencimentoRisco: localStorage.getItem("leite_vencimento_risco") || "",
-            alimentoImproprioApresentaCheiroSabor:
-              localStorage.getItem("alimento_improprio_apresenta_cheiro_sabor") || "",
-            carneMalPassada: localStorage.getItem("carne_mal_passada") || "",
-            descongelamentoAlimentosBacia: localStorage.getItem("descongelamento_alimentos_bacia") || "",
-            manipuladorAlimentoDoenteContamina: localStorage.getItem("manipulador_alimento_doente_contamina") || "",
-          });
+          const storedData = localStorage.getItem("conhecimentoGestor");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              utilizacaoAdornosFavorecerContaminacao:
+                parsedData.conhecimento.utilizacao_adornos_favorecer_contaminacao?.toString() || null,
+              aguaVeiculoTransmissaoDoencas:
+                parsedData.conhecimento.agua_veiculo_transmissao_doencas?.toString() || null,
+              formaHigienizarMaosEvitaContaminacao:
+                parsedData.conhecimento.forma_higienizar_maos_evita_contaminacao?.toString() || null,
+              contatoAlimentosContamina: parsedData.conhecimento.contato_alimentos_contamina?.toString() || null,
+              leiteVencimentoRisco: parsedData.conhecimento.leite_vencimento_risco?.toString() || null,
+              alimentoImproprioApresentaCheiroSabor:
+                parsedData.conhecimento.alimento_improprio_apresenta_cheiro_sabor?.toString() || null,
+              carneMalPassada: parsedData.conhecimento.carne_mal_passada?.toString() || null,
+              descongelamentoAlimentosBacia:
+                parsedData.conhecimento.descongelamento_alimentos_bacia?.toString() || null,
+              manipuladorAlimentoDoenteContamina:
+                parsedData.conhecimento.manipulador_alimento_doente_contamina?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -57,12 +64,36 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
-        }
-      });
+      const data = {
+        conhecimento: {
+          utilizacao_adornos_favorecer_contaminacao: respostas.utilizacaoAdornosFavorecerContaminacao
+            ? parseInt(respostas.utilizacaoAdornosFavorecerContaminacao)
+            : null,
+          agua_veiculo_transmissao_doencas: respostas.aguaVeiculoTransmissaoDoencas
+            ? parseInt(respostas.aguaVeiculoTransmissaoDoencas)
+            : null,
+          forma_higienizar_maos_evita_contaminacao: respostas.formaHigienizarMaosEvitaContaminacao
+            ? parseInt(respostas.formaHigienizarMaosEvitaContaminacao)
+            : null,
+          contato_alimentos_contamina: respostas.contatoAlimentosContamina
+            ? parseInt(respostas.contatoAlimentosContamina)
+            : null,
+          leite_vencimento_risco: respostas.leiteVencimentoRisco ? parseInt(respostas.leiteVencimentoRisco) : null,
+          alimento_improprio_apresenta_cheiro_sabor: respostas.alimentoImproprioApresentaCheiroSabor
+            ? parseInt(respostas.alimentoImproprioApresentaCheiroSabor)
+            : null,
+          carne_mal_passada: respostas.carneMalPassada ? parseInt(respostas.carneMalPassada) : null,
+          descongelamento_alimentos_bacia: respostas.descongelamentoAlimentosBacia
+            ? parseInt(respostas.descongelamentoAlimentosBacia)
+            : null,
+          manipulador_alimento_doente_contamina: respostas.manipuladorAlimentoDoenteContamina
+            ? parseInt(respostas.manipuladorAlimentoDoenteContamina)
+            : null,
+        },
+      };
+
+      localStorage.setItem("conhecimentoGestor", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -72,8 +103,8 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -135,7 +166,7 @@ export function AvaliacaoGestoresConhecimento({ onFormValidation }: AvaliacaoGes
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex gap-4"
             >

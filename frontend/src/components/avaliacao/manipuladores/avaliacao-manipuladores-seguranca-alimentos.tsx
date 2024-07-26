@@ -5,19 +5,19 @@ import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-type AvaliacaoGestoresComprometimentoNormativoProps = {
+interface AvaliacaoManipuladoresComprometimentoSegurancaAlimentosProps {
   onFormValidation: (isValid: boolean) => void;
-};
+}
 
-export function AvaliacaoGestoresComprometimentoNormativo({
+export function AvaliacaoManipuladoresComprometimentoSegurancaAlimentos({
   onFormValidation,
-}: AvaliacaoGestoresComprometimentoNormativoProps) {
+}: AvaliacaoManipuladoresComprometimentoSegurancaAlimentosProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    naoDeixaEmpregoPoisObrigacaoMoral: null,
-    culpadoDeixasseEmprego: null,
-    naoSeriaCertoDeixarEmprego: null,
-    devoEsseEmprego: null,
+    sigoNormasHigieneResponsabilidade: null,
+    segurancaAltaPrioridade: null,
+    sigoNormasHigieneImportante: null,
+    empenhadoSeguirNormasHigiene: null,
   });
 
   useEffect(() => {
@@ -28,16 +28,18 @@ export function AvaliacaoGestoresComprometimentoNormativo({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("comprometimentoNormativoGestor");
+          const storedData = localStorage.getItem("comprometimentoSegurancaAlimentosManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              naoDeixaEmpregoPoisObrigacaoMoral:
-                parsedData.comprometimento_normativo.nao_deixa_emprego_pois_obrigacao_moral?.toString() || null,
-              culpadoDeixasseEmprego: parsedData.comprometimento_normativo.culpado_deixasse_emprego?.toString() || null,
-              naoSeriaCertoDeixarEmprego:
-                parsedData.comprometimento_normativo.nao_seria_certo_deixar_emprego?.toString() || null,
-              devoEsseEmprego: parsedData.comprometimento_normativo.devo_esse_emprego?.toString() || null,
+              sigoNormasHigieneResponsabilidade:
+                parsedData.comprometimento_segurança_alimentos.sigo_normas_higiene_responsabilidade?.toString() || null,
+              segurancaAltaPrioridade:
+                parsedData.comprometimento_segurança_alimentos.segurança_alta_prioridade?.toString() || null,
+              sigoNormasHigieneImportante:
+                parsedData.comprometimento_segurança_alimentos.sigo_normas_higiene_importante?.toString() || null,
+              empenhadoSeguirNormasHigiene:
+                parsedData.comprometimento_segurança_alimentos.empenhado_seguir_normas_higiene?.toString() || null,
             });
           }
         } else {
@@ -53,21 +55,23 @@ export function AvaliacaoGestoresComprometimentoNormativo({
   useEffect(() => {
     if (userId) {
       const data = {
-        comprometimento_normativo: {
-          nao_deixa_emprego_pois_obrigacao_moral: respostas.naoDeixaEmpregoPoisObrigacaoMoral
-            ? parseInt(respostas.naoDeixaEmpregoPoisObrigacaoMoral)
+        comprometimento_segurança_alimentos: {
+          sigo_normas_higiene_responsabilidade: respostas.sigoNormasHigieneResponsabilidade
+            ? parseInt(respostas.sigoNormasHigieneResponsabilidade)
             : null,
-          culpado_deixasse_emprego: respostas.culpadoDeixasseEmprego
-            ? parseInt(respostas.culpadoDeixasseEmprego)
+          seguranca_alta_prioridade: respostas.segurancaAltaPrioridade
+            ? parseInt(respostas.segurancaAltaPrioridade)
             : null,
-          nao_seria_certo_deixar_emprego: respostas.naoSeriaCertoDeixarEmprego
-            ? parseInt(respostas.naoSeriaCertoDeixarEmprego)
+          sigo_normas_higiene_importante: respostas.sigoNormasHigieneImportante
+            ? parseInt(respostas.sigoNormasHigieneImportante)
             : null,
-          devo_esse_emprego: respostas.devoEsseEmprego ? parseInt(respostas.devoEsseEmprego) : null,
+          empenhado_seguir_normas_higiene: respostas.empenhadoSeguirNormasHigiene
+            ? parseInt(respostas.empenhadoSeguirNormasHigiene)
+            : null,
         },
       };
 
-      localStorage.setItem("comprometimentoNormativoGestor", JSON.stringify(data));
+      localStorage.setItem("comprometimentoSegurancaAlimentosManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -89,24 +93,24 @@ export function AvaliacaoGestoresComprometimentoNormativo({
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Comprometimento Normativo</h3>
+      <h3 className="mb-8 text-lg">Comprometimento com a Segurança dos Alimentos</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "naoDeixaEmpregoPoisObrigacaoMoral",
-            question: "Eu não deixaria meu emprego agora porque eu tenho uma obrigação moral com as pessoas daqui.",
+            key: "sigoNormasHigieneResponsabilidade",
+            question: "Eu sigo as normas de higiene porque é minha responsabilidade.",
           },
           {
-            key: "culpadoDeixasseEmprego",
-            question: "Eu me sentiria culpado se deixasse meu emprego agora.",
+            key: "segurancaAltaPrioridade",
+            question: "A segurança dos alimentos é uma alta prioridade para mim.",
           },
           {
-            key: "naoSeriaCertoDeixarEmprego",
-            question: "Mesmo se fosse vantagem para mim, eu sinto que não seria certo deixar meu emprego agora.",
+            key: "sigoNormasHigieneImportante",
+            question: "Eu sigo as normas de higiene, porque eu acho que elas são importantes.",
           },
           {
-            key: "devoEsseEmprego",
-            question: "Eu devo muito a esse emprego.",
+            key: "empenhadoSeguirNormasHigiene",
+            question: "Estou empenhado em seguir todas as normas de higiene.",
           },
         ].map(({ key, question }) => (
           <div key={key}>

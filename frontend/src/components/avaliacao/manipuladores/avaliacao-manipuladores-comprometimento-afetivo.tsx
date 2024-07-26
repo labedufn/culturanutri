@@ -13,12 +13,12 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
   onFormValidation,
 }: AvaliacaoManipuladoresComprometimentoAfetivoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    problemasRestauranteMeus: "",
-    restauranteTemSignificado: "",
-    restauranteMereceMinhaLealdade: "",
-    trabalharPorNecessidadeDesejo: "",
-    dedicarMinhaCarreiraAoRestaurante: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    problemasRestauranteMeus: null,
+    restauranteTemSignificado: null,
+    restauranteMereceMinhaLealdade: null,
+    trabalharPorNecessidadeDesejo: null,
+    dedicarMinhaCarreiraAoRestaurante: null,
   });
 
   useEffect(() => {
@@ -29,15 +29,22 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            problemasRestauranteMeus: localStorage.getItem("problemas_restaurante_meus_manipuladores") || "",
-            restauranteTemSignificado: localStorage.getItem("restaurante_tem_significado_manipuladores") || "",
-            restauranteMereceMinhaLealdade:
-              localStorage.getItem("restaurante_merece_minha_lealdade_manipuladores") || "",
-            trabalharPorNecessidadeDesejo: localStorage.getItem("trabalhar_por_necessidade_desejo_manipuladores") || "",
-            dedicarMinhaCarreiraAoRestaurante:
-              localStorage.getItem("dedicar_minha_carreira_ao_restaurante_manipuladores") || "",
-          });
+          const storedData = localStorage.getItem("comprometimentoAfetivoManipulador");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              problemasRestauranteMeus:
+                parsedData.comprometimento_afetivo.problemas_restaurante_meus?.toString() || null,
+              restauranteTemSignificado:
+                parsedData.comprometimento_afetivo.restaurante_tem_significado?.toString() || null,
+              restauranteMereceMinhaLealdade:
+                parsedData.comprometimento_afetivo.restaurante_merece_minha_lealdade?.toString() || null,
+              trabalharPorNecessidadeDesejo:
+                parsedData.comprometimento_afetivo.trabalhar_por_necessidade_e_desejo?.toString() || null,
+              dedicarMinhaCarreiraAoRestaurante:
+                parsedData.comprometimento_afetivo.dedicar_minha_carreira_ao_restaurante?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -50,12 +57,28 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(`${key.replace(/([A-Z])/g, "_$1").toLowerCase()}_manipuladores`, value);
-        }
-      });
+      const data = {
+        comprometimento_afetivo: {
+          problemas_restaurante_meus: respostas.problemasRestauranteMeus
+            ? parseInt(respostas.problemasRestauranteMeus)
+            : null,
+          restaurante_tem_significado: respostas.restauranteTemSignificado
+            ? parseInt(respostas.restauranteTemSignificado)
+            : null,
+          restaurante_merece_minha_lealdade: respostas.restauranteMereceMinhaLealdade
+            ? parseInt(respostas.restauranteMereceMinhaLealdade)
+            : null,
+          trabalhar_por_necessidade_e_desejo: respostas.trabalharPorNecessidadeDesejo
+            ? parseInt(respostas.trabalharPorNecessidadeDesejo)
+            : null,
+          dedicar_minha_carreira_ao_restaurante: respostas.dedicarMinhaCarreiraAoRestaurante
+            ? parseInt(respostas.dedicarMinhaCarreiraAoRestaurante)
+            : null,
+        },
+      };
+
+      localStorage.setItem("comprometimentoAfetivoManipulador", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -65,8 +88,8 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -105,7 +128,7 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

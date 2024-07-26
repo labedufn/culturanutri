@@ -13,18 +13,18 @@ interface AvaliacaoGestoresDadosIndividuaisProps {
 
 export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: AvaliacaoGestoresDadosIndividuaisProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [nomeCompleto, setNomeCompleto] = useState<string>("");
-  const [genero, setGenero] = useState<string>("");
-  const [idade, setIdade] = useState<string>("");
-  const [escolaridade, setEscolaridade] = useState<string>("");
-  const [formacao, setFormacao] = useState<string>("");
-  const [naoTenhaFormacaoTemTreinamento, setNaoTenhaFormacaoTemTreinamento] = useState<string>("");
-  const [tempoTrabalhaComAlimentos, setTempoTrabalhaComAlimentos] = useState<string>("");
-  const [acreditaComunicacaoBoa, setAcreditaComunicacaoBoa] = useState<string>("");
-  const [realizaTreinamentosBoasPraticas, setRealizaTreinamentosBoasPraticas] = useState<string>("");
-  const [cargaHoraria, setCargaHoraria] = useState<string>("");
-  const [frequenciaAplicacao, setFrequenciaAplicacao] = useState<string>("");
-  const [temasTreinamentos, setTemasTreinamentos] = useState<string>("");
+  const [nomeCompleto, setNomeCompleto] = useState<string | null>(null);
+  const [genero, setGenero] = useState<string | null>(null);
+  const [idade, setIdade] = useState<string | null>(null);
+  const [escolaridade, setEscolaridade] = useState<string | null>(null);
+  const [formacao, setFormacao] = useState<string | null>(null);
+  const [naoTenhaFormacaoTemTreinamento, setNaoTenhaFormacaoTemTreinamento] = useState<string | null>(null);
+  const [tempoTrabalhaComAlimentos, setTempoTrabalhaComAlimentos] = useState<string | null>(null);
+  const [acreditaComunicacaoBoa, setAcreditaComunicacaoBoa] = useState<string | null>(null);
+  const [realizaTreinamentosBoasPraticas, setRealizaTreinamentosBoasPraticas] = useState<string | null>(null);
+  const [cargaHoraria, setCargaHoraria] = useState<string | null>(null);
+  const [frequenciaAplicacao, setFrequenciaAplicacao] = useState<string | null>(null);
+  const [temasTreinamentos, setTemasTreinamentos] = useState<string | null>(null);
 
   const [errors, setErrors] = useState<{ idade?: string; tempoTrabalhaComAlimentos?: string }>({});
 
@@ -54,18 +54,18 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
 
   const validateForm = (currentErrors = errors) => {
     const isValid =
-      nomeCompleto !== "" &&
-      genero !== "" &&
-      idade !== "" &&
-      escolaridade !== "" &&
-      (escolaridade !== "5" || formacao !== "") &&
-      (escolaridade !== "6" || formacao !== "") &&
-      naoTenhaFormacaoTemTreinamento !== "" &&
-      tempoTrabalhaComAlimentos !== "" &&
-      acreditaComunicacaoBoa !== "" &&
-      realizaTreinamentosBoasPraticas !== "" &&
-      (realizaTreinamentosBoasPraticas !== "1" || frequenciaAplicacao !== "") &&
-      (realizaTreinamentosBoasPraticas !== "1" || temasTreinamentos !== "") &&
+      nomeCompleto !== null &&
+      genero !== null &&
+      idade !== null &&
+      escolaridade !== null &&
+      (escolaridade !== "5" || formacao !== null) &&
+      (escolaridade !== "6" || formacao !== null) &&
+      naoTenhaFormacaoTemTreinamento !== null &&
+      tempoTrabalhaComAlimentos !== null &&
+      acreditaComunicacaoBoa !== null &&
+      realizaTreinamentosBoasPraticas !== null &&
+      (realizaTreinamentosBoasPraticas !== "1" || frequenciaAplicacao !== null) &&
+      (realizaTreinamentosBoasPraticas !== "1" || temasTreinamentos !== null) &&
       Object.keys(currentErrors).length === 0;
 
     onFormValidation(isValid);
@@ -79,20 +79,26 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setNomeCompleto(localStorage.getItem("nome_completo") || "");
-          setGenero(localStorage.getItem("genero") || "");
-          setIdade(localStorage.getItem("idade") || "");
-          setEscolaridade(localStorage.getItem("escolaridade") || "");
-          setFormacao(localStorage.getItem("formacao") || "");
-          setNaoTenhaFormacaoTemTreinamento(localStorage.getItem("nao_tenha_formacao_tem_treinamento") || "");
-          setTempoTrabalhaComAlimentos(localStorage.getItem("tempo_trabalha_com_alimentos") || "");
-          setAcreditaComunicacaoBoa(localStorage.getItem("acredita_comunicacao_boa") || "");
-          setRealizaTreinamentosBoasPraticas(
-            localStorage.getItem("realiza_treinamentos_boas_prticas_manipulação") || "",
-          );
-          setCargaHoraria(localStorage.getItem("carga_horaria") || "");
-          setFrequenciaAplicacao(localStorage.getItem("frequencia_aplicação") || "");
-          setTemasTreinamentos(localStorage.getItem("temas_treinamentos") || "");
+          const storedData = localStorage.getItem("dadosIndividuaisGestor");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setNomeCompleto(parsedData.dados_individuais.nome_completo || null);
+            setGenero(parsedData.dados_individuais.genero?.toString() || null);
+            setIdade(parsedData.dados_individuais.idade?.toString() || null);
+            setEscolaridade(parsedData.dados_individuais.escolaridade?.toString() || null);
+            setFormacao(parsedData.dados_individuais.formacao || null);
+            setNaoTenhaFormacaoTemTreinamento(
+              parsedData.dados_individuais.nao_tenha_formacao_tem_treinamento?.toString() || null,
+            );
+            setTempoTrabalhaComAlimentos(parsedData.dados_individuais.tempo_trabalha_com_alimentos?.toString() || null);
+            setAcreditaComunicacaoBoa(parsedData.dados_individuais.acredita_comunicacao_boa?.toString() || null);
+            setRealizaTreinamentosBoasPraticas(
+              parsedData.dados_individuais.realiza_treinamentos_boas_prticas_manipulação?.toString() || null,
+            );
+            setCargaHoraria(parsedData.dados_individuais.carga_horaria || null);
+            setFrequenciaAplicacao(parsedData.dados_individuais.frequencia_aplicação?.toString() || null);
+            setTemasTreinamentos(parsedData.dados_individuais.temas_treinamentos || null);
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -105,21 +111,28 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
 
   useEffect(() => {
     if (userId) {
-      localStorage.setItem("nome_completo", nomeCompleto);
-      localStorage.setItem("genero", genero);
-      localStorage.setItem("idade", idade ? parseInt(idade).toString() : "");
-      localStorage.setItem("escolaridade", escolaridade);
-      localStorage.setItem("formacao", formacao);
-      localStorage.setItem("nao_tenha_formacao_tem_treinamento", naoTenhaFormacaoTemTreinamento);
-      localStorage.setItem(
-        "tempo_trabalha_com_alimentos",
-        tempoTrabalhaComAlimentos ? parseInt(tempoTrabalhaComAlimentos).toString() : "",
-      );
-      localStorage.setItem("acredita_comunicacao_boa", acreditaComunicacaoBoa);
-      localStorage.setItem("realiza_treinamentos_boas_prticas_manipulação", realizaTreinamentosBoasPraticas);
-      localStorage.setItem("carga_horaria", cargaHoraria);
-      localStorage.setItem("frequencia_aplicação", frequenciaAplicacao);
-      localStorage.setItem("temas_treinamentos", temasTreinamentos);
+      const data = {
+        dados_individuais: {
+          nome_completo: nomeCompleto,
+          genero: genero ? parseInt(genero) : null,
+          idade: idade ? parseInt(idade) : null,
+          escolaridade: escolaridade ? parseInt(escolaridade) : null,
+          formacao: formacao,
+          nao_tenha_formacao_tem_treinamento: naoTenhaFormacaoTemTreinamento
+            ? parseInt(naoTenhaFormacaoTemTreinamento)
+            : null,
+          tempo_trabalha_com_alimentos: tempoTrabalhaComAlimentos ? parseInt(tempoTrabalhaComAlimentos) : null,
+          acredita_comunicacao_boa: acreditaComunicacaoBoa ? parseInt(acreditaComunicacaoBoa) : null,
+          realiza_treinamentos_boas_prticas_manipulação: realizaTreinamentosBoasPraticas
+            ? parseInt(realizaTreinamentosBoasPraticas)
+            : null,
+          carga_horaria: cargaHoraria,
+          frequencia_aplicação: frequenciaAplicacao ? parseInt(frequenciaAplicacao) : null,
+          temas_treinamentos: temasTreinamentos,
+        },
+      };
+
+      localStorage.setItem("dadosIndividuaisGestor", JSON.stringify(data));
       validateForm();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,7 +163,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
           <Input
             type="text"
             placeholder="Digite o nome completo"
-            value={nomeCompleto}
+            value={nomeCompleto || ""}
             name="nomeCompleto"
             onChange={(e) => setNomeCompleto(e.target.value)}
             onBlur={validateForm}
@@ -160,7 +173,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
           <div className="mb-2 text-muted-foreground">
             <Label>Gênero</Label>
           </div>
-          <RadioGroup value={genero} onValueChange={setGenero} className="flex gap-4">
+          <RadioGroup value={genero || ""} onValueChange={setGenero} className="flex gap-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="0" id="feminino" />
               <Label htmlFor="feminino">Feminino</Label>
@@ -181,7 +194,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
             max={100}
             min={18}
             placeholder="Digite a idade do gestor"
-            value={idade}
+            value={idade || ""}
             name="idade"
             onChange={(e) => setIdade(e.target.value)}
             onBlur={validateField}
@@ -193,7 +206,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
           <div className="mb-2 text-muted-foreground">
             <Label>Escolaridade</Label>
           </div>
-          <Select value={escolaridade} onValueChange={setEscolaridade}>
+          <Select value={escolaridade || ""} onValueChange={setEscolaridade}>
             <SelectTrigger onBlur={validateForm}>
               <SelectValue placeholder="Selecione uma opção" />
             </SelectTrigger>
@@ -217,7 +230,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
             </div>
             <Input
               placeholder="Curso que é formado ou em andamento"
-              value={formacao}
+              value={formacao || ""}
               onChange={(e) => setFormacao(e.target.value)}
               onBlur={validateForm}
             />
@@ -230,7 +243,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
               <Label>Participou de treinamento para manipulação de alimentos?</Label>
             </div>
             <RadioGroup
-              value={naoTenhaFormacaoTemTreinamento}
+              value={naoTenhaFormacaoTemTreinamento || ""}
               onValueChange={setNaoTenhaFormacaoTemTreinamento}
               className="flex gap-4"
             >
@@ -254,7 +267,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
             type="number"
             placeholder="Número de meses trabalhados"
             min={1}
-            value={tempoTrabalhaComAlimentos}
+            value={tempoTrabalhaComAlimentos || ""}
             name="tempoTrabalhaComAlimentos"
             onChange={(e) => setTempoTrabalhaComAlimentos(e.target.value)}
             onBlur={validateField}
@@ -268,7 +281,11 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
           <div className="mb-2 text-muted-foreground">
             <Label>Você acredita que a comunicação entre funcionários é boa?</Label>
           </div>
-          <RadioGroup value={acreditaComunicacaoBoa} onValueChange={setAcreditaComunicacaoBoa} className="flex gap-4">
+          <RadioGroup
+            value={acreditaComunicacaoBoa || ""}
+            onValueChange={setAcreditaComunicacaoBoa}
+            className="flex gap-4"
+          >
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="1" id="sim" />
               <Label htmlFor="sim">Sim</Label>
@@ -285,7 +302,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
             <Label>Você realiza treinamentos com seus funcionários?</Label>
           </div>
           <RadioGroup
-            value={realizaTreinamentosBoasPraticas}
+            value={realizaTreinamentosBoasPraticas || ""}
             onValueChange={setRealizaTreinamentosBoasPraticas}
             className="flex gap-4"
           >
@@ -305,7 +322,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
             <div className="mb-2 text-muted-foreground">
               <Label>Com que frequência realiza treinamentos?</Label>
             </div>
-            <Select value={frequenciaAplicacao} onValueChange={setFrequenciaAplicacao}>
+            <Select value={frequenciaAplicacao || ""} onValueChange={setFrequenciaAplicacao}>
               <SelectTrigger onBlur={validateForm}>
                 <SelectValue placeholder="Selecione uma opção" />
               </SelectTrigger>
@@ -335,7 +352,7 @@ export function AvaliacaoGestoresDadosIndividuais({ onFormValidation }: Avaliaca
             <Input
               type="text"
               placeholder="Digite os temas abordados"
-              value={temasTreinamentos}
+              value={temasTreinamentos || ""}
               onChange={(e) => setTemasTreinamentos(e.target.value)}
               onBlur={validateForm}
             />

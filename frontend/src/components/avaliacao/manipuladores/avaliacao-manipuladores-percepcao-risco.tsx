@@ -11,11 +11,11 @@ type AvaliacaoManipuladoresPercepcaoRiscoProps = {
 
 export function AvaliacaoManipuladoresPercepcaoRisco({ onFormValidation }: AvaliacaoManipuladoresPercepcaoRiscoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    riscoApresentarDorBarrigaEstabelecimentoSimilar: "",
-    riscoApresentarDorBarrigaEstabelecimentoManipulado: "",
-    riscoApresentarDorBarrigaEstabelecimentoColegaManipulado: "",
-    riscoDoencaTransmitidaAlimentos: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    riscoApresentarDorBarrigaEstabelecimentoSimilar: null,
+    riscoApresentarDorBarrigaEstabelecimentoManipulado: null,
+    riscoApresentarDorBarrigaEstabelecimentoColegaManipulado: null,
+    riscoDoencaTransmitidaAlimentos: null,
   });
 
   useEffect(() => {
@@ -26,15 +26,21 @@ export function AvaliacaoManipuladoresPercepcaoRisco({ onFormValidation }: Avali
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            riscoApresentarDorBarrigaEstabelecimentoSimilar:
-              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_similar") || "",
-            riscoApresentarDorBarrigaEstabelecimentoManipulado:
-              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_manipulado") || "",
-            riscoApresentarDorBarrigaEstabelecimentoColegaManipulado:
-              localStorage.getItem("risco_apresentar_dor_barriga_estabelecimento_colega_manipulado") || "",
-            riscoDoencaTransmitidaAlimentos: localStorage.getItem("risco_doenca_transmitida_alimentos") || "",
-          });
+          const storedData = localStorage.getItem("percepcaoRiscoManipulador");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              riscoApresentarDorBarrigaEstabelecimentoSimilar:
+                parsedData.percepcao_risco.risco_apresentar_dor_barriga_estabelecimento_similar?.toString() || null,
+              riscoApresentarDorBarrigaEstabelecimentoManipulado:
+                parsedData.percepcao_risco.risco_apresentar_dor_barriga_estabelecimento_manipulado?.toString() || null,
+              riscoApresentarDorBarrigaEstabelecimentoColegaManipulado:
+                parsedData.percepcao_risco.risco_apresentar_dor_barriga_estabelecimento_colega_manipulado?.toString() ||
+                null,
+              riscoDoencaTransmitidaAlimentos:
+                parsedData.percepcao_risco.risco_doenca_transmitida_alimentos?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -47,12 +53,28 @@ export function AvaliacaoManipuladoresPercepcaoRisco({ onFormValidation }: Avali
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(key.replace(/([A-Z])/g, "_$1").toLowerCase(), parseInt(value, 10).toString());
-        }
-      });
+      const data = {
+        percepcao_risco: {
+          risco_apresentar_dor_barriga_estabelecimento_similar:
+            respostas.riscoApresentarDorBarrigaEstabelecimentoSimilar
+              ? parseInt(respostas.riscoApresentarDorBarrigaEstabelecimentoSimilar)
+              : null,
+          risco_apresentar_dor_barriga_estabelecimento_manipulado:
+            respostas.riscoApresentarDorBarrigaEstabelecimentoManipulado
+              ? parseInt(respostas.riscoApresentarDorBarrigaEstabelecimentoManipulado)
+              : null,
+          risco_apresentar_dor_barriga_estabelecimento_colega_manipulado:
+            respostas.riscoApresentarDorBarrigaEstabelecimentoColegaManipulado
+              ? parseInt(respostas.riscoApresentarDorBarrigaEstabelecimentoColegaManipulado)
+              : null,
+          risco_doenca_transmitida_alimentos: respostas.riscoDoencaTransmitidaAlimentos
+            ? parseInt(respostas.riscoDoencaTransmitidaAlimentos)
+            : null,
+        },
+      };
+
+      localStorage.setItem("percepcaoRiscoManipulador", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -62,8 +84,8 @@ export function AvaliacaoManipuladoresPercepcaoRisco({ onFormValidation }: Avali
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -102,7 +124,7 @@ export function AvaliacaoManipuladoresPercepcaoRisco({ onFormValidation }: Avali
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

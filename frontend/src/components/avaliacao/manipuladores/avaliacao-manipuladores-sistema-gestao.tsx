@@ -11,13 +11,13 @@ interface AvaliacaoManipuladoresSistemaGestaoProps {
 
 export function AvaliacaoManipuladoresSistemaGestao({ onFormValidation }: AvaliacaoManipuladoresSistemaGestaoProps) {
   const [userId, setUserId] = useState<string | null>(null);
-  const [respostas, setRespostas] = useState<{ [key: string]: string }>({
-    cooperacaoEntreAreasFormaSegura: "",
-    novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos: "",
-    muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos: "",
-    funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos: "",
-    acreditoLegislacaoEscritaRespaldo: "",
-    economizarProdutosHigienizacaoDiminuirCusto: "",
+  const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
+    cooperacaoEntreAreasFormaSegura: null,
+    novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos: null,
+    muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos: null,
+    funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos: null,
+    acreditoLegislacaoEscritaRespaldo: null,
+    economizarProdutosHigienizacaoDiminuirCusto: null,
   });
 
   useEffect(() => {
@@ -28,23 +28,26 @@ export function AvaliacaoManipuladoresSistemaGestao({ onFormValidation }: Avalia
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          setRespostas({
-            cooperacaoEntreAreasFormaSegura:
-              localStorage.getItem("cooperacao_entre_areas_forma_segura_manipuladores") || "",
-            novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos:
-              localStorage.getItem(
-                "novos_funcionarios_antigos_funcionarios_boa_pratica_manipulacao_alimentos_manipuladores",
-              ) || "",
-            muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos:
-              localStorage.getItem("muito_trabalho_rapidamente_funcionarios_trabalham_juntos_manipuladores") || "",
-            funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos:
-              localStorage.getItem("funcionarios_lembram_seguir_boas_praticas_manipulacao_alimentos_manipuladores") ||
-              "",
-            acreditoLegislacaoEscritaRespaldo:
-              localStorage.getItem("acredito_legislacao_escrita_respaldo_manipuladores") || "",
-            economizarProdutosHigienizacaoDiminuirCusto:
-              localStorage.getItem("economizar_produtos_higienizacao_diminuir_custo_manipuladores") || "",
-          });
+          const storedData = localStorage.getItem("sistemaGestaoManipulador");
+          if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setRespostas({
+              cooperacaoEntreAreasFormaSegura:
+                parsedData.sistemas_gestao.cooperacao_entre_areas_forma_segura?.toString() || null,
+              novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos:
+                parsedData.sistemas_gestao.novos_funcionarios_antigos_funcionarios_boa_pratica_manipulacao_alimentos?.toString() ||
+                null,
+              muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos:
+                parsedData.sistemas_gestao.muito_trabalho_rapidamente_funcionarios_trabalham_juntos?.toString() || null,
+              funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos:
+                parsedData.sistemas_gestao.funcionarios_lembram_seguir_boas_praticas_manipulacao_alimentos?.toString() ||
+                null,
+              acreditoLegislacaoEscritaRespaldo:
+                parsedData.sistemas_gestao.acredito_legislacao_escrita_respaldo?.toString() || null,
+              economizarProdutosHigienizacaoDiminuirCusto:
+                parsedData.sistemas_gestao.economizar_produtos_higienizacao_diminuir_custo?.toString() || null,
+            });
+          }
         } else {
           localStorage.clear();
           localStorage.setItem("userId", id);
@@ -57,15 +60,34 @@ export function AvaliacaoManipuladoresSistemaGestao({ onFormValidation }: Avalia
 
   useEffect(() => {
     if (userId) {
-      Object.keys(respostas).forEach((key) => {
-        const value = respostas[key];
-        if (value !== "") {
-          localStorage.setItem(
-            `${key.replace(/([A-Z])/g, "_$1").toLowerCase()}_manipuladores`,
-            parseInt(value, 10).toString(),
-          );
-        }
-      });
+      const data = {
+        sistemas_gestao: {
+          cooperacao_entre_areas_forma_segura: respostas.cooperacaoEntreAreasFormaSegura
+            ? parseInt(respostas.cooperacaoEntreAreasFormaSegura)
+            : null,
+          novos_funcionarios_antigos_funcionarios_boa_pratica_manipulacao_alimentos:
+            respostas.novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos
+              ? parseInt(respostas.novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos)
+              : null,
+          muito_trabalho_rapidamente_funcionarios_trabalham_juntos:
+            respostas.muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos
+              ? parseInt(respostas.muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos)
+              : null,
+          funcionarios_lembram_seguir_boas_praticas_manipulacao_alimentos:
+            respostas.funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos
+              ? parseInt(respostas.funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos)
+              : null,
+          acredito_legislacao_escrita_respaldo: respostas.acreditoLegislacaoEscritaRespaldo
+            ? parseInt(respostas.acreditoLegislacaoEscritaRespaldo)
+            : null,
+          economizar_produtos_higienizacao_diminuir_custo: respostas.economizarProdutosHigienizacaoDiminuirCusto
+            ? parseInt(respostas.economizarProdutosHigienizacaoDiminuirCusto)
+            : null,
+        },
+      };
+
+      localStorage.setItem("sistemaGestaoManipulador", JSON.stringify(data));
+      validateForm(respostas);
     }
   }, [userId, respostas]);
 
@@ -75,8 +97,8 @@ export function AvaliacaoManipuladoresSistemaGestao({ onFormValidation }: Avalia
     validateForm(newRespostas);
   };
 
-  const validateForm = (respostas: { [s: string]: unknown } | ArrayLike<unknown>) => {
-    const isValid = Object.values(respostas).every((resposta) => resposta !== "");
+  const validateForm = (respostas: { [key: string]: string | null }) => {
+    const isValid = Object.values(respostas).every((resposta) => resposta !== null);
     onFormValidation(isValid);
   };
 
@@ -91,30 +113,31 @@ export function AvaliacaoManipuladoresSistemaGestao({ onFormValidation }: Avalia
         {[
           {
             key: "cooperacaoEntreAreasFormaSegura",
-            question: "A cooperação entre áreas é realizada de forma segura?",
+            question:
+              "Existe uma boa cooperação entre as áreas para garantir que os consumidores recebam alimentos preparados de forma segura.",
           },
           {
             key: "novosFuncionariosAntigosFuncionariosBoaPraticaManipulacaoAlimentos",
             question:
-              "Os novos funcionários e os antigos funcionários seguem boas práticas de manipulação de alimentos?",
+              "Os novos funcionários e empregados experientes trabalham em conjunto para garantir as boas práticas de manipulação de alimentos.",
           },
           {
             key: "muitoTrabalhoRapidamenteFuncionariosTrabalhamJuntos",
-            question: "Os funcionários trabalham rapidamente juntos mesmo quando há muito trabalho?",
+            question:
+              "Quando há muito trabalho a ser feito rapidamente, os funcionários trabalham juntos como uma equipe para obter as tarefas concluídas com segurança.",
           },
           {
             key: "funcionariosLembramSeguirBoasPraticasManipulacaoAlimentos",
-            question: "Os funcionários se lembram de seguir boas práticas de manipulação de alimentos?",
+            question: "Os funcionários lembram um ao outro sobre seguir as boas práticas de manipulação de alimentos.",
           },
           {
             key: "acreditoLegislacaoEscritaRespaldo",
             question:
-              "Acredito que a legislação escrita serve como respaldo adequado para práticas de manipulação de alimentos.",
+              "Eu acredito que a legislação escrita seja nada mais do que um respaldo para processos judiciais.",
           },
           {
             key: "economizarProdutosHigienizacaoDiminuirCusto",
-            question:
-              "Economizar produtos e práticas de higienização para diminuir custos não compromete a segurança alimentar?",
+            question: "Às vezes temos que economizar em produtos para higienização para diminuir o custo da produção.",
           },
         ].map(({ key, question }) => (
           <div key={key}>
@@ -122,7 +145,7 @@ export function AvaliacaoManipuladoresSistemaGestao({ onFormValidation }: Avalia
               <Label>{question}</Label>
             </div>
             <RadioGroup
-              value={respostas[key]}
+              value={respostas[key] || ""}
               onValueChange={(value) => handleRespostaChange(key, value)}
               className="flex flex-col gap-4"
             >

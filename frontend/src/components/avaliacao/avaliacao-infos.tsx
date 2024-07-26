@@ -65,6 +65,7 @@ export function AvaliacaoInfos({ onFormValidation }: AvaliacaoInfosProps) {
   return (
     <>
       <div>
+        <h2 className="text-2xl font-semibold mb-4 md:mb-8 text-black">Informações</h2>
         <div className="mb-2 text-muted-foreground">
           <Label>Estabelecimento para avaliação</Label>
         </div>
@@ -92,8 +93,8 @@ export function AvaliacaoInfos({ onFormValidation }: AvaliacaoInfosProps) {
         }}
       />
       <div>
-        <p className="mt-4 text-muted-foreground">Não encontrou o estabelecimento que deseja avaliar?</p>
-        <Button className="mt-4 w-full md:max-w-96" onClick={() => setIsCreateModalOpen(true)}>
+        <p className="mt-6 text-muted-foreground text-sm">Não encontrou o estabelecimento que deseja avaliar?</p>
+        <Button variant={"link"} className="mt-2 p-0 text-primary-700" onClick={() => setIsCreateModalOpen(true)}>
           Cadastrar Novo Estabelecimento
         </Button>
       </div>
