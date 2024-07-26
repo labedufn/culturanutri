@@ -58,10 +58,6 @@ export function AvaliacaoInfos({ onFormValidation }: AvaliacaoInfosProps) {
     }
   }, [userId, estabelecimento, onFormValidation]);
 
-  useEffect(() => {
-    onFormValidation(!!estabelecimento);
-  }, [estabelecimento, onFormValidation]);
-
   return (
     <>
       <div>

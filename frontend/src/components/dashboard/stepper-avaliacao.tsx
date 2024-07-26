@@ -7,109 +7,94 @@ import { AvaliacaoInfos } from "../avaliacao/avaliacao-infos";
 import { useState } from "react";
 import { AvaliacaoGestores } from "../avaliacao/avaliacao-gestores";
 import { AvaliacaoManipuladores } from "../avaliacao/avaliacao-manipuladores";
+import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 export function StepperAvaliacao() {
   const [isFormValid, setIsFormValid] = useState(false);
-
-  const steps = [
-    {
-      icon: UtensilsCrossed,
-      completed: true,
-      onClick: () => console.log("Step 1 clicked"),
-      tooltip: "Informações",
-      content: ({ onNext, onPrev }: { onNext: () => void; onPrev: () => void }) => (
-        <div>
-          <AvaliacaoInfos onFormValidation={handleFormValidation} />
-          <div className="flex justify-end gap-4 mt-8 ">
-            <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onPrev} disabled>
-              Anterior
-            </Button>
-            <Button onClick={() => isFormValid && onNext()} disabled={!isFormValid}>
-              Próximo
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: Handshake,
-      completed: false,
-      onClick: () => console.log("Step 2 clicked"),
-      tooltip: "Gestor",
-      content: ({ onNext, onPrev }: { onNext: () => void; onPrev: () => void }) => (
-        <div>
-          <AvaliacaoGestores onFormValidation={handleFormValidation} />
-          <div className="flex justify-end gap-4">
-            <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onPrev}>
-              Anterior
-            </Button>
-            <Button onClick={onNext} disabled={!isFormValid}>
-              Próximo
-            </Button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: CookingPot,
-      completed: false,
-      onClick: () => console.log("Step 3 clicked"),
-      tooltip: "Manipulador de alimentos",
-      content: ({ onNext, onPrev }: { onNext: () => void; onPrev: () => void }) => (
-        <div>
-          <AvaliacaoManipuladores onFormValidation={handleFormValidation} />
-          <div className="flex justify-end gap-4">
-            <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onPrev}>
-              Anterior
-            </Button>
-            <Button onClick={onNext}>Próximo</Button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: ListChecks,
-      completed: false,
-      onClick: () => console.log("Step 4 clicked"),
-      tooltip: "Lista de verificação",
-      content: ({ onNext, onPrev }: { onNext: () => void; onPrev: () => void }) => (
-        <div>
-          Step 4 Content
-          <div className="flex justify-end gap-4">
-            <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onPrev}>
-              Anterior
-            </Button>
-            <Button onClick={onNext}>Próximo</Button>
-          </div>
-        </div>
-      ),
-    },
-    {
-      icon: NotebookPen,
-      completed: false,
-      onClick: () => console.log("Step 5 clicked"),
-      tooltip: "Análise qualitativa",
-      content: ({ onNext, onPrev }: { onNext: () => void; onPrev: () => void }) => (
-        <div>
-          Step 5 Content
-          <div className="flex justify-end gap-4">
-            <Button className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300" onClick={onPrev}>
-              Anterior
-            </Button>
-            <Button onClick={onNext}>Concluir</Button>
-          </div>
-        </div>
-      ),
-    },
-  ];
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleFormValidation = (isValid: boolean) => {
     setIsFormValid(isValid);
   };
 
+  const steps = [
+    {
+      icon: UtensilsCrossed,
+      tooltip: "Informações",
+      content: <AvaliacaoInfos onFormValidation={handleFormValidation} />,
+    },
+    {
+      icon: Handshake,
+      tooltip: "Gestor",
+      content: <AvaliacaoGestores />,
+    },
+    {
+      icon: CookingPot,
+      tooltip: "Manipulador de alimentos",
+      content: <AvaliacaoManipuladores onFormValidation={handleFormValidation} />,
+    },
+    {
+      icon: ListChecks,
+      tooltip: "Lista de verificação",
+      content: <div>Step 4 Content</div>,
+    },
+    {
+      icon: NotebookPen,
+      tooltip: "Análise qualitativa",
+      content: <div>Step 5 Content</div>,
+    },
+  ];
+
+  const handleStepChange = (stepIndex: number) => {
+    if (currentStep === 0 && !isFormValid) {
+      toast({
+        className: cn(
+          "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+        ),
+        title: "Erro!",
+        description: "Você deve definir um estabelecimento antes de continuar.",
+      });
+    } else {
+      setCurrentStep(stepIndex);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentStep === 0 && !isFormValid) {
+      toast({
+        className: cn(
+          "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+        ),
+        title: "Erro!",
+        description: "Você deve definir um estabelecimento antes de continuar.",
+      });
+    } else if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   return (
     <div className="">
-      <Stepper steps={steps} />
+      <Stepper steps={steps} currentStep={currentStep} onStepChange={handleStepChange} />
+      <div className="flex justify-end gap-4 mt-8">
+        <Button
+          className="bg-neutral-200 text-neutral-700 hover:bg-neutral-300"
+          onClick={handlePrev}
+          disabled={currentStep === 0}
+        >
+          Anterior
+        </Button>
+        <Button onClick={handleNext} disabled={currentStep === steps.length - 1}>
+          Próximo
+        </Button>
+      </div>
     </div>
   );
 }
