@@ -1,6 +1,7 @@
-export function formatarCnae(cnae: string) {
-  const cnaeLimpo = cnae.replace(/\D/g, "");
-  const cnaeFormatado = `${cnaeLimpo.substring(0, 4)}-${cnaeLimpo.substring(4, 6)}/${cnaeLimpo.substring(6)}`;
-
-  return cnaeFormatado;
+export function formatarCnae(value: string) {
+  return value
+    .replace(/\D/g, "")
+    .replace(/^(\d{4})(\d)/, "$1-$2")
+    .replace(/(\d{4}-\d)(\d)/, "$1/$2")
+    .slice(0, 9);
 }

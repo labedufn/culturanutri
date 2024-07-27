@@ -17,6 +17,7 @@ type StepperProps = {
 
 export function Stepper({ steps, currentStep, onStepChange }: StepperProps) {
   const handleStepClick = (index: number) => {
+    if (index === 0 && currentStep !== 0) return;
     onStepChange(index);
   };
 

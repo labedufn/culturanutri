@@ -8,11 +8,8 @@ import { ModalVisualizarEstabelecimento } from "./modal-visualizar-estabelecimen
 import { ModalExcluirEstabelecimento } from "./modal-excluir-estabelecimento";
 import { Toaster } from "@/components/ui/toaster";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
 import SearchInput from "../usuarios/search-input";
 import { ModalEditarEstabelecimento } from "./modal-editar-estabelecimento";
-import { ModalCadastrarEstabelecimento } from "./modal-cadastrar-estabelecimento";
-import { PlusIcon } from "lucide-react";
 import { formatarData } from "@/scripts/formatarData";
 import { formatarCnae } from "@/scripts/formatarCnae";
 
@@ -23,7 +20,6 @@ export default function EstabelecimentosTable() {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   useEffect(() => {
     fetchEstabelecimentos();
@@ -88,10 +84,6 @@ export default function EstabelecimentosTable() {
       ) : (
         <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-between sm:items-center">
           <SearchInput onSearch={handleSearch} placeholder="Buscar por nome ou CNAE" />
-          <Button className="w-full sm:w-auto" onClick={() => setIsCreateModalOpen(true)}>
-            <PlusIcon className="pr-2" />
-            Cadastrar Estabelecimento
-          </Button>
         </div>
       )}
       {!estabelecimentos ? (
@@ -124,11 +116,6 @@ export default function EstabelecimentosTable() {
           />
         </>
       )}
-      <ModalCadastrarEstabelecimento
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        onCreate={fetchEstabelecimentos}
-      />
       <Toaster />
     </div>
   );

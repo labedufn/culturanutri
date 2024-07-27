@@ -15,6 +15,7 @@ export class CriarEstabelecimentoService {
         alterado_por: estabelecimento.alterado_por,
       },
       select: {
+        id: true,
         nome: true,
         cnae: true,
         endereco: true,
