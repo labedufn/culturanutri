@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { cadastrarEstabelecimento } from "@/actions/cadastrar-estabelecimento";
 import { CadastrarEstabelecimentoProvider, useFormContext } from "./cadastrar-estabelecimento-provider";
 import { cn } from "@/lib/utils";
 import { CadastrarEstabelecimentoForm } from "./cadastrar-estabelecimento-form";
+import { currentUserId } from "@/scripts/currentUserId";
 
 interface CadastrarEstabelecimentoContentProps {
   onSuccess: () => void;
@@ -14,6 +15,26 @@ interface CadastrarEstabelecimentoContentProps {
 
 export function CadastrarEstabelecimentoContent({ onSuccess }: CadastrarEstabelecimentoContentProps) {
   const form = useFormContext();
+
+  useEffect(() => {
+    const checkUserId = async () => {
+      const currentId = await currentUserId();
+      const storedId = localStorage.getItem("userId");
+
+      if (currentId && currentId !== storedId) {
+        const sidebarOpen = localStorage.getItem("sidebarOpen");
+        localStorage.clear();
+        if (sidebarOpen) {
+          localStorage.setItem("sidebarOpen", sidebarOpen);
+        }
+        localStorage.setItem("userId", currentId);
+      } else if (!storedId) {
+        localStorage.setItem("userId", currentId || "");
+      }
+    };
+
+    checkUserId();
+  }, []);
 
   const onSubmit = async (data: any) => {
     try {

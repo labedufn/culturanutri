@@ -74,21 +74,41 @@ interface AvaliacaoGestoresProviderProps {
   children: ReactNode;
 }
 
+function getStoredValues(): Partial<FormSchemaType> {
+  return {
+    nomeCompleto: localStorage.getItem("nomeCompletoGestor") || "",
+    genero: localStorage.getItem("generoGestor") || "",
+    idade: localStorage.getItem("idadeGestor") ? Number(localStorage.getItem("idadeGestor")) : undefined,
+    escolaridade: localStorage.getItem("escolaridadeGestor") || "",
+    formacao: localStorage.getItem("formacaoGestor") || "",
+    naoTenhaFormacaoTemTreinamento: localStorage.getItem("naoTenhaFormacaoTemTreinamentoGestor") || "",
+    tempoTrabalhaComAlimentos: localStorage.getItem("tempoTrabalhaComAlimentosGestor")
+      ? Number(localStorage.getItem("tempoTrabalhaComAlimentosGestor"))
+      : undefined,
+    acreditaComunicacaoBoa: localStorage.getItem("acreditaComunicacaoBoaGestor") || "",
+    realizaTreinamentosBoasPraticas: localStorage.getItem("realizaTreinamentosBoasPraticasGestor") || "",
+    cargaHoraria: localStorage.getItem("cargaHorariaGestor") || "",
+    temasTreinamentos: localStorage.getItem("temasTreinamentosGestor") || "",
+  };
+}
+
 export function AvaliacaoGestoresProvider({ children }: AvaliacaoGestoresProviderProps) {
+  const defaultValues = getStoredValues();
+
   const methods = useForm<FormSchemaType>({
     resolver: zodResolver(schema),
     defaultValues: {
-      nomeCompleto: "",
-      genero: "",
-      idade: undefined,
-      escolaridade: "",
-      formacao: "",
-      naoTenhaFormacaoTemTreinamento: "",
-      tempoTrabalhaComAlimentos: undefined,
-      acreditaComunicacaoBoa: "",
-      realizaTreinamentosBoasPraticas: "",
-      cargaHoraria: "",
-      temasTreinamentos: "",
+      nomeCompleto: defaultValues.nomeCompleto || "",
+      genero: defaultValues.genero || "",
+      idade: defaultValues.idade || undefined,
+      escolaridade: defaultValues.escolaridade || "",
+      formacao: defaultValues.formacao || "",
+      naoTenhaFormacaoTemTreinamento: defaultValues.naoTenhaFormacaoTemTreinamento || "",
+      tempoTrabalhaComAlimentos: defaultValues.tempoTrabalhaComAlimentos || undefined,
+      acreditaComunicacaoBoa: defaultValues.acreditaComunicacaoBoa || "",
+      realizaTreinamentosBoasPraticas: defaultValues.realizaTreinamentosBoasPraticas || "",
+      cargaHoraria: defaultValues.cargaHoraria || "",
+      temasTreinamentos: defaultValues.temasTreinamentos || "",
     },
   });
 
@@ -99,10 +119,10 @@ export function AvaliacaoGestoresProvider({ children }: AvaliacaoGestoresProvide
   );
 }
 
-export const useFormContext = () => {
+export function useFormContext() {
   const context = useContext(FormContext);
   if (!context) {
     throw new Error("useFormContext must be used within a AvaliacaoGestoresProvider");
   }
   return context;
-};
+}

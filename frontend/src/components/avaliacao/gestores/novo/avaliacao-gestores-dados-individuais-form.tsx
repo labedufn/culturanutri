@@ -6,69 +6,24 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useFormContext } from "./avaliacao-gestores-provider";
-import { currentUserId } from "@/scripts/currentUserId";
-
-interface FormValues {
-  nomeCompleto?: string;
-  genero?: string;
-  idade?: string;
-  escolaridade?: string;
-  formacao?: string;
-  naoTenhaFormacaoTemTreinamento?: string;
-  tempoTrabalhaComAlimentos?: string;
-  acreditaComunicacaoBoa?: string;
-  realizaTreinamentosBoasPraticas?: string;
-  cargaHoraria?: string;
-  temasTreinamentos?: string;
-}
 
 export function AvaliacaoGestoresDadosIndividuaisForm() {
   const form = useFormContext();
-  const [userId, setUserId] = useState<string | null>(null);
   const [escolaridade, setEscolaridade] = useState(form.getValues("escolaridade"));
   const [realizaTreinamentos, setRealizaTreinamentos] = useState(form.getValues("realizaTreinamentosBoasPraticas"));
 
   useEffect(() => {
-    async function fetchUserId() {
-      const id = await currentUserId();
-      setUserId(id || "");
-
-      for (const key in localStorage) {
-        if (key.endsWith(`Gestor_${id}`)) continue;
-        localStorage.removeItem(key);
-      }
-
-      const storedValues: Partial<FormValues> = {};
-      for (const key in localStorage) {
-        if (key.endsWith(`Gestor_${id}`)) {
-          const fieldKey = key.replace(`Gestor_${id}`, "") as keyof FormValues;
-          storedValues[fieldKey] = localStorage.getItem(key) ?? undefined;
-        }
-      }
-      form.reset({
-        ...storedValues,
-        idade: Number(storedValues.idade),
-        tempoTrabalhaComAlimentos: Number(storedValues.tempoTrabalhaComAlimentos),
-      });
-    }
-    fetchUserId();
-  }, [form]);
-
-  useEffect(() => {
-    if (!userId) return;
-
     const subscription = form.watch((values) => {
       setEscolaridade(values.escolaridade || "");
       setRealizaTreinamentos(values.realizaTreinamentosBoasPraticas || "");
 
       for (const [key, value] of Object.entries(values)) {
-        localStorage.setItem(`${key}Gestor_${userId}`, String(value) ?? "");
+        localStorage.setItem(`${key}Gestor`, String(value) ?? "");
       }
     });
     return () => subscription.unsubscribe();
-  }, [form, userId]);
+  }, [form]);
 
-  if (!userId) return null;
   return (
     <>
       <FormField
@@ -93,7 +48,7 @@ export function AvaliacaoGestoresDadosIndividuaisForm() {
             <FormControl>
               <RadioGroup
                 className="flex gap-4"
-                value={field.value?.toString()}
+                value={field.value.toString()}
                 onValueChange={(value) => field.onChange(value)}
               >
                 <div className="flex items-center space-x-2">
@@ -172,11 +127,7 @@ export function AvaliacaoGestoresDadosIndividuaisForm() {
             <FormItem>
               <FormLabel>Participou de treinamento para manipulação de alimentos?</FormLabel>
               <FormControl>
-                <RadioGroup
-                  className="flex gap-4"
-                  value={field.value || ""}
-                  onValueChange={(value) => field.onChange(value)}
-                >
+                <RadioGroup className="flex gap-4" value={field.value} onValueChange={(value) => field.onChange(value)}>
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="1" id="sim" />
                     <FormLabel htmlFor="sim">Sim</FormLabel>
@@ -212,11 +163,7 @@ export function AvaliacaoGestoresDadosIndividuaisForm() {
           <FormItem>
             <FormLabel>Você acredita que a comunicação entre funcionários é boa?</FormLabel>
             <FormControl>
-              <RadioGroup
-                className="flex gap-4"
-                value={field.value || ""}
-                onValueChange={(value) => field.onChange(value)}
-              >
+              <RadioGroup className="flex gap-4" value={field.value} onValueChange={(value) => field.onChange(value)}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="1" id="sim" />
                   <FormLabel htmlFor="sim">Sim</FormLabel>
@@ -238,11 +185,7 @@ export function AvaliacaoGestoresDadosIndividuaisForm() {
           <FormItem>
             <FormLabel>Você realiza treinamentos com seus funcionários?</FormLabel>
             <FormControl>
-              <RadioGroup
-                className="flex gap-4"
-                value={field.value || ""}
-                onValueChange={(value) => field.onChange(value)}
-              >
+              <RadioGroup className="flex gap-4" value={field.value} onValueChange={(value) => field.onChange(value)}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="1" id="sim" />
                   <FormLabel htmlFor="sim">Sim</FormLabel>
