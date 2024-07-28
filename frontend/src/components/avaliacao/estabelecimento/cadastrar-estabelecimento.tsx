@@ -23,9 +23,12 @@ export function CadastrarEstabelecimentoContent({ onSuccess }: CadastrarEstabele
 
       if (currentId && currentId !== storedId) {
         const sidebarOpen = localStorage.getItem("sidebarOpen");
+        const estabelecimentoId = localStorage.getItem("estabelecimentoId");
         localStorage.clear();
         if (sidebarOpen) {
           localStorage.setItem("sidebarOpen", sidebarOpen);
+        } else if (estabelecimentoId) {
+          localStorage.setItem("estabelecimentoId", estabelecimentoId);
         }
         localStorage.setItem("userId", currentId);
       } else if (!storedId) {
@@ -93,8 +96,16 @@ export function CadastrarEstabelecimentoContent({ onSuccess }: CadastrarEstabele
 
 export function CadastrarEstabelecimento({ onSuccess }: { onSuccess: () => void }) {
   return (
-    <CadastrarEstabelecimentoProvider>
-      <CadastrarEstabelecimentoContent onSuccess={onSuccess} />
-    </CadastrarEstabelecimentoProvider>
+    <>
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold text-black mb-2">Cadastrar estabelecimento</h2>
+        <p className="text-muted-foreground text-sm">
+          Para iniciar uma avaliação é necessário cadastrar o estabelecimento que deseja avaliar.
+        </p>
+      </div>
+      <CadastrarEstabelecimentoProvider>
+        <CadastrarEstabelecimentoContent onSuccess={onSuccess} />
+      </CadastrarEstabelecimentoProvider>
+    </>
   );
 }

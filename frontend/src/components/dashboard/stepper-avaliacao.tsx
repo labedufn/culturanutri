@@ -13,15 +13,34 @@ import {
 } from "lucide-react";
 import { Stepper } from "./stepper";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CadastrarEstabelecimento } from "../avaliacao/estabelecimento/cadastrar-estabelecimento";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { AvaliacaoGestores } from "../avaliacao/gestores/novo/avaliacao-gestores";
 
 export function StepperAvaliacao() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isEstabelecimentoCadastrado, setIsEstabelecimentoCadastrado] = useState(false);
+  // Inicializa o estado currentStep e isEstabelecimentoCadastrado com base no localStorage
+  const [currentStep, setCurrentStep] = useState(() => {
+    const estabelecimentoId = localStorage.getItem("estabelecimentoId");
+    if (estabelecimentoId) {
+      const savedStep = localStorage.getItem("currentStep");
+      return savedStep ? parseInt(savedStep, 10) : 0;
+    }
+    return 0;
+  });
+
+  const [isEstabelecimentoCadastrado, setIsEstabelecimentoCadastrado] = useState(() => {
+    return localStorage.getItem("estabelecimentoId") !== null;
+  });
+
+  useEffect(() => {
+    if (isEstabelecimentoCadastrado) {
+      localStorage.setItem("currentStep", currentStep.toString());
+    } else {
+      localStorage.removeItem("currentStep");
+    }
+  }, [currentStep, isEstabelecimentoCadastrado]);
 
   const handleNext = () => {
     if (currentStep === 0 && !isEstabelecimentoCadastrado) {
@@ -108,7 +127,7 @@ export function StepperAvaliacao() {
         <Button
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground gap-1 h-9 bg-transparent text-black shadow-none"
           onClick={handlePrev}
-          disabled={currentStep === 0}
+          disabled={currentStep === 0 || currentStep === 1}
         >
           <ChevronLeft className="h-4 w-4" />
           Anterior
