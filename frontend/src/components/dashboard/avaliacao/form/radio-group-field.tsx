@@ -6,9 +6,15 @@ interface RadioGroupFieldProps {
   name: string;
   label: string;
   options: { label: string; value: string }[];
+  orientation?: "horizontal" | "vertical";
 }
 
-export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({ name, label, options }) => {
+export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
+  name,
+  label,
+  options,
+  orientation = "horizontal",
+}) => {
   return (
     <FormField
       name={name}
@@ -19,7 +25,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({ name, label, o
             <RadioGroup
               value={field.value ? field.value.toString() : ""}
               onValueChange={(value) => field.onChange(value)}
-              className="flex gap-4"
+              className={`flex gap-4 ${orientation === "vertical" ? "flex-col" : "flex-row"}`}
             >
               {options.map((option) => (
                 <div key={option.value} className="flex items-center space-x-2">

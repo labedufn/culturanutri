@@ -1,22 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-interface AvaliacaoManipuladoresComprometimentoInstrumentalProps {
+interface AvaliacaoManipuladoresComunicacaoProps {
   onFormValidation: (isValid: boolean) => void;
 }
 
-export function AvaliacaoManipuladoresComprometimentoInstrumental({
-  onFormValidation,
-}: AvaliacaoManipuladoresComprometimentoInstrumentalProps) {
+export function AvaliacaoManipuladoresComunicacao({ onFormValidation }: AvaliacaoManipuladoresComunicacaoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    deixarEmpregoVidaDesestruturada: null,
-    poucasAlternativasCasoDeixarEmprego: null,
-    muitoDificilDeixarEmprego: null,
+    tenhoLiberdadeComLider: null,
+    informacoesNecessariasDisponiveis: null,
+    informacoesAdequadasNormasHigiene: null,
+    fornecerSugestoesMelhoria: null,
   });
 
   useEffect(() => {
@@ -27,16 +26,16 @@ export function AvaliacaoManipuladoresComprometimentoInstrumental({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("comprometimentoInstrumentalManipulador");
+          const storedData = localStorage.getItem("comunicacaoManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              deixarEmpregoVidaDesestruturada:
-                parsedData.comprometimento_instrumental.deixar_emprego_vida_desestruturada?.toString() || null,
-              poucasAlternativasCasoDeixarEmprego:
-                parsedData.comprometimento_instrumental.poucas_alternativas_caso_deixar_emprego?.toString() || null,
-              muitoDificilDeixarEmprego:
-                parsedData.comprometimento_instrumental.muito_dificil_deixar_emprego?.toString() || null,
+              tenhoLiberdadeComLider: parsedData.comunicacao.tenho_liberdade_com_lider?.toString() || null,
+              informacoesNecessariasDisponiveis:
+                parsedData.comunicacao.informacoes_necessarias_disponiveis?.toString() || null,
+              informacoesAdequadasNormasHigiene:
+                parsedData.comunicacao.informacoes_adequadas_normas_higiene?.toString() || null,
+              fornecerSugestoesMelhoria: parsedData.comunicacao.fornecer_sugestoes_melhoria?.toString() || null,
             });
           }
         } else {
@@ -52,20 +51,23 @@ export function AvaliacaoManipuladoresComprometimentoInstrumental({
   useEffect(() => {
     if (userId) {
       const data = {
-        comprometimento_instrumental: {
-          deixar_emprego_vida_desestruturada: respostas.deixarEmpregoVidaDesestruturada
-            ? parseInt(respostas.deixarEmpregoVidaDesestruturada)
+        comunicacao: {
+          tenho_liberdade_com_lider: respostas.tenhoLiberdadeComLider
+            ? parseInt(respostas.tenhoLiberdadeComLider)
             : null,
-          poucas_alternativas_caso_deixar_emprego: respostas.poucasAlternativasCasoDeixarEmprego
-            ? parseInt(respostas.poucasAlternativasCasoDeixarEmprego)
+          informacoes_necessarias_disponiveis: respostas.informacoesNecessariasDisponiveis
+            ? parseInt(respostas.informacoesNecessariasDisponiveis)
             : null,
-          muito_dificil_deixar_emprego: respostas.muitoDificilDeixarEmprego
-            ? parseInt(respostas.muitoDificilDeixarEmprego)
+          informacoes_adequadas_normas_higiene: respostas.informacoesAdequadasNormasHigiene
+            ? parseInt(respostas.informacoesAdequadasNormasHigiene)
+            : null,
+          fornecer_sugestoes_melhoria: respostas.fornecerSugestoesMelhoria
+            ? parseInt(respostas.fornecerSugestoesMelhoria)
             : null,
         },
       };
 
-      localStorage.setItem("comprometimentoInstrumentalManipulador", JSON.stringify(data));
+      localStorage.setItem("comunicacaoManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -87,20 +89,27 @@ export function AvaliacaoManipuladoresComprometimentoInstrumental({
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Comprometimento Instrumental</h3>
+      <h3 className="mb-8 text-lg">Comunicação</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "deixarEmpregoVidaDesestruturada",
-            question: "Se eu decidisse deixar meu emprego agora, minha vida ficaria bastante desestruturada.",
+            key: "tenhoLiberdadeComLider",
+            question:
+              "Eu tenho liberdade de falar com meu líder se eu ver algo que pode afetar a segurança dos alimentos.",
           },
           {
-            key: "poucasAlternativasCasoDeixarEmprego",
-            question: "Eu acho que teria poucas alternativas se deixasse este emprego.",
+            key: "informacoesNecessariasDisponiveis",
+            question:
+              "Todas as informações necessárias para a manipulação de alimentos de forma segura são prontamente disponíveis para mim.",
           },
           {
-            key: "muitoDificilDeixarEmprego",
-            question: "Mesmo se eu quisesse, seria muito difícil para mim deixar este emprego agora.",
+            key: "informacoesAdequadasNormasHigiene",
+            question: "O líder fornece informações adequadas e atualizadas sobre as normas de higiene.",
+          },
+          {
+            key: "fornecerSugestoesMelhoria",
+            question:
+              "Sinto-me encorajado a fornecer sugestões para a melhoria das práticas de segurança dos alimentos.",
           },
         ].map(({ key, question }) => (
           <div key={key}>

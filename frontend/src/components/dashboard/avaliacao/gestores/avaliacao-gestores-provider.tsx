@@ -1,8 +1,8 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { schema, FormSchemaType } from "../schemas/validation-schema";
-import { getStoredValues } from "./storage/storage";
+import { schema, FormSchemaType } from "./schemas/schema-gestores";
+import { getStoredValuesGestor } from "./storage/storage-gestores";
 
 const FormContext = createContext<UseFormReturn<FormSchemaType> | null>(null);
 
@@ -11,7 +11,7 @@ interface AvaliacaoProviderProps {
 }
 
 export function AvaliacaoProvider({ children }: AvaliacaoProviderProps) {
-  const defaultValues = getStoredValues();
+  const defaultValues = getStoredValuesGestor();
 
   const methods = useForm<FormSchemaType>({
     resolver: zodResolver(schema),

@@ -1,24 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-type AvaliacaoManipuladoresComprometimentoAfetivoProps = {
+interface AvaliacaoManipuladoresAmbienteTrabalhoProps {
   onFormValidation: (isValid: boolean) => void;
-};
+}
 
-export function AvaliacaoManipuladoresComprometimentoAfetivo({
+export function AvaliacaoManipuladoresAmbienteTrabalho({
   onFormValidation,
-}: AvaliacaoManipuladoresComprometimentoAfetivoProps) {
+}: AvaliacaoManipuladoresAmbienteTrabalhoProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    problemasRestauranteMeus: null,
-    restauranteTemSignificado: null,
-    restauranteMereceMinhaLealdade: null,
-    trabalharPorNecessidadeDesejo: null,
-    dedicarMinhaCarreiraAoRestaurante: null,
+    equipamentosNecessariosFormaSegura: null,
+    estruturaAdequadaNormasHigiene: null,
+    produtosHigienizacaoAdequadosManipulacaoAlimentos: null,
   });
 
   useEffect(() => {
@@ -29,20 +27,16 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("comprometimentoAfetivoManipulador");
+          const storedData = localStorage.getItem("ambienteTrabalhoManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              problemasRestauranteMeus:
-                parsedData.comprometimento_afetivo.problemas_restaurante_meus?.toString() || null,
-              restauranteTemSignificado:
-                parsedData.comprometimento_afetivo.restaurante_tem_significado?.toString() || null,
-              restauranteMereceMinhaLealdade:
-                parsedData.comprometimento_afetivo.restaurante_merece_minha_lealdade?.toString() || null,
-              trabalharPorNecessidadeDesejo:
-                parsedData.comprometimento_afetivo.trabalhar_por_necessidade_e_desejo?.toString() || null,
-              dedicarMinhaCarreiraAoRestaurante:
-                parsedData.comprometimento_afetivo.dedicar_minha_carreira_ao_restaurante?.toString() || null,
+              equipamentosNecessariosFormaSegura:
+                parsedData.ambiente_trabalho.equipamentos_necessarios_forma_segura?.toString() || null,
+              estruturaAdequadaNormasHigiene:
+                parsedData.ambiente_trabalho.estrutura_adequada_normas_higiene?.toString() || null,
+              produtosHigienizacaoAdequadosManipulacaoAlimentos:
+                parsedData.ambiente_trabalho.produtos_higienizacao_adequados_manipulacao_alimentos?.toString() || null,
             });
           }
         } else {
@@ -58,26 +52,21 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
   useEffect(() => {
     if (userId) {
       const data = {
-        comprometimento_afetivo: {
-          problemas_restaurante_meus: respostas.problemasRestauranteMeus
-            ? parseInt(respostas.problemasRestauranteMeus)
+        ambiente_trabalho: {
+          equipamentos_necessarios_forma_segura: respostas.equipamentosNecessariosFormaSegura
+            ? parseInt(respostas.equipamentosNecessariosFormaSegura)
             : null,
-          restaurante_tem_significado: respostas.restauranteTemSignificado
-            ? parseInt(respostas.restauranteTemSignificado)
+          estrutura_adequada_normas_higiene: respostas.estruturaAdequadaNormasHigiene
+            ? parseInt(respostas.estruturaAdequadaNormasHigiene)
             : null,
-          restaurante_merece_minha_lealdade: respostas.restauranteMereceMinhaLealdade
-            ? parseInt(respostas.restauranteMereceMinhaLealdade)
-            : null,
-          trabalhar_por_necessidade_e_desejo: respostas.trabalharPorNecessidadeDesejo
-            ? parseInt(respostas.trabalharPorNecessidadeDesejo)
-            : null,
-          dedicar_minha_carreira_ao_restaurante: respostas.dedicarMinhaCarreiraAoRestaurante
-            ? parseInt(respostas.dedicarMinhaCarreiraAoRestaurante)
-            : null,
+          produtos_higienizacao_adequados_manipulacao_alimentos:
+            respostas.produtosHigienizacaoAdequadosManipulacaoAlimentos
+              ? parseInt(respostas.produtosHigienizacaoAdequadosManipulacaoAlimentos)
+              : null,
         },
       };
 
-      localStorage.setItem("comprometimentoAfetivoManipulador", JSON.stringify(data));
+      localStorage.setItem("ambienteTrabalhoManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -99,28 +88,21 @@ export function AvaliacaoManipuladoresComprometimentoAfetivo({
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Comprometimento Afetivo</h3>
+      <h3 className="mb-8 text-lg">Ambiente de Trabalho</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "problemasRestauranteMeus",
-            question: "Eu realmente sinto os problemas do restaurante como se fossem meus.",
+            key: "equipamentosNecessariosFormaSegura",
+            question: "Tenho equipamentos e utensílios necessários para preparar os alimentos de forma segura.",
           },
           {
-            key: "restauranteTemSignificado",
-            question: "Este restaurante tem um imenso significado pessoal para mim.",
+            key: "estruturaAdequadaNormasHigiene",
+            question: "A estrutura da cozinha é adequada para seguir as normas de higiene.",
           },
           {
-            key: "restauranteMereceMinhaLealdade",
-            question: "Este restaurante merece minha lealdade.",
-          },
-          {
-            key: "trabalharPorNecessidadeDesejo",
-            question: "Na situação atual, trabalhar nesse restaurante é tanto uma necessidade quanto um desejo.",
-          },
-          {
-            key: "dedicarMinhaCarreiraAoRestaurante",
-            question: "Eu seria muito feliz em dedicar o resto da minha carreira nesse restaurante.",
+            key: "produtosHigienizacaoAdequadosManipulacaoAlimentos",
+            question:
+              "Tenho os produtos para higienização adequados para realizar as boas práticas de manipulação de alimentos.",
           },
         ].map(({ key, question }) => (
           <div key={key}>

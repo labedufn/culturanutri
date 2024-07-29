@@ -14,10 +14,10 @@ import {
 import { Stepper } from "./stepper";
 import { Button } from "../ui/button";
 import { useState, useEffect } from "react";
-import { CadastrarEstabelecimento } from "../avaliacao/estabelecimento/cadastrar-estabelecimento";
+import { CadastrarEstabelecimento } from "./avaliacao/estabelecimento/cadastrar-estabelecimento";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { AvaliacaoGestores } from "../avaliacao/gestores/novo/avaliacao-gestores";
+import { AvaliacaoGestores } from "./avaliacao/gestores/avaliacao-gestores";
 
 export function StepperAvaliacao() {
   // Inicializa o estado currentStep e isEstabelecimentoCadastrado com base no localStorage

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
-import { CadastrarEstabelecimento } from "@/components/avaliacao/estabelecimento/cadastrar-estabelecimento";
+import { CadastrarEstabelecimento } from "@/components/dashboard/avaliacao/estabelecimento/cadastrar-estabelecimento";
 
 export default function TestePage() {
   return (

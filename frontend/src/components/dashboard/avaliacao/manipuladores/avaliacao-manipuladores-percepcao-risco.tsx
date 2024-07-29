@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
 type AvaliacaoManipuladoresPercepcaoRiscoProps = {

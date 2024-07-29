@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocalStorageFormSync } from "@/hooks/use-local-storage-hook-form";
-import { RadioGroupField } from "../../form/radio-group-field";
+import { RadioGroupField } from "../form/radio-group-field";
 
 const simNaoOptions = [
   { label: "Sim", value: "1" },

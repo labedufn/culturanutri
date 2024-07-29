@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, FocusEvent } from "react";
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
+import { Input } from "../../../ui/input";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../../ui/select";
 import { currentUserId } from "@/scripts/currentUserId";
 
 interface AvaliacaoManipuladoresDadosIndividuaisProps {

@@ -1,23 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-interface AvaliacaoManipuladoresComprometimentoSegurancaAlimentosProps {
+interface AvaliacaoManipuladoresLiderancaProps {
   onFormValidation: (isValid: boolean) => void;
 }
 
-export function AvaliacaoManipuladoresComprometimentoSegurancaAlimentos({
-  onFormValidation,
-}: AvaliacaoManipuladoresComprometimentoSegurancaAlimentosProps) {
+export function AvaliacaoManipuladoresLideranca({ onFormValidation }: AvaliacaoManipuladoresLiderancaProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    sigoNormasHigieneResponsabilidade: null,
-    segurancaAltaPrioridade: null,
-    sigoNormasHigieneImportante: null,
-    empenhadoSeguirNormasHigiene: null,
+    normasHigiene: null,
+    liderAtento: null,
+    funcionariosRepreendidos: null,
   });
 
   useEffect(() => {
@@ -28,18 +25,13 @@ export function AvaliacaoManipuladoresComprometimentoSegurancaAlimentos({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("comprometimentoSegurancaAlimentosManipulador");
+          const storedData = localStorage.getItem("liderancaManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              sigoNormasHigieneResponsabilidade:
-                parsedData.comprometimento_segurança_alimentos.sigo_normas_higiene_responsabilidade?.toString() || null,
-              segurancaAltaPrioridade:
-                parsedData.comprometimento_segurança_alimentos.segurança_alta_prioridade?.toString() || null,
-              sigoNormasHigieneImportante:
-                parsedData.comprometimento_segurança_alimentos.sigo_normas_higiene_importante?.toString() || null,
-              empenhadoSeguirNormasHigiene:
-                parsedData.comprometimento_segurança_alimentos.empenhado_seguir_normas_higiene?.toString() || null,
+              normasHigiene: parsedData.liderenca.normas_higiene?.toString() || null,
+              liderAtento: parsedData.liderenca.lider_atento?.toString() || null,
+              funcionariosRepreendidos: parsedData.liderenca.funcionarios_repreendidos?.toString() || null,
             });
           }
         } else {
@@ -55,23 +47,16 @@ export function AvaliacaoManipuladoresComprometimentoSegurancaAlimentos({
   useEffect(() => {
     if (userId) {
       const data = {
-        comprometimento_segurança_alimentos: {
-          sigo_normas_higiene_responsabilidade: respostas.sigoNormasHigieneResponsabilidade
-            ? parseInt(respostas.sigoNormasHigieneResponsabilidade)
-            : null,
-          seguranca_alta_prioridade: respostas.segurancaAltaPrioridade
-            ? parseInt(respostas.segurancaAltaPrioridade)
-            : null,
-          sigo_normas_higiene_importante: respostas.sigoNormasHigieneImportante
-            ? parseInt(respostas.sigoNormasHigieneImportante)
-            : null,
-          empenhado_seguir_normas_higiene: respostas.empenhadoSeguirNormasHigiene
-            ? parseInt(respostas.empenhadoSeguirNormasHigiene)
+        liderenca: {
+          normas_higiene: respostas.normasHigiene ? parseInt(respostas.normasHigiene) : null,
+          lider_atento: respostas.liderAtento ? parseInt(respostas.liderAtento) : null,
+          funcionarios_repreendidos: respostas.funcionariosRepreendidos
+            ? parseInt(respostas.funcionariosRepreendidos)
             : null,
         },
       };
 
-      localStorage.setItem("comprometimentoSegurancaAlimentosManipulador", JSON.stringify(data));
+      localStorage.setItem("liderancaManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -93,24 +78,20 @@ export function AvaliacaoManipuladoresComprometimentoSegurancaAlimentos({
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Comprometimento com a Segurança dos Alimentos</h3>
+      <h3 className="mb-8 text-lg">Liderança</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "sigoNormasHigieneResponsabilidade",
-            question: "Eu sigo as normas de higiene porque é minha responsabilidade.",
+            key: "normasHigiene",
+            question: "As normas de higiene são sempre seguidas.",
           },
           {
-            key: "segurancaAltaPrioridade",
-            question: "A segurança dos alimentos é uma alta prioridade para mim.",
+            key: "liderAtento",
+            question: "O líder está sempre atento às necessidades dos funcionários.",
           },
           {
-            key: "sigoNormasHigieneImportante",
-            question: "Eu sigo as normas de higiene, porque eu acho que elas são importantes.",
-          },
-          {
-            key: "empenhadoSeguirNormasHigiene",
-            question: "Estou empenhado em seguir todas as normas de higiene.",
+            key: "funcionariosRepreendidos",
+            question: "Os funcionários são repreendidos quando não seguem as normas.",
           },
         ].map(({ key, question }) => (
           <div key={key}>

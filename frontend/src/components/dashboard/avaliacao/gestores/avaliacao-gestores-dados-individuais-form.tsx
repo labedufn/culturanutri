@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useFormContext } from "./avaliacao-gestores-provider";
 import { useLocalStorageFormSync } from "@/hooks/use-local-storage-hook-form";
-import { RadioGroupField } from "../../form/radio-group-field";
-import { SelectField } from "../../form/select-field";
-import { InputField } from "../../form/input-field";
+import { RadioGroupField } from "../form/radio-group-field";
+import { SelectField } from "../form/select-field";
+import { InputField } from "../form/input-field";
+import { useFormContext } from "./avaliacao-gestores-provider";
 
 const escolaridadeOptions = [
   { label: "Fundamental incompleto", value: "1" },
@@ -27,16 +27,16 @@ const simNaoOptions = [
 ];
 
 const cargaHorariaOptions = [
-  { label: "Diário", value: "1" },
-  { label: "Semanal", value: "2" },
-  { label: "Quinzenal", value: "3" },
-  { label: "Mensal", value: "4" },
-  { label: "Trimestral", value: "5" },
-  { label: "Semestral", value: "6" },
-  { label: "Anual", value: "7" },
-  { label: "A cada 2 anos", value: "8" },
-  { label: "A cada 3 anos ou mais", value: "9" },
-  { label: "Só fez uma vez", value: "10" },
+  { label: "Diário", value: "Diário" },
+  { label: "Semanal", value: "Semanal" },
+  { label: "Quinzenal", value: "Quinzenal" },
+  { label: "Mensal", value: "Mensal" },
+  { label: "Semestral", value: "Semestral" },
+  { label: "Trimestral", value: "Trimestral" },
+  { label: "Anual", value: "Anual" },
+  { label: "A cada 2 anos", value: "A cada 2 anos" },
+  { label: "A cada 3 anos ou mais", value: "A cada 3 anos ou mais" },
+  { label: "Só fez uma vez", value: "Só fez uma vez" },
 ];
 
 export function AvaliacaoGestoresDadosIndividuaisForm() {

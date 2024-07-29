@@ -1,20 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-interface AvaliacaoManipuladoresLiderancaProps {
+interface AvaliacaoManipuladoresComprometimentoInstrumentalProps {
   onFormValidation: (isValid: boolean) => void;
 }
 
-export function AvaliacaoManipuladoresLideranca({ onFormValidation }: AvaliacaoManipuladoresLiderancaProps) {
+export function AvaliacaoManipuladoresComprometimentoInstrumental({
+  onFormValidation,
+}: AvaliacaoManipuladoresComprometimentoInstrumentalProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    normasHigiene: null,
-    liderAtento: null,
-    funcionariosRepreendidos: null,
+    deixarEmpregoVidaDesestruturada: null,
+    poucasAlternativasCasoDeixarEmprego: null,
+    muitoDificilDeixarEmprego: null,
   });
 
   useEffect(() => {
@@ -25,13 +27,16 @@ export function AvaliacaoManipuladoresLideranca({ onFormValidation }: AvaliacaoM
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("liderancaManipulador");
+          const storedData = localStorage.getItem("comprometimentoInstrumentalManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              normasHigiene: parsedData.liderenca.normas_higiene?.toString() || null,
-              liderAtento: parsedData.liderenca.lider_atento?.toString() || null,
-              funcionariosRepreendidos: parsedData.liderenca.funcionarios_repreendidos?.toString() || null,
+              deixarEmpregoVidaDesestruturada:
+                parsedData.comprometimento_instrumental.deixar_emprego_vida_desestruturada?.toString() || null,
+              poucasAlternativasCasoDeixarEmprego:
+                parsedData.comprometimento_instrumental.poucas_alternativas_caso_deixar_emprego?.toString() || null,
+              muitoDificilDeixarEmprego:
+                parsedData.comprometimento_instrumental.muito_dificil_deixar_emprego?.toString() || null,
             });
           }
         } else {
@@ -47,16 +52,20 @@ export function AvaliacaoManipuladoresLideranca({ onFormValidation }: AvaliacaoM
   useEffect(() => {
     if (userId) {
       const data = {
-        liderenca: {
-          normas_higiene: respostas.normasHigiene ? parseInt(respostas.normasHigiene) : null,
-          lider_atento: respostas.liderAtento ? parseInt(respostas.liderAtento) : null,
-          funcionarios_repreendidos: respostas.funcionariosRepreendidos
-            ? parseInt(respostas.funcionariosRepreendidos)
+        comprometimento_instrumental: {
+          deixar_emprego_vida_desestruturada: respostas.deixarEmpregoVidaDesestruturada
+            ? parseInt(respostas.deixarEmpregoVidaDesestruturada)
+            : null,
+          poucas_alternativas_caso_deixar_emprego: respostas.poucasAlternativasCasoDeixarEmprego
+            ? parseInt(respostas.poucasAlternativasCasoDeixarEmprego)
+            : null,
+          muito_dificil_deixar_emprego: respostas.muitoDificilDeixarEmprego
+            ? parseInt(respostas.muitoDificilDeixarEmprego)
             : null,
         },
       };
 
-      localStorage.setItem("liderancaManipulador", JSON.stringify(data));
+      localStorage.setItem("comprometimentoInstrumentalManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -78,20 +87,20 @@ export function AvaliacaoManipuladoresLideranca({ onFormValidation }: AvaliacaoM
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Liderança</h3>
+      <h3 className="mb-8 text-lg">Comprometimento Instrumental</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "normasHigiene",
-            question: "As normas de higiene são sempre seguidas.",
+            key: "deixarEmpregoVidaDesestruturada",
+            question: "Se eu decidisse deixar meu emprego agora, minha vida ficaria bastante desestruturada.",
           },
           {
-            key: "liderAtento",
-            question: "O líder está sempre atento às necessidades dos funcionários.",
+            key: "poucasAlternativasCasoDeixarEmprego",
+            question: "Eu acho que teria poucas alternativas se deixasse este emprego.",
           },
           {
-            key: "funcionariosRepreendidos",
-            question: "Os funcionários são repreendidos quando não seguem as normas.",
+            key: "muitoDificilDeixarEmprego",
+            question: "Mesmo se eu quisesse, seria muito difícil para mim deixar este emprego agora.",
           },
         ].map(({ key, question }) => (
           <div key={key}>

@@ -1,22 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Label } from "../../../ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../ui/radio-group";
 import { currentUserId } from "@/scripts/currentUserId";
 
-interface AvaliacaoManipuladoresAmbienteTrabalhoProps {
+interface AvaliacaoManipuladoresComprometimentoSegurancaAlimentosProps {
   onFormValidation: (isValid: boolean) => void;
 }
 
-export function AvaliacaoManipuladoresAmbienteTrabalho({
+export function AvaliacaoManipuladoresComprometimentoSegurancaAlimentos({
   onFormValidation,
-}: AvaliacaoManipuladoresAmbienteTrabalhoProps) {
+}: AvaliacaoManipuladoresComprometimentoSegurancaAlimentosProps) {
   const [userId, setUserId] = useState<string | null>(null);
   const [respostas, setRespostas] = useState<{ [key: string]: string | null }>({
-    equipamentosNecessariosFormaSegura: null,
-    estruturaAdequadaNormasHigiene: null,
-    produtosHigienizacaoAdequadosManipulacaoAlimentos: null,
+    sigoNormasHigieneResponsabilidade: null,
+    segurancaAltaPrioridade: null,
+    sigoNormasHigieneImportante: null,
+    empenhadoSeguirNormasHigiene: null,
   });
 
   useEffect(() => {
@@ -27,16 +28,18 @@ export function AvaliacaoManipuladoresAmbienteTrabalho({
       if (id) {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId === id) {
-          const storedData = localStorage.getItem("ambienteTrabalhoManipulador");
+          const storedData = localStorage.getItem("comprometimentoSegurancaAlimentosManipulador");
           if (storedData) {
             const parsedData = JSON.parse(storedData);
             setRespostas({
-              equipamentosNecessariosFormaSegura:
-                parsedData.ambiente_trabalho.equipamentos_necessarios_forma_segura?.toString() || null,
-              estruturaAdequadaNormasHigiene:
-                parsedData.ambiente_trabalho.estrutura_adequada_normas_higiene?.toString() || null,
-              produtosHigienizacaoAdequadosManipulacaoAlimentos:
-                parsedData.ambiente_trabalho.produtos_higienizacao_adequados_manipulacao_alimentos?.toString() || null,
+              sigoNormasHigieneResponsabilidade:
+                parsedData.comprometimento_segurança_alimentos.sigo_normas_higiene_responsabilidade?.toString() || null,
+              segurancaAltaPrioridade:
+                parsedData.comprometimento_segurança_alimentos.segurança_alta_prioridade?.toString() || null,
+              sigoNormasHigieneImportante:
+                parsedData.comprometimento_segurança_alimentos.sigo_normas_higiene_importante?.toString() || null,
+              empenhadoSeguirNormasHigiene:
+                parsedData.comprometimento_segurança_alimentos.empenhado_seguir_normas_higiene?.toString() || null,
             });
           }
         } else {
@@ -52,21 +55,23 @@ export function AvaliacaoManipuladoresAmbienteTrabalho({
   useEffect(() => {
     if (userId) {
       const data = {
-        ambiente_trabalho: {
-          equipamentos_necessarios_forma_segura: respostas.equipamentosNecessariosFormaSegura
-            ? parseInt(respostas.equipamentosNecessariosFormaSegura)
+        comprometimento_segurança_alimentos: {
+          sigo_normas_higiene_responsabilidade: respostas.sigoNormasHigieneResponsabilidade
+            ? parseInt(respostas.sigoNormasHigieneResponsabilidade)
             : null,
-          estrutura_adequada_normas_higiene: respostas.estruturaAdequadaNormasHigiene
-            ? parseInt(respostas.estruturaAdequadaNormasHigiene)
+          seguranca_alta_prioridade: respostas.segurancaAltaPrioridade
+            ? parseInt(respostas.segurancaAltaPrioridade)
             : null,
-          produtos_higienizacao_adequados_manipulacao_alimentos:
-            respostas.produtosHigienizacaoAdequadosManipulacaoAlimentos
-              ? parseInt(respostas.produtosHigienizacaoAdequadosManipulacaoAlimentos)
-              : null,
+          sigo_normas_higiene_importante: respostas.sigoNormasHigieneImportante
+            ? parseInt(respostas.sigoNormasHigieneImportante)
+            : null,
+          empenhado_seguir_normas_higiene: respostas.empenhadoSeguirNormasHigiene
+            ? parseInt(respostas.empenhadoSeguirNormasHigiene)
+            : null,
         },
       };
 
-      localStorage.setItem("ambienteTrabalhoManipulador", JSON.stringify(data));
+      localStorage.setItem("comprometimentoSegurancaAlimentosManipulador", JSON.stringify(data));
       validateForm(respostas);
     }
   }, [userId, respostas]);
@@ -88,21 +93,24 @@ export function AvaliacaoManipuladoresAmbienteTrabalho({
 
   return (
     <>
-      <h3 className="mb-8 text-lg">Ambiente de Trabalho</h3>
+      <h3 className="mb-8 text-lg">Comprometimento com a Segurança dos Alimentos</h3>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-1 md:grid-cols-2">
         {[
           {
-            key: "equipamentosNecessariosFormaSegura",
-            question: "Tenho equipamentos e utensílios necessários para preparar os alimentos de forma segura.",
+            key: "sigoNormasHigieneResponsabilidade",
+            question: "Eu sigo as normas de higiene porque é minha responsabilidade.",
           },
           {
-            key: "estruturaAdequadaNormasHigiene",
-            question: "A estrutura da cozinha é adequada para seguir as normas de higiene.",
+            key: "segurancaAltaPrioridade",
+            question: "A segurança dos alimentos é uma alta prioridade para mim.",
           },
           {
-            key: "produtosHigienizacaoAdequadosManipulacaoAlimentos",
-            question:
-              "Tenho os produtos para higienização adequados para realizar as boas práticas de manipulação de alimentos.",
+            key: "sigoNormasHigieneImportante",
+            question: "Eu sigo as normas de higiene, porque eu acho que elas são importantes.",
+          },
+          {
+            key: "empenhadoSeguirNormasHigiene",
+            question: "Estou empenhado em seguir todas as normas de higiene.",
           },
         ].map(({ key, question }) => (
           <div key={key}>
