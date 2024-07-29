@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export class CriarResultadoService {
   async execute(resultado: Resultado) {
-    console.log(resultado);
     let resultadoCriado;
     const resultadoExiste = await prisma.resultado.findFirst({
       where: {
