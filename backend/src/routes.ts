@@ -38,6 +38,7 @@ import { EditarListaVerificacaoController } from "@controllers/lista-verificacao
 import { CalcularListaVerificacaoController } from "@controllers/lista-verificacao/CalcularListaVerificacaoController";
 import { CriarResultadoController } from "@controllers/resultado/CriarResultadoController";
 import { BuscarResultadoController } from "@controllers/resultado/BuscarResultadoController";
+import { CriarAvaliacaoController } from "@controllers/avaliacao/CriarAvaliacaoController";
 
 export const router = Router();
 
@@ -59,6 +60,12 @@ router.get("/api/buscar-usuario", authUsuario, new BuscarUsuarioController().han
 router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioController().handle);
 router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
 router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioController().handle);
+
+// Rotas Avaliação
+router.post("/api/cadastrar-avaliacao", authUsuario, new CriarAvaliacaoController().handle);
+// router.put("/api/editar-avaliacao", authUsuario, new EditarAvaliacaoController().handle);
+// router.get("/api/listar-Avaliacaos", authUsuario, new ListarAvaliacaosController().handle);
+// router.get("/api/buscar-Avaliacao", authUsuario, new BuscarAvaliacaoController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
