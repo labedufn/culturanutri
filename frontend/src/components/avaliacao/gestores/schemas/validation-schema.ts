@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const schema = z
+export const schema = z
   .object({
     nomeCompleto: z.string().min(1, "O campo nome completo é obrigatório."),
     genero: z.string().min(1, "O campo gênero é obrigatório."),
@@ -13,7 +13,7 @@ const schema = z
     ),
     escolaridade: z.string().min(1, "O campo escolaridade é obrigatório."),
     formacao: z.string().optional().nullable(),
-    naoTenhaFormacaoTemTreinamento: z.string().optional().nullable(),
+    naoTenhaFormacaoTemTreinamento: z.string().min(1, "Este campo é obrigatório."),
     tempoTrabalhaComAlimentos: z.preprocess(
       (value) => (value === "" ? NaN : Number(value)),
       z
@@ -23,8 +23,8 @@ const schema = z
     ),
     acreditaComunicacaoBoa: z.string().min(1, "Este campo é obrigatório."),
     realizaTreinamentosBoasPraticas: z.string().min(1, "Este campo é obrigatório."),
-    cargaHoraria: z.string().optional().nullable(),
-    temasTreinamentos: z.string().optional().nullable(),
+    cargaHoraria: z.string().nullable().optional(),
+    temasTreinamentos: z.string().nullable().optional(),
   })
   .refine(
     (data) => {
@@ -36,18 +36,6 @@ const schema = z
     {
       message: "Formação é obrigatória para escolaridade superior incompleto ou completo.",
       path: ["formacao"],
-    },
-  )
-  .refine(
-    (data) => {
-      if (data.escolaridade !== "5" && data.escolaridade !== "6" && !data.naoTenhaFormacaoTemTreinamento) {
-        return false;
-      }
-      return true;
-    },
-    {
-      message: "Este campo é obrigatório se a escolaridade não é superior incompleto ou completo.",
-      path: ["naoTenhaFormacaoTemTreinamento"],
     },
   )
   .refine(
@@ -76,4 +64,3 @@ const schema = z
   );
 
 export type FormSchemaType = z.infer<typeof schema>;
-export default schema;
