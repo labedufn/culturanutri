@@ -17,7 +17,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({ name, label, o
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <RadioGroup
-              value={field.value.toString()}
+              value={field.value ? field.value.toString() : ""}
               onValueChange={(value) => field.onChange(value)}
               className="flex gap-4"
             >

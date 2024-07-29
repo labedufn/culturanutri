@@ -25,6 +25,16 @@ export const schema = z
     realizaTreinamentosBoasPraticas: z.string().min(1, "Este campo é obrigatório."),
     cargaHoraria: z.string().nullable().optional(),
     temasTreinamentos: z.string().nullable().optional(),
+    adornosContaminacao: z.string().min(1, "Este campo é obrigatório."),
+    aguaTransmissaoDoencas: z.string().min(1, "Este campo é obrigatório."),
+    higienizacaoMaos: z.string().min(1, "Este campo é obrigatório."),
+    contatoAlimentosCruCozido: z.string().min(1, "Este campo é obrigatório."),
+    leiteVencido: z.string().min(1, "Este campo é obrigatório."),
+    alimentoImproprio: z.string().min(1, "Este campo é obrigatório."),
+    carneMalPassada: z.string().min(1, "Este campo é obrigatório."),
+    lavagemVegetais: z.string().min(1, "Este campo é obrigatório."),
+    descongelamentoAlimentos: z.string().min(1, "Este campo é obrigatório."),
+    manipuladorDoente: z.string().min(1, "Este campo é obrigatório."),
   })
   .refine(
     (data) => {

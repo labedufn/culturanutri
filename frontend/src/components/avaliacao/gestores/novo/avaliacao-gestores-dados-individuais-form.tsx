@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "./avaliacao-gestores-provider";
 import { useLocalStorageFormSync } from "@/hooks/use-local-storage-hook-form";
-import { InputField } from "../../form/input-field";
 import { RadioGroupField } from "../../form/radio-group-field";
 import { SelectField } from "../../form/select-field";
+import { InputField } from "../../form/input-field";
 
 const escolaridadeOptions = [
   { label: "Fundamental incompleto", value: "1" },

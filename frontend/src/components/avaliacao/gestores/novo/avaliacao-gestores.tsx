@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AvaliacaoGestoresDialog } from "./avaliacao-gestores-content";
-import { AvaliacaoGestoresProvider } from "./avaliacao-gestores-provider";
+import { AvaliacaoGestoresContent } from "./avaliacao-gestores-content";
+import { AvaliacaoProvider } from "./avaliacao-gestores-provider";
 
 export function AvaliacaoGestores() {
   const [reloadKey, setReloadKey] = useState(0);
@@ -14,9 +14,9 @@ export function AvaliacaoGestores() {
   return (
     <>
       <h2 className="text-2xl font-semibold mb-8 text-black">Avaliação de gestores</h2>
-      <AvaliacaoGestoresProvider key={reloadKey}>
-        <AvaliacaoGestoresDialog onReload={handleReload} />
-      </AvaliacaoGestoresProvider>
+      <AvaliacaoProvider key={reloadKey}>
+        <AvaliacaoGestoresContent onReload={handleReload} />
+      </AvaliacaoProvider>
     </>
   );
 }

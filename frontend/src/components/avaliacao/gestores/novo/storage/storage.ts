@@ -15,5 +15,16 @@ export function getStoredValues(): Partial<FormSchemaType> {
     realizaTreinamentosBoasPraticas: localStorage.getItem("realizaTreinamentosBoasPraticasGestor") || "",
     cargaHoraria: localStorage.getItem("cargaHorariaGestor") || "",
     temasTreinamentos: localStorage.getItem("temasTreinamentosGestor") || "",
+
+    adornosContaminacao: localStorage.getItem("adornosContaminacaoGestor") || "",
+    aguaTransmissaoDoencas: localStorage.getItem("aguaTransmissaoDoencasGestor") || "",
+    higienizacaoMaos: localStorage.getItem("higienizacaoMaosGestor") || "",
+    contatoAlimentosCruCozido: localStorage.getItem("contatoAlimentosCruCozidoGestor") || "",
+    leiteVencido: localStorage.getItem("leiteVencidoGestor") || "",
+    alimentoImproprio: localStorage.getItem("alimentoImproprioGestor") || "",
+    carneMalPassada: localStorage.getItem("carneMalPassadaGestor") || "",
+    lavagemVegetais: localStorage.getItem("lavagemVegetaisGestor") || "",
+    descongelamentoAlimentos: localStorage.getItem("descongelamentoAlimentosGestor") || "",
+    manipuladorDoente: localStorage.getItem("manipuladorDoenteGestor") || "",
   };
 }

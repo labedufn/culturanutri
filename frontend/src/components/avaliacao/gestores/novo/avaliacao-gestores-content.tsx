@@ -7,8 +7,10 @@ import { useFormContext } from "./avaliacao-gestores-provider";
 import { cn } from "@/lib/utils";
 import { AvaliacaoGestoresDadosIndividuaisForm } from "./avaliacao-gestores-dados-individuais-form";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { AvaliacaoGestoresConhecimentoForm } from "./avaliacao-gestores-conhecimento-form";
 
-export function AvaliacaoGestoresDialog({ onReload }: { onReload: () => void }) {
+export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void }) {
   const form = useFormContext();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -63,7 +65,7 @@ export function AvaliacaoGestoresDialog({ onReload }: { onReload: () => void }) 
     <>
       <Button onClick={openDialog}>Avaliar novo gestor</Button>
       <Dialog open={isDialogOpen} onOpenChange={closeDialog}>
-        <DialogContent className="sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll lg:overflow-hidden max-h-screen">
+        <DialogContent className="sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen">
           <DialogHeader>
             <DialogTitle>Avaliação de Gestor</DialogTitle>
           </DialogHeader>
@@ -71,6 +73,11 @@ export function AvaliacaoGestoresDialog({ onReload }: { onReload: () => void }) 
             <h3 className="font-semibold text-black mt-4 mb-2">Dados do individuais</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
               <AvaliacaoGestoresDadosIndividuaisForm />
+            </div>
+            <Separator className="my-8" />
+            <h3 className="font-semibold text-black mt-4 mb-2">Conhecimento</h3>
+            <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
+              <AvaliacaoGestoresConhecimentoForm />
             </div>
           </div>
           <DialogFooter className="flex-col-reverse gap-4 md:gap-0 md:flex-row">

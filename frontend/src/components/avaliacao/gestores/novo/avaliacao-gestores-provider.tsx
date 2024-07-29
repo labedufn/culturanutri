@@ -6,11 +6,11 @@ import { getStoredValues } from "./storage/storage";
 
 const FormContext = createContext<UseFormReturn<FormSchemaType> | null>(null);
 
-interface AvaliacaoGestoresProviderProps {
+interface AvaliacaoProviderProps {
   children: ReactNode;
 }
 
-export function AvaliacaoGestoresProvider({ children }: AvaliacaoGestoresProviderProps) {
+export function AvaliacaoProvider({ children }: AvaliacaoProviderProps) {
   const defaultValues = getStoredValues();
 
   const methods = useForm<FormSchemaType>({
@@ -28,7 +28,7 @@ export function AvaliacaoGestoresProvider({ children }: AvaliacaoGestoresProvide
 export function useFormContext() {
   const context = useContext(FormContext);
   if (!context) {
-    throw new Error("useFormContext must be used within a AvaliacaoGestoresProvider");
+    throw new Error("useFormContext must be used within a AvaliacaoProvider");
   }
   return context;
 }
