@@ -95,7 +95,7 @@ export function StepperAvaliacao() {
     },
     {
       icon: Handshake,
-      tooltip: "Gestor",
+      tooltip: "Gestores",
       content: <AvaliacaoGestores />,
     },
     {
