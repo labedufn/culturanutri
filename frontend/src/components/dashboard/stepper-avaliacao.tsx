@@ -90,7 +90,7 @@ export function StepperAvaliacao() {
   const steps = [
     {
       icon: isEstabelecimentoCadastrado ? Check : UtensilsCrossed,
-      tooltip: "Informações",
+      tooltip: "Cadastrar estabelecimento",
       content: <CadastrarEstabelecimento onSuccess={handleEstabelecimentoSuccess} />,
     },
     {
