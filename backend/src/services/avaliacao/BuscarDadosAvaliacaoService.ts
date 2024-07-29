@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export class BuscarDadosAvaliacaoService {
   async execute(id_estabelecimento: string) {
-    const avaliacao = await prisma.avaliacao.findMany({
+    const avaliacoesBuscadas = await prisma.avaliacao.findMany({
       where: {
         id_estabelecimento: id_estabelecimento,
       },
@@ -17,6 +17,6 @@ export class BuscarDadosAvaliacaoService {
       },
     });
 
-    return avaliacao;
+    return avaliacoesBuscadas;
   }
 }

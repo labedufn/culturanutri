@@ -42,6 +42,7 @@ import { CriarAvaliacaoController } from "@controllers/avaliacao/CriarAvaliacaoC
 import { ExcluirAvaliacaoController } from "@controllers/avaliacao/ExcluirAvaliacaoController";
 import { ListarAvaliacaoController } from "@controllers/avaliacao/ListarAvaliacaoController";
 import { BuscarAvaliacaoController } from "@controllers/avaliacao/BuscarAvaliacaoController";
+import { BuscarDadosAvaliacaoController } from "@controllers/avaliacao/BuscarDadosAvaliacaoController";
 
 export const router = Router();
 
@@ -69,6 +70,7 @@ router.post("/api/cadastrar-avaliacao", authUsuario, new CriarAvaliacaoControlle
 router.put("/api/excluir-avaliacao", authUsuario, new ExcluirAvaliacaoController().handle);
 router.get("/api/listar-avaliacoes", authUsuario, new ListarAvaliacaoController().handle);
 router.get("/api/buscar-avaliacao", authUsuario, new BuscarAvaliacaoController().handle);
+router.get("/api/buscar-dados-avaliacao", authUsuario, new BuscarDadosAvaliacaoController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
