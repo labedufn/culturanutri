@@ -5,7 +5,7 @@ export class Avaliacao {
   data_alteracao: Date;
   ativo: number;
 
-  constructor(id_estabelecimento?: string, slug: string, ativo: number = 1) {
+  constructor(slug: string, ativo: number, id_estabelecimento?: string) {
     this.id_estabelecimento = id_estabelecimento;
     this.slug = slug;
     this.ativo = ativo;

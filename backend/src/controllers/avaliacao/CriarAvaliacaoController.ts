@@ -7,12 +7,12 @@ export class CriarAvaliacaoController {
     const { id_estabelecimento } = req.body;
     const id_usuario = req.id_usuario;
     try {
+      const ativo = 1;
       const buscarEstabelecimento = new BuscarEstabelecimentosService();
-      const estabelecimento = await buscarEstabelecimento.execute(id_estabelecimento, id_usuario);
+      const { estabelecimento } = await buscarEstabelecimento.execute(id_estabelecimento, id_usuario);
+      const slug = "avaliacao/" + estabelecimento["id"];
 
-      const slug = estabelecimento["nome"] + estabelecimento["id"];
-
-      const novaAvaliacao = new Avaliacao(id_estabelecimento, slug);
+      const novaAvaliacao = new Avaliacao(slug, ativo, id_estabelecimento);
       const criarAvaliacaoService = new CriarAvaliacaoService();
       const avaliacao = await criarAvaliacaoService.execute(novaAvaliacao);
 

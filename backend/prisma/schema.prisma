@@ -173,7 +173,7 @@ model CadastroToken {
 
 model Avaliacao {
   id                  String                @id @default(uuid())
-  id_estabelecimento  String                @default("null")
+  id_estabelecimento  String
   slug                String
   data_cadastro       DateTime              @default(now()) @db.Timestamptz(3)
   data_alteracao      DateTime              @updatedAt @db.Timestamptz(3)

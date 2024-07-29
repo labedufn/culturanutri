@@ -39,6 +39,9 @@ import { CalcularListaVerificacaoController } from "@controllers/lista-verificac
 import { CriarResultadoController } from "@controllers/resultado/CriarResultadoController";
 import { BuscarResultadoController } from "@controllers/resultado/BuscarResultadoController";
 import { CriarAvaliacaoController } from "@controllers/avaliacao/CriarAvaliacaoController";
+import { ExcluirAvaliacaoController } from "@controllers/avaliacao/ExcluirAvaliacaoController";
+import { ListarAvaliacaoController } from "@controllers/avaliacao/ListarAvaliacaoController";
+import { BuscarAvaliacaoController } from "@controllers/avaliacao/BuscarAvaliacaoController";
 
 export const router = Router();
 
@@ -63,9 +66,9 @@ router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioContr
 
 // Rotas Avaliação
 router.post("/api/cadastrar-avaliacao", authUsuario, new CriarAvaliacaoController().handle);
-// router.put("/api/editar-avaliacao", authUsuario, new EditarAvaliacaoController().handle);
-// router.get("/api/listar-Avaliacaos", authUsuario, new ListarAvaliacaosController().handle);
-// router.get("/api/buscar-Avaliacao", authUsuario, new BuscarAvaliacaoController().handle);
+router.put("/api/excluir-avaliacao", authUsuario, new ExcluirAvaliacaoController().handle);
+router.get("/api/listar-avaliacoes", authUsuario, new ListarAvaliacaoController().handle);
+router.get("/api/buscar-avaliacao", authUsuario, new BuscarAvaliacaoController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
