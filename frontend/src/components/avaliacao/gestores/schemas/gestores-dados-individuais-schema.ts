@@ -1,6 +1,3 @@
-import React, { createContext, useContext, ReactNode } from "react";
-import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 const schema = z
@@ -16,7 +13,7 @@ const schema = z
     ),
     escolaridade: z.string().min(1, "O campo escolaridade é obrigatório."),
     formacao: z.string().optional().nullable(),
-    naoTenhaFormacaoTemTreinamento: z.string().min(1, "Este campo é obrigatório."),
+    naoTenhaFormacaoTemTreinamento: z.string().optional().nullable(),
     tempoTrabalhaComAlimentos: z.preprocess(
       (value) => (value === "" ? NaN : Number(value)),
       z
@@ -39,6 +36,18 @@ const schema = z
     {
       message: "Formação é obrigatória para escolaridade superior incompleto ou completo.",
       path: ["formacao"],
+    },
+  )
+  .refine(
+    (data) => {
+      if (data.escolaridade !== "5" && data.escolaridade !== "6" && !data.naoTenhaFormacaoTemTreinamento) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Este campo é obrigatório se a escolaridade não é superior incompleto ou completo.",
+      path: ["naoTenhaFormacaoTemTreinamento"],
     },
   )
   .refine(
@@ -66,51 +75,5 @@ const schema = z
     },
   );
 
-type FormSchemaType = z.infer<typeof schema>;
-
-const FormContext = createContext<UseFormReturn<FormSchemaType> | null>(null);
-
-interface AvaliacaoGestoresProviderProps {
-  children: ReactNode;
-}
-
-function getStoredValues(): Partial<FormSchemaType> {
-  return {
-    nomeCompleto: localStorage.getItem("nomeCompletoGestor") || "",
-    genero: localStorage.getItem("generoGestor") || "",
-    idade: localStorage.getItem("idadeGestor") ? Number(localStorage.getItem("idadeGestor")) : undefined,
-    escolaridade: localStorage.getItem("escolaridadeGestor") || "",
-    formacao: localStorage.getItem("formacaoGestor") || "",
-    naoTenhaFormacaoTemTreinamento: localStorage.getItem("naoTenhaFormacaoTemTreinamentoGestor") || "",
-    tempoTrabalhaComAlimentos: localStorage.getItem("tempoTrabalhaComAlimentosGestor")
-      ? Number(localStorage.getItem("tempoTrabalhaComAlimentosGestor"))
-      : undefined,
-    acreditaComunicacaoBoa: localStorage.getItem("acreditaComunicacaoBoaGestor") || "",
-    realizaTreinamentosBoasPraticas: localStorage.getItem("realizaTreinamentosBoasPraticasGestor") || "",
-    cargaHoraria: localStorage.getItem("cargaHorariaGestor") || "",
-    temasTreinamentos: localStorage.getItem("temasTreinamentosGestor") || "",
-  };
-}
-
-export function AvaliacaoGestoresProvider({ children }: AvaliacaoGestoresProviderProps) {
-  const defaultValues = getStoredValues();
-
-  const methods = useForm<FormSchemaType>({
-    resolver: zodResolver(schema),
-    defaultValues,
-  });
-
-  return (
-    <FormContext.Provider value={methods}>
-      <FormProvider {...methods}>{children}</FormProvider>
-    </FormContext.Provider>
-  );
-}
-
-export function useFormContext() {
-  const context = useContext(FormContext);
-  if (!context) {
-    throw new Error("useFormContext must be used within a AvaliacaoGestoresProvider");
-  }
-  return context;
-}
+export type FormSchemaType = z.infer<typeof schema>;
+export default schema;
