@@ -9,7 +9,7 @@ export class CriarAnaliseQuantitativaService {
     let analiseQuantitativaCriada;
     const analiseQuantitativaExiste = await prisma.analiseQuantitativa.findFirst({
       where: {
-        id_estabelecimento: analiseQuantitativa.id_estabelecimento,
+        id_avaliacao: analiseQuantitativa.id_avaliacao,
       },
     });
 
@@ -19,7 +19,7 @@ export class CriarAnaliseQuantitativaService {
           id: analiseQuantitativaExiste.id,
         },
         data: {
-          id_estabelecimento: analiseQuantitativa.id_estabelecimento,
+          id_avaliacao: analiseQuantitativa.id_avaliacao,
           caracteristicas_socio_demograficas: analiseQuantitativa.caracteristicas_socio_demograficas,
           resultados_avaliacao_quantitativas_csa: analiseQuantitativa.resultados_avaliacao_quantitativas_csa,
           vies_otimista: analiseQuantitativa.vies_otimista,
@@ -27,7 +27,7 @@ export class CriarAnaliseQuantitativaService {
         },
         select: {
           id: true,
-          id_estabelecimento: true,
+          id_avaliacao: true,
           caracteristicas_socio_demograficas: true,
           resultados_avaliacao_quantitativas_csa: true,
           vies_otimista: true,
@@ -39,7 +39,7 @@ export class CriarAnaliseQuantitativaService {
     } else {
       analiseQuantitativaCriada = await prisma.analiseQuantitativa.create({
         data: {
-          id_estabelecimento: analiseQuantitativa.id_estabelecimento,
+          id_avaliacao: analiseQuantitativa.id_avaliacao,
           caracteristicas_socio_demograficas: analiseQuantitativa.caracteristicas_socio_demograficas,
           resultados_avaliacao_quantitativas_csa: analiseQuantitativa.resultados_avaliacao_quantitativas_csa,
           vies_otimista: analiseQuantitativa.vies_otimista,
@@ -47,7 +47,7 @@ export class CriarAnaliseQuantitativaService {
         },
         select: {
           id: true,
-          id_estabelecimento: true,
+          id_avaliacao: true,
           caracteristicas_socio_demograficas: true,
           resultados_avaliacao_quantitativas_csa: true,
           vies_otimista: true,

@@ -5,13 +5,13 @@ import { Request, Response } from "express";
 
 export class CriarListaVerificacaoController {
   async handle(req: Request, res: Response) {
-    const { json_informacoes, id_estabelecimento } = req.body;
+    const { json_informacoes, id_avaliacao } = req.body;
 
     try {
       const ativo = 1;
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
 
-      const novaListaVerificacao = new ListaVerificacao(informacoes, id_estabelecimento, ativo);
+      const novaListaVerificacao = new ListaVerificacao(informacoes, id_avaliacao, ativo);
       const criarListaVerificacaoService = new CriarListaVerificacaoService();
       const listaVerificacao = await criarListaVerificacaoService.execute(novaListaVerificacao);
 

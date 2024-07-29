@@ -4,14 +4,14 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 const prisma = new PrismaClient();
 
 export class BuscarResultadoService {
-  async execute(id_estabelecimento: string) {
+  async execute(id_avaliacao: string) {
     const resultado = await prisma.resultado.findFirst({
       where: {
-        id_estabelecimento: id_estabelecimento,
+        id_avaliacao: id_avaliacao,
       },
       select: {
         id: true,
-        id_estabelecimento: true,
+        id_avaliacao: true,
         id_triangulacao: true,
         informacoes: true,
       },

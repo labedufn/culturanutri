@@ -8,15 +8,15 @@ import { Request, Response } from "express";
 
 export class CriarAnaliseQuantitativaController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_avaliacao } = req.body;
 
     try {
       const listarGestoresService = new ListarGestoresService();
       const listarManipuladoresAlimentoService = new ListarManipuladoresAlimentoService();
       const calcularAnaliseQuantitativaService = new CalcularAnaliseQuantitativaService();
 
-      const manipuladores = await listarManipuladoresAlimentoService.execute(id_estabelecimento);
-      const gestores = await listarGestoresService.execute(id_estabelecimento);
+      const manipuladores = await listarManipuladoresAlimentoService.execute(id_avaliacao);
+      const gestores = await listarGestoresService.execute(id_avaliacao);
 
       const {
         json_caracteristicas_socio_demograficas,
@@ -37,7 +37,7 @@ export class CriarAnaliseQuantitativaController {
       const { vies_otimista } = await converterBase64JSON(json_vies_otimista, "vies_otimista");
 
       const analiseQuantitativa = new AnaliseQuantitativa(
-        id_estabelecimento,
+        id_avaliacao,
         caracteristicas_socio_demograficas,
         resultados_avaliacao_quantitativas_csa,
         vies_otimista,

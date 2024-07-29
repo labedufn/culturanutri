@@ -9,7 +9,7 @@ import { Request, Response } from "express";
 
 export class CalcularTriangulacaoController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_avaliacao } = req.body;
 
     try {
       const calcularTriangulacaoService = new CalcularTriangulacaoService();
@@ -18,9 +18,9 @@ export class CalcularTriangulacaoController {
       const buscarAnaliseQuantitativaService = new BuscarAnaliseQuantitativaService();
       const buscarListaVerificacao = new BuscarListaVerificacaoService();
 
-      const analiseQualitativa = await buscarAnaliseQualitativaService.execute(id_estabelecimento);
-      const analiseQuantitativa = await buscarAnaliseQuantitativaService.execute(id_estabelecimento);
-      const listaVerificacao = await buscarListaVerificacao.execute(id_estabelecimento);
+      const analiseQualitativa = await buscarAnaliseQualitativaService.execute(id_avaliacao);
+      const analiseQuantitativa = await buscarAnaliseQuantitativaService.execute(id_avaliacao);
+      const listaVerificacao = await buscarListaVerificacao.execute(id_avaliacao);
 
       const { informacoes } = await calcularTriangulacaoService.execute(
         analiseQualitativa,
@@ -31,7 +31,7 @@ export class CalcularTriangulacaoController {
 
       const { informacoesCodificadas } = await converterBase64JSON(informacoes, "informacoesCodificadas");
 
-      const triangulacao = new Triangulacao(id_estabelecimento, informacoesCodificadas, ativo);
+      const triangulacao = new Triangulacao(id_avaliacao, informacoesCodificadas, ativo);
       const triangulacaoCalculada = await criarTriangulacaoService.execute(triangulacao);
 
       return res.json(triangulacaoCalculada);

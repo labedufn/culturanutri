@@ -3,11 +3,11 @@ import { Request, Response } from "express";
 
 export class BuscarAnaliseQuantitativaController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_avaliacao } = req.body;
 
     try {
       const buscarAnaliseQuantitativaService = new BuscarAnaliseQuantitativaService();
-      const analiseQuantitativa = await buscarAnaliseQuantitativaService.execute(id_estabelecimento);
+      const analiseQuantitativa = await buscarAnaliseQuantitativaService.execute(id_avaliacao);
 
       return res.json(analiseQuantitativa);
     } catch (error) {

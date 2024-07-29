@@ -5,12 +5,12 @@ import { Request, Response } from "express";
 
 export class EditarGestorController {
   async handle(req: Request, res: Response) {
-    const { id_gestor, json_informacoes, id_estabelecimento, ativo } = req.body;
+    const { id_gestor, json_informacoes, id_avaliacao, ativo } = req.body;
 
     try {
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
 
-      const gestor = new Gestor(informacoes, id_estabelecimento, ativo);
+      const gestor = new Gestor(informacoes, id_avaliacao, ativo);
       const editarGestorService = new EditarGestosService();
       const gestorAlterado = await editarGestorService.execute(id_gestor, gestor);
 

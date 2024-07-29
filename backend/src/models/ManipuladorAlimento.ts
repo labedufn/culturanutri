@@ -1,11 +1,11 @@
 export class ManipuladorAlimento {
   informacoes: any;
-  id_estabelecimento: string;
+  id_avaliacao: string;
   ativo: number;
 
-  constructor(informacoes: unknown, id_estabelecimento: string, ativo: number = 1) {
+  constructor(informacoes: unknown, id_avaliacao: string, ativo: number = 1) {
     this.informacoes = informacoes;
-    this.id_estabelecimento = id_estabelecimento;
+    this.id_avaliacao = id_avaliacao;
     this.ativo = ativo;
   }
 }

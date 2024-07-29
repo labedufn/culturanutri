@@ -4,6 +4,7 @@ export class BuscarAvaliacaoController {
   async handle(req: Request, res: Response) {
     const { id_avaliacao } = req.body;
     try {
+      //haverá alterações - aqui traremos TODOS os dados dessa avaliacao
       const buscarAvaliacaoService = new BuscarAvaliacaoService();
       const avaliacao = await buscarAvaliacaoService.execute(id_avaliacao);
 

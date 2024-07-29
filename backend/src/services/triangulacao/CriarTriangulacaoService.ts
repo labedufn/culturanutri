@@ -9,7 +9,7 @@ export class CriarTriangulacaoService {
     let triangulacaoNova;
     const triangulacaoExiste = await prisma.triangulacao.findFirst({
       where: {
-        id_estabelecimento: triangulacao.id_estabelecimento,
+        id_avaliacao: triangulacao.id_avaliacao,
       },
     });
 
@@ -24,7 +24,7 @@ export class CriarTriangulacaoService {
         select: {
           id: true,
           informacoes: true,
-          id_estabelecimento: true,
+          id_avaliacao: true,
           data_cadastro: true,
           data_alteracao: true,
         },
@@ -33,12 +33,12 @@ export class CriarTriangulacaoService {
       triangulacaoNova = await prisma.triangulacao.create({
         data: {
           informacoes: triangulacao.informacoes,
-          id_estabelecimento: triangulacao.id_estabelecimento,
+          id_avaliacao: triangulacao.id_avaliacao,
         },
         select: {
           id: true,
           informacoes: true,
-          id_estabelecimento: true,
+          id_avaliacao: true,
           data_cadastro: true,
           data_alteracao: true,
         },

@@ -7,19 +7,19 @@ import { Request, Response } from "express";
 
 export class CriarResultadoController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_estabelecimento, id_avaliacao } = req.body;
 
     try {
       const buscarTriangulacaoService = new BuscarTriangulacaoService();
       const criarResultadoService = new CriarResultadoService();
       const calcularResultadoService = new CalcularResultadoService();
-      const triangulacao = await buscarTriangulacaoService.execute(id_estabelecimento);
+      const triangulacao = await buscarTriangulacaoService.execute(id_avaliacao);
 
       const { informacoes } = await calcularResultadoService.execute(triangulacao);
 
       const { informacoesCodificadas } = await converterBase64JSON(informacoes, "informacoesCodificadas");
 
-      const resultado = new Resultado(informacoesCodificadas, id_estabelecimento, triangulacao.id);
+      const resultado = new Resultado(informacoesCodificadas, id_avaliacao, id_estabelecimento, triangulacao.id);
       const resultadoCriado = await criarResultadoService.execute(resultado);
 
       return res.json(resultadoCriado);

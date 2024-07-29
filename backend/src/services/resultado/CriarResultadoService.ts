@@ -6,9 +6,11 @@ const prisma = new PrismaClient();
 
 export class CriarResultadoService {
   async execute(resultado: Resultado) {
+    console.log(resultado);
     let resultadoCriado;
     const resultadoExiste = await prisma.resultado.findFirst({
       where: {
+        id_avaliacao: resultado.id_avaliacao,
         id_estabelecimento: resultado.id_estabelecimento,
         id_triangulacao: resultado.id_triangulacao,
       },
@@ -20,12 +22,14 @@ export class CriarResultadoService {
           id: resultadoExiste.id,
         },
         data: {
+          id_avaliacao: resultado.id_avaliacao,
           id_estabelecimento: resultado.id_estabelecimento,
           id_triangulacao: resultado.id_triangulacao,
           informacoes: resultado.informacoes,
         },
         select: {
           id: true,
+          id_avaliacao: true,
           id_estabelecimento: true,
           id_triangulacao: true,
           informacoes: true,
@@ -34,12 +38,14 @@ export class CriarResultadoService {
     } else {
       resultadoCriado = await prisma.resultado.create({
         data: {
+          id_avaliacao: resultado.id_avaliacao,
           id_estabelecimento: resultado.id_estabelecimento,
           id_triangulacao: resultado.id_triangulacao,
           informacoes: resultado.informacoes,
         },
         select: {
           id: true,
+          id_avaliacao: true,
           id_estabelecimento: true,
           id_triangulacao: true,
           informacoes: true,

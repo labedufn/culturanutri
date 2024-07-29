@@ -4,10 +4,10 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 const prisma = new PrismaClient();
 
 export class BuscarListaVerificacaoService {
-  async execute(id_estabelecimento: string) {
+  async execute(id_avaliacao: string) {
     const listaVerificacaoBuscada = await prisma.listaVerificacao.findFirst({
       where: {
-        id_estabelecimento: id_estabelecimento,
+        id_avaliacao: id_avaliacao,
         ativo: 1,
       },
       select: {

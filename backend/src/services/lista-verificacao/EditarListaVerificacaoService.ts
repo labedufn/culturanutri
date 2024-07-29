@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 
 export class EditarListaVerificacaoService {
   async execute(id_lista_verificacao: string, listaVerificacao: ListaVerificacao) {
-    console.log(listaVerificacao);
     const listaVerificacaoCriada = await prisma.listaVerificacao.update({
       where: {
         id: id_lista_verificacao,

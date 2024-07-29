@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 export class CalcularListaVerificacaoController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_avaliacao } = req.body;
 
     try {
       const ativo = 1;
@@ -15,12 +15,12 @@ export class CalcularListaVerificacaoController {
       const buscarListaVerificacaoService = new BuscarListaVerificacaoService();
       const calcularListaVerificacaoService = new CalcularListaVerificacaoService();
 
-      const lista = await buscarListaVerificacaoService.execute(id_estabelecimento);
+      const lista = await buscarListaVerificacaoService.execute(id_avaliacao);
       const { informacoesCalculadas } = await calcularListaVerificacaoService.execute(lista.informacoesDecodificadas);
 
       const { informacoes } = await converterBase64JSON(informacoesCalculadas, "informacoes");
 
-      const listaVerificacao = new ListaVerificacao(informacoes, id_estabelecimento, ativo);
+      const listaVerificacao = new ListaVerificacao(informacoes, id_avaliacao, ativo);
       const listaVerificacaoCalculada = await editarListaVerificacaoService.execute(lista.id, listaVerificacao);
 
       return res.json(listaVerificacaoCalculada);

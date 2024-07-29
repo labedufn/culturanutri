@@ -9,16 +9,16 @@ export class EditarAnaliseQualitativaService {
     const analiseQualitativaEditada = await prisma.analiseQualitativa.update({
       where: {
         id: idAnaliseQualitativa,
-        id_estabelecimento: analiseQualitativa.id_estabelecimento,
+        id_avaliacao: analiseQualitativa.id_avaliacao,
       },
       data: {
-        id_estabelecimento: analiseQualitativa.id_estabelecimento,
+        id_avaliacao: analiseQualitativa.id_avaliacao,
         informacoes: analiseQualitativa.informacoes,
         ativo: analiseQualitativa.ativo,
       },
       select: {
         id: true,
-        id_estabelecimento: true,
+        id_avaliacao: true,
         informacoes: true,
         data_cadastro: true,
         data_alteracao: true,
