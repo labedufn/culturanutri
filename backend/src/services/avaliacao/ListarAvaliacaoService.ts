@@ -17,8 +17,6 @@ export class ListarAvaliacaoService {
       },
     });
 
-    console.log(avaliacoes);
-
     return avaliacoes;
   }
 }
