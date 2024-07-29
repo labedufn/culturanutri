@@ -5,10 +5,10 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 const prisma = new PrismaClient();
 
 export class ListarGestoresService {
-  async execute(idAvaliacao: string): Promise<Gestor[]> {
+  async execute(): Promise<Gestor[]> {
     const gestores = await prisma.gestores.findMany({
       where: {
-        id_avaliacao: idAvaliacao,
+        ativo: 1,
       },
       select: {
         id: true,
@@ -22,7 +22,6 @@ export class ListarGestoresService {
 
     const decodedGestores = await Promise.all(
       gestores.map(async (gestor) => ({
-        idAvaliacao,
         ...gestor,
         informacoes: await desconverterBase64JSON(gestor.informacoes),
       })),

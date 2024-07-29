@@ -3,11 +3,9 @@ import { Request, Response } from "express";
 
 export class ListarGestoresController {
   async handle(req: Request, res: Response) {
-    const { id_avaliacao } = req.body;
-
     try {
       const listarGestoresService = new ListarGestoresService();
-      const gestores = await listarGestoresService.execute(id_avaliacao);
+      const gestores = await listarGestoresService.execute();
 
       return res.json(gestores);
     } catch (error) {
