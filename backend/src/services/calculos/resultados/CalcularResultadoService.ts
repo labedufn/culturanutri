@@ -23,7 +23,7 @@ export class CalcularResultadoService {
         comunicacao: triangulacao["informacoesDecodificadas"].comunicacao.triangulacao.escore_elemento,
         conhecimento: triangulacao["informacoesDecodificadas"].conhecimento.triangulacao.escore_elemento,
         comprometimento: triangulacao["informacoesDecodificadas"].comprometimento.triangulacao.escore_elemento,
-        percepcao_risco: "",
+        percepcao_risco: triangulacao["informacoesDecodificadas"].percepcao_risco.triangulacao.escore_elemento,
         pressao_trabalho_crencas_normativas:
           triangulacao["informacoesDecodificadas"].pressao_trabalho_crencas_normativas.triangulacao.escore_elemento,
         ambiente_trabalho: triangulacao["informacoesDecodificadas"].ambiente_trabalho.triangulacao.escore_elemento,

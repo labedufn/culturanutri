@@ -201,53 +201,53 @@ export class CalcularTriangulacaoService {
 
   private percepcaoRisco(valor1, valor2) {
     if (valor1 === -3 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
-      return "1";
+      return 1;
     } else if (valor1 <= -1.1 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
-      return "1";
+      return 1;
     } else if (valor1 === -1 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
-      return "2";
+      return 2;
     } else if (valor1 <= 1.9 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
-      return "2";
+      return 2;
     } else if (valor1 === 2 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
-      return "3";
+      return 3;
     } else if (valor1 <= 3 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
-      return "3";
+      return 3;
     } else {
-      return "";
+      return 4;
     }
   }
 
   private analisarQuantitativas(valor) {
     if (valor === -3) {
-      return "1";
+      return 1;
     } else if (valor <= -1.1) {
-      return "1";
+      return 1;
     } else if (valor === -1) {
-      return "2";
+      return 2;
     } else if (valor <= 1.9) {
-      return "2";
+      return 2;
     } else if (valor === 2) {
-      return "3";
+      return 3;
     } else if (valor <= 3) {
-      return "3";
+      return 3;
     } else {
-      return "";
+      return 4;
     }
   }
 
   private percepcaoRiscoPorcentagem(valor1, valor2) {
     if (valor1 === 0 && valor2 === 0) {
-      return "1";
+      return 1;
     } else if (valor1 <= 0.05 && valor2 <= 0.05) {
-      return "1";
+      return 1;
     } else if (valor1 === 0.06 && valor2 === 0.06) {
-      return "2";
+      return 2;
     } else if (valor1 <= 0.999 && valor2 <= 0.999) {
-      return "2";
+      return 2;
     } else if (valor1 <= 1 && valor2 <= 1) {
-      return "3";
+      return 3;
     } else {
-      return "";
+      return 4;
     }
   }
 
