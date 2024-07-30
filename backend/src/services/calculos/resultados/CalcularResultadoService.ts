@@ -16,6 +16,22 @@ export class CalcularResultadoService {
       return "";
     }
   }
+
+  private converterValor(celula) {
+    if (celula === "1") {
+      return 1;
+    } else if (celula === "1->2") {
+      return 1.5;
+    } else if (celula === "2") {
+      return 2;
+    } else if (celula === "2->3") {
+      return 2.5;
+    } else if (celula === "3") {
+      return 3;
+    } else {
+      return null;
+    }
+  }
   async execute(triangulacao: Triangulacao) {
     const informacoes = {
       triangulacao: {
@@ -32,6 +48,20 @@ export class CalcularResultadoService {
         csa: triangulacao["informacoesDecodificadas"].escore_elemento,
         resultado: this.categorizar(triangulacao["informacoesDecodificadas"].escore_elemento),
       },
+    };
+
+    informacoes["resultado"] = {
+      liderança: this.converterValor(informacoes["triangulacao"].liderança),
+      comunicacao: this.converterValor(informacoes["triangulacao"].comunicacao),
+      conhecimento: this.converterValor(informacoes["triangulacao"].conhecimento),
+      comprometimento: this.converterValor(informacoes["triangulacao"].comprometimento),
+      percepcao_risco: this.converterValor(informacoes["triangulacao"].percepcao_risco),
+      pressao_trabalho_crencas_normativas: this.converterValor(
+        informacoes["triangulacao"].pressao_trabalho_crencas_normativas,
+      ),
+      ambiente_trabalho: this.converterValor(informacoes["triangulacao"].ambiente_trabalho),
+      sistema_estilos_gestao: this.converterValor(informacoes["triangulacao"].sistema_estilos_gestao),
+      csa: this.converterValor(informacoes["triangulacao"].csa),
     };
 
     return { informacoes };
