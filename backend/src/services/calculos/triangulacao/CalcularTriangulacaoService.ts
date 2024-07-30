@@ -199,6 +199,58 @@ export class CalcularTriangulacaoService {
     }
   }
 
+  private percepcaoRisco(valor1, valor2) {
+    if (valor1 === -3 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
+      return "1";
+    } else if (valor1 <= -1.1 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
+      return "1";
+    } else if (valor1 === -1 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
+      return "2";
+    } else if (valor1 <= 1.9 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
+      return "2";
+    } else if (valor1 === 2 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
+      return "3";
+    } else if (valor1 <= 3 || valor2 === "Médio Risco" || valor2 === "Alto Risco" || valor2 === "Muito Alto Risco") {
+      return "3";
+    } else {
+      return "";
+    }
+  }
+
+  private analisarQuantitativas(valor) {
+    if (valor === -3) {
+      return "1";
+    } else if (valor <= -1.1) {
+      return "1";
+    } else if (valor === -1) {
+      return "2";
+    } else if (valor <= 1.9) {
+      return "2";
+    } else if (valor === 2) {
+      return "3";
+    } else if (valor <= 3) {
+      return "3";
+    } else {
+      return "";
+    }
+  }
+
+  private percepcaoRiscoPorcentagem(valor1, valor2) {
+    if (valor1 === 0 && valor2 === 0) {
+      return "1";
+    } else if (valor1 <= 0.05 && valor2 <= 0.05) {
+      return "1";
+    } else if (valor1 === 0.06 && valor2 === 0.06) {
+      return "2";
+    } else if (valor1 <= 0.999 && valor2 <= 0.999) {
+      return "2";
+    } else if (valor1 <= 1 && valor2 <= 1) {
+      return "3";
+    } else {
+      return "";
+    }
+  }
+
   async execute(analiseQualitativa: JSON, analiseQuantitativa: JSON, listaVerificacao: JSON) {
     const informacoes = {};
 
@@ -628,6 +680,41 @@ export class CalcularTriangulacaoService {
       },
     };
 
+    //falta fazer
+    informacoes["percepcao_risco"] = {
+      escore_analise_quantitativa: {
+        0: this.percepcaoRisco(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].percepcao_risco.proprio_trabalho
+            .manipuladores.media,
+          listaVerificacao["informacoesDecodificadas"].classificacao,
+        ),
+        1: analiseQualitativa["informacoesDecodificadas"].percepcao_risco
+          .trabalhadores_entendem_julgam_situacoes_risco_tomam_decisoes.escore,
+        2: this.analisarQuantitativas(
+          analiseQuantitativa["resultadosAvaliacaoQuantitativasCSADecodificadas"].percepcao_risco.letalidade
+            .manipuladores.media,
+        ),
+        3: this.percepcaoRiscoPorcentagem(
+          analiseQuantitativa["viesOtimistaDecodificado"].percepcao_risco.manipulador_alimento
+            .outro_manipulador_outro_servico.teste_estatistico,
+          analiseQuantitativa["viesOtimistaDecodificado"].percepcao_risco.manipulador_alimento
+            .outro_manipulador_mesmo_servico.teste_estatistico,
+        ),
+      },
+      escore_analise_qualitativa: {
+        0: this.calcularAnaliseQualitativa(
+          analiseQualitativa["informacoesDecodificadas"].sistema_gestao
+            .equipe_motivada_implementar_praticas_seguras_ferramentas_qualidade.escore,
+        ),
+        1: analiseQualitativa["informacoesDecodificadas"].percepcao_risco
+          .trabalhadores_entendem_julgam_situacoes_risco_tomam_decisoes.escore,
+        2: analiseQualitativa["informacoesDecodificadas"].sistema_gestao
+          .programas_pre_requisito_haccp_sistema_boas_praticas_higiene_implementados.valor,
+        3: analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho
+          .adequacao_ambiente_frequente_necessidade_local_nao_inspecoes.valor,
+      },
+    };
+
     //informacoes valor_medio (geral)
     informacoes["valor_medio"] = this.calcularMedia(
       informacoes["lideranca"].triangulacao.valor_medio,
@@ -637,14 +724,11 @@ export class CalcularTriangulacaoService {
       informacoes["pressao_trabalho_crencas_normativas"].triangulacao.valor_medio,
       informacoes["ambiente_trabalho"].triangulacao.valor_medio,
       informacoes["sistema_estilos_gestao"].triangulacao.valor_medio,
+      informacoes["percepcao_risco"].triangulacao.valor_medio,
     );
 
     //informacoes escore_elemento (geral)
     informacoes["escore_elemento"] = this.verificarValor(informacoes["valor_medio"]);
-
-    //falta fazer
-    //informacoes percepcao_risco (esse ficará em falta pois possui erros no excel)
-    informacoes["percepcao_risco"] = {};
 
     return { informacoes: informacoes };
   }
