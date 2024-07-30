@@ -4,15 +4,15 @@ import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 const prisma = new PrismaClient();
 
 export class BuscarTriangulacaoService {
-  async execute(id_estabelecimento: string) {
+  async execute(id_avaliacao: string) {
     const triangulacao = await prisma.triangulacao.findFirst({
-      data: {
-        id_estabelecimento: id_estabelecimento,
+      where: {
+        id_avaliacao: id_avaliacao,
       },
       select: {
         id: true,
         informacoes: true,
-        id_estabelecimento: true,
+        id_avaliacao: true,
         data_cadastro: true,
         data_alteracao: true,
       },

@@ -1,6 +1,7 @@
 import { Gestor } from "@models/Gestor";
 import { ManipuladorAlimento } from "@models/ManipuladorAlimento";
 import { mean, std, mode } from "mathjs";
+import * as jStat from "jstat";
 
 export class CalcularAnaliseQuantitativaService {
   jStat = require("jstat");
@@ -144,19 +145,45 @@ export class CalcularAnaliseQuantitativaService {
     }
   }
 
-  private calcularTesteT(sample1, sample2) {
-    const result = this.jStat.ttest(sample1, sample2, { type: "two" });
-    return result;
+  private calcularTesteT(sample1: number[], sample2: number[]): number {
+    try {
+      const result = this.jStat.ttest(sample1, sample2, 2, { type: "two" });
+      console.log("Result:", result);
+      if (isNaN(result)) {
+        return 0;
+      }
+      return result;
+    } catch (error) {
+      return 0;
+    }
   }
 
-  private buscaValores(objeto, propriedade, outraPropriedade) {
-    Object.keys(objeto).forEach((key) => {
-      const gestor = objeto[key];
-      const sample1 = gestor.informacoes.percepcao_risco[propriedade];
-      const sample2 = gestor.informacoes.percepcao_risco[outraPropriedade];
+  private buscaValores(objeto: any, propriedade: string, outraPropriedade: string, manipulador?: boolean): number {
+    const resultados: number[] = [];
 
-      return this.calcularTesteT(sample1, sample2);
-    });
+    if (manipulador) {
+      Object.keys(objeto).forEach((key) => {
+        const manipulador = objeto[key];
+        const sample1 = manipulador.informacoes.percepcao_risco[propriedade];
+        const sample2 = manipulador.informacoes.percepcao_risco[outraPropriedade];
+        console.log("Sample1:", sample1, "Sample2:", sample2);
+        const resultado = this.calcularTesteT(sample1, sample2);
+        resultados.push(resultado);
+      });
+    } else {
+      Object.keys(objeto).forEach((key) => {
+        const gestor = objeto[key];
+        const sample1 = gestor.informacoes.percepcao_risco[propriedade];
+        const sample2 = gestor.informacoes.percepcao_risco[outraPropriedade];
+        const resultado = this.calcularTesteT(sample1, sample2);
+        resultados.push(resultado);
+      });
+    }
+
+    const somaResultados = resultados.reduce((acc, curr) => acc + curr, 0);
+    const mediaResultados = somaResultados / resultados.length;
+
+    return mediaResultados;
   }
 
   private calcularEstatisticas(entities: { informacoes: any }[], propriedade: string) {
@@ -330,6 +357,8 @@ export class CalcularAnaliseQuantitativaService {
         vies_otimista["gestores"].outros_servicos_alimentacao.vies;
       vies_otimista.gestores.proprio_servico_alimentacao.nota =
         vies_otimista["gestores"].outros_servicos_alimentacao.nota;
+      vies_otimista.gestores.proprio_servico_alimentacao.teste_estatistico =
+        vies_otimista["gestores"].outros_servicos_alimentacao.teste_estatistico;
 
       vies_otimista["manipuladores"] = {
         outro_manipulador_outro_servico: {
@@ -356,6 +385,7 @@ export class CalcularAnaliseQuantitativaService {
             manipuladores,
             "risco_apresentar_dor_barriga_estabelecimento_similar",
             "risco_apresentar_dor_barriga_estabelecimento_colega_manipulado",
+            true,
           ),
         },
       };

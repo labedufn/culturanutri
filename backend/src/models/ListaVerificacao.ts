@@ -1,11 +1,11 @@
 export class ListaVerificacao {
   informacoes: any;
-  id_estabelecimento: string;
+  id_avaliacao: string;
   ativo: number;
 
-  constructor(informacoes: unknown, id_estabelecimento: string, ativo: number) {
+  constructor(informacoes: unknown, id_avaliacao: string, ativo: number) {
     this.informacoes = informacoes;
-    this.id_estabelecimento = id_estabelecimento;
+    this.id_avaliacao = id_avaliacao;
     this.ativo = ativo;
   }
 }

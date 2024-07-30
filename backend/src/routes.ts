@@ -37,6 +37,12 @@ import { CriarListaVerificacaoController } from "@controllers/lista-verificacao/
 import { EditarListaVerificacaoController } from "@controllers/lista-verificacao/EditarListaVerificacaoController";
 import { CalcularListaVerificacaoController } from "@controllers/lista-verificacao/CalcularListaVerificacaoController";
 import { CriarResultadoController } from "@controllers/resultado/CriarResultadoController";
+import { BuscarResultadoController } from "@controllers/resultado/BuscarResultadoController";
+import { CriarAvaliacaoController } from "@controllers/avaliacao/CriarAvaliacaoController";
+import { ExcluirAvaliacaoController } from "@controllers/avaliacao/ExcluirAvaliacaoController";
+import { ListarAvaliacaoController } from "@controllers/avaliacao/ListarAvaliacaoController";
+import { BuscarAvaliacaoController } from "@controllers/avaliacao/BuscarAvaliacaoController";
+import { BuscarDadosAvaliacaoController } from "@controllers/avaliacao/BuscarDadosAvaliacaoController";
 
 export const router = Router();
 
@@ -58,6 +64,13 @@ router.get("/api/buscar-usuario", authUsuario, new BuscarUsuarioController().han
 router.get("/api/listar-infos", authUsuario, new ListarInformacoesUsuarioController().handle);
 router.get("/api/listar-convites", authAdministrador, new ListarConvitesCadastroController().handle);
 router.delete("/api/excluir-usuario", authAdministrador, new ExcluirUsuarioController().handle);
+
+// Rotas Avaliação
+router.post("/api/cadastrar-avaliacao", authUsuario, new CriarAvaliacaoController().handle);
+router.put("/api/excluir-avaliacao", authUsuario, new ExcluirAvaliacaoController().handle);
+router.get("/api/listar-avaliacoes", authUsuario, new ListarAvaliacaoController().handle);
+router.get("/api/buscar-avaliacao", authUsuario, new BuscarAvaliacaoController().handle);
+router.get("/api/buscar-dados-avaliacao", authUsuario, new BuscarDadosAvaliacaoController().handle);
 
 // Rotas Estabelecimento
 router.post("/api/cadastrar-estabelecimento", authUsuario, new CriarEstabelecimentoController().handle);
@@ -97,4 +110,5 @@ router.post("/api/editar-lista-verificacao", authUsuario, new EditarListaVerific
 router.post("/api/calcular-lista-verificacao", authUsuario, new CalcularListaVerificacaoController().handle);
 
 // Rotas Resultado
-router.post("/api/criar-resultado", new CriarResultadoController().handle);
+router.post("/api/criar-resultado", authUsuario, new CriarResultadoController().handle);
+router.post("/api/buscar-resultado", authUsuario, new BuscarResultadoController().handle);

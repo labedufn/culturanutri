@@ -13,25 +13,25 @@ enum TipoUsuario {
 }
 
 model Gestores {
-  id                 String          @id @default(uuid())
-  id_estabelecimento String
-  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
-  informacoes        String          @db.Text
-  ativo              Int             @default(1)
-  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  id             String    @id @default(uuid())
+  id_avaliacao   String
+  data_cadastro  DateTime  @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime  @updatedAt @db.Timestamptz(3)
+  informacoes    String    @db.Text
+  ativo          Int       @default(1)
+  avaliacao      Avaliacao @relation(fields: [id_avaliacao], references: [id])
 
   @@map("gestores")
 }
 
 model ManipuladorAlimento {
-  id                 String          @id @default(uuid())
-  id_estabelecimento String
-  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
-  informacoes        String          @db.Text
-  ativo              Int             @default(1)
-  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  id             String    @id @default(uuid())
+  id_avaliacao   String
+  data_cadastro  DateTime  @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime  @updatedAt @db.Timestamptz(3)
+  informacoes    String    @db.Text
+  ativo          Int       @default(1)
+  avaliacao      Avaliacao @relation(fields: [id_avaliacao], references: [id])
 
   AnaliQuantitativa AnaliseQuantitativa[]
 
@@ -39,51 +39,38 @@ model ManipuladorAlimento {
 }
 
 model ListaVerificacao {
-  id                 String          @id @default(uuid())
-  informacoes        String          @db.Text
-  id_estabelecimento String
-  ativo              Int             @default(1)
-  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
-  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  id             String    @id @default(uuid())
+  informacoes    String    @db.Text
+  id_avaliacao   String
+  ativo          Int       @default(1)
+  data_cadastro  DateTime  @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime  @updatedAt @db.Timestamptz(3)
+  avaliacao      Avaliacao @relation(fields: [id_avaliacao], references: [id])
 
   @@map("listas_verificacoes")
 }
 
-model TabelaAuxiliar {
-  id                       String @id @default(uuid())
-  codigo_tabela            Int
-  descricao                String @db.VarChar(255)
-  item_tabela              Int
-  id_listas_verificacoes   String
-  id_triangulacoes         String
-  id_analises_qualitativas String
-  id_resultados            String
-
-  @@map("tabelas_auxiliares")
-}
-
 model AnaliseQualitativa {
-  id                 String          @id @default(uuid())
-  id_estabelecimento String
-  informacoes        String          @db.Text
-  data_cadastro      DateTime        @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime        @updatedAt @db.Timestamptz(3)
-  estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
-  ativo              Int             @default(1)
+  id             String    @id @default(uuid())
+  id_avaliacao   String
+  informacoes    String    @db.Text
+  data_cadastro  DateTime  @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime  @updatedAt @db.Timestamptz(3)
+  avaliacao      Avaliacao @relation(fields: [id_avaliacao], references: [id])
+  ativo          Int       @default(1)
 
   @@map("analises_qualitativas")
 }
 
 model Triangulacao {
-  id                 String   @id @default(uuid())
-  id_estabelecimento String
-  informacoes        String   @db.Text
-  data_cadastro      DateTime @default(now()) @db.Timestamptz(3)
-  data_alteracao     DateTime @updatedAt @db.Timestamptz(3)
+  id             String   @id @default(uuid())
+  id_avaliacao   String
+  informacoes    String   @db.Text
+  data_cadastro  DateTime @default(now()) @db.Timestamptz(3)
+  data_alteracao DateTime @updatedAt @db.Timestamptz(3)
 
-  Resultado       Resultado[]
-  Estabelecimento Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  Resultado Resultado[]
+  avaliacao Avaliacao   @relation(fields: [id_avaliacao], references: [id])
 
   @@map("triangulacoes")
 }
@@ -92,23 +79,25 @@ model Resultado {
   id                 String          @id @default(uuid())
   id_estabelecimento String
   id_triangulacao    String
+  id_avaliacao       String
   informacoes        String          @db.Text
   triangulacao       Triangulacao    @relation(fields: [id_triangulacao], references: [id])
   estabelecimento    Estabelecimento @relation(fields: [id_estabelecimento], references: [id])
+  avaliacao          Avaliacao       @relation(fields: [id_avaliacao], references: [id])
 
   @@map("resultados")
 }
 
 model AnaliseQuantitativa {
   id                                     String               @id @default(uuid())
-  id_estabelecimento                     String
+  id_avaliacao                           String
   caracteristicas_socio_demograficas     String               @db.Text
   resultados_avaliacao_quantitativas_csa String               @db.Text
   vies_otimista                          String               @db.Text
   data_cadastro                          DateTime             @default(now()) @db.Timestamptz(3)
   data_alteracao                         DateTime             @updatedAt @db.Timestamptz(3)
   ativo                                  Int                  @default(1)
-  estabelecimento                        Estabelecimento      @relation(fields: [id_estabelecimento], references: [id])
+  avaliacao                              Avaliacao            @relation(fields: [id_avaliacao], references: [id])
   ManipuladorAlimento                    ManipuladorAlimento? @relation(fields: [manipuladorAlimentoId], references: [id])
   manipuladorAlimentoId                  String?
 
@@ -116,26 +105,21 @@ model AnaliseQuantitativa {
 }
 
 model Estabelecimento {
-  id                               String                @id @default(uuid())
-  nome                             String                @db.VarChar(255)
-  cnae                             String                @db.VarChar(255)
-  endereco                         String                @db.VarChar(255)
+  id                               String      @id @default(uuid())
+  nome                             String      @db.VarChar(255)
+  cnae                             String      @db.VarChar(255)
+  endereco                         String      @db.VarChar(255)
   pessoal_ocupado                  Int
   numero_refeicoes                 Int
   possui_alvara_sanitario          Int
   possui_responsavel_boas_praticas Int
-  data_criacao                     DateTime              @default(now()) @db.Timestamptz(3)
-  data_alteracao                   DateTime              @updatedAt @db.Timestamptz(3)
+  data_criacao                     DateTime    @default(now()) @db.Timestamptz(3)
+  data_alteracao                   DateTime    @updatedAt @db.Timestamptz(3)
   alterado_por                     String
-  ativo                            Int                   @default(1)
-  usuario                          Usuario               @relation(fields: [alterado_por], references: [id])
-  Gestores                         Gestores[]
-  ManipuladorAlimento              ManipuladorAlimento[]
-  ListaVerificacao                 ListaVerificacao[]
-  AnaliseQualitativa               AnaliseQualitativa[]
-  Triangulacao                     Triangulacao[]
+  ativo                            Int         @default(1)
+  usuario                          Usuario     @relation(fields: [alterado_por], references: [id])
   Resultado                        Resultado[]
-  AnaliseQuantitativa              AnaliseQuantitativa[]
+  Avaliacao                        Avaliacao[]
 
   @@map("estabelecimentos")
 }
@@ -185,4 +169,23 @@ model CadastroToken {
   usuario      Usuario     @relation(fields: [criado_por], references: [id])
 
   @@map("cadastros_tokens")
+}
+
+model Avaliacao {
+  id                  String                @id @default(uuid())
+  id_estabelecimento  String
+  slug                String
+  data_cadastro       DateTime              @default(now()) @db.Timestamptz(3)
+  data_alteracao      DateTime              @updatedAt @db.Timestamptz(3)
+  ativo               Int                   @default(1)
+  Estabelecimento     Estabelecimento       @relation(fields: [id_estabelecimento], references: [id])
+  Gestores            Gestores[]
+  AnaliseQuantitativa AnaliseQuantitativa[]
+  ManipuladorAlimento ManipuladorAlimento[]
+  ListaVerificacao    ListaVerificacao[]
+  AnaliseQualitativa  AnaliseQualitativa[]
+  Triangulacao        Triangulacao[]
+  Resultado           Resultado[]
+
+  @@map("avaliacoes")
 }

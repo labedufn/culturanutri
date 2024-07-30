@@ -1,15 +1,14 @@
 import { BuscarTriangulacaoService } from "@services/triangulacao/BuscarTriangulacaoService";
 import { Request, Response } from "express";
-
-export class CalcularTriangulacaoController {
+export class BuscarTriangulacaoController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_triangulacao } = req.body;
 
     try {
-      const buscarTriangulacaoService = new BuscarTriangulacaoService();
-      const triangulacao = await buscarTriangulacaoService.execute(id_estabelecimento);
+      const buscarListaVerificacao = new BuscarTriangulacaoService();
+      const listaVerificacao = await buscarListaVerificacao.execute(id_triangulacao);
 
-      return res.json(triangulacao);
+      return res.json(listaVerificacao);
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
