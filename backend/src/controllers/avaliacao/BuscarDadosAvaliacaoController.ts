@@ -1,5 +1,11 @@
+import { BuscarAnalisesQualitativaEstabelecimentoService } from "@services/analise-qualitativa/BuscarAnalisesQualitativaEstabelecimentoService";
+import { BuscarAnalisesQuantitativaEstabelecimentoService } from "@services/analise-quantitativa/BuscarAnalisesQuantitativaEstabelecimentoService";
 import { BuscarDadosAvaliacaoService } from "@services/avaliacao/BuscarDadosAvaliacaoService";
 import { BuscarGestoresEstabelecimentoService } from "@services/gestor/BuscarGestoresEstabelecimentoService";
+import { BuscarListasVerificacaoEstabelecimentoService } from "@services/lista-verificacao/BuscarListasVerificacaoEstabelecimentoService";
+import { BuscarManipuladoresAlimentoEstabelecimentoService } from "@services/manipulador-alimento/BuscarManipuladoresAlimentoEstabelecimentoService";
+import { BuscarResultadosEstabelecimentoService } from "@services/resultado/BuscarResultadosEstabelecimentoService";
+import { BuscarTriangulacoesEstabelecimentoService } from "@services/triangulacao/BuscarTriangulacoesEstabelecimentoService";
 
 export class BuscarDadosAvaliacaoController {
   async handle(req: Request, res: Response) {
@@ -7,16 +13,31 @@ export class BuscarDadosAvaliacaoController {
     try {
       const buscarDadosAvaliacaoService = new BuscarDadosAvaliacaoService();
       const avaliacoes = await buscarDadosAvaliacaoService.execute(id_estabelecimento);
-      // ira me retornar um array de avaliacoes com ID
       const idAvaliacoes = avaliacoes.map((avaliacao) => avaliacao.id);
-      //   const dados = {};
+      const dados = {};
 
       const buscarGestoresEstabelecimentoService = new BuscarGestoresEstabelecimentoService();
-      const gestores = await buscarGestoresEstabelecimentoService.execute(idAvaliacoes);
+      dados["gestores"] = await buscarGestoresEstabelecimentoService.execute(idAvaliacoes);
 
-      // terei que criar um buscar diferente para cada prop, onde será passado um array de ids (avaliacoes)
+      const buscarManipuladoresAlimentoEstabelecimentoService = new BuscarManipuladoresAlimentoEstabelecimentoService();
+      dados["manipuladoresAlimento"] = await buscarManipuladoresAlimentoEstabelecimentoService.execute(idAvaliacoes);
 
-      return res.json(gestores);
+      const buscarAnalisesQualitativaEstabelecimentoService = new BuscarAnalisesQualitativaEstabelecimentoService();
+      dados["analisesQualitativa"] = await buscarAnalisesQualitativaEstabelecimentoService.execute(idAvaliacoes);
+
+      const buscarAnalisesQuantitativaEstabelecimentoService = new BuscarAnalisesQuantitativaEstabelecimentoService();
+      dados["analisesQuantitativa"] = await buscarAnalisesQuantitativaEstabelecimentoService.execute(idAvaliacoes);
+
+      const buscarListasVerificacaoEstabelecimentoService = new BuscarListasVerificacaoEstabelecimentoService();
+      dados["listasVerificacao"] = await buscarListasVerificacaoEstabelecimentoService.execute(idAvaliacoes);
+
+      const buscarTriangulacoesEstabelecimentoService = new BuscarTriangulacoesEstabelecimentoService();
+      dados["triangulacoes"] = await buscarTriangulacoesEstabelecimentoService.execute(idAvaliacoes);
+
+      const buscarResultadosEstabelecimentoService = new BuscarResultadosEstabelecimentoService();
+      dados["resultados"] = await buscarResultadosEstabelecimentoService.execute(idAvaliacoes);
+
+      return res.json(dados);
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
