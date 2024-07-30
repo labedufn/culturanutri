@@ -680,7 +680,7 @@ export class CalcularTriangulacaoService {
       },
     };
 
-    //falta fazer
+    // informacoes percepcao_risco
     informacoes["percepcao_risco"] = {
       escore_analise_quantitativa: {
         0: this.percepcaoRisco(
@@ -695,23 +695,65 @@ export class CalcularTriangulacaoService {
             .manipuladores.media,
         ),
         3: this.percepcaoRiscoPorcentagem(
-          analiseQuantitativa["viesOtimistaDecodificado"].percepcao_risco.manipulador_alimento
-            .outro_manipulador_outro_servico.teste_estatistico,
-          analiseQuantitativa["viesOtimistaDecodificado"].percepcao_risco.manipulador_alimento
-            .outro_manipulador_mesmo_servico.teste_estatistico,
+          analiseQuantitativa["viesOtimistaDecodificado"].manipuladores.outro_manipulador_outro_servico
+            .teste_estatistico,
+          analiseQuantitativa["viesOtimistaDecodificado"].manipuladores.outro_manipulador_mesmo_servico
+            .teste_estatistico,
         ),
       },
       escore_analise_qualitativa: {
-        0: this.calcularAnaliseQualitativa(
-          analiseQualitativa["informacoesDecodificadas"].sistema_gestao
-            .equipe_motivada_implementar_praticas_seguras_ferramentas_qualidade.escore,
+        0: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].percepcao_risco
+            .manipuladores_percebem_risco_situacoes_alto_risco.escore,
         ),
         1: analiseQualitativa["informacoesDecodificadas"].percepcao_risco
           .trabalhadores_entendem_julgam_situacoes_risco_tomam_decisoes.escore,
-        2: analiseQualitativa["informacoesDecodificadas"].sistema_gestao
-          .programas_pre_requisito_haccp_sistema_boas_praticas_higiene_implementados.valor,
-        3: analiseQualitativa["informacoesDecodificadas"].ambiente_trabalho
-          .adequacao_ambiente_frequente_necessidade_local_nao_inspecoes.valor,
+        2: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].percepcao_risco.trabalhadores_percebem_letalidade.valor,
+        ),
+        3: this.calcularAnaliseQuantitativa(
+          analiseQualitativa["informacoesDecodificadas"].percepcao_risco.trabalhadores_sem_vies_otimista_pessimista
+            .valor,
+        ),
+      },
+    };
+
+    informacoes["percepcao_risco"] = {
+      ...informacoes["percepcao_risco"],
+      triangulacao: {
+        escore_caracteristicas: {
+          0:
+            informacoes["percepcao_risco"].escore_analise_quantitativa[0] +
+            informacoes["percepcao_risco"].escore_analise_qualitativa[0],
+          1: this.escoreCaracteristicas(informacoes["percepcao_risco"].escore_analise_quantitativa[1]),
+          2:
+            informacoes["percepcao_risco"].escore_analise_quantitativa[2] +
+            informacoes["percepcao_risco"].escore_analise_qualitativa[2],
+          3:
+            informacoes["percepcao_risco"].escore_analise_quantitativa[3] +
+            informacoes["percepcao_risco"].escore_analise_qualitativa[3],
+        },
+      },
+    };
+
+    informacoes["percepcao_risco"] = {
+      ...informacoes["percepcao_risco"],
+      triangulacao: {
+        ...informacoes["percepcao_risco"].triangulacao,
+        valor_medio: this.calcularMedia(
+          informacoes["percepcao_risco"].triangulacao.escore_caracteristicas[0],
+          informacoes["percepcao_risco"].triangulacao.escore_caracteristicas[1],
+          informacoes["percepcao_risco"].triangulacao.escore_caracteristicas[2],
+          informacoes["percepcao_risco"].triangulacao.escore_caracteristicas[3],
+        ),
+      },
+    };
+
+    informacoes["percepcao_risco"] = {
+      ...informacoes["percepcao_risco"],
+      triangulacao: {
+        ...informacoes["percepcao_risco"].triangulacao,
+        escore_elemento: this.escoreElemento(informacoes["percepcao_risco"].triangulacao.valor_medio),
       },
     };
 
