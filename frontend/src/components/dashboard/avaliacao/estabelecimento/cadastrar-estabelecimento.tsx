@@ -1,20 +1,19 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { cadastrarEstabelecimento } from "@/actions/cadastrar-estabelecimento";
+import { cadastrarAvaliacao } from "@/actions/cadastrar-avaliacao";
 import { CadastrarEstabelecimentoProvider, useFormContext } from "./cadastrar-estabelecimento-provider";
 import { cn } from "@/lib/utils";
 import { CadastrarEstabelecimentoForm } from "./cadastrar-estabelecimento-form";
 import { currentUserId } from "@/scripts/currentUserId";
 
-interface CadastrarEstabelecimentoContentProps {
-  onSuccess: () => void;
-}
-
-export function CadastrarEstabelecimentoContent({ onSuccess }: CadastrarEstabelecimentoContentProps) {
+export function CadastrarEstabelecimentoContent() {
   const form = useFormContext();
+  const router = useRouter();
 
   useEffect(() => {
     const checkUserId = async () => {
@@ -49,26 +48,42 @@ export function CadastrarEstabelecimentoContent({ onSuccess }: CadastrarEstabele
         possui_alvara_sanitario: Number(data.possui_alvara_sanitario),
         possui_responsavel_boas_praticas: Number(data.possui_responsavel_boas_praticas),
       };
-      const response = await cadastrarEstabelecimento(formattedData);
 
-      if (response.success && response.estabelecimentoCriado) {
-        localStorage.setItem("estabelecimentoId", response.estabelecimentoCriado.id);
+      const responseEstabelecimento = await cadastrarEstabelecimento(formattedData);
 
-        toast({
-          className: cn(
-            "bg-green-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
-          ),
-          title: "Sucesso!",
-          description: "Estabelecimento cadastrado com sucesso.",
-        });
-        onSuccess();
+      if (responseEstabelecimento.success && responseEstabelecimento.estabelecimentoCriado) {
+        const estabelecimentoId = responseEstabelecimento.estabelecimentoCriado.id;
+        localStorage.setItem("estabelecimentoId", estabelecimentoId);
+
+        const responseAvaliacao = await cadastrarAvaliacao(estabelecimentoId);
+
+        console.log(responseAvaliacao.avaliacaoCriada.id);
+
+        if (responseAvaliacao.success && responseAvaliacao.avaliacaoCriada) {
+          toast({
+            className: cn(
+              "bg-green-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+            ),
+            title: "Sucesso!",
+            description: "Estabelecimento e avaliação cadastrados com sucesso.",
+          });
+          router.push(`/dashboard/avaliacoes/${responseAvaliacao.avaliacaoCriada.id}`);
+        } else {
+          toast({
+            className: cn(
+              "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
+            ),
+            title: "Erro!",
+            description: responseAvaliacao.message || "Erro ao cadastrar avaliação.",
+          });
+        }
       } else {
         toast({
           className: cn(
             "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
           ),
           title: "Erro!",
-          description: response.message || "Erro ao cadastrar estabelecimento.",
+          description: responseEstabelecimento.message || "Erro ao cadastrar estabelecimento.",
         });
       }
     } catch (error) {
@@ -94,7 +109,7 @@ export function CadastrarEstabelecimentoContent({ onSuccess }: CadastrarEstabele
   );
 }
 
-export function CadastrarEstabelecimento({ onSuccess }: { onSuccess: () => void }) {
+export function CadastrarEstabelecimento() {
   return (
     <>
       <div className="mb-8">
@@ -104,7 +119,7 @@ export function CadastrarEstabelecimento({ onSuccess }: { onSuccess: () => void 
         </p>
       </div>
       <CadastrarEstabelecimentoProvider>
-        <CadastrarEstabelecimentoContent onSuccess={onSuccess} />
+        <CadastrarEstabelecimentoContent />
       </CadastrarEstabelecimentoProvider>
     </>
   );

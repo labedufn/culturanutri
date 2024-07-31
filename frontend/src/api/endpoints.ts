@@ -131,3 +131,15 @@ export function EXCLUIR_GESTOR() {
     url: `${API_URL}/api/excluir-gestor`,
   };
 }
+
+export function CADASTRAR_AVALIACAO() {
+  return {
+    url: `${API_URL}/api/cadastrar-avaliacao`,
+  };
+}
+
+export function BUSCAR_AVALIACAO() {
+  return {
+    url: `${API_URL}/api/buscar-avaliacao`,
+  };
+}

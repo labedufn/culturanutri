@@ -1,3 +1,5 @@
+"use ";
+
 import { FormSchemaType } from "../schemas/schema-gestores";
 
 export function getStoredValuesGestor(): Partial<FormSchemaType> {

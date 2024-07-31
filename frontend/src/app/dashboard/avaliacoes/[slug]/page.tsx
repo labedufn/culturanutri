@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,9 +9,26 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
-import { CadastrarEstabelecimento } from "@/components/dashboard/avaliacao/estabelecimento/cadastrar-estabelecimento";
+import { StepperAvaliacao } from "@/components/dashboard/stepper-avaliacao";
+import { notFound } from "next/navigation";
+import { buscarAvaliacao } from "@/actions/buscar-avaliacao";
+import { formatarData } from "@/scripts/formatarData";
 
-export default function AvaliacoesNovaPage() {
+interface AvaliacaoPageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export default async function AvaliacaoPage({ params }: AvaliacaoPageProps) {
+  const avaliacaoResponse = await buscarAvaliacao(params.slug);
+
+  if (!avaliacaoResponse.success || !avaliacaoResponse.data) {
+    notFound();
+  }
+
+  const { data_cadastro, Estabelecimento } = avaliacaoResponse.data!;
+
   return (
     <>
       <Breadcrumb>
@@ -30,21 +46,16 @@ export default function AvaliacoesNovaPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Nova Avaliação</BreadcrumbPage>
+            <BreadcrumbPage>
+              Avaliação de {Estabelecimento.nome} em {formatarData(data_cadastro)}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <Card className="rounded-lg border-none mt-6">
         <CardContent className="p-6">
           <div className="min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
-            <div className="mb-8">
-              <h3 className="mb-2">Avaliação de Cultura de Segurança dos Alimentos</h3>
-              <p className="text-sm text-muted-foreground">
-                Este sistema foi elaborado para tornar mais intuitiva a análise de dados da avaliação da cultura de
-                segurança dos alimentos.
-              </p>
-            </div>
-            <CadastrarEstabelecimento />
+            <StepperAvaliacao slug={params.slug} />
           </div>
         </CardContent>
       </Card>

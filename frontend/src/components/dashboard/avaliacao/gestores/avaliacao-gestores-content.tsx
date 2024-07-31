@@ -17,7 +17,12 @@ import { AvaliacaoGestoresComprometimentoAfetivoForm } from "./avaliacao-gestore
 import { cadastrarGestor } from "@/actions/cadastrar-gestor";
 import GestoresTable from "./gestores-table";
 
-export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void }) {
+interface AvaliacaoGestoresContentProps {
+  onReload: () => void;
+  slug: string;
+}
+
+export function AvaliacaoGestoresContent({ onReload, slug }: AvaliacaoGestoresContentProps) {
   const form = useFormContext();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -34,15 +39,15 @@ export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void })
             nao_tenha_formacao_tem_treinamento: Number(data.naoTenhaFormacaoTemTreinamento),
             tempo_trabalha_com_alimentos: Number(data.tempoTrabalhaComAlimentos),
             acredita_comunicacao_boa: Number(data.acreditaComunicacaoBoa),
-            realiza_treinamentos_boas_prticas_manipulação: Number(data.realizaTreinamentosBoasPraticas),
+            realiza_treinamentos_boas_praticas_manipulacao: Number(data.realizaTreinamentosBoasPraticas),
             carga_horaria: data.cargaHoraria,
-            frequencia_aplicação: 0,
+            frequencia_aplicacao: 0,
             temas_treinamentos: data.temasTreinamentos,
           },
           conhecimento: {
-            utilização_adornos_favorecer_contaminacao: Number(data.adornosContaminacao),
+            utilizacao_adornos_favorecer_contaminacao: Number(data.adornosContaminacao),
             agua_veiculo_transmissao_doencas: Number(data.aguaTransmissaoDoencas),
-            forma_higienizar_mãos_evita_contaminacao: Number(data.higienizacaoMaos),
+            forma_higienizar_maos_evita_contaminacao: Number(data.higienizacaoMaos),
             contato_alimentos_contamina: Number(data.contatoAlimentosCruCozido),
             leite_vencimento_risco: Number(data.leiteVencido),
             alimento_improprio_apresenta_cheiro_sabor: Number(data.alimentoImproprio),
@@ -58,7 +63,7 @@ export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void })
             dedicar_minha_carreira_ao_restaurante: Number(data.dedicarCarreira),
           },
           comprometimento_normativo: {
-            nao_deixa_emprego_pois_obrigação_moral: Number(data.obrigacaoMoral),
+            nao_deixa_emprego_pois_obrigacao_moral: Number(data.obrigacaoMoral),
             culpado_deixasse_emprego: Number(data.sentirCulpado),
             nao_seria_certo_deixar_emprego: Number(data.naoSeriaCerto),
             devo_esse_emprego: Number(data.devoMuito),
@@ -71,7 +76,7 @@ export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void })
           percepcao_risco: {
             risco_apresentar_dor_barriga_estabelecimento_similar: Number(data.riscoIntoxicacaoSimilar),
             risco_apresentar_dor_barriga_estabelecimento_gerenciado: Number(data.riscoIntoxicacaoGerencia),
-            risco_doença_transmitida_alimentos: Number(data.riscoDoencaGrave),
+            risco_doenca_transmitida_alimentos: Number(data.riscoDoencaGrave),
           },
           sistemas_gestao: {
             lideranca_modificada_consumidor_alta_percepcao_risco: Number(data.modificarLideranca),
@@ -83,7 +88,7 @@ export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void })
             boas_praticas_consumidor_alta_percepcao_risco: Number(data.melhorarBoasPraticas),
           },
         },
-        id_estabelecimento: localStorage.getItem("estabelecimentoId"),
+        id_avaliacao: slug,
       };
 
       const response = await cadastrarGestor(formattedData);
@@ -98,13 +103,9 @@ export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void })
         });
 
         const sidebarOpen = localStorage.getItem("sidebarOpen");
-        const estabelecimentoId = localStorage.getItem("estabelecimentoId");
         localStorage.clear();
         if (sidebarOpen !== null) {
           localStorage.setItem("sidebarOpen", sidebarOpen);
-        }
-        if (estabelecimentoId !== null) {
-          localStorage.setItem("estabelecimentoId", estabelecimentoId);
         }
 
         onReload();

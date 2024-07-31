@@ -4,7 +4,11 @@ import { useState } from "react";
 import { AvaliacaoGestoresContent } from "./avaliacao-gestores-content";
 import { AvaliacaoProvider } from "./avaliacao-gestores-provider";
 
-export function AvaliacaoGestores() {
+interface AvaliacaoGestoresProps {
+  slug: string;
+}
+
+export function AvaliacaoGestores({ slug }: AvaliacaoGestoresProps) {
   const [reloadKey, setReloadKey] = useState(0);
 
   const handleReload = () => {
@@ -15,7 +19,7 @@ export function AvaliacaoGestores() {
     <>
       <h2 className="text-2xl font-semibold mb-8 text-black">Avaliação de gestores</h2>
       <AvaliacaoProvider key={reloadKey}>
-        <AvaliacaoGestoresContent onReload={handleReload} />
+        <AvaliacaoGestoresContent onReload={handleReload} slug={slug} />
       </AvaliacaoProvider>
     </>
   );

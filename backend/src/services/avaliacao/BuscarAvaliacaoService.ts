@@ -14,6 +14,11 @@ export class BuscarAvaliacaoService {
         data_cadastro: true,
         slug: true,
         ativo: true,
+        Estabelecimento: {
+          select: {
+            nome: true,
+          },
+        },
       },
     });
 
