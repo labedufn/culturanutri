@@ -1,0 +1,155 @@
+informacoes = {
+  lideranca: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  comunicacao: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+      "1": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  conhecimento: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  comprometimento: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  percepcao_risco: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": "FALSE",
+      "3": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  pressao_trabalho_crencas_normativas: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+      "1": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  ambiente_trabalho: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  sistema_estilos_gestao: {
+    escore_analise_quantitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    escore_analise_qualitativa: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    escore_caracteristicas: {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0,
+    },
+    valor_medio: 2,
+    escore_elemento: 4,
+  },
+  valor_medio: 2,
+  escore_elemento: 4,
+};

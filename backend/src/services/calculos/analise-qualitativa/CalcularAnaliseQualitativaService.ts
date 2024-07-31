@@ -15,52 +15,52 @@ export class CalcularAnaliseQualitativaService {
   async execute(informacoes: any) {
     const informacoesCalculadas: object = {};
     try {
-      informacoesCalculadas["liderenca"] = {
+      informacoesCalculadas["lideranca"] = {
         gerentes_fornecem_assistencia_orientacao_seguranca_alimentos: {
-          valor: informacoes["liderenca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
-            informacoes["liderenca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
+            informacoes["lideranca"].gerentes_fornecem_assistencia_orientacao_seguranca_alimentos.valor,
+            informacoes["lideranca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
           ),
         },
         gerentes_presentes_area_producao_manuseio_alimentos: {
-          valor: informacoes["liderenca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
-            informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+            informacoes["lideranca"].gerentes_presentes_area_producao_manuseio_alimentos.valor,
+            informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
           ),
         },
         gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos: {
-          valor: informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
-            informacoes["liderenca"].gerentes_promovem_reconhecimento.valor,
+            informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+            informacoes["lideranca"].gerentes_promovem_reconhecimento.valor,
           ),
         },
         gerentes_promovem_reconhecimento: {
-          valor: informacoes["liderenca"].gerentes_promovem_reconhecimento.valor,
+          valor: informacoes["lideranca"].gerentes_promovem_reconhecimento.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
-            informacoes["liderenca"].gerentes_promovem_reconhecimento.valor,
+            informacoes["lideranca"].gerentes_elogiam_manipuladores_praticas_seguras_manipulacao_alimentos.valor,
+            informacoes["lideranca"].gerentes_promovem_reconhecimento.valor,
           ),
         },
         gerentes_comprometidos_organizacao_seguranca_alimentos: {
-          valor: informacoes["liderenca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
+          valor: informacoes["lideranca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
-            informacoes["liderenca"].comportamento_gerentes_consistente_praticas_seguras.valor,
+            informacoes["lideranca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
+            informacoes["lideranca"].comportamento_gerentes_consistente_praticas_seguras.valor,
           ),
         },
         comportamento_gerentes_consistente_praticas_seguras: {
-          valor: informacoes["liderenca"].comportamento_gerentes_consistente_praticas_seguras.valor,
+          valor: informacoes["lideranca"].comportamento_gerentes_consistente_praticas_seguras.valor,
           escore: this.calcularEscore(
-            informacoes["liderenca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
-            informacoes["liderenca"].comportamento_gerentes_consistente_praticas_seguras.valor,
+            informacoes["lideranca"].gerentes_comprometidos_organizacao_seguranca_alimentos.valor,
+            informacoes["lideranca"].comportamento_gerentes_consistente_praticas_seguras.valor,
           ),
         },
         gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos: {
           valor:
-            informacoes["liderenca"].gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos
+            informacoes["lideranca"].gerentes_trabalham_politicas_sistemas_processos_alinhados_seguranca_alimentos
               .valor,
         },
       };
@@ -128,12 +128,13 @@ export class CalcularAnaliseQualitativaService {
             informacoes["comunicacao"].melhorias_seguranca_alimentos_comunicadas_informacoes_visiveis_importantes.valor,
         },
       };
+
       informacoesCalculadas["conhecimento"] = {
         conhecimento_aspectos_tempo_temperatura: {
-          valor: informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
+          valor: informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -144,10 +145,10 @@ export class CalcularAnaliseQualitativaService {
           ),
         },
         conhecimento_medida_temperatura: {
-          valor: informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+          valor: informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -161,8 +162,8 @@ export class CalcularAnaliseQualitativaService {
           valor:
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -175,8 +176,8 @@ export class CalcularAnaliseQualitativaService {
         conhecimento_contaminacao_cruzada: {
           valor: informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -189,8 +190,8 @@ export class CalcularAnaliseQualitativaService {
         conhecimento_metodo_descongelar_alimentos: {
           valor: informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -203,8 +204,8 @@ export class CalcularAnaliseQualitativaService {
         conhecimento_risco_perigo_biologico_fisico_quimico: {
           valor: informacoes["conhecimento"].conhecimento_risco_perigo_biologico_fisico_quimico.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -217,8 +218,8 @@ export class CalcularAnaliseQualitativaService {
         conhecimento_metodo_lavar_maos: {
           valor: informacoes["conhecimento"].conhecimento_metodo_lavar_maos.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -231,8 +232,8 @@ export class CalcularAnaliseQualitativaService {
         conhecimento_organizacao_alimentos_deposito: {
           valor: informacoes["conhecimento"].conhecimento_organizacao_alimentos_deposito.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -245,8 +246,8 @@ export class CalcularAnaliseQualitativaService {
         conhecimento_doencas_transmitidas_alimentos: {
           valor: informacoes["conhecimento"].conhecimento_doencas_transmitidas_alimentos.valor,
           escore: this.calcularEscore(
-            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor.valor,
-            informacoes["conhecimento"].conhecimento_medida_temperatura.valor.valor,
+            informacoes["conhecimento"].conhecimento_aspectos_tempo_temperatura.valor,
+            informacoes["conhecimento"].conhecimento_medida_temperatura.valor,
             informacoes["conhecimento"].conhecimento_metodo_usar_produtos_higiene_aplicar_processo_higienizacao.valor,
             informacoes["conhecimento"].conhecimento_contaminacao_cruzada.valor,
             informacoes["conhecimento"].conhecimento_metodo_descongelar_alimentos.valor,
@@ -314,6 +315,7 @@ export class CalcularAnaliseQualitativaService {
           ),
         },
       };
+
       informacoesCalculadas["comprometimento"] = {
         manipuladores_gerentes_satisfeitos_trabalho: {
           valor: informacoes["comprometimento"].manipuladores_gerentes_satisfeitos_trabalho.valor,
@@ -463,6 +465,7 @@ export class CalcularAnaliseQualitativaService {
           ),
         },
       };
+
       informacoesCalculadas["percepcao_risco"] = {
         manipuladores_percebem_risco_situacoes_alto_risco: {
           valor: informacoes["percepcao_risco"].manipuladores_percebem_risco_situacoes_alto_risco.valor,
@@ -500,6 +503,7 @@ export class CalcularAnaliseQualitativaService {
           valor: informacoes["percepcao_risco"].trabalhadores_sem_vies_otimista_pessimista.valor,
         },
       };
+
       informacoesCalculadas["pressao_trabalho_crencas_normativas"] = {
         manipuladores_carga_trabalho_pesada: {
           valor: informacoes["pressao_trabalho_crencas_normativas"].manipuladores_carga_trabalho_pesada.valor,
@@ -540,6 +544,7 @@ export class CalcularAnaliseQualitativaService {
           ),
         },
       };
+
       informacoesCalculadas["sistema_gestao"] = {
         equipe_motivada_implementar_praticas_seguras_ferramentas_qualidade: {
           valor: informacoes["sistema_gestao"].equipe_motivada_implementar_praticas_seguras_ferramentas_qualidade.valor,
@@ -594,6 +599,7 @@ export class CalcularAnaliseQualitativaService {
             informacoes["sistema_gestao"].processo_producao_alinhado_praticas_seguras_projetado_minimizar_riscos.valor,
         },
       };
+
       informacoesCalculadas["ambiente_trabalho"] = {
         layout_permite_fluxo_adequado_preparacao_alimentos: {
           valor: informacoes["ambiente_trabalho"].layout_permite_fluxo_adequado_preparacao_alimentos.valor,

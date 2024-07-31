@@ -6,21 +6,46 @@ const prisma = new PrismaClient();
 
 export class CriarManipuladorAlimentoService {
   async execute(manipuladorAlimento: ManipuladorAlimento) {
-    const manipuladorCriado = await prisma.manipuladorAlimento.create({
-      data: {
-        id_estabelecimento: manipuladorAlimento.id_estabelecimento,
-        informacoes: manipuladorAlimento.informacoes,
-        ativo: manipuladorAlimento.ativo,
-      },
-      select: {
-        id: true,
-        id_estabelecimento: true,
-        data_cadastro: true,
-        data_alteracao: true,
-        informacoes: true,
-        ativo: true,
+    let manipuladorCriado;
+    const avaliacao = await prisma.avaliacao.findUnique({
+      where: {
+        id: manipuladorAlimento.id_avaliacao,
       },
     });
+
+    if (!avaliacao) {
+      manipuladorCriado = await prisma.manipuladorAlimento.create({
+        data: {
+          id_avaliacao: manipuladorAlimento.id_avaliacao,
+          informacoes: manipuladorAlimento.informacoes,
+          ativo: manipuladorAlimento.ativo,
+        },
+        select: {
+          id: true,
+          id_avaliacao: true,
+          data_cadastro: true,
+          data_alteracao: true,
+          informacoes: true,
+          ativo: true,
+        },
+      });
+    } else {
+      manipuladorCriado = await prisma.manipuladorAlimento.create({
+        data: {
+          id_avaliacao: manipuladorAlimento.id_avaliacao,
+          informacoes: manipuladorAlimento.informacoes,
+          ativo: manipuladorAlimento.ativo,
+        },
+        select: {
+          id: true,
+          id_avaliacao: true,
+          data_cadastro: true,
+          data_alteracao: true,
+          informacoes: true,
+          ativo: true,
+        },
+      });
+    }
 
     const informacoesDecodificadas = await desconverterBase64JSON(manipuladorCriado.informacoes);
 

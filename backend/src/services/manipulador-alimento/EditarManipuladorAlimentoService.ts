@@ -11,20 +11,19 @@ export class EditarManipuladorAlimentoService {
         id: idManipulador,
       },
       data: {
+        id_avaliacao: manipuladorAlimento.id_avaliacao,
         informacoes: manipuladorAlimento.informacoes,
         ativo: manipuladorAlimento.ativo,
       },
       select: {
         id: true,
+        id_avaliacao: true,
+        data_cadastro: true,
         data_alteracao: true,
         informacoes: true,
         ativo: true,
       },
     });
-
-    if (!manipuladorAlterado) {
-      throw new Error("Manipulador de alimento não encontrado");
-    }
 
     const informacoesDecodificadas = await desconverterBase64JSON(manipuladorAlterado.informacoes);
 

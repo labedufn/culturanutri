@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
-
 export class EditarGestosService {
   async execute(idGestor: string, gestor: Gestor) {
     const gestorAlterado = await prisma.gestores.update({

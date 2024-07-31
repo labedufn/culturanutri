@@ -1,6 +1,6 @@
 json_resultados_avaliacao_quantitativas_csa = {
   elementos: {
-    liderenca: {
+    lideranca: {
       manipuladores: {
         media: 21,
         dp: 2,

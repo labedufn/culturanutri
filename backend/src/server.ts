@@ -11,9 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use(router);
 
-// Middleware de tratamento de erros
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(next);
   if (err instanceof Error) {
     return res.status(400).json({
       error: err.message,

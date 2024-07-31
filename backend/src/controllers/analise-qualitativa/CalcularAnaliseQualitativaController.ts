@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 export class CalcularAnaliseQualitativaController {
   async handle(req: Request, res: Response) {
-    const { id_estabelecimento } = req.body;
+    const { id_avaliacao } = req.body;
 
     try {
       const buscarAnaliseQualitativaService = new BuscarAnaliseQualitativaService();
@@ -16,14 +16,14 @@ export class CalcularAnaliseQualitativaController {
 
       const ativo = 1;
 
-      const analiseQualitativaBuscada = await buscarAnaliseQualitativaService.execute(id_estabelecimento);
+      const analiseQualitativaBuscada = await buscarAnaliseQualitativaService.execute(id_avaliacao);
       const { json_informacoes } = await calcularAnaliseQualitativaService.execute(
         analiseQualitativaBuscada.informacoesDecodificadas,
       );
 
       const { informacoes } = await converterBase64JSON(json_informacoes, "informacoes");
 
-      const analiseQualitativa = new AnaliseQualitativa(id_estabelecimento, informacoes, ativo);
+      const analiseQualitativa = new AnaliseQualitativa(id_avaliacao, informacoes, ativo);
       const analiseQualitativaCalculada = await editarAnaliseQualitativaService.execute(
         analiseQualitativaBuscada.id,
         analiseQualitativa,

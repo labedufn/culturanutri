@@ -1,14 +1,13 @@
-import { ManipuladorAlimento } from "@models/ManipuladorAlimento";
 import { PrismaClient } from "@prisma/client";
 import desconverterBase64JSON from "@utils/desconverterBase64JSON";
 
 const prisma = new PrismaClient();
 
 export class ListarManipuladoresAlimentoService {
-  async execute(id_estabelecimento: string): Promise<ManipuladorAlimento[]> {
+  async execute() {
     const manipuladores = await prisma.manipuladorAlimento.findMany({
       where: {
-        id_estabelecimento,
+        ativo: 1,
       },
       select: {
         id: true,
@@ -21,7 +20,6 @@ export class ListarManipuladoresAlimentoService {
 
     const decodeManipulador = await Promise.all(
       manipuladores.map(async (manipulador) => ({
-        id_estabelecimento,
         ...manipulador,
         informacoes: await desconverterBase64JSON(manipulador.informacoes),
       })),

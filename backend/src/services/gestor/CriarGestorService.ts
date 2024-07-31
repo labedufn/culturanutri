@@ -8,11 +8,12 @@ export class CriarGestorService {
   async execute(gestor: Gestor) {
     const gestorCriado = await prisma.gestores.create({
       data: {
-        id_estabelecimento: gestor.id_estabelecimento,
+        id_avaliacao: gestor.id_avaliacao,
         informacoes: gestor.informacoes,
       },
       select: {
-        id_estabelecimento: true,
+        id: true,
+        id_avaliacao: true,
         informacoes: true,
       },
     });
