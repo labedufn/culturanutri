@@ -113,3 +113,21 @@ export function CADASTRAR_GESTOR() {
     url: `${API_URL}/api/cadastrar-gestor`,
   };
 }
+
+export function LISTAR_GESTOR() {
+  return {
+    url: `${API_URL}/api/listar-gestor`,
+  };
+}
+
+export function EDITAR_GESTOR() {
+  return {
+    url: `${API_URL}/api/editar-gestor`,
+  };
+}
+
+export function EXCLUIR_GESTOR() {
+  return {
+    url: `${API_URL}/api/excluir-gestor`,
+  };
+}

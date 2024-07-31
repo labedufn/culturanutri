@@ -15,6 +15,7 @@ import { AvaliacaoGestoresSistemasGestaoForm } from "./avaliacao-gestores-sistem
 import { useFormContext } from "./avaliacao-gestores-provider";
 import { AvaliacaoGestoresComprometimentoAfetivoForm } from "./avaliacao-gestores-comprometimento-afetivo-form";
 import { cadastrarGestor } from "@/actions/cadastrar-gestor";
+import GestoresTable from "./gestores-table";
 
 export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void }) {
   const form = useFormContext();
@@ -132,7 +133,13 @@ export function AvaliacaoGestoresContent({ onReload }: { onReload: () => void })
 
   return (
     <>
-      <Button onClick={openDialog}>Avaliar novo gestor</Button>
+      <div className="flex flex-col-reverse lg:flex-row gap-4 lg:justify-between items-end mb-4">
+        <h3 className="text-black">Tabela de avaliação de gestores</h3>
+        <Button className="w-full lg:w-auto" onClick={openDialog}>
+          Avaliar novo gestor
+        </Button>
+      </div>
+      <GestoresTable />
       <Dialog open={isDialogOpen} onOpenChange={closeDialog}>
         <DialogContent className="sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll max-h-screen lg:max-h-[800px]">
           <DialogHeader>
