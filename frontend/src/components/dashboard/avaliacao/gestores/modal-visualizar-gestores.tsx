@@ -49,14 +49,16 @@ export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualiz
     label: string,
     value: string | number | boolean | null,
     converter?: ((value: any) => string) | string,
-  ) => (
-    <div key={label}>
-      <Label className="text-muted-foreground">{label}:</Label>
-      <p className="font-medium text-sm">
-        {typeof converter === "function" ? converter(value) : value?.toString() || "Não informado"}
-      </p>
-    </div>
-  );
+  ) => {
+    const displayValue = typeof converter === "function" ? converter(value) : value?.toString() || "Não informado";
+    if (displayValue === "Não informado") return null;
+    return (
+      <div key={label}>
+        <Label className="text-muted-foreground">{label}:</Label>
+        <p className="font-medium text-sm">{displayValue}</p>
+      </div>
+    );
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
