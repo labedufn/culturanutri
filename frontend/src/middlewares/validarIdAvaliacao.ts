@@ -6,8 +6,15 @@ export function validarIdAvaliacao(middleware: CustomMiddleware): CustomMiddlewa
   return async (request: NextRequest, event: NextFetchEvent, response: NextResponse) => {
     const pathname = request.nextUrl.pathname;
 
+    const ignoredRoutes = ["/dashboard/avaliacoes/nova", "/dashboard/avaliacoes/minhas"];
+
     if (pathname.startsWith("/dashboard/avaliacoes/")) {
-      const slug = pathname.split("/").pop();
+      const segments = pathname.split("/");
+      const slug = segments[segments.length - 1];
+
+      if (ignoredRoutes.includes(pathname)) {
+        return middleware(request, event, response);
+      }
 
       if (!slug) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
