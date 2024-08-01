@@ -1,22 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Edit, Trash } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-
-export type DadosIndividuais = {
-  nome_completo: string;
-  genero: number;
-  idade: number;
-  escolaridade: number;
-  formacao: string;
-};
-
-export type Gestor = {
-  id: string;
-  informacoes: {
-    dados_individuais: DadosIndividuais;
-  };
-  ativo: number;
-};
+import { Gestor } from "@/types/gestor";
 
 export const columns = (
   handleVisualizar: (gestor: Gestor) => void,
@@ -107,12 +92,5 @@ export const columns = (
       </div>
     ),
     sortable: false,
-  },
-];
-
-export const defaultSort = [
-  {
-    id: "informacoes.dados_individuais.nome_completo",
-    desc: true,
   },
 ];

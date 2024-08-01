@@ -1,7 +1,7 @@
 "use server";
 
 import { apiErro } from "@/api/api-erros";
-import { LISTAR_GESTOR } from "@/api/endpoints";
+import { LISTAR_GESTORES } from "@/api/endpoints";
 import axios from "axios";
 import { cookies } from "next/headers";
 
@@ -10,7 +10,7 @@ export async function listarGestor() {
   const token = cookieData ? cookieData.value : null;
 
   try {
-    const { url } = LISTAR_GESTOR();
+    const { url } = LISTAR_GESTORES();
     const response = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +18,6 @@ export async function listarGestor() {
       },
     });
     const dados = response.data;
-    console.log(dados);
     return {
       success: true,
       data: dados,

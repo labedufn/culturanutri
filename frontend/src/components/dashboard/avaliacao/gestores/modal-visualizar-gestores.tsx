@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,22 +9,24 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-
-type DadosIndividuais = {
-  nome_completo: string;
-  genero: number;
-  idade: number;
-  escolaridade: number;
-  formacao: string;
-};
-
-type Gestor = {
-  id: string;
-  informacoes: {
-    dados_individuais: DadosIndividuais;
-  };
-  ativo: number;
-};
+import {
+  converteAvaliacao,
+  converteEscolaridade,
+  converteFrequenciaAplicacao,
+  converteGenero,
+  converteRisco,
+  converteSimNao,
+  Gestor,
+} from "@/types/gestor";
+import {
+  labelsDadosIndividuais,
+  labelsConhecimento,
+  labelsComprometimentoAfetivo,
+  labelsComprometimentoNormativo,
+  labelsComprometimentoInstrumental,
+  labelsPercepcaoRisco,
+  labelsSistemasGestao,
+} from "@/types/gestor";
 
 type ModalVisualizarGestorProps = {
   isOpen: boolean;
@@ -34,56 +35,112 @@ type ModalVisualizarGestorProps = {
 };
 
 export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualizarGestorProps) {
-  const { dados_individuais } = gestor.informacoes;
+  const {
+    dados_individuais,
+    conhecimento,
+    comprometimento_afetivo,
+    comprometimento_normativo,
+    comprometimento_instrumental,
+    percepcao_risco,
+    sistemas_gestao,
+  } = gestor.informacoes;
+
+  const renderInformacao = (
+    label: string,
+    value: string | number | boolean | null,
+    converter?: ((value: any) => string) | string,
+  ) => (
+    <div key={label}>
+      <Label className="text-muted-foreground">{label}:</Label>
+      <p className="font-medium text-sm">
+        {typeof converter === "function" ? converter(value) : value?.toString() || "Não informado"}
+      </p>
+    </div>
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[800px] lg:max-w-screen-lg overflow-y-scroll lg:overflow-hidden max-h-screen">
+      <DialogContent className="max-w-screen-lg lg:max-h-[800px] overflow-y-scroll max-h-screen">
         <DialogHeader>
           <DialogTitle>Visualizar Gestor</DialogTitle>
           <DialogDescription>Informações do gestor selecionado.</DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-2 md:gap-5 gap-6">
-          <div>
-            <Label className="text-muted-foreground">Nome Completo:</Label>
-            <p className="font-medium text-sm">{dados_individuais.nome_completo}</p>
+        <h3 className="font-semibold text-black mt-4 mb-2">Dados do individuais</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {Object.entries(dados_individuais).map(([key, value]) =>
+            renderInformacao(
+              labelsDadosIndividuais[key as keyof typeof labelsDadosIndividuais],
+              value,
+              {
+                nome_completo: "",
+                genero: converteGenero,
+                idade: "",
+                escolaridade: converteEscolaridade,
+                formacao: "",
+                carga_horaria: "",
+                temas_treinamentos: "",
+                tempo_trabalha_com_alimentos: "",
+                nao_tenha_formacao_tem_treinamento: converteSimNao,
+                acredita_comunicacao_boa: converteSimNao,
+                realiza_treinamentos_boas_praticas_manipulacao: converteSimNao,
+                frequencia_aplicacao: converteFrequenciaAplicacao,
+              }[key as keyof typeof labelsDadosIndividuais],
+            ),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Conhecimento</h3>
           </div>
-          <div>
-            <Label className="text-muted-foreground">Gênero:</Label>
-            <p className="font-medium text-sm">{dados_individuais.genero === 0 ? "Masculino" : "Feminino"}</p>
+          {Object.entries(conhecimento).map(([key, value]) =>
+            renderInformacao(labelsConhecimento[key as keyof typeof labelsConhecimento], value, converteSimNao),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Comprometimento afetivo</h3>
           </div>
-          <div>
-            <Label className="text-muted-foreground">Idade:</Label>
-            <p className="font-medium text-sm">{dados_individuais.idade}</p>
+          {Object.entries(comprometimento_afetivo).map(([key, value]) =>
+            renderInformacao(
+              labelsComprometimentoAfetivo[key as keyof typeof labelsComprometimentoAfetivo],
+              value,
+              converteAvaliacao,
+            ),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Comprometimento normativo</h3>
           </div>
-          <div>
-            <Label className="text-muted-foreground">Escolaridade:</Label>
-            <p className="font-medium text-sm">
-              {dados_individuais.escolaridade === 1
-                ? "Ensino Fundamental"
-                : dados_individuais.escolaridade === 2
-                  ? "Ensino Médio"
-                  : "Ensino Superior"}
-            </p>
+          {Object.entries(comprometimento_normativo).map(([key, value]) =>
+            renderInformacao(
+              labelsComprometimentoNormativo[key as keyof typeof labelsComprometimentoNormativo],
+              value,
+              converteAvaliacao,
+            ),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Comprometimento instrumental</h3>
           </div>
-          <div className="col-span-2">
-            <Separator />
+          {Object.entries(comprometimento_instrumental).map(([key, value]) =>
+            renderInformacao(
+              labelsComprometimentoInstrumental[key as keyof typeof labelsComprometimentoInstrumental],
+              value,
+              converteAvaliacao,
+            ),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Percepção de risco</h3>
           </div>
-          <div className="col-span-2">
-            <Label className="text-muted-foreground">Formação:</Label>
-            <p className="font-medium text-sm">{dados_individuais.formacao}</p>
+          {Object.entries(percepcao_risco).map(([key, value]) =>
+            renderInformacao(labelsPercepcaoRisco[key as keyof typeof labelsPercepcaoRisco], value, converteRisco),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Sistemas de gestão</h3>
           </div>
-          <div className="col-span-2">
-            <Separator />
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Situação:</Label>
-            <div>
-              <Badge className={gestor.ativo === 1 ? "bg-green-100 text-green-600" : "bg-red-100 text-red-500"}>
-                {gestor.ativo === 1 ? "Ativo" : "Inativo"}
-              </Badge>
-            </div>
-          </div>
+          {Object.entries(sistemas_gestao).map(([key, value]) =>
+            renderInformacao(labelsSistemasGestao[key as keyof typeof labelsSistemasGestao], value, converteAvaliacao),
+          )}
         </div>
         <DialogFooter>
           <Button className="bg-primary-700 hover:bg-primary-800" onClick={onClose}>

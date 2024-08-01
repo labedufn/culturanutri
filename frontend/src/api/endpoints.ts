@@ -114,9 +114,15 @@ export function CADASTRAR_GESTOR() {
   };
 }
 
-export function LISTAR_GESTOR() {
+export function LISTAR_GESTORES() {
   return {
-    url: `${API_URL}/api/listar-gestor`,
+    url: `${API_URL}/api/listar-gestores`,
+  };
+}
+
+export function BUSCAR_GESTOR() {
+  return {
+    url: `${API_URL}/api/buscar-gestor`,
   };
 }
 

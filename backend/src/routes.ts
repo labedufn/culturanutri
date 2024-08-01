@@ -82,7 +82,7 @@ router.delete("/api/excluir-estabelecimento", authUsuario, new ExcluirEstabeleci
 // Rotas Gestor Avaliacao
 router.post("/api/cadastrar-gestor", authUsuario, new CriarGestorController().handle);
 router.put("/api/editar-gestor", authUsuario, new EditarGestorController().handle);
-router.get("/api/listar-gestor", authUsuario, new ListarGestoresController().handle);
+router.get("/api/listar-gestores", authUsuario, new ListarGestoresController().handle);
 router.get("/api/buscar-gestor", authUsuario, new BuscarGestorController().handle);
 
 // Rotas Manipulador Alimento
