@@ -5,10 +5,10 @@ import { AvaliacaoGestoresContent } from "./avaliacao-gestores-content";
 import { AvaliacaoProvider } from "./avaliacao-gestores-provider";
 
 interface AvaliacaoGestoresProps {
-  slug: string;
+  id: string;
 }
 
-export function AvaliacaoGestores({ slug }: AvaliacaoGestoresProps) {
+export function AvaliacaoGestores({ id }: AvaliacaoGestoresProps) {
   const [reloadKey, setReloadKey] = useState(0);
 
   const handleReload = () => {
@@ -19,7 +19,7 @@ export function AvaliacaoGestores({ slug }: AvaliacaoGestoresProps) {
     <>
       <h2 className="text-2xl font-semibold mb-8 text-black">Avaliação de gestores</h2>
       <AvaliacaoProvider key={reloadKey}>
-        <AvaliacaoGestoresContent onReload={handleReload} slug={slug} />
+        <AvaliacaoGestoresContent onReload={handleReload} id={id} />
       </AvaliacaoProvider>
     </>
   );

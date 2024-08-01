@@ -10,22 +10,17 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import { StepperAvaliacao } from "@/components/dashboard/stepper-avaliacao";
-import { notFound } from "next/navigation";
 import { buscarAvaliacao } from "@/actions/buscar-avaliacao";
 import { formatarData } from "@/scripts/formatarData";
 
 interface AvaliacaoPageProps {
   params: {
-    slug: string;
+    id: string;
   };
 }
 
 export default async function AvaliacaoPage({ params }: AvaliacaoPageProps) {
-  const avaliacaoResponse = await buscarAvaliacao(params.slug);
-
-  if (!avaliacaoResponse.success || !avaliacaoResponse.data) {
-    notFound();
-  }
+  const avaliacaoResponse = await buscarAvaliacao(params.id);
 
   const { data_cadastro, Estabelecimento } = avaliacaoResponse.data!;
 
@@ -55,7 +50,7 @@ export default async function AvaliacaoPage({ params }: AvaliacaoPageProps) {
       <Card className="rounded-lg border-none mt-6">
         <CardContent className="p-6">
           <div className="min-h-[calc(100vh-56px-64px-20px-24px-56px-48px)]">
-            <StepperAvaliacao slug={params.slug} />
+            <StepperAvaliacao id={params.id} />
           </div>
         </CardContent>
       </Card>

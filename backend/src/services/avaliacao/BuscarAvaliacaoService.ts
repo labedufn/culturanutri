@@ -12,7 +12,6 @@ export class BuscarAvaliacaoService {
         id: true,
         id_estabelecimento: true,
         data_cadastro: true,
-        slug: true,
         ativo: true,
         Estabelecimento: {
           select: {
@@ -21,6 +20,10 @@ export class BuscarAvaliacaoService {
         },
       },
     });
+
+    if (!avaliacao) {
+      throw new Error("Avaliação não encontrada");
+    }
 
     return avaliacao;
   }

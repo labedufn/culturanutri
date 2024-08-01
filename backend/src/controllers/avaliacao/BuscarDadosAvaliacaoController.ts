@@ -6,15 +6,17 @@ import { BuscarListasVerificacaoEstabelecimentoService } from "@services/lista-v
 import { BuscarManipuladoresAlimentoEstabelecimentoService } from "@services/manipulador-alimento/BuscarManipuladoresAlimentoEstabelecimentoService";
 import { BuscarResultadosEstabelecimentoService } from "@services/resultado/BuscarResultadosEstabelecimentoService";
 import { BuscarTriangulacoesEstabelecimentoService } from "@services/triangulacao/BuscarTriangulacoesEstabelecimentoService";
+import { Request, Response } from "express";
 
 export class BuscarDadosAvaliacaoController {
   async handle(req: Request, res: Response) {
     const { id_estabelecimento } = req.body;
+
     try {
       const buscarDadosAvaliacaoService = new BuscarDadosAvaliacaoService();
       const avaliacoes = await buscarDadosAvaliacaoService.execute(id_estabelecimento);
-      const idAvaliacoes = avaliacoes.map((avaliacao) => avaliacao.id);
-      const dados = {};
+      const idAvaliacoes = avaliacoes.map((avaliacao: any) => avaliacao.id);
+      const dados: any = {};
 
       const buscarGestoresEstabelecimentoService = new BuscarGestoresEstabelecimentoService();
       dados["gestores"] = await buscarGestoresEstabelecimentoService.execute(idAvaliacoes);

@@ -7,10 +7,10 @@ import { useState, useEffect } from "react";
 import { AvaliacaoGestores } from "./avaliacao/gestores/avaliacao-gestores";
 
 interface StepperAvaliacaoProps {
-  slug: string;
+  id: string;
 }
 
-export function StepperAvaliacao({ slug }: StepperAvaliacaoProps) {
+export function StepperAvaliacao({ id }: StepperAvaliacaoProps) {
   const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function StepperAvaliacao({ slug }: StepperAvaliacaoProps) {
     {
       icon: Handshake,
       tooltip: "Gestores",
-      content: <AvaliacaoGestores slug={slug} />,
+      content: <AvaliacaoGestores id={id} />,
     },
     {
       icon: ChefHat,

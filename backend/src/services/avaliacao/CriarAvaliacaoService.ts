@@ -8,14 +8,12 @@ export class CriarAvaliacaoService {
       const avaliacaoCriada = await prisma.avaliacao.create({
         data: {
           id_estabelecimento: avaliacao.id_estabelecimento,
-          slug: avaliacao.slug,
           ativo: avaliacao.ativo,
         },
         select: {
           id: true,
           id_estabelecimento: true,
           data_cadastro: true,
-          slug: true,
           ativo: true,
         },
       });

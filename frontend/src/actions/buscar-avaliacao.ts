@@ -26,15 +26,13 @@ export async function buscarAvaliacao(id_avaliacao: string): Promise<AvaliacaoRe
 
   try {
     const { url } = BUSCAR_AVALIACAO();
-    const response = await axios.get(url, {
-      data: { id_avaliacao },
+    const response = await axios.get(`${url}?id_avaliacao=${id_avaliacao}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
     const dados = response.data;
-    console.log("DADOS ", dados);
     return {
       success: true,
       data: dados,

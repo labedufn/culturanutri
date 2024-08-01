@@ -19,10 +19,10 @@ import GestoresTable from "./gestores-table";
 
 interface AvaliacaoGestoresContentProps {
   onReload: () => void;
-  slug: string;
+  id: string;
 }
 
-export function AvaliacaoGestoresContent({ onReload, slug }: AvaliacaoGestoresContentProps) {
+export function AvaliacaoGestoresContent({ onReload, id }: AvaliacaoGestoresContentProps) {
   const form = useFormContext();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -88,7 +88,7 @@ export function AvaliacaoGestoresContent({ onReload, slug }: AvaliacaoGestoresCo
             boas_praticas_consumidor_alta_percepcao_risco: Number(data.melhorarBoasPraticas),
           },
         },
-        id_avaliacao: slug,
+        id_avaliacao: id,
       };
 
       const response = await cadastrarGestor(formattedData);
