@@ -6,10 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { listarGestor } from "@/actions/listar-gestor";
 import { Toaster } from "@/components/ui/toaster";
 import { ModalVisualizarGestor } from "./modal-visualizar-gestores";
-import { ModalEditarGestor } from "./modal-editar-gestores";
 import { ModalExcluirGestor } from "./modal-excluir-gestores";
 import { columns } from "./table/columns";
-import { AvaliacaoProvider } from "./avaliacao-gestores-provider";
 import { Gestor } from "@/types/gestor";
 
 export default function GestoresTable() {
@@ -17,7 +15,6 @@ export default function GestoresTable() {
   const [filteredData, setFilteredData] = useState<Gestor[]>([]);
   const [selectedGestor, setSelectedGestor] = useState<Gestor | null>(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
@@ -45,11 +42,6 @@ export default function GestoresTable() {
     setIsViewModalOpen(true);
   };
 
-  const handleEditar = (gestor: Gestor) => {
-    setSelectedGestor(gestor);
-    setIsEditModalOpen(true);
-  };
-
   const handleExcluir = (gestor: Gestor) => {
     setSelectedGestor(gestor);
     setIsDeleteModalOpen(true);
@@ -60,7 +52,7 @@ export default function GestoresTable() {
       {!gestores ? (
         <Skeleton className="h-64 w-full" />
       ) : (
-        <DataTable columns={columns(handleVisualizar, handleEditar, handleExcluir)} data={filteredData} />
+        <DataTable columns={columns(handleVisualizar, handleExcluir)} data={filteredData} />
       )}
       {selectedGestor && (
         <>
@@ -69,21 +61,6 @@ export default function GestoresTable() {
             onClose={() => setIsViewModalOpen(false)}
             gestor={selectedGestor}
           />
-          <AvaliacaoProvider>
-            <ModalEditarGestor
-              isOpen={isEditModalOpen}
-              onClose={() => setIsEditModalOpen(false)}
-              gestor={selectedGestor}
-              onUpdate={() => {
-                if (typeof window !== "undefined") {
-                  const url = new URL(window.location.href);
-                  const pathParts = url.pathname.split("/");
-                  const avaliacaoId = pathParts[pathParts.length - 1];
-                  fetchGestores(avaliacaoId);
-                }
-              }}
-            />
-          </AvaliacaoProvider>
           <ModalExcluirGestor
             isOpen={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}

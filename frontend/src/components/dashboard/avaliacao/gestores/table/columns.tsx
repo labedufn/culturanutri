@@ -1,11 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, Edit, Trash } from "lucide-react";
+import { Eye, Trash } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Gestor } from "@/types/gestor";
 
 export const columns = (
   handleVisualizar: (gestor: Gestor) => void,
-  handleEditar: (gestor: Gestor) => void,
   handleExcluir: (gestor: Gestor) => void,
 ): Array<ColumnDef<Gestor> & { sortable?: boolean }> => [
   {
@@ -60,19 +59,6 @@ export const columns = (
             </TooltipTrigger>
             <TooltipContent side="bottom" className="bg-zinc-800">
               <p className="text-white">Visualizar Gestor</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button onClick={() => handleEditar(row.original)}>
-                <Edit className="text-zinc-400 w-5 hover:text-zinc-500" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="bg-zinc-800">
-              <p className="text-white">Editar Gestor</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
