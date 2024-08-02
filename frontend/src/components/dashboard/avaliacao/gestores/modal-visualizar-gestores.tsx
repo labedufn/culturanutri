@@ -67,7 +67,7 @@ export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualiz
           <DialogTitle>Visualizar Gestor</DialogTitle>
           <DialogDescription>Informações do gestor selecionado.</DialogDescription>
         </DialogHeader>
-        <h3 className="font-semibold text-black mt-4 mb-2">Dados do individuais</h3>
+        <h3 className="font-semibold text-black mt-4">Dados do individuais</h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {Object.entries(dados_individuais).map(([key, value]) =>
             renderInformacao(
@@ -91,14 +91,14 @@ export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualiz
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />
-            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Conhecimento</h3>
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Conhecimento</h3>
           </div>
           {Object.entries(conhecimento).map(([key, value]) =>
             renderInformacao(labelsConhecimento[key as keyof typeof labelsConhecimento], value, converteSimNao),
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />
-            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Comprometimento afetivo</h3>
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Comprometimento afetivo</h3>
           </div>
           {Object.entries(comprometimento_afetivo).map(([key, value]) =>
             renderInformacao(
@@ -109,7 +109,7 @@ export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualiz
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />
-            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Comprometimento normativo</h3>
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Comprometimento normativo</h3>
           </div>
           {Object.entries(comprometimento_normativo).map(([key, value]) =>
             renderInformacao(
@@ -120,7 +120,7 @@ export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualiz
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />
-            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Comprometimento instrumental</h3>
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Comprometimento instrumental</h3>
           </div>
           {Object.entries(comprometimento_instrumental).map(([key, value]) =>
             renderInformacao(
@@ -131,14 +131,14 @@ export function ModalVisualizarGestor({ isOpen, onClose, gestor }: ModalVisualiz
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />
-            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Percepção de risco</h3>
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Percepção de risco</h3>
           </div>
           {Object.entries(percepcao_risco).map(([key, value]) =>
             renderInformacao(labelsPercepcaoRisco[key as keyof typeof labelsPercepcaoRisco], value, converteRisco),
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />
-            <h3 className="font-semibold col-col-span-1 text-black mt-4 mb-2">Sistemas de gestão</h3>
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Sistemas de gestão</h3>
           </div>
           {Object.entries(sistemas_gestao).map(([key, value]) =>
             renderInformacao(labelsSistemasGestao[key as keyof typeof labelsSistemasGestao], value, converteAvaliacao),
