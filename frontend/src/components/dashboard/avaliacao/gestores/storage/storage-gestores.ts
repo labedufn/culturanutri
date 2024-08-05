@@ -1,4 +1,4 @@
-import { FormSchemaType } from "../schemas/schema-gestores";
+import { FormSchemaType } from "../../gestores/schemas/schema-gestores";
 
 export function getStoredValuesGestor(): Partial<FormSchemaType> {
   if (typeof window === "undefined") {

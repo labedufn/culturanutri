@@ -149,3 +149,33 @@ export function BUSCAR_AVALIACAO() {
     url: `${API_URL}/api/buscar-avaliacao`,
   };
 }
+
+export function LISTAR_MANIPULADORES() {
+  return {
+    url: `${API_URL}/api/listar-manipuladores`,
+  };
+}
+
+export function CADASTRAR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/cadastrar-manipulador`,
+  };
+}
+
+export function BUSCAR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/buscar-manipulador`,
+  };
+}
+
+export function EDITAR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/editar-manipulador`,
+  };
+}
+
+export function EXCLUIR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/excluir-manipulador`,
+  };
+}

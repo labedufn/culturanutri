@@ -5,6 +5,7 @@ import { Stepper } from "./stepper";
 import { Button } from "../ui/button";
 import { useState, useEffect } from "react";
 import { AvaliacaoGestores } from "./avaliacao/gestores/avaliacao-gestores";
+import { AvaliacaoManipuladores } from "./avaliacao/manipuladores/avaliacao-manipuladores";
 
 interface StepperAvaliacaoProps {
   id: string;
@@ -49,7 +50,7 @@ export function StepperAvaliacao({ id }: StepperAvaliacaoProps) {
     {
       icon: ChefHat,
       tooltip: "Manipuladores de alimentos",
-      content: <div>Manipuladores</div>,
+      content: <AvaliacaoManipuladores id={id} />,
     },
     {
       icon: ListChecks,
