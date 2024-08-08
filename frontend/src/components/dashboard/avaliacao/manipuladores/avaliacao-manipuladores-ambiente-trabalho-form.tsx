@@ -11,26 +11,33 @@ const escalaOptions = [
   { label: "Concordo totalmente", value: "5" },
 ];
 
-export function AvaliacaoGestoresComprometimentoInstrumentalForm() {
-  useLocalStorageFormSync(["vidaDesestruturada", "poucasAlternativas", "dificilDeixarEmprego"], "Gestor");
+export function AvaliacaoManipuladoresAmbienteTrabalhoForm() {
+  useLocalStorageFormSync(
+    [
+      "equipamentosNecessariosFormaSegura",
+      "estruturaAdequadaNormasHigiene",
+      "produtosHigienizacaoAdequadosManipulacaoAlimentos",
+    ],
+    "Manipulador",
+  );
 
   return (
     <>
       <RadioGroupField
-        name="vidaDesestruturada"
-        label="Se eu decidisse deixar meu emprego agora, minha vida ficaria bastante desestruturada."
+        name="equipamentosNecessariosFormaSegura"
+        label="Tenho equipamentos e utensílios necessários para preparar os alimentos de forma segura."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="poucasAlternativas"
-        label="Eu acho que teria poucas alternativas se deixasse este emprego."
+        name="estruturaAdequadaNormasHigiene"
+        label="A estrutura da cozinha é adequada para seguir as normas de higiene."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="dificilDeixarEmprego"
-        label="Mesmo se eu quisesse, seria muito difícil para mim deixar meu emprego agora."
+        name="produtosHigienizacaoAdequadosManipulacaoAlimentos"
+        label="Tenho os produtos para higienização adequados para realizar as boas práticas de manipulação de alimentos."
         options={escalaOptions}
         orientation="vertical"
       />

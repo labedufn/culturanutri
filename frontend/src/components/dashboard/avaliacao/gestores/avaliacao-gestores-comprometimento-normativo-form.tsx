@@ -12,30 +12,33 @@ const escalaOptions = [
 ];
 
 export function AvaliacaoGestoresComprometimentoNormativoForm() {
-  useLocalStorageFormSync(["obrigacaoMoral", "sentirCulpado", "naoSeriaCerto", "devoMuito"]);
+  useLocalStorageFormSync(
+    ["naoDeixaEmpregoPoisObrigacaoMoral", "culpadoDeixasseEmprego", "naoSeriaCertoDeixarEmprego", "devoEsseEmprego"],
+    "Gestor",
+  );
 
   return (
     <>
       <RadioGroupField
-        name="obrigacaoMoral"
+        name="naoDeixaEmpregoPoisObrigacaoMoral"
         label="Eu não deixaria meu emprego agora porque eu tenho uma obrigação moral com as pessoas daqui."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="sentirCulpado"
+        name="culpadoDeixasseEmprego"
         label="Eu me sentiria culpado se deixasse meu emprego agora."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="naoSeriaCerto"
+        name="naoSeriaCertoDeixarEmprego"
         label="Mesmo se fosse vantagem para mim, eu sinto que não seria certo deixar meu emprego agora."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="devoMuito"
+        name="devoEsseEmprego"
         label="Eu devo muito a esse meu emprego."
         options={escalaOptions}
         orientation="vertical"

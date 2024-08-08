@@ -18,6 +18,7 @@ export async function listarManipulador() {
       },
     });
     const dados = response.data;
+    console.log(dados);
     return {
       success: true,
       data: dados,

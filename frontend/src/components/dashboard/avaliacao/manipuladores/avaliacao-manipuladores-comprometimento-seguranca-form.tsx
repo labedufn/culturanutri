@@ -11,41 +11,40 @@ const escalaOptions = [
   { label: "Concordo totalmente", value: "5" },
 ];
 
-export function AvaliacaoGestoresComprometimentoAfetivoForm() {
+export function AvaliacaoManipuladoresComprometimentoSegurancaForm() {
   useLocalStorageFormSync(
-    ["problemasRestaurante", "significadoPessoal", "mereceLealdade", "necessidadeDesejo", "dedicarCarreira"],
-    "Gestor",
+    [
+      "sigoNormasHigieneResponsabilidade",
+      "segurancaAltaPrioridade",
+      "sigoNormasHigieneImportante",
+      "empenhadoSeguirNormasHigiene",
+    ],
+    "Manipulador",
   );
 
   return (
     <>
       <RadioGroupField
-        name="problemasRestaurante"
-        label="Eu realmente sinto os problemas do restaurante como se fossem meus."
+        name="sigoNormasHigieneResponsabilidade"
+        label="Eu sigo as normas de higiene porque é minha responsabilidade."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="significadoPessoal"
-        label="Este restaurante tem um imenso significado pessoal para mim."
+        name="segurancaAltaPrioridade"
+        label="A segurança dos alimentos é uma alta prioridade para mim."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="mereceLealdade"
-        label="Este restaurante merece minha lealdade."
+        name="sigoNormasHigieneImportante"
+        label="Eu sigo as normas de higiene, porque eu acho que elas são importantes."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="necessidadeDesejo"
-        label="Na situação atual, trabalhar nesse restaurante é tanto uma necessidade quanto um desejo."
-        options={escalaOptions}
-        orientation="vertical"
-      />
-      <RadioGroupField
-        name="dedicarCarreira"
-        label="Eu seria muito feliz em dedicar o resto da minha carreira nesse restaurante."
+        name="empenhadoSeguirNormasHigiene"
+        label="Estou empenhado em seguir todas as normas de higiene."
         options={escalaOptions}
         orientation="vertical"
       />

@@ -14,20 +14,12 @@ export const schema = z
     escolaridade: z.string().min(1, "O campo escolaridade é obrigatório."),
     formacao: z.string().optional().nullable(),
     participouTreinamento: z.string().min(1, "Este campo é obrigatório."),
-    tempoTrabalhoAnos: z.preprocess(
+    tempoTrabalhaComAlimentos: z.preprocess(
       (value) => (value === "" ? NaN : Number(value)),
       z
-        .number({ invalid_type_error: "O campo tempo de trabalho com alimentos (anos) é obrigatório." })
-        .min(0, "O tempo de trabalho com alimentos (anos) deve ser maior ou igual a 0.")
-        .refine((value) => !isNaN(value), "O campo tempo de trabalho com alimentos (anos) é obrigatório."),
-    ),
-    tempoTrabalhoMeses: z.preprocess(
-      (value) => (value === "" ? NaN : Number(value)),
-      z
-        .number({ invalid_type_error: "O campo tempo de trabalho com alimentos (meses) é obrigatório." })
-        .min(0, "O tempo de trabalho com alimentos (meses) deve ser maior ou igual a 0.")
-        .max(11, "O tempo de trabalho com alimentos (meses) deve ser menor ou igual a 11.")
-        .refine((value) => !isNaN(value), "O campo tempo de trabalho com alimentos (meses) é obrigatório."),
+        .number({ invalid_type_error: "O campo tempo de trabalho com alimentos é obrigatório." })
+        .min(1, "Há quanto tempo trabalha com alimentos deve ser maior que 0.")
+        .refine((value) => !isNaN(value), "O campo tempo de trabalho com alimentos é obrigatório."),
     ),
     aberturaComChefe: z.string().min(1, "Este campo é obrigatório."),
     boaComunicacaoEntreFuncionarios: z.string().min(1, "Este campo é obrigatório."),
@@ -66,7 +58,6 @@ export const schema = z
     empenhadoSeguirNormasHigiene: z.string().min(1, "Este campo é obrigatório."),
     riscoApresentarDorBarrigaEstabelecimentoSimilar: z.string().min(1, "Este campo é obrigatório."),
     riscoApresentarDorBarrigaEstabelecimentoManipulado: z.string().min(1, "Este campo é obrigatório."),
-    riscoApresentarDorBarrigaEstabelecimentoColegaManipulado: z.string().min(1, "Este campo é obrigatório."),
     riscoDoencaTransmitidaAlimentos: z.string().min(1, "Este campo é obrigatório."),
     chefeSeguirBoasPraticas: z.string().min(1, "Este campo é obrigatório."),
     colegasTrabalhoNormasHigiene: z.string().min(1, "Este campo é obrigatório."),

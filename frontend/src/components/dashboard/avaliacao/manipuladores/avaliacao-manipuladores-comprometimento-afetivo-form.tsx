@@ -11,40 +11,46 @@ const escalaOptions = [
   { label: "Concordo totalmente", value: "5" },
 ];
 
-export function AvaliacaoGestoresComprometimentoAfetivoForm() {
+export function AvaliacaoManipuladoresComprometimentoAfetivoForm() {
   useLocalStorageFormSync(
-    ["problemasRestaurante", "significadoPessoal", "mereceLealdade", "necessidadeDesejo", "dedicarCarreira"],
-    "Gestor",
+    [
+      "problemasRestauranteMeus",
+      "restauranteTemSignificado",
+      "restauranteMereceMinhaLealdade",
+      "trabalharPorNecessidadeEDesejo",
+      "dedicarMinhaCarreiraAoRestaurante",
+    ],
+    "Manipulador",
   );
 
   return (
     <>
       <RadioGroupField
-        name="problemasRestaurante"
+        name="problemasRestauranteMeus"
         label="Eu realmente sinto os problemas do restaurante como se fossem meus."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="significadoPessoal"
+        name="restauranteTemSignificado"
         label="Este restaurante tem um imenso significado pessoal para mim."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="mereceLealdade"
+        name="restauranteMereceMinhaLealdade"
         label="Este restaurante merece minha lealdade."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="necessidadeDesejo"
+        name="trabalharPorNecessidadeEDesejo"
         label="Na situação atual, trabalhar nesse restaurante é tanto uma necessidade quanto um desejo."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="dedicarCarreira"
+        name="dedicarMinhaCarreiraAoRestaurante"
         label="Eu seria muito feliz em dedicar o resto da minha carreira nesse restaurante."
         options={escalaOptions}
         orientation="vertical"

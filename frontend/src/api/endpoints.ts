@@ -152,13 +152,13 @@ export function BUSCAR_AVALIACAO() {
 
 export function LISTAR_MANIPULADORES() {
   return {
-    url: `${API_URL}/api/listar-manipuladores`,
+    url: `${API_URL}/api/listar-manipulador-alimento`,
   };
 }
 
 export function CADASTRAR_MANIPULADOR() {
   return {
-    url: `${API_URL}/api/cadastrar-manipulador`,
+    url: `${API_URL}/api/cadastrar-manipulador-alimento`,
   };
 }
 

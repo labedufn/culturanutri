@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocalStorageFormSync } from "@/hooks/use-local-storage-hook-form";
 import { RadioGroupField } from "../form/radio-group-field";
-import { InputField } from "../form/input-field";
 import { SelectField } from "../form/select-field";
+import { InputField } from "../form/input-field";
 import { useFormContext } from "./avaliacao-manipuladores-provider";
 
 const escolaridadeOptions = [
@@ -30,17 +30,20 @@ export function AvaliacaoManipuladoresDadosIndividuaisForm() {
   const form = useFormContext();
   const [escolaridade, setEscolaridade] = useState(form.getValues("escolaridade"));
 
-  useLocalStorageFormSync([
-    "genero",
-    "idade",
-    "escolaridade",
-    "formacao",
-    "participouTreinamento",
-    "tempoTrabalhoAnos",
-    "tempoTrabalhoMeses",
-    "aberturaComChefe",
-    "boaComunicacaoEntreFuncionarios",
-  ]);
+  useLocalStorageFormSync(
+    [
+      "nomeCompleto",
+      "genero",
+      "idade",
+      "escolaridade",
+      "formacao",
+      "participouTreinamento",
+      "tempoTrabalhaComAlimentos",
+      "aberturaComChefe",
+      "boaComunicacaoEntreFuncionarios",
+    ],
+    "Manipulador",
+  );
 
   useEffect(() => {
     const subscription = form.watch((values) => {
@@ -51,6 +54,7 @@ export function AvaliacaoManipuladoresDadosIndividuaisForm() {
 
   return (
     <>
+      <InputField name="nomeCompleto" label="Nome Completo" placeholder="Digite o nome completo" />
       <RadioGroupField name="genero" label="Gênero" options={generoOptions} />
       <InputField name="idade" label="Idade" type="number" placeholder="Digite a idade" min={18} />
       <SelectField name="escolaridade" label="Escolaridade" options={escolaridadeOptions} />
@@ -65,22 +69,13 @@ export function AvaliacaoManipuladoresDadosIndividuaisForm() {
         />
       )}
 
-      <div className="grid grid-cols-2 gap-4">
-        <InputField
-          name="tempoTrabalhoAnos"
-          label="Tempo de trabalho com alimentos (anos)"
-          type="number"
-          placeholder="Anos"
-          min={0}
-        />
-        <InputField
-          name="tempoTrabalhoMeses"
-          label="Tempo de trabalho com alimentos (meses)"
-          type="number"
-          placeholder="Meses"
-          min={0}
-        />
-      </div>
+      <InputField
+        name="tempoTrabalhaComAlimentos"
+        label="Há quanto tempo trabalha com alimentos? (meses)"
+        type="number"
+        placeholder="Número de meses trabalhados"
+        min={1}
+      />
 
       <RadioGroupField
         name="aberturaComChefe"

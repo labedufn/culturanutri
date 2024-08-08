@@ -44,19 +44,22 @@ export function AvaliacaoGestoresDadosIndividuaisForm() {
   const [escolaridade, setEscolaridade] = useState(form.getValues("escolaridade"));
   const [realizaTreinamentos, setRealizaTreinamentos] = useState(form.getValues("realizaTreinamentosBoasPraticas"));
 
-  useLocalStorageFormSync([
-    "nomeCompleto",
-    "genero",
-    "idade",
-    "escolaridade",
-    "formacao",
-    "naoTenhaFormacaoTemTreinamento",
-    "tempoTrabalhaComAlimentos",
-    "acreditaComunicacaoBoa",
-    "realizaTreinamentosBoasPraticas",
-    "cargaHoraria",
-    "temasTreinamentos",
-  ]);
+  useLocalStorageFormSync(
+    [
+      "nomeCompleto",
+      "genero",
+      "idade",
+      "escolaridade",
+      "formacao",
+      "naoTenhaFormacaoTemTreinamento",
+      "tempoTrabalhaComAlimentos",
+      "acreditaComunicacaoBoa",
+      "realizaTreinamentosBoasPraticas",
+      "cargaHoraria",
+      "temasTreinamentos",
+    ],
+    "Gestor",
+  );
 
   useEffect(() => {
     const subscription = form.watch((values) => {

@@ -1,4 +1,4 @@
-import { FormSchemaType } from "../../gestores/schemas/schema-manipuladores";
+import { FormSchemaType } from "../schemas/schema-manipuladores";
 
 export function getStoredValuesManipulador(): Partial<FormSchemaType> {
   if (typeof window === "undefined") {
@@ -12,11 +12,8 @@ export function getStoredValuesManipulador(): Partial<FormSchemaType> {
     escolaridade: localStorage.getItem("escolaridadeManipulador") || "",
     formacao: localStorage.getItem("formacaoManipulador") || "",
     participouTreinamento: localStorage.getItem("participouTreinamentoManipulador") || "",
-    tempoTrabalhoAnos: localStorage.getItem("tempoTrabalhoAnosManipulador")
-      ? Number(localStorage.getItem("tempoTrabalhoAnosManipulador"))
-      : undefined,
-    tempoTrabalhoMeses: localStorage.getItem("tempoTrabalhoMesesManipulador")
-      ? Number(localStorage.getItem("tempoTrabalhoMesesManipulador"))
+    tempoTrabalhaComAlimentos: localStorage.getItem("tempoTrabalhaComAlimentosManipulador")
+      ? Number(localStorage.getItem("tempoTrabalhaComAlimentosManipulador"))
       : undefined,
     aberturaComChefe: localStorage.getItem("aberturaComChefeManipulador") || "",
     boaComunicacaoEntreFuncionarios: localStorage.getItem("boaComunicacaoEntreFuncionariosManipulador") || "",

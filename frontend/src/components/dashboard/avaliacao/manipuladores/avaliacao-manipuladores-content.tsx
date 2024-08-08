@@ -11,6 +11,17 @@ import { AvaliacaoManipuladoresDadosIndividuaisForm } from "./avaliacao-manipula
 import ManipuladoresTable from "./manipuladores-table";
 import { useFormContext } from "./avaliacao-manipuladores-provider";
 import { cadastrarManipulador } from "@/actions/cadastrar-manipulador";
+import { AvaliacaoManipuladoresConhecimentoForm } from "./avaliacao-manipuladores-conhecimento-form";
+import { AvaliacaoManipuladoresLiderancaForm } from "./avaliacao-manipuladores-lideranca-form";
+import { AvaliacaoManipuladoresComunicacaoForm } from "./avaliacao-manipuladores-comunicacao-form";
+import { AvaliacaoManipuladoresComprometimentoAfetivoForm } from "./avaliacao-manipuladores-comprometimento-afetivo-form";
+import { AvaliacaoManipuladoresComprometimentoNormativoForm } from "./avaliacao-manipuladores-comprometimento-normativo-form";
+import { AvaliacaoManipuladoresComprometimentoInstrumentalForm } from "./avaliacao-manipuladores-comprometimento-instrumental-form";
+import { AvaliacaoManipuladoresComprometimentoSegurancaForm } from "./avaliacao-manipuladores-comprometimento-seguranca-form";
+import { AvaliacaoManipuladoresPercepcaoRiscoForm } from "./avaliacao-manipuladores-percepcao-risco-form";
+import { AvaliacaoManipuladoresPressoesTrabalhoForm } from "./avaliacao-manipuladores-pressoes-trabalho-form";
+import { AvaliacaoManipuladoresAmbienteTrabalhoForm } from "./avaliacao-manipuladores-ambiente-trabalho-form";
+import { AvaliacaoManipuladoresSistemasGestaoForm } from "./avaliacao-manipuladores-sistemas-gestao-form";
 
 interface AvaliacaoManipuladoresContentProps {
   onReload: () => void;
@@ -22,10 +33,13 @@ export function AvaliacaoManipuladoresContent({ onReload, id }: AvaliacaoManipul
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const onSubmit = async (data: any) => {
+    console.log("onSubmit chamado com dados:", data); // Log de depuração
     try {
       const formattedData = formatarDadosManipulador(data, id);
+      console.log("Dados formatados:", formattedData); // Log de depuração
 
       const response = await cadastrarManipulador(formattedData);
+      console.log("Resposta da API:", response); // Log de depuração
 
       if (response.success) {
         toast({
@@ -53,6 +67,7 @@ export function AvaliacaoManipuladoresContent({ onReload, id }: AvaliacaoManipul
         });
       }
     } catch (error) {
+      console.error("Erro ao cadastrar o manipulador:", error); // Log de depuração
       toast({
         className: cn(
           "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",
@@ -88,42 +103,57 @@ export function AvaliacaoManipuladoresContent({ onReload, id }: AvaliacaoManipul
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Liderança</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresLiderancaForm /> */}
+              <AvaliacaoManipuladoresLiderancaForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Comunicação</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresComunicacaoForm /> */}
+              <AvaliacaoManipuladoresComunicacaoForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Conhecimento</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresConhecimentoForm /> */}
+              <AvaliacaoManipuladoresConhecimentoForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Comprometimento afetivo</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresComprometimentoAfetivoForm /> */}
+              <AvaliacaoManipuladoresComprometimentoAfetivoForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Comprometimento normativo</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresComprometimentoNormativoForm /> */}
+              <AvaliacaoManipuladoresComprometimentoNormativoForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Comprometimento instrumental</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresComprometimentoInstrumentalForm /> */}
+              <AvaliacaoManipuladoresComprometimentoInstrumentalForm />
+            </div>
+            <Separator className="my-8" />
+            <h3 className="font-semibold text-black mt-4 mb-2">Comprometimento com segurança dos alimentos</h3>
+            <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
+              <AvaliacaoManipuladoresComprometimentoSegurancaForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Percepção de risco</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresPercepcaoRiscoForm /> */}
+              <AvaliacaoManipuladoresPercepcaoRiscoForm />
+            </div>
+            <Separator className="my-8" />
+            <h3 className="font-semibold text-black mt-4 mb-2">Pressões de trabalho e crenças normativas</h3>
+            <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
+              <AvaliacaoManipuladoresPressoesTrabalhoForm />
+            </div>
+            <Separator className="my-8" />
+            <h3 className="font-semibold text-black mt-4 mb-2">Ambiente de trabalho</h3>
+            <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
+              <AvaliacaoManipuladoresAmbienteTrabalhoForm />
             </div>
             <Separator className="my-8" />
             <h3 className="font-semibold text-black mt-4 mb-2">Sistemas de gestão</h3>
             <div className="grid grid-cols-1 gap-4 lg:gap-6 sm:grid-cols-1 md:grid-cols-2 mb-8">
-              {/* <AvaliacaoManipuladoresSistemasGestaoForm /> */}
+              <AvaliacaoManipuladoresSistemasGestaoForm />
             </div>
           </div>
           <DialogFooter className="flex-col-reverse gap-4 md:gap-0 md:flex-row">

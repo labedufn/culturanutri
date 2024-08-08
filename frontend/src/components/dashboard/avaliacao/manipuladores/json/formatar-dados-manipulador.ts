@@ -8,10 +8,7 @@ export const formatarDadosManipulador = (data: any, id: string) => {
         escolaridade: Number(data.escolaridade),
         formacao: data.formacao,
         participou_treinamento_manipulacao_alimentos: Number(data.participouTreinamento),
-        tempo_trabalha_com_alimentos: {
-          anos: Number(data.tempoTrabalhoAnos),
-          meses: Number(data.tempoTrabalhoMeses),
-        },
+        tempo_trabalha_com_alimentos: Number(data.tempoTrabalhaComAlimentos),
         boa_comunicacao_chefe: Number(data.aberturaComChefe),
         boa_comunicacao_entre_funcionarios: Number(data.boaComunicacaoEntreFuncionarios),
       },

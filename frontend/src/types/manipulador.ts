@@ -5,10 +5,7 @@ export interface DadosIndividuais {
   escolaridade: number;
   formacao: string;
   participou_treinamento_manipulacao_alimentos: number;
-  tempo_trabalha_com_alimentos: {
-    anos: number;
-    meses: number;
-  };
+  tempo_trabalha_com_alimentos: number;
   boa_comunicacao_chefe: number;
   boa_comunicacao_entre_funcionarios: number;
 }
@@ -234,8 +231,4 @@ export function converteRisco(value: number): string {
     7: "Extremamente alto",
   };
   return riscoMap[value] || "Não informado";
-}
-
-export function converteTempoTrabalho(value: { anos: number; meses: number }): string {
-  return `${value.anos} anos e ${value.meses} meses`;
 }

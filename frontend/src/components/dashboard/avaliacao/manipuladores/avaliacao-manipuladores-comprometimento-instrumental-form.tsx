@@ -11,25 +11,28 @@ const escalaOptions = [
   { label: "Concordo totalmente", value: "5" },
 ];
 
-export function AvaliacaoGestoresComprometimentoInstrumentalForm() {
-  useLocalStorageFormSync(["vidaDesestruturada", "poucasAlternativas", "dificilDeixarEmprego"], "Gestor");
+export function AvaliacaoManipuladoresComprometimentoInstrumentalForm() {
+  useLocalStorageFormSync(
+    ["deixarEmpregoVidaDesestruturada", "poucasAlternativasCasoDeixarEmprego", "muitoDificilDeixarEmprego"],
+    "Manipulador",
+  );
 
   return (
     <>
       <RadioGroupField
-        name="vidaDesestruturada"
+        name="deixarEmpregoVidaDesestruturada"
         label="Se eu decidisse deixar meu emprego agora, minha vida ficaria bastante desestruturada."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="poucasAlternativas"
+        name="poucasAlternativasCasoDeixarEmprego"
         label="Eu acho que teria poucas alternativas se deixasse este emprego."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="dificilDeixarEmprego"
+        name="muitoDificilDeixarEmprego"
         label="Mesmo se eu quisesse, seria muito difícil para mim deixar meu emprego agora."
         options={escalaOptions}
         orientation="vertical"

@@ -11,41 +11,35 @@ const escalaOptions = [
   { label: "Concordo totalmente", value: "5" },
 ];
 
-export function AvaliacaoGestoresComprometimentoAfetivoForm() {
+export function AvaliacaoManipuladoresComprometimentoNormativoForm() {
   useLocalStorageFormSync(
-    ["problemasRestaurante", "significadoPessoal", "mereceLealdade", "necessidadeDesejo", "dedicarCarreira"],
-    "Gestor",
+    ["naoDeixaEmpregoPoisObrigacaoMoral", "culpadoDeixasseEmprego", "naoSeriaCertoDeixarEmprego", "devoEsseEmprego"],
+    "Manipulador",
   );
 
   return (
     <>
       <RadioGroupField
-        name="problemasRestaurante"
-        label="Eu realmente sinto os problemas do restaurante como se fossem meus."
+        name="naoDeixaEmpregoPoisObrigacaoMoral"
+        label="Eu não deixaria meu emprego agora porque eu tenho uma obrigação moral com as pessoas daqui."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="significadoPessoal"
-        label="Este restaurante tem um imenso significado pessoal para mim."
+        name="culpadoDeixasseEmprego"
+        label="Eu me sentiria culpado se deixasse meu emprego agora."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="mereceLealdade"
-        label="Este restaurante merece minha lealdade."
+        name="naoSeriaCertoDeixarEmprego"
+        label="Mesmo se fosse vantagem para mim, eu sinto que não seria certo deixar meu emprego agora."
         options={escalaOptions}
         orientation="vertical"
       />
       <RadioGroupField
-        name="necessidadeDesejo"
-        label="Na situação atual, trabalhar nesse restaurante é tanto uma necessidade quanto um desejo."
-        options={escalaOptions}
-        orientation="vertical"
-      />
-      <RadioGroupField
-        name="dedicarCarreira"
-        label="Eu seria muito feliz em dedicar o resto da minha carreira nesse restaurante."
+        name="devoEsseEmprego"
+        label="Eu devo muito a esse meu emprego."
         options={escalaOptions}
         orientation="vertical"
       />

@@ -3,7 +3,7 @@
 import React, { createContext, useContext, ReactNode } from "react";
 import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { schema, FormSchemaType } from "../gestores/schemas/schema-manipuladores";
+import { schema, FormSchemaType } from "./schemas/schema-manipuladores";
 import { getStoredValuesManipulador } from "./storage/storage-manipuladores";
 
 const FormContext = createContext<UseFormReturn<FormSchemaType> | null>(null);

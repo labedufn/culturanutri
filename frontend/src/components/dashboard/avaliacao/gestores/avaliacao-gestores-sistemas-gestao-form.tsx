@@ -12,15 +12,18 @@ const escalaOptions = [
 ];
 
 export function AvaliacaoGestoresSistemasGestaoForm() {
-  useLocalStorageFormSync([
-    "modificarLideranca",
-    "modificarComunicacao",
-    "modificarSegurancaAlimentos",
-    "modificarAmbienteTrabalho",
-    "pressionarManipulador",
-    "modificarComprometimento",
-    "melhorarBoasPraticas",
-  ]);
+  useLocalStorageFormSync(
+    [
+      "modificarLideranca",
+      "modificarComunicacao",
+      "modificarSegurancaAlimentos",
+      "modificarAmbienteTrabalho",
+      "pressionarManipulador",
+      "modificarComprometimento",
+      "melhorarBoasPraticas",
+    ],
+    "Gestor",
+  );
 
   return (
     <>
