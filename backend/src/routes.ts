@@ -41,8 +41,8 @@ import { BuscarResultadoController } from "@controllers/resultado/BuscarResultad
 import { CriarAvaliacaoController } from "@controllers/avaliacao/CriarAvaliacaoController";
 import { ExcluirAvaliacaoController } from "@controllers/avaliacao/ExcluirAvaliacaoController";
 import { ListarAvaliacaoController } from "@controllers/avaliacao/ListarAvaliacaoController";
-import { BuscarAvaliacaoController } from "@controllers/avaliacao/BuscarAvaliacaoController";
 import { BuscarDadosAvaliacaoController } from "@controllers/avaliacao/BuscarDadosAvaliacaoController";
+import { BuscarAvaliacaoController } from "@controllers/avaliacao/BuscarAvaliacaoController";
 
 export const router = Router();
 
@@ -82,7 +82,7 @@ router.delete("/api/excluir-estabelecimento", authUsuario, new ExcluirEstabeleci
 // Rotas Gestor Avaliacao
 router.post("/api/cadastrar-gestor", authUsuario, new CriarGestorController().handle);
 router.put("/api/editar-gestor", authUsuario, new EditarGestorController().handle);
-router.get("/api/listar-gestor", authUsuario, new ListarGestoresController().handle);
+router.get("/api/listar-gestores", authUsuario, new ListarGestoresController().handle);
 router.get("/api/buscar-gestor", authUsuario, new BuscarGestorController().handle);
 
 // Rotas Manipulador Alimento

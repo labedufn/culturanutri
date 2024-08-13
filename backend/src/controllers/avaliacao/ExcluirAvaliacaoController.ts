@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import { ExcluirAvaliacaoService } from "@services/avaliacao/ExcluirAvaliacaoService";
 
 export class ExcluirAvaliacaoController {
@@ -8,7 +9,7 @@ export class ExcluirAvaliacaoController {
       const avaliacao = await excluirAvaliacaoService.execute(id_avaliacao, ativo);
 
       return res.json(avaliacao);
-    } catch (error) {
+    } catch (error: any) {
       return res.status(400).json({ error: error.message });
     }
   }

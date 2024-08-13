@@ -113,3 +113,69 @@ export function CADASTRAR_GESTOR() {
     url: `${API_URL}/api/cadastrar-gestor`,
   };
 }
+
+export function LISTAR_GESTORES() {
+  return {
+    url: `${API_URL}/api/listar-gestores`,
+  };
+}
+
+export function BUSCAR_GESTOR() {
+  return {
+    url: `${API_URL}/api/buscar-gestor`,
+  };
+}
+
+export function EDITAR_GESTOR() {
+  return {
+    url: `${API_URL}/api/editar-gestor`,
+  };
+}
+
+export function EXCLUIR_GESTOR() {
+  return {
+    url: `${API_URL}/api/excluir-gestor`,
+  };
+}
+
+export function CADASTRAR_AVALIACAO() {
+  return {
+    url: `${API_URL}/api/cadastrar-avaliacao`,
+  };
+}
+
+export function BUSCAR_AVALIACAO() {
+  return {
+    url: `${API_URL}/api/buscar-avaliacao`,
+  };
+}
+
+export function LISTAR_MANIPULADORES() {
+  return {
+    url: `${API_URL}/api/listar-manipulador-alimento`,
+  };
+}
+
+export function CADASTRAR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/cadastrar-manipulador-alimento`,
+  };
+}
+
+export function BUSCAR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/buscar-manipulador`,
+  };
+}
+
+export function EDITAR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/editar-manipulador`,
+  };
+}
+
+export function EXCLUIR_MANIPULADOR() {
+  return {
+    url: `${API_URL}/api/excluir-manipulador`,
+  };
+}

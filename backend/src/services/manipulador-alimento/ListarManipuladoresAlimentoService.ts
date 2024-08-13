@@ -11,6 +11,7 @@ export class ListarManipuladoresAlimentoService {
       },
       select: {
         id: true,
+        id_avaliacao: true,
         data_cadastro: true,
         data_alteracao: true,
         informacoes: true,

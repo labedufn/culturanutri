@@ -23,18 +23,19 @@ export async function login(data: { emailOuCpf: string; senha: string; rememberM
     const dados = response.data;
 
     const cookieOptions: any = {
-      name: "token",
-      value: dados.token,
       httpOnly: true,
       secure: true,
       sameSite: "lax",
+      path: "/",
     };
 
     if (data.rememberMe) {
       cookieOptions.maxAge = 604800; // 7 dias
     }
 
-    cookies().set(cookieOptions);
+    cookies().set("token", dados.token, cookieOptions);
+
+    return { success: true };
   } catch (error: any) {
     return {
       success: false,

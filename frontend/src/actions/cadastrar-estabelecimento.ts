@@ -34,9 +34,11 @@ export async function cadastrarEstabelecimento(data: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     return {
       success: true,
       message: response.data.message,
+      estabelecimentoCriado: response.data.estabelecimentoCriado,
     };
   } catch (error: unknown) {
     console.log(error);
