@@ -14,7 +14,8 @@ import {
   converteEscolaridade,
   converteGenero,
   converteSimNao,
-  converteTempoTrabalho,
+  labelsComunicacao,
+  labelsLideranca,
   Manipulador,
 } from "@/types/manipulador";
 import {
@@ -39,6 +40,8 @@ type ModalVisualizarManipuladorProps = {
 export function ModalVisualizarManipulador({ isOpen, onClose, manipulador }: ModalVisualizarManipuladorProps) {
   const {
     dados_individuais,
+    lideranca,
+    comunicacao,
     conhecimento,
     comprometimento_afetivo,
     comprometimento_normativo,
@@ -85,11 +88,25 @@ export function ModalVisualizarManipulador({ isOpen, onClose, manipulador }: Mod
                 escolaridade: converteEscolaridade,
                 formacao: "",
                 participou_treinamento_manipulacao_alimentos: converteSimNao,
-                tempo_trabalha_com_alimentos: converteTempoTrabalho,
+                tempo_trabalha_com_alimentos: "",
                 boa_comunicacao_chefe: converteSimNao,
                 boa_comunicacao_entre_funcionarios: converteSimNao,
               }[key as keyof typeof labelsDadosIndividuais],
             ),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Liderança</h3>
+          </div>
+          {Object.entries(lideranca).map(([key, value]) =>
+            renderInformacao(labelsLideranca[key as keyof typeof labelsLideranca], value, converteAvaliacao),
+          )}
+          <div className="col-span-1 lg:col-span-2">
+            <Separator className="my-8" />
+            <h3 className="font-semibold col-col-span-1 text-black mt-4">Comunicação</h3>
+          </div>
+          {Object.entries(comunicacao).map(([key, value]) =>
+            renderInformacao(labelsComunicacao[key as keyof typeof labelsComunicacao], value, converteAvaliacao),
           )}
           <div className="col-span-1 lg:col-span-2">
             <Separator className="my-8" />

@@ -33,7 +33,13 @@ export function AvaliacaoManipuladoresPercepcaoRiscoForm() {
       />
       <RadioGroupField
         name="riscoApresentarDorBarrigaEstabelecimentoManipulado"
-        label="Qual o risco do cliente apresentar dor de barriga e/ou vômitos (intoxicação alimentar) após comer uma refeição preparada no estabelecimento que você gerencia?"
+        label="Qual o risco do cliente apresentar dor de barriga e/ou vômitos (intoxicação alimentar) após comer uma refeição preparada por você?"
+        options={riscoOptions}
+        orientation="vertical"
+      />
+      <RadioGroupField
+        name="riscoApresentarDorBarrigaEstabelecimentoColegaManipulado"
+        label="Qual o risco do cliente apresentar dor de barriga e/ou vômitos (intoxicação alimentar) após consumir uma refeição preparada por um colega seu (manipulador de alimentos que trabalhe no mesmo local que você)?"
         options={riscoOptions}
         orientation="vertical"
       />

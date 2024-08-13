@@ -14,6 +14,7 @@ interface AvaliacaoProviderProps {
 
 export function AvaliacaoProvider({ children }: AvaliacaoProviderProps) {
   const defaultValues = getStoredValuesManipulador();
+  console.log("Valores padrão carregados:", defaultValues); // Log de depuração
 
   const methods = useForm<FormSchemaType>({
     resolver: zodResolver(schema),
