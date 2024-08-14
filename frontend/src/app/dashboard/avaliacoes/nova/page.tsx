@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
-import { CadastrarEstabelecimento } from "@/components/dashboard/avaliacao/estabelecimento/cadastrar-estabelecimento";
+import { EstabelecimentoTabs } from "@/components/dashboard/avaliacao/estabelecimento/estabelecimento-tabs";
 
 export default function AvaliacoesNovaPage() {
   return (
@@ -41,10 +41,11 @@ export default function AvaliacoesNovaPage() {
               <h3 className="mb-2">Avaliação de Cultura de Segurança dos Alimentos</h3>
               <p className="text-sm text-muted-foreground">
                 Este sistema foi elaborado para tornar mais intuitiva a análise de dados da avaliação da cultura de
-                segurança dos alimentos.
+                segurança dos alimentos. Para iniciar a avaliação é necessário <b>selecionar</b> ou <b>cadastrar</b> um
+                estabelecimento.
               </p>
             </div>
-            <CadastrarEstabelecimento />
+            <EstabelecimentoTabs />
           </div>
         </CardContent>
       </Card>
