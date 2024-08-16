@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { useState, useEffect } from "react";
 import { AvaliacaoGestores } from "./avaliacao/gestores/avaliacao-gestores";
 import { AvaliacaoManipuladores } from "./avaliacao/manipuladores/avaliacao-manipuladores";
+import { ListaVerificacao } from "./avaliacao/lista-verificacao/lista-verificacao";
 
 interface StepperAvaliacaoProps {
   id: string;
@@ -55,7 +56,7 @@ export function StepperAvaliacao({ id }: StepperAvaliacaoProps) {
     {
       icon: ListChecks,
       tooltip: "Lista de verificação",
-      content: <div>Lista de verificação</div>,
+      content: <ListaVerificacao id={id} />,
     },
     {
       icon: TextSearch,

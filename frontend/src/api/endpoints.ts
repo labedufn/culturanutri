@@ -179,3 +179,15 @@ export function EXCLUIR_MANIPULADOR() {
     url: `${API_URL}/api/excluir-manipulador`,
   };
 }
+
+export function CADASTRAR_LISTA_VERIFICACAO() {
+  return {
+    url: `${API_URL}/api/criar-lista-verificacao`,
+  };
+}
+
+export function CALCULAR_LISTA_VERIFICACAO() {
+  return {
+    url: `${API_URL}/api/calcular-lista-verificacao`,
+  };
+}

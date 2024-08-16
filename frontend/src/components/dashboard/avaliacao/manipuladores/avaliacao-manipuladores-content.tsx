@@ -33,13 +33,10 @@ export function AvaliacaoManipuladoresContent({ onReload, id }: AvaliacaoManipul
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const onSubmit = async (data: any) => {
-    console.log("onSubmit chamado com dados:", data); // Log de depuração
     try {
       const formattedData = formatarDadosManipulador(data, id);
-      console.log("Dados formatados:", formattedData); // Log de depuração
 
       const response = await cadastrarManipulador(formattedData);
-      console.log("Resposta da API:", response); // Log de depuração
 
       if (response.success) {
         toast({
@@ -67,7 +64,6 @@ export function AvaliacaoManipuladoresContent({ onReload, id }: AvaliacaoManipul
         });
       }
     } catch (error) {
-      console.error("Erro ao cadastrar o manipulador:", error); // Log de depuração
       toast({
         className: cn(
           "bg-red-600 border-none text-white top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4",

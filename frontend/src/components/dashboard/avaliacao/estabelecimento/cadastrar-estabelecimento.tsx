@@ -57,8 +57,6 @@ export function CadastrarEstabelecimentoContent() {
 
         const responseAvaliacao = await cadastrarAvaliacao(estabelecimentoId);
 
-        console.log(responseAvaliacao.avaliacaoCriada.id);
-
         if (responseAvaliacao.success && responseAvaliacao.avaliacaoCriada) {
           toast({
             className: cn(
