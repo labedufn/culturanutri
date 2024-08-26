@@ -11,7 +11,7 @@ interface CorAnaliseQualitativaProps {
 }
 
 export function CorAnaliseQualitativa({ content, score }: CorAnaliseQualitativaProps) {
-  const [selectedTab, setSelectedTab] = useState("verde");
+  const [selectedTab, setSelectedTab] = useState("vermelho");
 
   const triggerClasses = (baseColor: string, rounded: string) =>
     clsx(
@@ -30,10 +30,10 @@ export function CorAnaliseQualitativa({ content, score }: CorAnaliseQualitativaP
 
   return (
     <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-      <TabsContent value="verde">
-        <div className="p-4 bg-green-100 border-2 border-green-500 rounded-md">
-          {score !== undefined && <Badge className="bg-green-500 text-black mb-2">Score: {score}</Badge>}
-          <p className="text-green-800">{content}</p>
+      <TabsContent value="vermelho">
+        <div className="p-4 bg-red-100 border-2 border-red-500 rounded-md">
+          {score !== undefined && <Badge className="bg-red-500 text-white mb-2">Score: {score}</Badge>}
+          <p className="text-red-800">{content}</p>
         </div>
       </TabsContent>
       <TabsContent value="amarelo">
@@ -42,21 +42,21 @@ export function CorAnaliseQualitativa({ content, score }: CorAnaliseQualitativaP
           <p className="text-yellow-800">{content}</p>
         </div>
       </TabsContent>
-      <TabsContent value="vermelho">
-        <div className="p-4 bg-red-100 border-2 border-red-500 rounded-md">
-          {score !== undefined && <Badge className="bg-red-500 text-white mb-2">Score: {score}</Badge>}
-          <p className="text-red-800">{content}</p>
+      <TabsContent value="verde">
+        <div className="p-4 bg-green-100 border-2 border-green-500 rounded-md">
+          {score !== undefined && <Badge className="bg-green-500 text-black mb-2">Score: {score}</Badge>}
+          <p className="text-green-800">{content}</p>
         </div>
       </TabsContent>
       <TabsList className="rounded-full flex justify-between bg-transparent">
-        <TabsTrigger value="verde" className={triggerClasses("green", "rounded-full rounded-r-none")}>
-          {selectedTab === "verde" && <Indicator color="green" />}
+        <TabsTrigger value="vermelho" className={triggerClasses("red", "rounded-full rounded-r-none")}>
+          {selectedTab === "vermelho" && <Indicator color="red" />}
         </TabsTrigger>
         <TabsTrigger value="amarelo" className={triggerClasses("yellow", "rounded-none")}>
           {selectedTab === "amarelo" && <Indicator color="yellow" />}
         </TabsTrigger>
-        <TabsTrigger value="vermelho" className={triggerClasses("red", "rounded-full rounded-l-none")}>
-          {selectedTab === "vermelho" && <Indicator color="red" />}
+        <TabsTrigger value="verde" className={triggerClasses("green", "rounded-full rounded-l-none")}>
+          {selectedTab === "verde" && <Indicator color="green" />}
         </TabsTrigger>
       </TabsList>
     </Tabs>

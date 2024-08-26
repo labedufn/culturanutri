@@ -12,6 +12,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { StepperAvaliacao } from "@/components/dashboard/stepper-avaliacao";
 import { buscarAvaliacao } from "@/actions/buscar-avaliacao";
 import { formatarData } from "@/scripts/formatarData";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Avaliações | Cultura de Segurança dos Alimentos",
+  description: "Cultura de Segurança dos Alimentos",
+};
 
 interface AvaliacaoPageProps {
   params: {
