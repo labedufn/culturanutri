@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { AvaliacaoGestores } from "./avaliacao/gestores/avaliacao-gestores";
 import { AvaliacaoManipuladores } from "./avaliacao/manipuladores/avaliacao-manipuladores";
 import { ListaVerificacao } from "./avaliacao/lista-verificacao/lista-verificacao";
+import { AvaliacaoAnaliseQualitativa } from "./avaliacao/analise-qualitativa/avaliacao-analise-qualitativa";
 
 interface StepperAvaliacaoProps {
   id: string;
@@ -61,7 +62,7 @@ export function StepperAvaliacao({ id }: StepperAvaliacaoProps) {
     {
       icon: TextSearch,
       tooltip: "Análise qualitativa",
-      content: <div>Análise qualitativa</div>,
+      content: <AvaliacaoAnaliseQualitativa id={id} />,
     },
     {
       icon: FileCheck,

@@ -191,3 +191,15 @@ export function CALCULAR_LISTA_VERIFICACAO() {
     url: `${API_URL}/api/calcular-lista-verificacao`,
   };
 }
+
+export function CADASTRAR_ANALISE_QUALITATIVA() {
+  return {
+    url: `${API_URL}/api/cadastrar-analise-qualitativa`,
+  };
+}
+
+export function CALCULAR_ANALISE_QUALITATIVA() {
+  return {
+    url: `${API_URL}/api/calcular-analise-qualitativa`,
+  };
+}

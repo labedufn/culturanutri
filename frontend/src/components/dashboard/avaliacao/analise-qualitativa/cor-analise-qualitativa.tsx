@@ -5,12 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import clsx from "clsx";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 
 interface CorAnaliseQualitativaProps {
   content: string;
+  score?: number;
 }
 
-export function CorAnaliseQualitativa({ content }: CorAnaliseQualitativaProps) {
+export function CorAnaliseQualitativa({ content, score }: CorAnaliseQualitativaProps) {
   const [selectedTab, setSelectedTab] = useState("vermelho");
 
   const triggerClasses = (baseColor: string, rounded: string) =>
@@ -35,30 +37,33 @@ export function CorAnaliseQualitativa({ content }: CorAnaliseQualitativaProps) {
           <Label className="mb-2">Valor</Label>
           <Input type="number" placeholder="0" defaultValue={0} min={0} />
         </div>
-        <TabsContent value="vermelho">
-          <div className="p-4 bg-red-100 border-2 border-red-500 rounded-md">
-            <p className="text-red-800">{content}</p>
+        <TabsContent value="verde">
+          <div className="p-4 bg-green-100 border-2 border-green-500 rounded-md">
+            {score !== undefined && <Badge className="bg-green-500 text-black mb-2">Score: {score}</Badge>}
+            <p className="text-green-800">{content}</p>
           </div>
         </TabsContent>
         <TabsContent value="amarelo">
           <div className="p-4 bg-yellow-100 border-2 border-yellow-500 rounded-md">
+            {score !== undefined && <Badge className="bg-yellow-500 text-black mb-2">Score: {score}</Badge>}
             <p className="text-yellow-800">{content}</p>
           </div>
         </TabsContent>
-        <TabsContent value="verde">
-          <div className="p-4 bg-green-100 border-2 border-green-500 rounded-md">
-            <p className="text-green-800">{content}</p>
+        <TabsContent value="vermelho">
+          <div className="p-4 bg-red-100 border-2 border-red-500 rounded-md">
+            {score !== undefined && <Badge className="bg-red-500 text-white mb-2">Score: {score}</Badge>}
+            <p className="text-red-800">{content}</p>
           </div>
         </TabsContent>
         <TabsList className="rounded-full flex justify-between bg-transparent">
-          <TabsTrigger value="vermelho" className={triggerClasses("red", "rounded-full rounded-r-none")}>
-            {selectedTab === "vermelho" && <Indicator color="red" />}
+          <TabsTrigger value="verde" className={triggerClasses("green", "rounded-full rounded-r-none")}>
+            {selectedTab === "verde" && <Indicator color="green" />}
           </TabsTrigger>
           <TabsTrigger value="amarelo" className={triggerClasses("yellow", "rounded-none")}>
             {selectedTab === "amarelo" && <Indicator color="yellow" />}
           </TabsTrigger>
-          <TabsTrigger value="verde" className={triggerClasses("green", "rounded-full rounded-l-none")}>
-            {selectedTab === "verde" && <Indicator color="green" />}
+          <TabsTrigger value="vermelho" className={triggerClasses("red", "rounded-full rounded-l-none")}>
+            {selectedTab === "vermelho" && <Indicator color="red" />}
           </TabsTrigger>
         </TabsList>
       </Tabs>
