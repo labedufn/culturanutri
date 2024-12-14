@@ -51,7 +51,7 @@ export class RecuperarSenhaService {
     const mailOptions = {
       from: "culturanutri@teste.com",
       to: email,
-      subject: "Redefinição de Senha - CulturaNutri",
+      subject: "Redefinição de Senha - CSA - Cultura de Segurança dos Alimentos",
       html: htmlContent,
     };
 
