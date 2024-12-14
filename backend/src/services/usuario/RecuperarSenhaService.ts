@@ -2,15 +2,14 @@ import { PrismaClient } from "@prisma/client";
 import { sign } from "jsonwebtoken";
 import moment from "moment-timezone";
 import { createTransport } from "nodemailer";
+import { generatePasswordResetEmailTemplate } from "templates/EmailTemplate";
 
 const prisma = new PrismaClient();
 
 export class RecuperarSenhaService {
-  async execute(email) {
+  async execute(email: string) {
     const usuario = await prisma.usuario.findUnique({
-      where: {
-        email: email,
-      },
+      where: { email },
     });
 
     if (!usuario) {
@@ -24,25 +23,36 @@ export class RecuperarSenhaService {
 
     await prisma.resetSenhaToken.create({
       data: {
-        token: token,
+        token,
         id_usuario: usuario.id,
         expira_em: expiraEmDate,
       },
+    });
+
+    const resetPasswordLink = `${process.env.FRONTEND_URL}/autenticacao/redefinir-senha?token=${token}`;
+
+    const htmlContent = generatePasswordResetEmailTemplate({
+      userName: usuario.nome,
+      userEmail: email,
+      resetLink: resetPasswordLink,
+      frontendUrl: process.env.FRONTEND_URL,
     });
 
     const transporter = createTransport({
       host: process.env.SMTP_HOST,
       port: Number(process.env.SMTP_PORT),
       secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
     });
-
-    const resetPasswordLink = `${process.env.FRONTEND_URL}/autenticacao/redefinir-senha?token=${token}`;
 
     const mailOptions = {
       from: "culturanutri@teste.com",
       to: email,
-      subject: "Redefinição de Senha",
-      text: `Aqui está o seu link de recuperação de senha: ${resetPasswordLink}`,
+      subject: "Redefinição de Senha - CulturaNutri",
+      html: htmlContent,
     };
 
     await transporter.sendMail(mailOptions);
